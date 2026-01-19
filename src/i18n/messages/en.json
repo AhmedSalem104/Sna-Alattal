@@ -1,0 +1,152 @@
+{
+  "metadata": {
+    "title": "S.N.A Al-Attal Engineering Industries",
+    "description": "Leading manufacturer of liquid filling production lines in Egypt and Turkey"
+  },
+  "nav": {
+    "home": "Home",
+    "about": "About Us",
+    "products": "Products",
+    "solutions": "Solutions",
+    "clients": "Clients",
+    "news": "News",
+    "contact": "Contact",
+    "exhibitions": "Exhibitions",
+    "team": "Our Team",
+    "certificates": "Certificates"
+  },
+  "hero": {
+    "title": "S.N.A Al-Attal Engineering Industries",
+    "subtitle": "Shaping the Future of Packaging",
+    "description": "Leading manufacturer of liquid filling production lines with over 30 years of experience",
+    "cta": "Discover Our Products",
+    "secondary_cta": "Contact Us"
+  },
+  "about": {
+    "title": "About Us",
+    "subtitle": "A Success Story Spanning Three Decades",
+    "description": "S.N.A Al-Attal Engineering Industries is a leading Egyptian company in manufacturing liquid filling production lines, established in 10th of Ramadan City and expanded to Istanbul, Turkey.",
+    "experience": "Years of Experience",
+    "projects": "Completed Projects",
+    "clients": "Satisfied Clients",
+    "countries": "Countries"
+  },
+  "products": {
+    "title": "Our Products",
+    "subtitle": "Complete Production Line Solutions",
+    "viewAll": "View All",
+    "viewDetails": "View Details",
+    "categories": "Categories"
+  },
+  "solutions": {
+    "title": "Our Solutions",
+    "subtitle": "Custom Solutions for Every Industry",
+    "description": "We provide comprehensive solutions tailored to various industry needs"
+  },
+  "clients": {
+    "title": "Our Clients",
+    "subtitle": "Partners in Success",
+    "description": "We are proud of the trust from major companies in Egypt and the region"
+  },
+  "team": {
+    "title": "Our Team",
+    "subtitle": "Expertise and Competence",
+    "description": "A team of specialized engineers and technicians"
+  },
+  "certificates": {
+    "title": "Certificates",
+    "subtitle": "Quality and Accreditation",
+    "description": "International quality and accreditation certificates"
+  },
+  "exhibitions": {
+    "title": "Exhibitions",
+    "subtitle": "Our Global Presence",
+    "description": "We participate in the most important specialized international exhibitions"
+  },
+  "news": {
+    "title": "News",
+    "subtitle": "Latest Updates",
+    "readMore": "Read More",
+    "viewAll": "All News"
+  },
+  "contact": {
+    "title": "Contact Us",
+    "subtitle": "We are here to help",
+    "form": {
+      "name": "Full Name",
+      "email": "Email Address",
+      "phone": "Phone Number",
+      "company": "Company Name",
+      "subject": "Subject",
+      "message": "Message",
+      "submit": "Send Message",
+      "sending": "Sending...",
+      "success": "Your message has been sent successfully",
+      "error": "An error occurred, please try again"
+    },
+    "info": {
+      "egypt": {
+        "title": "Egypt - Headquarters",
+        "address": "10th of Ramadan City, Industrial Zone",
+        "phone": "+20 103 222 1038"
+      },
+      "turkey": {
+        "title": "Turkey",
+        "address": "Istanbul, Industrial Zone",
+        "phone": "+90 XXX XXX XXXX"
+      }
+    }
+  },
+  "footer": {
+    "description": "Leading manufacturer of liquid filling production lines",
+    "quickLinks": "Quick Links",
+    "contactInfo": "Contact Information",
+    "followUs": "Follow Us",
+    "rights": "All Rights Reserved",
+    "privacy": "Privacy Policy",
+    "terms": "Terms & Conditions"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "retry": "Retry",
+    "noData": "No data available",
+    "search": "Search",
+    "filter": "Filter",
+    "sort": "Sort",
+    "all": "All",
+    "more": "More",
+    "less": "Less",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "close": "Close",
+    "open": "Open",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "add": "Add",
+    "view": "View"
+  },
+  "onboarding": {
+    "phase1": {
+      "title": "Welcome",
+      "subtitle": "To the World of Advanced Packaging"
+    },
+    "phase2": {
+      "title": "30+ Years of Experience",
+      "subtitle": "In Production Line Manufacturing"
+    },
+    "phase3": {
+      "title": "Integrated Solutions",
+      "subtitle": "For All Industries"
+    },
+    "phase4": {
+      "title": "Global Presence",
+      "subtitle": "Egypt and Turkey"
+    },
+    "skip": "Skip",
+    "start": "Start Now"
+  }
+}

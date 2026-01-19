@@ -1,0 +1,408 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+// User model for authentication
+model User {
+  id            String    @id @default(cuid())
+  name          String
+  email         String    @unique
+  phone         String?
+  password      String
+  image         String?
+  role          UserRole  @default(EDITOR)
+  isActive      Boolean   @default(true)
+  lastLogin     DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  deletedAt     DateTime?
+
+  activities    ActivityLog[]
+
+  @@map("users")
+}
+
+enum UserRole {
+  ADMIN
+  EDITOR
+  VIEWER
+}
+
+// Product Category
+model Category {
+  id          String    @id @default(cuid())
+  nameAr      String
+  nameEn      String
+  nameTr      String
+  slug        String    @unique
+  descriptionAr String? @db.Text
+  descriptionEn String? @db.Text
+  descriptionTr String? @db.Text
+  image       String?
+  parentId    String?
+  parent      Category? @relation("CategoryChildren", fields: [parentId], references: [id], onDelete: SetNull)
+  children    Category[] @relation("CategoryChildren")
+  products    Product[]
+  isActive    Boolean   @default(true)
+  order       Int       @default(0)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  deletedAt   DateTime?
+
+  @@map("categories")
+}
+
+// Product
+model Product {
+  id               String    @id @default(cuid())
+  nameAr           String
+  nameEn           String
+  nameTr           String
+  slug             String    @unique
+  descriptionAr    String?   @db.Text
+  descriptionEn    String?   @db.Text
+  descriptionTr    String?   @db.Text
+  shortDescAr      String?   @db.VarChar(500)
+  shortDescEn      String?   @db.VarChar(500)
+  shortDescTr      String?   @db.VarChar(500)
+  images           Json      @default("[]")
+  categoryId       String?
+  category         Category? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  features         Json      @default("[]")
+  specifications   Json      @default("{}")
+  seoTitleAr       String?
+  seoTitleEn       String?
+  seoTitleTr       String?
+  seoDescAr        String?   @db.VarChar(500)
+  seoDescEn        String?   @db.VarChar(500)
+  seoDescTr        String?   @db.VarChar(500)
+  seoKeywords      Json      @default("[]")
+  isActive         Boolean   @default(true)
+  isFeatured       Boolean   @default(false)
+  order            Int       @default(0)
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+  deletedAt        DateTime?
+
+  solutions        SolutionProduct[]
+
+  @@map("products")
+}
+
+// Solution
+model Solution {
+  id               String    @id @default(cuid())
+  titleAr          String
+  titleEn          String
+  titleTr          String
+  slug             String    @unique
+  descriptionAr    String?   @db.Text
+  descriptionEn    String?   @db.Text
+  descriptionTr    String?   @db.Text
+  shortDescAr      String?   @db.VarChar(500)
+  shortDescEn      String?   @db.VarChar(500)
+  shortDescTr      String?   @db.VarChar(500)
+  icon             String?
+  image            String?
+  features         Json      @default("[]")
+  isActive         Boolean   @default(true)
+  isFeatured       Boolean   @default(false)
+  order            Int       @default(0)
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+  deletedAt        DateTime?
+
+  products         SolutionProduct[]
+
+  @@map("solutions")
+}
+
+// Solution-Product relation
+model SolutionProduct {
+  solutionId String
+  solution   Solution @relation(fields: [solutionId], references: [id], onDelete: Cascade)
+  productId  String
+  product    Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  order      Int      @default(0)
+
+  @@id([solutionId, productId])
+  @@map("solution_products")
+}
+
+// Client
+model Client {
+  id            String    @id @default(cuid())
+  nameAr        String
+  nameEn        String
+  nameTr        String
+  logo          String
+  website       String?
+  descriptionAr String?   @db.Text
+  descriptionEn String?   @db.Text
+  descriptionTr String?   @db.Text
+  isActive      Boolean   @default(true)
+  isFeatured    Boolean   @default(false)
+  order         Int       @default(0)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  deletedAt     DateTime?
+
+  @@map("clients")
+}
+
+// Team Member
+model TeamMember {
+  id          String    @id @default(cuid())
+  nameAr      String
+  nameEn      String
+  nameTr      String
+  positionAr  String
+  positionEn  String
+  positionTr  String
+  bioAr       String?   @db.Text
+  bioEn       String?   @db.Text
+  bioTr       String?   @db.Text
+  image       String
+  email       String?
+  phone       String?
+  linkedin    String?
+  isActive    Boolean   @default(true)
+  order       Int       @default(0)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  deletedAt   DateTime?
+
+  @@map("team_members")
+}
+
+// Certificate
+model Certificate {
+  id             String    @id @default(cuid())
+  nameAr         String
+  nameEn         String
+  nameTr         String
+  issuingBodyAr  String
+  issuingBodyEn  String
+  issuingBodyTr  String
+  descriptionAr  String?   @db.Text
+  descriptionEn  String?   @db.Text
+  descriptionTr  String?   @db.Text
+  image          String
+  issueDate      DateTime
+  expiryDate     DateTime?
+  isActive       Boolean   @default(true)
+  order          Int       @default(0)
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  deletedAt      DateTime?
+
+  @@map("certificates")
+}
+
+// Exhibition
+model Exhibition {
+  id            String    @id @default(cuid())
+  nameAr        String
+  nameEn        String
+  nameTr        String
+  locationAr    String
+  locationEn    String
+  locationTr    String
+  descriptionAr String?   @db.Text
+  descriptionEn String?   @db.Text
+  descriptionTr String?   @db.Text
+  images        Json      @default("[]")
+  startDate     DateTime
+  endDate       DateTime
+  isActive      Boolean   @default(true)
+  order         Int       @default(0)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  deletedAt     DateTime?
+
+  @@map("exhibitions")
+}
+
+// TV Interview
+model TVInterview {
+  id            String    @id @default(cuid())
+  titleAr       String
+  titleEn       String
+  titleTr       String
+  channelAr     String
+  channelEn     String
+  channelTr     String
+  descriptionAr String?   @db.Text
+  descriptionEn String?   @db.Text
+  descriptionTr String?   @db.Text
+  videoUrl      String
+  thumbnail     String
+  date          DateTime
+  isActive      Boolean   @default(true)
+  order         Int       @default(0)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  deletedAt     DateTime?
+
+  @@map("tv_interviews")
+}
+
+// News
+model News {
+  id            String    @id @default(cuid())
+  titleAr       String
+  titleEn       String
+  titleTr       String
+  slug          String    @unique
+  contentAr     String    @db.LongText
+  contentEn     String    @db.LongText
+  contentTr     String    @db.LongText
+  excerptAr     String?   @db.VarChar(500)
+  excerptEn     String?   @db.VarChar(500)
+  excerptTr     String?   @db.VarChar(500)
+  image         String
+  author        String?
+  publishedAt   DateTime  @default(now())
+  isActive      Boolean   @default(true)
+  isFeatured    Boolean   @default(false)
+  tags          Json      @default("[]")
+  seoTitleAr    String?
+  seoTitleEn    String?
+  seoTitleTr    String?
+  seoDescAr     String?   @db.VarChar(500)
+  seoDescEn     String?   @db.VarChar(500)
+  seoDescTr     String?   @db.VarChar(500)
+  seoKeywords   Json      @default("[]")
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  deletedAt     DateTime?
+
+  @@map("news")
+}
+
+// Slide (Hero Slider)
+model Slide {
+  id            String    @id @default(cuid())
+  titleAr       String
+  titleEn       String
+  titleTr       String
+  subtitleAr    String?
+  subtitleEn    String?
+  subtitleTr    String?
+  descriptionAr String?   @db.Text
+  descriptionEn String?   @db.Text
+  descriptionTr String?   @db.Text
+  image         String
+  buttonTextAr  String?
+  buttonTextEn  String?
+  buttonTextTr  String?
+  buttonLink    String?
+  isActive      Boolean   @default(true)
+  order         Int       @default(0)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  deletedAt     DateTime?
+
+  @@map("slides")
+}
+
+// Contact Message
+model ContactMessage {
+  id         String    @id @default(cuid())
+  name       String
+  email      String
+  phone      String?
+  company    String?
+  subject    String
+  message    String    @db.Text
+  isRead     Boolean   @default(false)
+  isArchived Boolean   @default(false)
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  deletedAt  DateTime?
+
+  @@map("contact_messages")
+}
+
+// Catalogue
+model Catalogue {
+  id            String    @id @default(cuid())
+  nameAr        String
+  nameEn        String
+  nameTr        String
+  descriptionAr String?   @db.Text
+  descriptionEn String?   @db.Text
+  descriptionTr String?   @db.Text
+  fileUrl       String
+  thumbnail     String?
+  fileSize      Int       @default(0)
+  downloadCount Int       @default(0)
+  isActive      Boolean   @default(true)
+  order         Int       @default(0)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  deletedAt     DateTime?
+
+  @@map("catalogues")
+}
+
+// Settings
+model Settings {
+  id        String    @id @default(cuid())
+  key       String    @unique
+  value     Json
+  group     String    @default("general")
+  updatedAt DateTime  @updatedAt
+
+  @@map("settings")
+}
+
+// Page (for custom pages like About, Privacy, Terms)
+model Page {
+  id            String    @id @default(cuid())
+  titleAr       String
+  titleEn       String
+  titleTr       String
+  slug          String    @unique
+  contentAr     String    @db.LongText
+  contentEn     String    @db.LongText
+  contentTr     String    @db.LongText
+  seoTitleAr    String?
+  seoTitleEn    String?
+  seoTitleTr    String?
+  seoDescAr     String?   @db.VarChar(500)
+  seoDescEn     String?   @db.VarChar(500)
+  seoDescTr     String?   @db.VarChar(500)
+  seoKeywords   Json      @default("[]")
+  isActive      Boolean   @default(true)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  deletedAt     DateTime?
+
+  @@map("pages")
+}
+
+// Activity Log
+model ActivityLog {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  action    String
+  entity    String
+  entityId  String
+  oldData   Json?
+  newData   Json?
+  ipAddress String?
+  userAgent String?  @db.Text
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@index([entity, entityId])
+  @@index([createdAt])
+  @@map("activity_logs")
+}

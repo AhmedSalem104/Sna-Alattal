@@ -1,0 +1,152 @@
+{
+  "metadata": {
+    "title": "S.N.A Al-Attal Mühendislik Sanayi",
+    "description": "Mısır ve Türkiye'de sıvı dolum üretim hatlarının önde gelen üreticisi"
+  },
+  "nav": {
+    "home": "Ana Sayfa",
+    "about": "Hakkımızda",
+    "products": "Ürünler",
+    "solutions": "Çözümler",
+    "clients": "Müşteriler",
+    "news": "Haberler",
+    "contact": "İletişim",
+    "exhibitions": "Fuarlar",
+    "team": "Ekibimiz",
+    "certificates": "Sertifikalar"
+  },
+  "hero": {
+    "title": "S.N.A Al-Attal Mühendislik Sanayi",
+    "subtitle": "Ambalajın Geleceğini Şekillendiriyoruz",
+    "description": "30 yılı aşkın deneyimle sıvı dolum üretim hatlarının önde gelen üreticisi",
+    "cta": "Ürünlerimizi Keşfedin",
+    "secondary_cta": "Bize Ulaşın"
+  },
+  "about": {
+    "title": "Hakkımızda",
+    "subtitle": "Üç On Yıla Yayılan Bir Başarı Hikayesi",
+    "description": "S.N.A Al-Attal Mühendislik Sanayi, sıvı dolum üretim hatları imalatında Mısır'ın önde gelen şirketidir. 10. Ramazan Şehri'nde kurulmuş ve İstanbul, Türkiye'ye genişlemiştir.",
+    "experience": "Yıllık Deneyim",
+    "projects": "Tamamlanan Proje",
+    "clients": "Memnun Müşteri",
+    "countries": "Ülke"
+  },
+  "products": {
+    "title": "Ürünlerimiz",
+    "subtitle": "Komple Üretim Hattı Çözümleri",
+    "viewAll": "Tümünü Görüntüle",
+    "viewDetails": "Detayları Görüntüle",
+    "categories": "Kategoriler"
+  },
+  "solutions": {
+    "title": "Çözümlerimiz",
+    "subtitle": "Her Sektör İçin Özel Çözümler",
+    "description": "Çeşitli sektör ihtiyaçlarına uygun kapsamlı çözümler sunuyoruz"
+  },
+  "clients": {
+    "title": "Müşterilerimiz",
+    "subtitle": "Başarıda Ortaklar",
+    "description": "Mısır ve bölgedeki büyük şirketlerin güveninden gurur duyuyoruz"
+  },
+  "team": {
+    "title": "Ekibimiz",
+    "subtitle": "Uzmanlık ve Yetkinlik",
+    "description": "Uzman mühendisler ve teknisyenlerden oluşan bir ekip"
+  },
+  "certificates": {
+    "title": "Sertifikalar",
+    "subtitle": "Kalite ve Akreditasyon",
+    "description": "Uluslararası kalite ve akreditasyon sertifikaları"
+  },
+  "exhibitions": {
+    "title": "Fuarlar",
+    "subtitle": "Küresel Varlığımız",
+    "description": "En önemli uluslararası uzmanlık fuarlarına katılıyoruz"
+  },
+  "news": {
+    "title": "Haberler",
+    "subtitle": "Son Gelişmeler",
+    "readMore": "Devamını Oku",
+    "viewAll": "Tüm Haberler"
+  },
+  "contact": {
+    "title": "İletişim",
+    "subtitle": "Size yardımcı olmak için buradayız",
+    "form": {
+      "name": "Ad Soyad",
+      "email": "E-posta Adresi",
+      "phone": "Telefon Numarası",
+      "company": "Şirket Adı",
+      "subject": "Konu",
+      "message": "Mesaj",
+      "submit": "Mesaj Gönder",
+      "sending": "Gönderiliyor...",
+      "success": "Mesajınız başarıyla gönderildi",
+      "error": "Bir hata oluştu, lütfen tekrar deneyin"
+    },
+    "info": {
+      "egypt": {
+        "title": "Mısır - Genel Merkez",
+        "address": "10. Ramazan Şehri, Sanayi Bölgesi",
+        "phone": "+20 103 222 1038"
+      },
+      "turkey": {
+        "title": "Türkiye",
+        "address": "İstanbul, Sanayi Bölgesi",
+        "phone": "+90 XXX XXX XXXX"
+      }
+    }
+  },
+  "footer": {
+    "description": "Sıvı dolum üretim hatlarının önde gelen üreticisi",
+    "quickLinks": "Hızlı Bağlantılar",
+    "contactInfo": "İletişim Bilgileri",
+    "followUs": "Bizi Takip Edin",
+    "rights": "Tüm Hakları Saklıdır",
+    "privacy": "Gizlilik Politikası",
+    "terms": "Şartlar ve Koşullar"
+  },
+  "common": {
+    "loading": "Yükleniyor...",
+    "error": "Bir hata oluştu",
+    "retry": "Tekrar Dene",
+    "noData": "Veri bulunamadı",
+    "search": "Ara",
+    "filter": "Filtrele",
+    "sort": "Sırala",
+    "all": "Tümü",
+    "more": "Daha Fazla",
+    "less": "Daha Az",
+    "back": "Geri",
+    "next": "İleri",
+    "previous": "Önceki",
+    "close": "Kapat",
+    "open": "Aç",
+    "save": "Kaydet",
+    "cancel": "İptal",
+    "delete": "Sil",
+    "edit": "Düzenle",
+    "add": "Ekle",
+    "view": "Görüntüle"
+  },
+  "onboarding": {
+    "phase1": {
+      "title": "Hoş Geldiniz",
+      "subtitle": "Gelişmiş Ambalaj Dünyasına"
+    },
+    "phase2": {
+      "title": "30+ Yıllık Deneyim",
+      "subtitle": "Üretim Hattı İmalatında"
+    },
+    "phase3": {
+      "title": "Entegre Çözümler",
+      "subtitle": "Tüm Sektörler İçin"
+    },
+    "phase4": {
+      "title": "Küresel Varlık",
+      "subtitle": "Mısır ve Türkiye"
+    },
+    "skip": "Atla",
+    "start": "Şimdi Başla"
+  }
+}

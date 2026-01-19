@@ -1,0 +1,26 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git init:*)",
+      "Bash(git remote add:*)",
+      "Bash(dir:*)",
+      "Bash(git fetch:*)",
+      "Bash(npx create-next-app@latest:*)",
+      "Bash(npm install)",
+      "Bash(test:*)",
+      "Bash(npm install:*)",
+      "Bash(npm --version)",
+      "Bash(node --version:*)",
+      "Bash(npm i:*)",
+      "Bash(\"/c/Program Files/nodejs/npm.cmd\" install)",
+      "Bash(\"/c/Program Files/nodejs/npm.cmd\" view next version)",
+      "Bash(\"/c/Program Files/nodejs/npm.cmd\" view eslint-config-next version)",
+      "Bash(\"/c/Program Files/nodejs/npm.cmd\" run build)",
+      "Bash(npx prisma:*)",
+      "Bash(npm run build:*)",
+      "Bash(npx next build)",
+      "Bash(npm run lint)",
+      "Bash(npx tsc:*)"
+    ]
+  }
+}
