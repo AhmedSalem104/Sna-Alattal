@@ -6,6 +6,7 @@ import { Providers } from '@/components/providers';
 import './globals.css';
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'),
   title: {
     default: 'العتال للصناعات الهندسية | S.N.A Al-Attal',
     template: '%s | S.N.A Al-Attal',
@@ -72,10 +73,9 @@ export default async function RootLayout({
   return (
     <html lang={locale} dir={dir} suppressHydrationWarning>
       <head>
-        <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="icon" href="/icon.svg" type="image/svg+xml" />
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <link rel="manifest" href="/manifest.json" />
+        <meta name="theme-color" content="#D4AF37" />
       </head>
       <body className={`${dir === 'rtl' ? 'font-cairo' : 'font-inter'} antialiased`}>
         <NextIntlClientProvider messages={messages} locale={locale}>

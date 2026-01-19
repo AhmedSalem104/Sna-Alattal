@@ -1,0 +1,21 @@
+{
+  "name": "S.N.A Al-Attal Engineering Industries",
+  "short_name": "SNA Al-Attal",
+  "description": "Leading manufacturer of liquid filling production lines in Egypt and Turkey",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0A0A0A",
+  "theme_color": "#D4AF37",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "categories": ["business", "industrial"],
+  "lang": "ar",
+  "dir": "rtl"
+}

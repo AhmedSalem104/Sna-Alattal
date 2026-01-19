@@ -148,5 +148,252 @@
     },
     "skip": "Skip",
     "start": "Start Now"
+  },
+  "contactPage": {
+    "badge": "Contact Us",
+    "title": "We're Here to Help",
+    "subtitle": "Get in touch with us for the best engineering solutions for your project",
+    "getInTouch": "Get In Touch",
+    "getInTouchDesc": "We're always available to answer your questions and provide the best solutions",
+    "quickResponse": "Quick Response",
+    "quickResponseDesc": "Our team is available around the clock to respond to your inquiries",
+    "sendMessage": "Send Us a Message",
+    "successMessage": "Your message has been sent successfully! We'll contact you soon",
+    "findUs": "Find Us",
+    "findUsDesc": "Visit us at one of our offices in Egypt or Turkey",
+    "form": {
+      "name": "Full Name",
+      "namePlaceholder": "Enter your full name",
+      "email": "Email Address",
+      "emailPlaceholder": "Enter your email address",
+      "phone": "Phone Number",
+      "phonePlaceholder": "Enter your phone number",
+      "company": "Company Name",
+      "companyPlaceholder": "Enter your company name (optional)",
+      "subject": "Subject",
+      "subjectPlaceholder": "Select a subject",
+      "message": "Message",
+      "messagePlaceholder": "Write your message here...",
+      "send": "Send Message",
+      "sending": "Sending..."
+    }
+  },
+  "aboutPage": {
+    "badge": "About Us",
+    "title": "S.N.A Al-Attal Engineering Industries",
+    "subtitle": "A 30-year journey of excellence in filling line manufacturing",
+    "yearsExperience": "Years of Experience",
+    "story": {
+      "title": "Our Story",
+      "p1": "S.N.A Al-Attal Engineering Industries was founded in 1994 in the 10th of Ramadan City, Egypt. We started as a small workshop manufacturing spare parts for filling machines and evolved to become one of the largest companies specializing in liquid filling production lines in the region.",
+      "p2": "In 2010, we opened our branch in Istanbul, Turkey, to be closer to our customers in Europe and the Middle East. Today, we proudly serve over 300 clients in 15 countries worldwide."
+    },
+    "stats": {
+      "projects": "Projects Completed",
+      "clients": "Satisfied Clients",
+      "countries": "Countries"
+    },
+    "vision": {
+      "title": "Our Vision",
+      "content": "To be the first and best partner for every company seeking integrated and reliable filling solutions in the Middle East and Africa region."
+    },
+    "mission": {
+      "title": "Our Mission",
+      "content": "Delivering innovative, high-quality filling solutions that meet our clients' needs while adhering to the highest quality and safety standards."
+    },
+    "values": {
+      "title": "Our Values",
+      "subtitle": "The principles that guide our daily work",
+      "quality": {
+        "title": "Quality",
+        "desc": "We commit to the highest quality standards in everything we manufacture"
+      },
+      "team": {
+        "title": "Teamwork",
+        "desc": "An integrated team working with a unified spirit"
+      },
+      "global": {
+        "title": "Global Reach",
+        "desc": "We reach our customers wherever they are"
+      },
+      "innovation": {
+        "title": "Innovation",
+        "desc": "We always strive to develop new and innovative solutions"
+      }
+    },
+    "timeline": {
+      "title": "Our Journey",
+      "subtitle": "Key milestones in our company history"
+    },
+    "cta": {
+      "title": "Ready to Get Started?",
+      "subtitle": "Contact us today to discuss your project requirements",
+      "button": "Contact Us"
+    }
+  },
+  "productsPage": {
+    "badge": "Our Products",
+    "title": "Complete Production Lines",
+    "subtitle": "Discover our wide range of filling machines and equipment",
+    "search": "Search for a product...",
+    "categories": {
+      "all": "All Products",
+      "filling": "Filling Machines",
+      "capping": "Capping Machines",
+      "labeling": "Labeling Machines",
+      "conveyor": "Conveyors",
+      "packaging": "Packaging Lines"
+    },
+    "viewDetails": "View Details",
+    "requestQuote": "Request Quote",
+    "specs": "Specifications",
+    "features": "Features",
+    "noProducts": "No products match your search"
+  },
+  "solutionsPage": {
+    "badge": "Our Solutions",
+    "title": "Complete Solutions for Every Industry",
+    "subtitle": "We provide customized solutions to meet the needs of various industrial sectors",
+    "industries": {
+      "title": "Industries We Serve",
+      "foodBeverage": "Food & Beverage",
+      "pharmaceutical": "Pharmaceutical",
+      "cosmetics": "Cosmetics",
+      "chemicals": "Chemicals",
+      "oils": "Oils & Lubricants"
+    },
+    "benefits": {
+      "title": "Why Choose Us?",
+      "customization": "Full Customization",
+      "support": "Continuous Technical Support",
+      "quality": "High Quality",
+      "experience": "Extensive Experience"
+    },
+    "learnMore": "Learn More",
+    "contactUs": "Contact Us"
+  },
+  "exhibitionsPage": {
+    "badge": "Exhibitions",
+    "title": "Our Presence at International Exhibitions",
+    "subtitle": "We participate in the most important specialized exhibitions worldwide",
+    "upcoming": "Upcoming Exhibitions",
+    "upcomingDesc": "Don't miss the chance to visit us at upcoming exhibitions",
+    "comingSoon": "Coming Soon",
+    "scheduleVisit": "Schedule a Visit",
+    "past": "Past Exhibitions",
+    "pastDesc": "Exhibitions we have participated in",
+    "location": "Location",
+    "date": "Date",
+    "booth": "Booth Number",
+    "visitUs": "Visit Us",
+    "gallery": "Photo Gallery",
+    "cta": {
+      "title": "Want to Meet Us at the Next Exhibition?",
+      "subtitle": "Contact us to schedule a meeting or get a free invitation",
+      "button": "Book Your Appointment"
+    }
+  },
+  "newsPage": {
+    "badge": "News",
+    "title": "Latest News & Updates",
+    "subtitle": "Stay updated with the latest company and industry news",
+    "featured": "Featured News",
+    "latest": "Latest News",
+    "readMore": "Read More",
+    "searchPlaceholder": "Search news...",
+    "loadMore": "Load More",
+    "categories": {
+      "all": "All",
+      "company": "Company News",
+      "industry": "Industry News",
+      "events": "Events",
+      "news": "News",
+      "press": "Press"
+    },
+    "share": "Share",
+    "relatedNews": "Related News",
+    "newsletter": {
+      "title": "Subscribe to Our Newsletter",
+      "subtitle": "Get the latest news and updates directly in your inbox",
+      "placeholder": "Enter your email address",
+      "subscribe": "Subscribe Now"
+    },
+    "articles": {
+      "1": {
+        "title": "New Production Line Launch 2024",
+        "excerpt": "S.N.A Al-Attal Engineering Industries announces the launch of a new production line with advanced technologies to meet growing market needs"
+      },
+      "2": {
+        "title": "Our Participation in Gulfood 2024",
+        "excerpt": "We are proud of our participation in Gulfood Food Industries Exhibition in Dubai, where we showcased our latest products and solutions"
+      },
+      "3": {
+        "title": "ISO Certification Renewal",
+        "excerpt": "The company successfully renewed the ISO 9001:2015 quality certificate, confirming our commitment to the highest quality standards"
+      },
+      "4": {
+        "title": "Expanding Our Operations in Turkey",
+        "excerpt": "Opening new facilities in Istanbul to expand our services in the European and Middle East region"
+      },
+      "5": {
+        "title": "Strategic Partnership Announcement",
+        "excerpt": "Signing a new partnership agreement with a leading company to enhance our technical capabilities"
+      },
+      "6": {
+        "title": "Industry 4.0 Implementation",
+        "excerpt": "Starting the digital transformation project and implementing Industry 4.0 technologies in production lines"
+      }
+    }
+  },
+  "certificatesPage": {
+    "badge": "Certificates",
+    "title": "Quality & Accreditation Certificates",
+    "subtitle": "We are proud to have obtained the most important international certificates",
+    "viewCertificate": "View Certificate",
+    "issuedBy": "Issued By",
+    "validUntil": "Valid Until"
+  },
+  "cataloguesPage": {
+    "badge": "Catalogues",
+    "title": "Product Catalogues",
+    "subtitle": "Download our product catalogues in PDF format",
+    "download": "Download",
+    "preview": "Preview",
+    "size": "Size",
+    "pages": "Pages"
+  },
+  "clientsPage": {
+    "badge": "Our Clients",
+    "title": "Partners in Success",
+    "subtitle": "We are proud of the trust from major companies in Egypt and the region",
+    "stats": {
+      "clients": "Satisfied Clients",
+      "projects": "Completed Projects",
+      "countries": "Countries",
+      "experience": "Years of Experience"
+    },
+    "ourClients": "Our Distinguished Clients",
+    "ourClientsDesc": "We are proud of our partnership with the largest companies across various industrial sectors",
+    "whyTrustUs": "Why Do They Trust Us?",
+    "whyTrustUsDesc": "We provide integrated and reliable solutions that meet our clients' needs",
+    "trust": {
+      "quality": {
+        "title": "High Quality",
+        "desc": "We are committed to the highest quality standards in all our products and services"
+      },
+      "support": {
+        "title": "Continuous Technical Support",
+        "desc": "Specialized technical support team available around the clock"
+      },
+      "global": {
+        "title": "Global Presence",
+        "desc": "We serve our clients in more than 15 countries worldwide"
+      }
+    },
+    "cta": {
+      "title": "Want to Become One of Our Clients?",
+      "subtitle": "Contact us today to discuss your project needs",
+      "button": "Contact Us"
+    }
   }
 }

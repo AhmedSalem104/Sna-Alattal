@@ -137,7 +137,7 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
                         activeImage === index ? 'border-primary' : 'border-transparent opacity-60 hover:opacity-100'
                       }`}
                     >
-                      <Image src={img} alt="" fill className="object-cover" />
+                      <Image src={img} alt="" fill sizes="96px" className="object-cover" />
                     </button>
                   ))}
                 </div>

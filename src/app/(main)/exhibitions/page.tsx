@@ -124,6 +124,7 @@ export default function ExhibitionsPage() {
                         src={exhibition.image}
                         alt={exhibition.name}
                         fill
+                        sizes="(max-width: 1024px) 100vw, 33vw"
                         className="object-cover"
                       />
                       <div className="absolute top-4 right-4 px-3 py-1 bg-primary text-dark rounded-full text-sm font-medium">
@@ -210,6 +211,7 @@ export default function ExhibitionsPage() {
                     src={exhibition.image}
                     alt={exhibition.name}
                     fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     className="object-cover group-hover:scale-105 transition-transform duration-500 grayscale group-hover:grayscale-0"
                   />
                 </div>

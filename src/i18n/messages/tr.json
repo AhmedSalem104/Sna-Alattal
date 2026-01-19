@@ -148,5 +148,252 @@
     },
     "skip": "Atla",
     "start": "Şimdi Başla"
+  },
+  "contactPage": {
+    "badge": "İletişim",
+    "title": "Size Yardımcı Olmak İçin Buradayız",
+    "subtitle": "Projeniz için en iyi mühendislik çözümleri için bizimle iletişime geçin",
+    "getInTouch": "İletişimde Kalın",
+    "getInTouchDesc": "Sorularınızı yanıtlamak ve en iyi çözümleri sunmak için her zaman buradayız",
+    "quickResponse": "Hızlı Yanıt",
+    "quickResponseDesc": "Ekibimiz sorularınıza yanıt vermek için 7/24 hazır",
+    "sendMessage": "Bize Mesaj Gönderin",
+    "successMessage": "Mesajınız başarıyla gönderildi! En kısa sürede sizinle iletişime geçeceğiz",
+    "findUs": "Bizi Bulun",
+    "findUsDesc": "Mısır veya Türkiye'deki ofislerimizden birini ziyaret edin",
+    "form": {
+      "name": "Ad Soyad",
+      "namePlaceholder": "Adınızı ve soyadınızı girin",
+      "email": "E-posta Adresi",
+      "emailPlaceholder": "E-posta adresinizi girin",
+      "phone": "Telefon Numarası",
+      "phonePlaceholder": "Telefon numaranızı girin",
+      "company": "Şirket Adı",
+      "companyPlaceholder": "Şirket adınızı girin (isteğe bağlı)",
+      "subject": "Konu",
+      "subjectPlaceholder": "Bir konu seçin",
+      "message": "Mesaj",
+      "messagePlaceholder": "Mesajınızı buraya yazın...",
+      "send": "Mesaj Gönder",
+      "sending": "Gönderiliyor..."
+    }
+  },
+  "aboutPage": {
+    "badge": "Hakkımızda",
+    "title": "S.N.A Al-Attal Mühendislik Sanayi",
+    "subtitle": "Dolum hattı imalatında 30 yıllık mükemmellik yolculuğu",
+    "yearsExperience": "Yıllık Deneyim",
+    "story": {
+      "title": "Hikayemiz",
+      "p1": "S.N.A Al-Attal Mühendislik Sanayi, 1994 yılında Mısır'ın 10. Ramazan Şehri'nde kuruldu. Dolum makineleri için yedek parça üreten küçük bir atölye olarak başladık ve bölgedeki en büyük sıvı dolum üretim hatları imalat şirketlerinden biri haline geldik.",
+      "p2": "2010 yılında, Avrupa ve Orta Doğu'daki müşterilerimize daha yakın olmak için İstanbul, Türkiye'de şubemizi açtık. Bugün, dünya genelinde 15 ülkede 300'den fazla müşteriye hizmet vermekten gurur duyuyoruz."
+    },
+    "stats": {
+      "projects": "Tamamlanan Proje",
+      "clients": "Memnun Müşteri",
+      "countries": "Ülke"
+    },
+    "vision": {
+      "title": "Vizyonumuz",
+      "content": "Orta Doğu ve Afrika bölgesinde entegre ve güvenilir dolum çözümleri arayan her şirket için ilk ve en iyi ortak olmak."
+    },
+    "mission": {
+      "title": "Misyonumuz",
+      "content": "En yüksek kalite ve güvenlik standartlarına bağlı kalarak müşterilerimizin ihtiyaçlarını karşılayan yenilikçi, yüksek kaliteli dolum çözümleri sunmak."
+    },
+    "values": {
+      "title": "Değerlerimiz",
+      "subtitle": "Günlük çalışmamızı yönlendiren ilkeler",
+      "quality": {
+        "title": "Kalite",
+        "desc": "Ürettiğimiz her şeyde en yüksek kalite standartlarına bağlıyız"
+      },
+      "team": {
+        "title": "Takım Çalışması",
+        "desc": "Birleşik bir ruhla çalışan entegre bir ekip"
+      },
+      "global": {
+        "title": "Küresel Erişim",
+        "desc": "Müşterilerimize nerede olurlarsa olsunlar ulaşıyoruz"
+      },
+      "innovation": {
+        "title": "İnovasyon",
+        "desc": "Her zaman yeni ve yenilikçi çözümler geliştirmeye çalışıyoruz"
+      }
+    },
+    "timeline": {
+      "title": "Yolculuğumuz",
+      "subtitle": "Şirket tarihimizdeki önemli kilometre taşları"
+    },
+    "cta": {
+      "title": "Başlamaya Hazır mısınız?",
+      "subtitle": "Proje gereksinimlerinizi görüşmek için bugün bizimle iletişime geçin",
+      "button": "Bize Ulaşın"
+    }
+  },
+  "productsPage": {
+    "badge": "Ürünlerimiz",
+    "title": "Komple Üretim Hatları",
+    "subtitle": "Geniş dolum makineleri ve ekipman yelpazemizi keşfedin",
+    "search": "Ürün ara...",
+    "categories": {
+      "all": "Tüm Ürünler",
+      "filling": "Dolum Makineleri",
+      "capping": "Kapatma Makineleri",
+      "labeling": "Etiketleme Makineleri",
+      "conveyor": "Konveyörler",
+      "packaging": "Paketleme Hatları"
+    },
+    "viewDetails": "Detayları Görüntüle",
+    "requestQuote": "Teklif İste",
+    "specs": "Özellikler",
+    "features": "Özellikler",
+    "noProducts": "Aramanızla eşleşen ürün bulunamadı"
+  },
+  "solutionsPage": {
+    "badge": "Çözümlerimiz",
+    "title": "Her Sektör İçin Komple Çözümler",
+    "subtitle": "Çeşitli endüstriyel sektörlerin ihtiyaçlarını karşılamak için özelleştirilmiş çözümler sunuyoruz",
+    "industries": {
+      "title": "Hizmet Verdiğimiz Sektörler",
+      "foodBeverage": "Gıda ve İçecek",
+      "pharmaceutical": "İlaç",
+      "cosmetics": "Kozmetik",
+      "chemicals": "Kimyasallar",
+      "oils": "Yağlar ve Yağlayıcılar"
+    },
+    "benefits": {
+      "title": "Neden Bizi Seçmelisiniz?",
+      "customization": "Tam Özelleştirme",
+      "support": "Sürekli Teknik Destek",
+      "quality": "Yüksek Kalite",
+      "experience": "Geniş Deneyim"
+    },
+    "learnMore": "Daha Fazla Bilgi",
+    "contactUs": "Bize Ulaşın"
+  },
+  "exhibitionsPage": {
+    "badge": "Fuarlar",
+    "title": "Uluslararası Fuarlardaki Varlığımız",
+    "subtitle": "Dünya genelinde en önemli uzmanlaşmış fuarlara katılıyoruz",
+    "upcoming": "Yaklaşan Fuarlar",
+    "upcomingDesc": "Yaklaşan fuarlarda bizi ziyaret etme fırsatını kaçırmayın",
+    "comingSoon": "Yakında",
+    "scheduleVisit": "Ziyaret Planla",
+    "past": "Geçmiş Fuarlar",
+    "pastDesc": "Katıldığımız geçmiş fuarlar",
+    "location": "Konum",
+    "date": "Tarih",
+    "booth": "Stand Numarası",
+    "visitUs": "Bizi Ziyaret Edin",
+    "gallery": "Fotoğraf Galerisi",
+    "cta": {
+      "title": "Bir Sonraki Fuarda Bizimle Buluşmak İster misiniz?",
+      "subtitle": "Randevu almak veya ücretsiz davetiye almak için bizimle iletişime geçin",
+      "button": "Randevunuzu Alın"
+    }
+  },
+  "newsPage": {
+    "badge": "Haberler",
+    "title": "Son Haberler ve Güncellemeler",
+    "subtitle": "En son şirket ve sektör haberlerinden haberdar olun",
+    "featured": "Öne Çıkan Haberler",
+    "latest": "Son Haberler",
+    "readMore": "Devamını Oku",
+    "searchPlaceholder": "Haberlerde ara...",
+    "loadMore": "Daha Fazla Yükle",
+    "categories": {
+      "all": "Tümü",
+      "company": "Şirket Haberleri",
+      "industry": "Sektör Haberleri",
+      "events": "Etkinlikler",
+      "news": "Haberler",
+      "press": "Basın"
+    },
+    "share": "Paylaş",
+    "relatedNews": "İlgili Haberler",
+    "newsletter": {
+      "title": "Bültenimize Abone Olun",
+      "subtitle": "En son haberler ve güncellemeleri doğrudan e-postanıza alın",
+      "placeholder": "E-posta adresinizi girin",
+      "subscribe": "Şimdi Abone Ol"
+    },
+    "articles": {
+      "1": {
+        "title": "Yeni Üretim Hattı Lansmanı 2024",
+        "excerpt": "S.N.A Al-Attal Mühendislik Sanayi, büyüyen pazar ihtiyaçlarını karşılamak için gelişmiş teknolojilerle yeni bir üretim hattı başlattığını duyurdu"
+      },
+      "2": {
+        "title": "Gulfood 2024'e Katılımımız",
+        "excerpt": "Dubai'deki Gulfood Gıda Endüstrileri Fuarına katılmaktan gurur duyuyoruz, en yeni ürün ve çözümlerimizi sergiledik"
+      },
+      "3": {
+        "title": "ISO Sertifika Yenilemesi",
+        "excerpt": "Şirket, en yüksek kalite standartlarına bağlılığımızı doğrulayan ISO 9001:2015 kalite sertifikasını başarıyla yeniledi"
+      },
+      "4": {
+        "title": "Türkiye'deki Operasyonlarımızı Genişletiyoruz",
+        "excerpt": "Avrupa ve Orta Doğu bölgesinde hizmetlerimizi genişletmek için İstanbul'da yeni tesisler açıyoruz"
+      },
+      "5": {
+        "title": "Stratejik Ortaklık Duyurusu",
+        "excerpt": "Teknik kapasitelerimizi artırmak için önde gelen bir şirketle yeni bir ortaklık anlaşması imzaladık"
+      },
+      "6": {
+        "title": "Endüstri 4.0 Uygulaması",
+        "excerpt": "Dijital dönüşüm projesine başladık ve üretim hatlarında Endüstri 4.0 teknolojilerini uygulamaya koyduk"
+      }
+    }
+  },
+  "certificatesPage": {
+    "badge": "Sertifikalar",
+    "title": "Kalite ve Akreditasyon Sertifikaları",
+    "subtitle": "En önemli uluslararası sertifikaları almış olmaktan gurur duyuyoruz",
+    "viewCertificate": "Sertifikayı Görüntüle",
+    "issuedBy": "Veren Kuruluş",
+    "validUntil": "Geçerlilik Tarihi"
+  },
+  "cataloguesPage": {
+    "badge": "Kataloglar",
+    "title": "Ürün Katalogları",
+    "subtitle": "Ürün kataloglarımızı PDF formatında indirin",
+    "download": "İndir",
+    "preview": "Önizleme",
+    "size": "Boyut",
+    "pages": "Sayfa"
+  },
+  "clientsPage": {
+    "badge": "Müşterilerimiz",
+    "title": "Başarıda Ortaklar",
+    "subtitle": "Mısır ve bölgedeki büyük şirketlerin güveninden gurur duyuyoruz",
+    "stats": {
+      "clients": "Memnun Müşteri",
+      "projects": "Tamamlanan Proje",
+      "countries": "Ülke",
+      "experience": "Yıllık Deneyim"
+    },
+    "ourClients": "Seçkin Müşterilerimiz",
+    "ourClientsDesc": "Çeşitli endüstriyel sektörlerdeki en büyük şirketlerle ortaklığımızdan gurur duyuyoruz",
+    "whyTrustUs": "Neden Bize Güveniyorlar?",
+    "whyTrustUsDesc": "Müşterilerimizin ihtiyaçlarını karşılayan entegre ve güvenilir çözümler sunuyoruz",
+    "trust": {
+      "quality": {
+        "title": "Yüksek Kalite",
+        "desc": "Tüm ürün ve hizmetlerimizde en yüksek kalite standartlarına bağlıyız"
+      },
+      "support": {
+        "title": "Sürekli Teknik Destek",
+        "desc": "7/24 hizmet veren uzman teknik destek ekibi"
+      },
+      "global": {
+        "title": "Küresel Varlık",
+        "desc": "Dünya genelinde 15'ten fazla ülkede müşterilerimize hizmet veriyoruz"
+      }
+    },
+    "cta": {
+      "title": "Müşterilerimizden Biri Olmak İster misiniz?",
+      "subtitle": "Proje ihtiyaçlarınızı görüşmek için bugün bizimle iletişime geçin",
+      "button": "Bize Ulaşın"
+    }
   }
 }
