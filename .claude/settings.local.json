@@ -32,7 +32,14 @@
       "Bash(npx next dev)",
       "Bash(powershell -Command \"Start-Process ''http://localhost:3000''\")",
       "Bash(git commit -m \"$\\(cat <<''EOF''\nfix: Add missing shadcn/ui components\n\n- Add Select component\n- Add Tabs component  \n- Add Dialog component\n- Add Switch component\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
-      "Bash(git commit -m \"$\\(cat <<''EOF''\nfix: Fix Arabic text display and language switcher\n\n- Fix hero title to display Arabic words properly \\(not character by character\\)\n- Fix language switcher to use full page reload for locale change\n- Update i18n config to read locale from cookie properly\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>\nEOF\n\\)\")"
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nfix: Fix Arabic text display and language switcher\n\n- Fix hero title to display Arabic words properly \\(not character by character\\)\n- Fix language switcher to use full page reload for locale change\n- Update i18n config to read locale from cookie properly\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nfix: Add missing components and dependencies\n\n- Add AlertDialog component\n- Add Table component\n- Install @tanstack/react-table\n- Install react-dropzone\n- Fix i18n.ts to not use cookies from next/headers\n- Update middleware to handle locale\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nfix: Add missing npm dependencies\n\n- Add @tanstack/react-table\n- Add react-dropzone\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(if not exist .env copy .env.example .env)",
+      "Bash(npx tsx:*)",
+      "Bash(npm run db:seed:*)",
+      "Bash(powershell -Command \"cd ''C:\\\\Users\\\\B-SMART\\\\Desktop\\\\Al-attal S.N.A\\\\Sna-Alattal''; npm run db:seed\")",
+      "Bash(git commit:*)"
     ]
   }
 }
