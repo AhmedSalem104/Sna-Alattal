@@ -20,7 +20,17 @@
       "Bash(npm run build:*)",
       "Bash(npx next build)",
       "Bash(npm run lint)",
-      "Bash(npx tsc:*)"
+      "Bash(npx tsc:*)",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nfeat: Complete SNA Al-Attal website with all 4 phases\n\nPhase 1 - Project Setup:\n- Next.js 15 with App Router\n- Prisma ORM with MySQL schema\n- NextAuth.js authentication\n- Tailwind CSS + shadcn/ui components\n- next-intl for Arabic/English/Turkish\n\nPhase 2 - Landing Page:\n- Homepage with hero, products, solutions, clients sections\n- Internal pages: products, solutions, about, contact\n- News, exhibitions, certificates, catalogues pages\n- Responsive design with Framer Motion animations\n\nPhase 3 - Admin Dashboard:\n- Full CRUD for products, clients, messages\n- Soft delete with trash management\n- Activity logging for audit trail\n- Cloudinary image upload integration\n- Data tables with search, sort, pagination\n\nPhase 4 - Deployment Ready:\n- Dynamic sitemap generator\n- robots.txt for SEO\n- Comprehensive database seed\n- Environment configuration\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(git push:*)",
+      "Bash(git add:*)",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\ndocs: Add professional README with comprehensive documentation\n\n- Project overview and badges\n- Features breakdown \\(Frontend/Backend\\)\n- Complete tech stack with badges\n- Installation guide\n- Environment variables documentation\n- Database setup instructions\n- Project structure diagram\n- API routes documentation\n- Deployment guides \\(Vercel, Railway, Docker\\)\n- Performance metrics\n- Contributing guidelines\n- Contact information\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(npm run dev:*)",
+      "Bash(timeout:*)",
+      "Bash(start cmd /c \"npm run dev\")",
+      "Bash(start http://localhost:3000)",
+      "Bash(npx next dev)",
+      "Bash(powershell -Command \"Start-Process ''http://localhost:3000''\")"
     ]
   }
 }
