@@ -2,12 +2,23 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { getToken } from 'next-auth/jwt';
 
+const locales = ['ar', 'en', 'tr'];
+const defaultLocale = 'ar';
+
 // Protected admin routes
 const protectedRoutes = ['/admin'];
 const authRoutes = ['/admin/login'];
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
+
+  // Handle locale from cookie
+  const localeCookie = request.cookies.get('NEXT_LOCALE')?.value;
+  const locale = localeCookie && locales.includes(localeCookie) ? localeCookie : defaultLocale;
+
+  // Create response with locale header for next-intl
+  const response = NextResponse.next();
+  response.headers.set('x-next-intl-locale', locale);
 
   // Check if it's an admin route (except login)
   const isProtectedRoute = protectedRoutes.some(
@@ -34,7 +45,7 @@ export async function middleware(request: NextRequest) {
     }
   }
 
-  return NextResponse.next();
+  return response;
 }
 
 export const config = {
