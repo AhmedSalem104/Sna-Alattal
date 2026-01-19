@@ -117,12 +117,8 @@ export function HeroSection() {
         {/* Title */}
         <h1 className="hero-title heading-1 text-white mb-6 overflow-hidden">
           {titleWords.map((word, wordIndex) => (
-            <span key={wordIndex} className="inline-block mx-2">
-              {word.split('').map((char, charIndex) => (
-                <span key={charIndex} className="inline-block text-primary">
-                  {char}
-                </span>
-              ))}
+            <span key={wordIndex} className="inline-block mx-2 text-primary">
+              {word}
             </span>
           ))}
         </h1>

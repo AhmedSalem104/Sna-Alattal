@@ -17,10 +17,10 @@ export function useLocale() {
     (newLocale: Locale) => {
       // Set cookie for the new locale
       document.cookie = `NEXT_LOCALE=${newLocale}; path=/; max-age=31536000`;
-      // Refresh the page to apply the new locale
-      router.refresh();
+      // Full page reload to apply the new locale
+      window.location.reload();
     },
-    [router]
+    []
   );
 
   return {

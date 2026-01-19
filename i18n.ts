@@ -1,4 +1,5 @@
 import { getRequestConfig } from 'next-intl/server';
+import { cookies } from 'next/headers';
 
 export const locales = ['ar', 'en', 'tr'] as const;
 export type Locale = (typeof locales)[number];
@@ -16,13 +17,15 @@ export const localeDirection: Record<Locale, 'rtl' | 'ltr'> = {
   tr: 'ltr',
 };
 
-export default getRequestConfig(async ({ requestLocale }) => {
-  // This typically corresponds to the `[locale]` segment
-  let locale = await requestLocale;
+export default getRequestConfig(async () => {
+  // Read locale from cookie
+  const cookieStore = await cookies();
+  const localeCookie = cookieStore.get('NEXT_LOCALE');
 
-  // Ensure that the incoming locale is valid
-  if (!locale || !locales.includes(locale as Locale)) {
-    locale = defaultLocale;
+  let locale: Locale = defaultLocale;
+
+  if (localeCookie && locales.includes(localeCookie.value as Locale)) {
+    locale = localeCookie.value as Locale;
   }
 
   return {
