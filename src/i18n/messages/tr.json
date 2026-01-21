@@ -46,7 +46,8 @@
   "clients": {
     "title": "Müşterilerimiz",
     "subtitle": "Başarıda Ortaklar",
-    "description": "Mısır ve bölgedeki büyük şirketlerin güveninden gurur duyuyoruz"
+    "description": "Mısır ve bölgedeki büyük şirketlerin güveninden gurur duyuyoruz",
+    "trustText": "300'den fazla büyük şirketin güveninden gurur duyuyoruz"
   },
   "team": {
     "title": "Ekibimiz",

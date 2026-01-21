@@ -71,7 +71,7 @@ export function ClientsSection() {
           className="mt-12 text-center"
         >
           <p className="text-gray-600 text-sm">
-            نفخر بثقة أكثر من <span className="text-primary font-bold">300+</span> عميل من كبرى الشركات
+            {t('clients.trustText')}
           </p>
         </motion.div>
       </div>
