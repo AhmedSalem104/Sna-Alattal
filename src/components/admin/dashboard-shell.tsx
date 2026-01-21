@@ -67,8 +67,8 @@ export function DashboardShell({ children }: DashboardShellProps) {
       <div
         className={cn(
           'min-h-screen transition-all duration-300',
-          'lg:mr-64',
-          isCollapsed && 'lg:mr-20'
+          'lg:mr-64 lg:rtl:mr-0 lg:rtl:ml-64',
+          isCollapsed && 'lg:mr-20 lg:rtl:mr-0 lg:rtl:ml-20'
         )}
       >
         <Header isCollapsed={isCollapsed} />

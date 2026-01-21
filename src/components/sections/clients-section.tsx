@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef } from 'react';
+import { useRef, memo } from 'react';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import { motion, useInView } from 'framer-motion';
@@ -17,7 +17,7 @@ const sampleClients = [
   { id: '8', name: 'Client 8', logo: '/images/logo.jpg' },
 ];
 
-export function ClientsSection() {
+export const ClientsSection = memo(function ClientsSection() {
   const t = useTranslations();
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
@@ -78,4 +78,4 @@ export function ClientsSection() {
       </div>
     </section>
   );
-}
+});

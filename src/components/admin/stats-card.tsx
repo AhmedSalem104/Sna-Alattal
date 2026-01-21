@@ -46,9 +46,9 @@ export function StatsCard({
                 )}
               >
                 {trend.isPositive ? (
-                  <TrendingUp className="h-3 w-3 ml-1" />
+                  <TrendingUp className="h-3 w-3 ml-1 rtl:ml-0 rtl:mr-1" />
                 ) : (
-                  <TrendingDown className="h-3 w-3 ml-1" />
+                  <TrendingDown className="h-3 w-3 ml-1 rtl:ml-0 rtl:mr-1" />
                 )}
                 {trend.value}%
               </span>

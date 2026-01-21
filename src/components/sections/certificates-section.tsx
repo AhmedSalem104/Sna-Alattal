@@ -79,6 +79,7 @@ export function CertificatesSection() {
                       width={80}
                       height={80}
                       className="object-contain"
+                      loading="lazy"
                     />
                   </div>
                 </div>

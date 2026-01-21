@@ -110,7 +110,7 @@ export function Header({ isCollapsed }: HeaderProps) {
           </Link>
           {breadcrumbs.map((crumb, index) => (
             <div key={crumb.href} className="flex items-center gap-2">
-              <ChevronLeft size={14} className="text-gray-600" />
+              <ChevronLeft size={14} className="text-gray-600 rtl:rotate-180" />
               {index === breadcrumbs.length - 1 ? (
                 <span className="text-gray-900 font-medium">{crumb.label}</span>
               ) : (
@@ -130,10 +130,10 @@ export function Header({ isCollapsed }: HeaderProps) {
       <div className="flex items-center gap-3">
         {/* Search */}
         <div className="hidden lg:block relative">
-          <Search className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-600" size={18} />
+          <Search className="absolute right-3 rtl:right-auto rtl:left-3 top-1/2 -translate-y-1/2 text-gray-600" size={18} />
           <Input
             placeholder="بحث..."
-            className="w-64 pr-10 bg-gray-50 border-gray-200 text-gray-900 placeholder:text-gray-600"
+            className="w-64 pr-10 rtl:pr-4 rtl:pl-10 bg-gray-50 border-gray-200 text-gray-900 placeholder:text-gray-600"
           />
         </div>
 
@@ -141,7 +141,7 @@ export function Header({ isCollapsed }: HeaderProps) {
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="gold" size="sm" className="hidden sm:flex">
-              <Plus size={16} className="ml-1" />
+              <Plus size={16} className="ml-1 rtl:ml-0 rtl:mr-1" />
               إضافة جديد
             </Button>
           </DropdownMenuTrigger>
@@ -163,7 +163,7 @@ export function Header({ isCollapsed }: HeaderProps) {
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" size="icon" className="relative text-gray-600 hover:text-primary">
               <Bell size={20} />
-              <span className="absolute top-1 left-1 w-2 h-2 bg-primary rounded-full" />
+              <span className="absolute top-1 left-1 rtl:left-auto rtl:right-1 w-2 h-2 bg-primary rounded-full" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-80 bg-gray-50 border-gray-200">

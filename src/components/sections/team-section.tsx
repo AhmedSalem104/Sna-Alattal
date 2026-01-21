@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef } from 'react';
+import { useRef, memo } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
@@ -43,7 +43,7 @@ const teamMembers = [
   },
 ];
 
-export function TeamSection() {
+export const TeamSection = memo(function TeamSection() {
   const t = useTranslations();
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
@@ -129,4 +129,4 @@ export function TeamSection() {
       </div>
     </section>
   );
-}
+});

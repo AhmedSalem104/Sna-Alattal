@@ -276,7 +276,7 @@
     display: none;
   }
 
-  /* RTL Utilities */
+  /* RTL Utilities - Enhanced */
   .flip-rtl {
     @apply rtl:scale-x-[-1];
   }
@@ -287,6 +287,33 @@
 
   .end-0 {
     @apply right-0 rtl:right-auto rtl:left-0;
+  }
+
+  /* Logical Margin/Padding Utilities */
+  .ms-auto {
+    @apply ml-auto rtl:ml-0 rtl:mr-auto;
+  }
+
+  .me-auto {
+    @apply mr-auto rtl:mr-0 rtl:ml-auto;
+  }
+
+  /* Logical Spacing - Common patterns */
+  .space-inline-2 {
+    @apply mr-2 rtl:mr-0 rtl:ml-2;
+  }
+
+  .space-inline-4 {
+    @apply mr-4 rtl:mr-0 rtl:ml-4;
+  }
+
+  /* Text Direction Utilities */
+  .text-start-dir {
+    @apply text-left rtl:text-right;
+  }
+
+  .text-end-dir {
+    @apply text-right rtl:text-left;
   }
 
   /* Aspect Ratios */

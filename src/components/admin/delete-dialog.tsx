@@ -82,7 +82,7 @@ export function DeleteDialog({
           >
             {isLoading ? (
               <>
-                <Loader2 className="ml-2 h-4 w-4 animate-spin" />
+                <Loader2 className="ml-2 rtl:ml-0 rtl:mr-2 h-4 w-4 animate-spin" />
                 جاري الحذف...
               </>
             ) : isPermanent ? (

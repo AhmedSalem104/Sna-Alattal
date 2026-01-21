@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useRef, useState, memo } from 'react';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import { motion, useInView } from 'framer-motion';
@@ -34,7 +34,7 @@ const tvInterviews = [
   },
 ];
 
-export function TVSection() {
+export const TVSection = memo(function TVSection() {
   const t = useTranslations();
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
@@ -145,4 +145,4 @@ export function TVSection() {
       )}
     </>
   );
-}
+});

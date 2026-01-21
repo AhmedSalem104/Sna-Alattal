@@ -71,14 +71,14 @@ function DataTableComponent<TData, TValue>({
       {searchKey && (
         <div className="flex items-center gap-4">
           <div className="relative flex-1 max-w-sm">
-            <Search className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-600" size={18} />
+            <Search className="absolute right-3 rtl:right-auto rtl:left-3 top-1/2 -translate-y-1/2 text-gray-600" size={18} />
             <Input
               placeholder={searchPlaceholder}
               value={(table.getColumn(searchKey)?.getFilterValue() as string) ?? ''}
               onChange={(event) =>
                 table.getColumn(searchKey)?.setFilterValue(event.target.value)
               }
-              className="pr-10 bg-gray-50 border-gray-200 text-gray-900 touch-input"
+              className="pr-10 rtl:pr-4 rtl:pl-10 bg-gray-50 border-gray-200 text-gray-900 touch-input"
               aria-label="بحث في الجدول"
             />
           </div>
