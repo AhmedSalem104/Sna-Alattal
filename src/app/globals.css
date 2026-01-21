@@ -145,6 +145,24 @@
     @apply bg-dark/80 backdrop-blur-md border border-white/10;
   }
 
+  /* Navbar Enhancements */
+  .navbar-link {
+    @apply relative overflow-hidden;
+  }
+
+  .navbar-link::before {
+    content: '';
+    @apply absolute inset-0 bg-primary/5 scale-x-0 transition-transform duration-300 origin-left;
+  }
+
+  [dir='rtl'] .navbar-link::before {
+    @apply origin-right;
+  }
+
+  .navbar-link:hover::before {
+    @apply scale-x-100;
+  }
+
   /* Loading Spinner */
   .spinner {
     @apply w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin;
