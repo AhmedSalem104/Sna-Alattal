@@ -141,7 +141,9 @@ export function Navbar() {
                 isScrolled ? "text-gray-700" : "text-gray-900"
               )}
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
+              aria-label={isMobileMenuOpen ? "إغلاق القائمة" : "فتح القائمة"}
+              aria-expanded={isMobileMenuOpen}
+              aria-controls="mobile-navigation"
             >
               <AnimatePresence mode="wait">
                 <motion.div
@@ -162,7 +164,10 @@ export function Navbar() {
       {/* Mobile Menu */}
       <AnimatePresence>
         {isMobileMenuOpen && (
-          <motion.div
+          <motion.nav
+            id="mobile-navigation"
+            role="navigation"
+            aria-label="القائمة المحمولة"
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
@@ -217,7 +222,7 @@ export function Navbar() {
                 </Button>
               </motion.div>
             </div>
-          </motion.div>
+          </motion.nav>
         )}
       </AnimatePresence>
     </header>

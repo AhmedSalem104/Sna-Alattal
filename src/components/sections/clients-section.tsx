@@ -57,6 +57,7 @@ export function ClientsSection() {
                   width={80}
                   height={80}
                   className="object-contain opacity-60 group-hover:opacity-100 transition-opacity grayscale group-hover:grayscale-0"
+                  loading="lazy"
                 />
               </div>
             </motion.div>

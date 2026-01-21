@@ -56,6 +56,7 @@ export function AboutSection() {
                 fill
                 sizes="(max-width: 768px) 100vw, 50vw"
                 className="object-cover"
+                loading="lazy"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-white/60 to-transparent" />
             </div>
