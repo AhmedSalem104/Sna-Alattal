@@ -86,9 +86,13 @@ export default async function RootLayout({
         <link
           rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Cairo:wght@200..1000&display=swap"
-          media="print"
-          onLoad="this.media='all'"
         />
+        <noscript>
+          <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Cairo:wght@200..1000&display=swap"
+          />
+        </noscript>
       </head>
       <body className={`${dir === 'rtl' ? 'font-cairo' : 'font-inter'} antialiased`} suppressHydrationWarning>
         <NextIntlClientProvider messages={messages} locale={locale}>
