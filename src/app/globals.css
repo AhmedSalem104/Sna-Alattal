@@ -57,6 +57,10 @@
     @apply border-border;
   }
 
+  html {
+    position: relative;
+  }
+
   body {
     @apply bg-background text-foreground;
     position: relative;

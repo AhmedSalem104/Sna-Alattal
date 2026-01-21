@@ -77,7 +77,7 @@ export default async function RootLayout({
         <link rel="manifest" href="/manifest.json" />
         <meta name="theme-color" content="#D4AF37" />
       </head>
-      <body className={`${dir === 'rtl' ? 'font-cairo' : 'font-inter'} antialiased`}>
+      <body className={`${dir === 'rtl' ? 'font-cairo' : 'font-inter'} antialiased`} suppressHydrationWarning>
         <NextIntlClientProvider messages={messages} locale={locale}>
           <Providers>
             {children}
