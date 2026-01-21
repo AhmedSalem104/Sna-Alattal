@@ -299,19 +299,53 @@
     "title": "Complete Production Lines",
     "subtitle": "Discover our wide range of filling machines and equipment",
     "search": "Search for a product...",
+    "searchPlaceholder": "Search for a product...",
     "categories": {
       "all": "All Products",
       "filling": "Filling Machines",
       "capping": "Capping Machines",
       "labeling": "Labeling Machines",
       "conveyor": "Conveyors",
-      "packaging": "Packaging Lines"
+      "packaging": "Packaging Lines",
+      "complete": "Complete Production Lines"
     },
     "viewDetails": "View Details",
     "requestQuote": "Request Quote",
     "specs": "Specifications",
     "features": "Features",
-    "noProducts": "No products match your search"
+    "featured": "Featured",
+    "noProducts": "No products match your search",
+    "products": {
+      "filling1": {
+        "name": "Automatic Filling Machine",
+        "desc": "High-speed filling machine with advanced servo motor technology and touch screen"
+      },
+      "filling2": {
+        "name": "Semi-Automatic Filling Machine",
+        "desc": "Easy-to-operate filling machine with advanced PLC system"
+      },
+      "capping1": {
+        "name": "Automatic Capping Machine",
+        "desc": "Multi-head capping machine with high-precision automatic adjustment"
+      },
+      "labeling1": {
+        "name": "Automatic Labeling Machine",
+        "desc": "High-precision labeling machine with dual heads for accurate label placement"
+      },
+      "packaging1": {
+        "name": "Shrink Wrapper",
+        "desc": "Shrink wrapping machine with automatic film feeding and touch panel control"
+      },
+      "complete1": {
+        "name": "Complete Production Line",
+        "desc": "Fully automated complete production line with customizable features and high efficiency"
+      }
+    },
+    "cta": {
+      "title": "Ready to Get Started?",
+      "subtitle": "Contact us today to discuss your project needs and get the best engineering solutions",
+      "button": "Contact Us Now"
+    }
   },
   "solutionsPage": {
     "badge": "Our Solutions",

@@ -299,19 +299,53 @@
     "title": "Komple Üretim Hatları",
     "subtitle": "Geniş dolum makineleri ve ekipman yelpazemizi keşfedin",
     "search": "Ürün ara...",
+    "searchPlaceholder": "Ürün ara...",
     "categories": {
       "all": "Tüm Ürünler",
       "filling": "Dolum Makineleri",
       "capping": "Kapatma Makineleri",
       "labeling": "Etiketleme Makineleri",
       "conveyor": "Konveyörler",
-      "packaging": "Paketleme Hatları"
+      "packaging": "Paketleme Hatları",
+      "complete": "Komple Üretim Hatları"
     },
     "viewDetails": "Detayları Görüntüle",
     "requestQuote": "Teklif İste",
     "specs": "Özellikler",
     "features": "Özellikler",
-    "noProducts": "Aramanızla eşleşen ürün bulunamadı"
+    "featured": "Öne Çıkan",
+    "noProducts": "Aramanızla eşleşen ürün bulunamadı",
+    "products": {
+      "filling1": {
+        "name": "Otomatik Dolum Makinesi",
+        "desc": "Gelişmiş servo motor teknolojisi ve dokunmatik ekran ile yüksek hızlı dolum makinesi"
+      },
+      "filling2": {
+        "name": "Yarı Otomatik Dolum Makinesi",
+        "desc": "Gelişmiş PLC sistemi ile kullanımı kolay dolum makinesi"
+      },
+      "capping1": {
+        "name": "Otomatik Kapatma Makinesi",
+        "desc": "Yüksek hassasiyetli otomatik ayarlama ile çok başlı kapatma makinesi"
+      },
+      "labeling1": {
+        "name": "Otomatik Etiketleme Makinesi",
+        "desc": "Doğru etiket yerleştirme için çift başlı yüksek hassasiyetli etiketleme makinesi"
+      },
+      "packaging1": {
+        "name": "Shrink Paketleme Makinesi",
+        "desc": "Otomatik film besleme ve dokunmatik panel kontrollü shrink paketleme makinesi"
+      },
+      "complete1": {
+        "name": "Komple Üretim Hattı",
+        "desc": "Özelleştirilebilir özellikler ve yüksek verimlilik ile tamamen otomatik komple üretim hattı"
+      }
+    },
+    "cta": {
+      "title": "Başlamaya Hazır mısınız?",
+      "subtitle": "Proje ihtiyaçlarınızı görüşmek ve en iyi mühendislik çözümlerini almak için bugün bizimle iletişime geçin",
+      "button": "Şimdi Bize Ulaşın"
+    }
   },
   "solutionsPage": {
     "badge": "Çözümlerimiz",
