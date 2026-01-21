@@ -89,7 +89,7 @@ export function NewsSection() {
           >
             <Link href={`/news/${newsArticles[0].id}`}>
               <div className="group relative h-full bg-gray-100 rounded-2xl overflow-hidden border border-gray-200 hover:border-primary/50 transition-all duration-300">
-                <div className="relative aspect-[16/9] lg:aspect-auto lg:absolute lg:inset-0 overflow-hidden">
+                <div className="relative aspect-[16/9] sm:aspect-[16/10] md:aspect-[4/3] lg:aspect-auto lg:absolute lg:inset-0 overflow-hidden">
                   <Image
                     src={newsArticles[0].image}
                     alt={newsArticles[0].title}

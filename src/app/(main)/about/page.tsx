@@ -102,9 +102,9 @@ export default function AboutPage() {
                   />
                 </div>
                 {/* Experience Badge */}
-                <div className="absolute -bottom-6 -left-6 bg-primary text-gray-900 p-6 rounded-2xl shadow-xl">
-                  <div className="text-4xl font-bold">30+</div>
-                  <div className="text-sm font-medium">{t('yearsExperience')}</div>
+                <div className="relative bottom-0 left-4 mt-4 md:absolute md:-bottom-6 md:-left-6 md:mt-0 bg-primary text-gray-900 p-4 sm:p-5 md:p-6 rounded-2xl shadow-xl inline-block">
+                  <div className="text-3xl sm:text-4xl font-bold">30+</div>
+                  <div className="text-xs sm:text-sm font-medium">{t('yearsExperience')}</div>
                 </div>
               </div>
             </motion.div>
@@ -234,8 +234,8 @@ export default function AboutPage() {
 
           <div className="max-w-4xl mx-auto">
             <div className="relative">
-              {/* Line */}
-              <div className="absolute top-0 bottom-0 right-1/2 w-px bg-primary/30 transform translate-x-1/2" />
+              {/* Timeline Line - Left on mobile, center on desktop */}
+              <div className="absolute top-0 bottom-0 left-4 md:left-1/2 w-px bg-primary/30 md:transform md:translate-x-1/2" />
 
               {timeline.map((item, index) => (
                 <motion.div
@@ -244,21 +244,21 @@ export default function AboutPage() {
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 }}
-                  className={`flex items-center gap-8 mb-8 ${
-                    index % 2 === 0 ? 'flex-row-reverse text-right' : ''
+                  className={`flex items-center gap-4 md:gap-8 mb-8 ${
+                    index % 2 === 0 ? 'md:flex-row-reverse md:text-right' : ''
                   }`}
                 >
-                  <div className="flex-1">
-                    <div className="bg-white p-6 rounded-xl border border-gray-200">
+                  <div className="flex-1 pl-12 md:pl-0">
+                    <div className="bg-white p-4 md:p-6 rounded-xl border border-gray-200 shadow-sm">
                       <div className="flex items-center gap-2 mb-2">
                         <Calendar className="text-primary" size={18} />
-                        <span className="text-primary font-bold">{item.year}</span>
+                        <span className="text-primary font-bold text-sm md:text-base">{item.year}</span>
                       </div>
-                      <p className="text-gray-700">{item.event}</p>
+                      <p className="text-gray-700 text-sm md:text-base">{item.event}</p>
                     </div>
                   </div>
-                  <div className="w-4 h-4 bg-primary rounded-full relative z-10 flex-shrink-0" />
-                  <div className="flex-1" />
+                  <div className="w-3 h-3 md:w-4 md:h-4 bg-primary rounded-full relative z-10 flex-shrink-0 absolute left-[13px] md:static" />
+                  <div className="flex-1 hidden md:block" />
                 </motion.div>
               ))}
             </div>
