@@ -29,7 +29,14 @@
     "experience": "Years of Experience",
     "projects": "Completed Projects",
     "clients": "Satisfied Clients",
-    "countries": "Countries"
+    "countries": "Countries",
+    "learnMore": "Learn More",
+    "features": {
+      "manufacturing": "Local Manufacturing",
+      "global": "Global Presence",
+      "team": "Expert Team",
+      "quality": "High Quality"
+    }
   },
   "products": {
     "title": "Our Products",
@@ -58,6 +65,27 @@
     "title": "Certificates",
     "subtitle": "Quality and Accreditation",
     "description": "International quality and accreditation certificates"
+  },
+  "catalogues": {
+    "title": "Catalogues",
+    "heading": "Download Catalogues",
+    "description": "Download our product catalogues to view all specifications and details",
+    "downloads": "downloads",
+    "downloadButton": "Download Catalogue",
+    "items": {
+      "products": {
+        "name": "Products Catalogue 2024",
+        "description": "Comprehensive catalogue of all our products and production lines"
+      },
+      "filling": {
+        "name": "Filling Machines Catalogue",
+        "description": "Detailed guide for filling machines"
+      },
+      "production": {
+        "name": "Production Lines Catalogue",
+        "description": "Integrated production line solutions"
+      }
+    }
   },
   "exhibitions": {
     "title": "Exhibitions",

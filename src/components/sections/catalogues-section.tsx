@@ -10,27 +10,24 @@ import { Button } from '@/components/ui/button';
 const catalogues = [
   {
     id: '1',
-    name: 'كتالوج المنتجات 2024',
-    nameEn: 'Products Catalogue 2024',
-    description: 'كتالوج شامل لجميع منتجاتنا وخطوط الإنتاج',
+    nameKey: 'catalogues.items.products.name',
+    descKey: 'catalogues.items.products.description',
     thumbnail: '/images/logo.jpg',
     fileSize: '15 MB',
     downloads: 1250,
   },
   {
     id: '2',
-    name: 'كتالوج ماكينات التعبئة',
-    nameEn: 'Filling Machines Catalogue',
-    description: 'دليل تفصيلي لماكينات التعبئة',
+    nameKey: 'catalogues.items.filling.name',
+    descKey: 'catalogues.items.filling.description',
     thumbnail: '/images/logo.jpg',
     fileSize: '8 MB',
     downloads: 890,
   },
   {
     id: '3',
-    name: 'كتالوج خطوط الإنتاج',
-    nameEn: 'Production Lines Catalogue',
-    description: 'حلول خطوط الإنتاج المتكاملة',
+    nameKey: 'catalogues.items.production.name',
+    descKey: 'catalogues.items.production.description',
     thumbnail: '/images/logo.jpg',
     fileSize: '12 MB',
     downloads: 650,
@@ -65,11 +62,11 @@ export function CataloguesSection() {
         >
           <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium mb-4">
             <FileText size={16} />
-            الكتالوجات
+            {t('catalogues.title')}
           </div>
-          <h2 className="heading-2 text-gray-900 mb-4">تحميل الكتالوجات</h2>
+          <h2 className="heading-2 text-gray-900 mb-4">{t('catalogues.heading')}</h2>
           <p className="text-gray-600">
-            قم بتحميل كتالوجات منتجاتنا للاطلاع على جميع المواصفات والتفاصيل
+            {t('catalogues.description')}
           </p>
         </motion.div>
 
@@ -116,13 +113,13 @@ export function CataloguesSection() {
                 {/* Content */}
                 <div className="p-6">
                   <h3 className="text-lg font-semibold text-gray-900 mb-2 group-hover:text-primary transition-colors">
-                    {catalogue.name}
+                    {t(catalogue.nameKey)}
                   </h3>
-                  <p className="text-sm text-gray-600 mb-4">{catalogue.description}</p>
+                  <p className="text-sm text-gray-600 mb-4">{t(catalogue.descKey)}</p>
 
                   <div className="flex items-center justify-between text-sm">
                     <span className="text-gray-600">{catalogue.fileSize}</span>
-                    <span className="text-primary">{catalogue.downloads} تحميل</span>
+                    <span className="text-primary">{catalogue.downloads} {t('catalogues.downloads')}</span>
                   </div>
                 </div>
 
@@ -134,7 +131,7 @@ export function CataloguesSection() {
                     onClick={() => handleDownload(catalogue.id)}
                   >
                     <Download size={18} className="ml-2 group-hover/btn:animate-bounce" />
-                    تحميل الكتالوج
+                    {t('catalogues.downloadButton')}
                   </Button>
                 </div>
               </div>

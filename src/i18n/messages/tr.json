@@ -29,7 +29,14 @@
     "experience": "Yıllık Deneyim",
     "projects": "Tamamlanan Proje",
     "clients": "Memnun Müşteri",
-    "countries": "Ülke"
+    "countries": "Ülke",
+    "learnMore": "Daha Fazla Bilgi",
+    "features": {
+      "manufacturing": "Yerel Üretim",
+      "global": "Küresel Varlık",
+      "team": "Uzman Ekip",
+      "quality": "Yüksek Kalite"
+    }
   },
   "products": {
     "title": "Ürünlerimiz",
@@ -58,6 +65,27 @@
     "title": "Sertifikalar",
     "subtitle": "Kalite ve Akreditasyon",
     "description": "Uluslararası kalite ve akreditasyon sertifikaları"
+  },
+  "catalogues": {
+    "title": "Kataloglar",
+    "heading": "Katalogları İndir",
+    "description": "Tüm özellikleri ve detayları görmek için ürün kataloglarımızı indirin",
+    "downloads": "indirme",
+    "downloadButton": "Katalogu İndir",
+    "items": {
+      "products": {
+        "name": "Ürün Katalogu 2024",
+        "description": "Tüm ürünlerimiz ve üretim hatlarımızın kapsamlı katalogu"
+      },
+      "filling": {
+        "name": "Dolum Makineleri Katalogu",
+        "description": "Dolum makineleri için detaylı kılavuz"
+      },
+      "production": {
+        "name": "Üretim Hatları Katalogu",
+        "description": "Entegre üretim hattı çözümleri"
+      }
+    }
   },
   "exhibitions": {
     "title": "Fuarlar",

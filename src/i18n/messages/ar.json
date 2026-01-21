@@ -29,7 +29,14 @@
     "experience": "سنة خبرة",
     "projects": "مشروع منفذ",
     "clients": "عميل راضٍ",
-    "countries": "دولة"
+    "countries": "دولة",
+    "learnMore": "اعرف المزيد",
+    "features": {
+      "manufacturing": "تصنيع محلي",
+      "global": "تواجد عالمي",
+      "team": "فريق خبراء",
+      "quality": "جودة عالية"
+    }
   },
   "products": {
     "title": "منتجاتنا",
@@ -58,6 +65,27 @@
     "title": "الشهادات",
     "subtitle": "الجودة والاعتماد",
     "description": "شهادات الجودة والاعتماد الدولية"
+  },
+  "catalogues": {
+    "title": "الكتالوجات",
+    "heading": "تحميل الكتالوجات",
+    "description": "قم بتحميل كتالوجات منتجاتنا للاطلاع على جميع المواصفات والتفاصيل",
+    "downloads": "تحميل",
+    "downloadButton": "تحميل الكتالوج",
+    "items": {
+      "products": {
+        "name": "كتالوج المنتجات 2024",
+        "description": "كتالوج شامل لجميع منتجاتنا وخطوط الإنتاج"
+      },
+      "filling": {
+        "name": "كتالوج ماكينات التعبئة",
+        "description": "دليل تفصيلي لماكينات التعبئة"
+      },
+      "production": {
+        "name": "كتالوج خطوط الإنتاج",
+        "description": "حلول خطوط الإنتاج المتكاملة"
+      }
+    }
   },
   "exhibitions": {
     "title": "المعارض",

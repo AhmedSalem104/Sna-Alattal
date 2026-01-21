@@ -9,10 +9,10 @@ import { ArrowRight, CheckCircle, Factory, Globe, Users, Award } from 'lucide-re
 import { Button } from '@/components/ui/button';
 
 const features = [
-  { icon: Factory, key: 'manufacturing' },
-  { icon: Globe, key: 'global' },
-  { icon: Users, key: 'team' },
-  { icon: Award, key: 'quality' },
+  { icon: Factory, labelKey: 'about.features.manufacturing' },
+  { icon: Globe, labelKey: 'about.features.global' },
+  { icon: Users, labelKey: 'about.features.team' },
+  { icon: Award, labelKey: 'about.features.quality' },
 ];
 
 export function AboutSection() {
@@ -94,7 +94,7 @@ export function AboutSection() {
             <div className="grid grid-cols-2 gap-4 py-6">
               {features.map((feature, index) => (
                 <motion.div
-                  key={feature.key}
+                  key={feature.labelKey}
                   variants={itemVariants}
                   className="flex items-center gap-3 p-4 bg-gray-100 rounded-xl"
                 >
@@ -102,10 +102,7 @@ export function AboutSection() {
                     <feature.icon size={20} className="text-primary" />
                   </div>
                   <span className="text-sm text-gray-700">
-                    {feature.key === 'manufacturing' && 'تصنيع محلي'}
-                    {feature.key === 'global' && 'تواجد عالمي'}
-                    {feature.key === 'team' && 'فريق خبراء'}
-                    {feature.key === 'quality' && 'جودة عالية'}
+                    {t(feature.labelKey)}
                   </span>
                 </motion.div>
               ))}
@@ -114,7 +111,7 @@ export function AboutSection() {
             {/* CTA */}
             <Button variant="gold" size="lg" asChild className="group">
               <Link href="/about">
-                اعرف المزيد
+                {t('about.learnMore')}
                 <ArrowRight className="mr-2 rtl:rotate-180 group-hover:translate-x-1 transition-transform" size={18} />
               </Link>
             </Button>
