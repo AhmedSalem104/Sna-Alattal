@@ -94,6 +94,7 @@ export function NewsSection() {
                     src={newsArticles[0].image}
                     alt={newsArticles[0].title}
                     fill
+                    sizes="(max-width: 1024px) 100vw, 50vw"
                     className="object-cover group-hover:scale-110 transition-transform duration-500"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-dark via-dark/70 to-transparent" />
@@ -130,6 +131,7 @@ export function NewsSection() {
                         src={article.image}
                         alt={article.title}
                         fill
+                        sizes="96px"
                         className="object-cover group-hover:scale-110 transition-transform duration-500"
                       />
                     </div>
