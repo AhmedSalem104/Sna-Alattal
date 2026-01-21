@@ -351,6 +351,29 @@
     "badge": "Our Solutions",
     "title": "Complete Solutions for Every Industry",
     "subtitle": "We provide customized solutions to meet the needs of various industrial sectors",
+    "solutions": {
+      "food": {
+        "title": "Food & Beverage Industry",
+        "desc": "Complete filling solutions for the food and beverage sector with the highest hygiene standards",
+        "fullDesc": "We provide integrated production lines for water, juices, dairy products, oils, and sauces with FDA-compliant systems and aseptic filling technology"
+      },
+      "pharma": {
+        "title": "Pharmaceutical Industry",
+        "desc": "GMP-compliant filling solutions for the pharmaceutical sector with validation support",
+        "fullDesc": "Specialized production lines for syrups, suspensions, IV solutions, and vaccines with sterile filling and track & trace systems"
+      },
+      "cosmetics": {
+        "title": "Cosmetics Industry",
+        "desc": "Precision filling systems for cosmetic and personal care products",
+        "fullDesc": "High-quality production lines for creams, lotions, perfumes, and shampoos with multi-product capability and decorative packaging options"
+      },
+      "chemicals": {
+        "title": "Chemical Industry",
+        "desc": "Corrosion-resistant filling solutions for chemical products with enhanced safety features",
+        "fullDesc": "Industrial production lines for detergents, lubricants, pesticides, and paints with hazmat handling and explosion-proof systems"
+      }
+    },
+    "industrySolution": "Industry Solution",
     "industries": {
       "title": "Industries We Serve",
       "foodBeverage": "Food & Beverage",
@@ -358,6 +381,16 @@
       "cosmetics": "Cosmetics",
       "chemicals": "Chemicals",
       "oils": "Oils & Lubricants"
+    },
+    "whyChoose": {
+      "title": "Why Choose Our Solutions?",
+      "subtitle": "We combine innovation, quality, and experience to deliver the best filling solutions"
+    },
+    "stats": {
+      "years": "Years of Experience",
+      "projects": "Successful Projects",
+      "clients": "Satisfied Clients",
+      "countries": "Countries Served"
     },
     "benefits": {
       "title": "Why Choose Us?",
@@ -367,7 +400,12 @@
       "experience": "Extensive Experience"
     },
     "learnMore": "Learn More",
-    "contactUs": "Contact Us"
+    "contactUs": "Contact Us",
+    "cta": {
+      "title": "Ready to Start Your Project?",
+      "subtitle": "Contact us today to discuss your requirements and get a customized solution",
+      "button": "Get in Touch"
+    }
   },
   "exhibitionsPage": {
     "badge": "Exhibitions",

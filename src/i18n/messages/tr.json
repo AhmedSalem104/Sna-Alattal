@@ -351,6 +351,29 @@
     "badge": "Çözümlerimiz",
     "title": "Her Sektör İçin Komple Çözümler",
     "subtitle": "Çeşitli endüstriyel sektörlerin ihtiyaçlarını karşılamak için özelleştirilmiş çözümler sunuyoruz",
+    "solutions": {
+      "food": {
+        "title": "Gıda ve İçecek Endüstrisi",
+        "desc": "En yüksek hijyen standartlarıyla gıda ve içecek sektörü için komple dolum çözümleri",
+        "fullDesc": "FDA uyumlu sistemler ve aseptik dolum teknolojisi ile su, meyve suları, süt ürünleri, yağlar ve soslar için entegre üretim hatları sunuyoruz"
+      },
+      "pharma": {
+        "title": "İlaç Endüstrisi",
+        "desc": "Doğrulama desteği ile ilaç sektörü için GMP uyumlu dolum çözümleri",
+        "fullDesc": "Steril dolum ve izleme sistemleri ile şuruplar, süspansiyonlar, IV çözeltileri ve aşılar için özel üretim hatları"
+      },
+      "cosmetics": {
+        "title": "Kozmetik Endüstrisi",
+        "desc": "Kozmetik ve kişisel bakım ürünleri için hassas dolum sistemleri",
+        "fullDesc": "Çoklu ürün yeteneği ve dekoratif paketleme seçenekleri ile kremler, losyonlar, parfümler ve şampuanlar için yüksek kaliteli üretim hatları"
+      },
+      "chemicals": {
+        "title": "Kimyasal Endüstri",
+        "desc": "Gelişmiş güvenlik özellikleri ile kimyasal ürünler için korozyona dayanıklı dolum çözümleri",
+        "fullDesc": "Tehlikeli madde taşıma ve patlamaya dayanıklı sistemler ile deterjanlar, yağlayıcılar, pestisitler ve boyalar için endüstriyel üretim hatları"
+      }
+    },
+    "industrySolution": "Endüstri Çözümü",
     "industries": {
       "title": "Hizmet Verdiğimiz Sektörler",
       "foodBeverage": "Gıda ve İçecek",
@@ -358,6 +381,16 @@
       "cosmetics": "Kozmetik",
       "chemicals": "Kimyasallar",
       "oils": "Yağlar ve Yağlayıcılar"
+    },
+    "whyChoose": {
+      "title": "Neden Çözümlerimizi Seçmelisiniz?",
+      "subtitle": "En iyi dolum çözümlerini sunmak için inovasyon, kalite ve deneyimi bir araya getiriyoruz"
+    },
+    "stats": {
+      "years": "Yıllık Deneyim",
+      "projects": "Başarılı Proje",
+      "clients": "Memnun Müşteri",
+      "countries": "Hizmet Verdiğimiz Ülke"
     },
     "benefits": {
       "title": "Neden Bizi Seçmelisiniz?",
@@ -367,7 +400,12 @@
       "experience": "Geniş Deneyim"
     },
     "learnMore": "Daha Fazla Bilgi",
-    "contactUs": "Bize Ulaşın"
+    "contactUs": "Bize Ulaşın",
+    "cta": {
+      "title": "Projenizi Başlatmaya Hazır mısınız?",
+      "subtitle": "Gereksinimlerinizi görüşmek ve özelleştirilmiş bir çözüm almak için bugün bizimle iletişime geçin",
+      "button": "İletişime Geçin"
+    }
   },
   "exhibitionsPage": {
     "badge": "Fuarlar",
