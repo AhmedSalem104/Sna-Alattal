@@ -52,7 +52,7 @@ export function ProductsSection() {
   const isInView = useInView(ref, { once: true, margin: '-100px' });
 
   return (
-    <section ref={ref} className="section-padding bg-dark relative overflow-hidden">
+    <section ref={ref} className="section-padding bg-white relative overflow-hidden">
       {/* Background Elements */}
       <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-primary/5 to-transparent" />
 
@@ -69,7 +69,7 @@ export function ProductsSection() {
               <span className="w-2 h-2 bg-primary rounded-full" />
               {t('products.title')}
             </div>
-            <h2 className="heading-2 text-white">{t('products.subtitle')}</h2>
+            <h2 className="heading-2 text-gray-900">{t('products.subtitle')}</h2>
           </div>
 
           <Button variant="goldOutline" asChild className="group shrink-0">
@@ -90,7 +90,7 @@ export function ProductsSection() {
               transition={{ duration: 0.6, delay: index * 0.1 }}
             >
               <Link href={`/products/${product.id}`}>
-                <Card className="group bg-dark-50 border-white/10 hover:border-primary/50 transition-all duration-300 overflow-hidden h-full">
+                <Card className="group bg-gray-50 border-gray-200 hover:border-primary/50 transition-all duration-300 overflow-hidden h-full">
                   {/* Image */}
                   <div className="relative aspect-square overflow-hidden">
                     <Image
@@ -99,7 +99,7 @@ export function ProductsSection() {
                       fill
                       className="object-cover group-hover:scale-110 transition-transform duration-500"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-dark to-transparent opacity-60" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-white to-transparent opacity-60" />
 
                     {/* Featured Badge */}
                     {product.isFeatured && (
@@ -111,7 +111,7 @@ export function ProductsSection() {
                     {/* Hover Overlay */}
                     <div className="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                       <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center">
-                        <ArrowUpRight size={24} className="text-dark" />
+                        <ArrowUpRight size={24} className="text-gray-900" />
                       </div>
                     </div>
                   </div>
@@ -119,7 +119,7 @@ export function ProductsSection() {
                   {/* Content */}
                   <CardContent className="p-4">
                     <p className="text-xs text-primary mb-2">{product.category}</p>
-                    <h3 className="text-white font-semibold group-hover:text-primary transition-colors line-clamp-2">
+                    <h3 className="text-gray-900 font-semibold group-hover:text-primary transition-colors line-clamp-2">
                       {product.name}
                     </h3>
                   </CardContent>

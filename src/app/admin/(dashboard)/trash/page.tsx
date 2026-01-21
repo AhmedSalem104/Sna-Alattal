@@ -140,7 +140,7 @@ export default function TrashPage() {
   const renderItemList = (items: DeletedItem[], type: string, icon: React.ReactNode) => (
     <div className="space-y-3">
       {items.length === 0 ? (
-        <div className="text-center py-8 text-gray-400">
+        <div className="text-center py-8 text-gray-600">
           <Trash2 className="mx-auto mb-2 opacity-50" size={40} />
           <p>لا توجد عناصر محذوفة</p>
         </div>
@@ -148,15 +148,15 @@ export default function TrashPage() {
         items.map((item) => (
           <div
             key={item.id}
-            className="flex items-center justify-between p-4 bg-dark rounded-xl border border-white/10"
+            className="flex items-center justify-between p-4 bg-white rounded-xl border border-gray-200"
           >
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-white/5 rounded-lg">{icon}</div>
+              <div className="p-2 bg-gray-100 rounded-lg">{icon}</div>
               <div>
-                <p className="text-white font-medium">
+                <p className="text-gray-900 font-medium">
                   {item.nameAr || item.titleAr || item.name}
                 </p>
-                <p className="text-xs text-gray-400">
+                <p className="text-xs text-gray-600">
                   حُذف في {new Date(item.deletedAt).toLocaleDateString('ar-EG')}
                 </p>
               </div>
@@ -178,20 +178,20 @@ export default function TrashPage() {
                     حذف نهائي
                   </Button>
                 </AlertDialogTrigger>
-                <AlertDialogContent className="bg-dark-50 border-white/10">
+                <AlertDialogContent className="bg-gray-50 border-gray-200">
                   <AlertDialogHeader>
-                    <AlertDialogTitle className="text-white">تأكيد الحذف النهائي</AlertDialogTitle>
-                    <AlertDialogDescription className="text-gray-400">
+                    <AlertDialogTitle className="text-gray-900">تأكيد الحذف النهائي</AlertDialogTitle>
+                    <AlertDialogDescription className="text-gray-600">
                       هذا الإجراء لا يمكن التراجع عنه. سيتم حذف العنصر نهائياً.
                     </AlertDialogDescription>
                   </AlertDialogHeader>
                   <AlertDialogFooter>
-                    <AlertDialogCancel className="bg-dark border-white/10 text-white">
+                    <AlertDialogCancel className="bg-white border-gray-200 text-gray-900">
                       إلغاء
                     </AlertDialogCancel>
                     <AlertDialogAction
                       onClick={() => permanentDelete(type, item.id)}
-                      className="bg-red-500 hover:bg-red-600 text-white"
+                      className="bg-red-500 hover:bg-red-600 text-gray-900"
                     >
                       حذف نهائي
                     </AlertDialogAction>
@@ -213,8 +213,8 @@ export default function TrashPage() {
         className="flex items-center justify-between"
       >
         <div>
-          <h1 className="text-2xl font-bold text-white">سلة المحذوفات</h1>
-          <p className="text-gray-400">
+          <h1 className="text-2xl font-bold text-gray-900">سلة المحذوفات</h1>
+          <p className="text-gray-600">
             {totalItems > 0 ? `${totalItems} عنصر في سلة المحذوفات` : 'سلة المحذوفات فارغة'}
           </p>
         </div>
@@ -226,23 +226,23 @@ export default function TrashPage() {
                 تفريغ السلة
               </Button>
             </AlertDialogTrigger>
-            <AlertDialogContent className="bg-dark-50 border-white/10">
+            <AlertDialogContent className="bg-gray-50 border-gray-200">
               <AlertDialogHeader>
-                <AlertDialogTitle className="text-white flex items-center gap-2">
+                <AlertDialogTitle className="text-gray-900 flex items-center gap-2">
                   <AlertTriangle className="text-red-400" size={24} />
                   تأكيد تفريغ سلة المحذوفات
                 </AlertDialogTitle>
-                <AlertDialogDescription className="text-gray-400">
+                <AlertDialogDescription className="text-gray-600">
                   سيتم حذف جميع العناصر ({totalItems} عنصر) نهائياً ولا يمكن استرجاعها.
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>
-                <AlertDialogCancel className="bg-dark border-white/10 text-white">
+                <AlertDialogCancel className="bg-white border-gray-200 text-gray-900">
                   إلغاء
                 </AlertDialogCancel>
                 <AlertDialogAction
                   onClick={emptyTrash}
-                  className="bg-red-500 hover:bg-red-600 text-white"
+                  className="bg-red-500 hover:bg-red-600 text-gray-900"
                 >
                   تفريغ السلة نهائياً
                 </AlertDialogAction>
@@ -263,7 +263,7 @@ export default function TrashPage() {
           transition={{ delay: 0.1 }}
         >
           <Tabs defaultValue="products">
-            <TabsList className="bg-dark-50 border border-white/10 mb-6">
+            <TabsList className="bg-gray-50 border border-gray-200 mb-6">
               <TabsTrigger value="products" className="flex items-center gap-2">
                 <Package size={16} />
                 المنتجات
@@ -303,9 +303,9 @@ export default function TrashPage() {
             </TabsList>
 
             <TabsContent value="products">
-              <Card className="bg-dark-50 border-white/10">
+              <Card className="bg-gray-50 border-gray-200">
                 <CardHeader>
-                  <CardTitle className="text-white">المنتجات المحذوفة</CardTitle>
+                  <CardTitle className="text-gray-900">المنتجات المحذوفة</CardTitle>
                 </CardHeader>
                 <CardContent>
                   {renderItemList(trashData.products, 'products', <Package className="text-primary" size={20} />)}
@@ -314,9 +314,9 @@ export default function TrashPage() {
             </TabsContent>
 
             <TabsContent value="clients">
-              <Card className="bg-dark-50 border-white/10">
+              <Card className="bg-gray-50 border-gray-200">
                 <CardHeader>
-                  <CardTitle className="text-white">العملاء المحذوفون</CardTitle>
+                  <CardTitle className="text-gray-900">العملاء المحذوفون</CardTitle>
                 </CardHeader>
                 <CardContent>
                   {renderItemList(trashData.clients, 'clients', <Users className="text-primary" size={20} />)}
@@ -325,9 +325,9 @@ export default function TrashPage() {
             </TabsContent>
 
             <TabsContent value="news">
-              <Card className="bg-dark-50 border-white/10">
+              <Card className="bg-gray-50 border-gray-200">
                 <CardHeader>
-                  <CardTitle className="text-white">الأخبار المحذوفة</CardTitle>
+                  <CardTitle className="text-gray-900">الأخبار المحذوفة</CardTitle>
                 </CardHeader>
                 <CardContent>
                   {renderItemList(trashData.news, 'news', <Newspaper className="text-primary" size={20} />)}
@@ -336,9 +336,9 @@ export default function TrashPage() {
             </TabsContent>
 
             <TabsContent value="catalogues">
-              <Card className="bg-dark-50 border-white/10">
+              <Card className="bg-gray-50 border-gray-200">
                 <CardHeader>
-                  <CardTitle className="text-white">الكتالوجات المحذوفة</CardTitle>
+                  <CardTitle className="text-gray-900">الكتالوجات المحذوفة</CardTitle>
                 </CardHeader>
                 <CardContent>
                   {renderItemList(trashData.catalogues, 'catalogues', <FileText className="text-primary" size={20} />)}

@@ -36,7 +36,7 @@ export function CertificatesSection() {
   const isInView = useInView(ref, { once: true, margin: '-100px' });
 
   return (
-    <section ref={ref} className="section-padding bg-dark relative overflow-hidden">
+    <section ref={ref} className="section-padding bg-white relative overflow-hidden">
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute top-0 right-0 w-1/2 h-full bg-[radial-gradient(circle_at_70%_30%,_#F9BF0F_0%,_transparent_50%)]" />
@@ -54,8 +54,8 @@ export function CertificatesSection() {
             <Award size={16} />
             {t('certificates.title')}
           </div>
-          <h2 className="heading-2 text-white mb-4">{t('certificates.subtitle')}</h2>
-          <p className="text-gray-400">{t('certificates.description')}</p>
+          <h2 className="heading-2 text-gray-900 mb-4">{t('certificates.subtitle')}</h2>
+          <p className="text-gray-600">{t('certificates.description')}</p>
         </motion.div>
 
         {/* Certificates Grid */}
@@ -68,11 +68,11 @@ export function CertificatesSection() {
               transition={{ duration: 0.6, delay: index * 0.15 }}
               className="group"
             >
-              <div className="relative p-8 bg-gradient-to-b from-white/10 to-white/5 rounded-2xl border border-white/10 hover:border-primary/50 transition-all duration-300 text-center h-full">
+              <div className="relative p-8 bg-gradient-to-b from-white/10 to-white/5 rounded-2xl border border-gray-200 hover:border-primary/50 transition-all duration-300 text-center h-full">
                 {/* Certificate Image */}
                 <div className="relative w-32 h-32 mx-auto mb-6">
                   <div className="absolute inset-0 bg-primary/20 rounded-full blur-xl group-hover:blur-2xl transition-all" />
-                  <div className="relative w-full h-full rounded-full bg-white/10 p-4 flex items-center justify-center">
+                  <div className="relative w-full h-full rounded-full bg-gray-100 p-4 flex items-center justify-center">
                     <Image
                       src={cert.image}
                       alt={cert.name}
@@ -85,8 +85,8 @@ export function CertificatesSection() {
 
                 {/* Content */}
                 <h3 className="text-xl font-bold text-primary mb-2">{cert.name}</h3>
-                <p className="text-sm text-gray-400 mb-2">{cert.issuer}</p>
-                <p className="text-gray-300">{cert.description}</p>
+                <p className="text-sm text-gray-600 mb-2">{cert.issuer}</p>
+                <p className="text-gray-700">{cert.description}</p>
 
                 {/* Verified Badge */}
                 <div className="mt-6 inline-flex items-center gap-2 text-green-500 text-sm">

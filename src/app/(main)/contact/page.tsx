@@ -97,9 +97,9 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="min-h-screen bg-dark">
+    <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="relative py-32 bg-gradient-to-b from-primary/20 via-dark to-dark overflow-hidden">
+      <section className="relative py-32 bg-gradient-to-b from-primary/20 via-white to-white overflow-hidden">
         <div className="absolute inset-0">
           <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl" />
           <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-primary/5 rounded-full blur-3xl" />
@@ -115,10 +115,10 @@ export default function ContactPage() {
             <span className="inline-block px-4 py-1 bg-primary/20 text-primary rounded-full text-sm mb-4">
               {t('badge')}
             </span>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
               {t('title')}
             </h1>
-            <p className="text-xl text-gray-300">
+            <p className="text-xl text-gray-700">
               {t('subtitle')}
             </p>
           </motion.div>
@@ -137,43 +137,43 @@ export default function ContactPage() {
               className="lg:col-span-1 space-y-8"
             >
               <div>
-                <h2 className="text-2xl font-bold text-white mb-6">{t('getInTouch')}</h2>
-                <p className="text-gray-400">{t('getInTouchDesc')}</p>
+                <h2 className="text-2xl font-bold text-gray-900 mb-6">{t('getInTouch')}</h2>
+                <p className="text-gray-600">{t('getInTouchDesc')}</p>
               </div>
 
               {/* Offices */}
               {offices.map((office, index) => (
                 <div
                   key={index}
-                  className="bg-dark-50 p-6 rounded-2xl border border-white/10"
+                  className="bg-gray-50 p-6 rounded-2xl border border-gray-200"
                 >
                   <div className="flex items-center gap-3 mb-4">
                     <div className="p-2 bg-primary/20 rounded-lg">
                       <Building2 className="text-primary" size={20} />
                     </div>
-                    <h3 className="text-lg font-bold text-white">{office.name}</h3>
+                    <h3 className="text-lg font-bold text-gray-900">{office.name}</h3>
                   </div>
 
                   <div className="space-y-3">
                     <div className="flex items-start gap-3">
                       <MapPin className="text-primary mt-1 flex-shrink-0" size={18} />
-                      <span className="text-gray-400 text-sm">{office.address}</span>
+                      <span className="text-gray-600 text-sm">{office.address}</span>
                     </div>
                     <div className="flex items-center gap-3">
                       <Phone className="text-primary flex-shrink-0" size={18} />
-                      <a href={`tel:${office.phone}`} className="text-gray-400 text-sm hover:text-primary transition-colors">
+                      <a href={`tel:${office.phone}`} className="text-gray-600 text-sm hover:text-primary transition-colors">
                         {office.phone}
                       </a>
                     </div>
                     <div className="flex items-center gap-3">
                       <Mail className="text-primary flex-shrink-0" size={18} />
-                      <a href={`mailto:${office.email}`} className="text-gray-400 text-sm hover:text-primary transition-colors">
+                      <a href={`mailto:${office.email}`} className="text-gray-600 text-sm hover:text-primary transition-colors">
                         {office.email}
                       </a>
                     </div>
                     <div className="flex items-center gap-3">
                       <Clock className="text-primary flex-shrink-0" size={18} />
-                      <span className="text-gray-400 text-sm">{office.hours}</span>
+                      <span className="text-gray-600 text-sm">{office.hours}</span>
                     </div>
                   </div>
                 </div>
@@ -183,9 +183,9 @@ export default function ContactPage() {
               <div className="bg-primary/10 p-6 rounded-2xl border border-primary/30">
                 <div className="flex items-center gap-3 mb-4">
                   <MessageSquare className="text-primary" size={24} />
-                  <h3 className="text-lg font-bold text-white">{t('quickResponse')}</h3>
+                  <h3 className="text-lg font-bold text-gray-900">{t('quickResponse')}</h3>
                 </div>
-                <p className="text-gray-400 text-sm mb-4">{t('quickResponseDesc')}</p>
+                <p className="text-gray-600 text-sm mb-4">{t('quickResponseDesc')}</p>
                 <a
                   href="https://wa.me/201234567890"
                   target="_blank"
@@ -205,8 +205,8 @@ export default function ContactPage() {
               viewport={{ once: true }}
               className="lg:col-span-2"
             >
-              <div className="bg-dark-50 p-8 rounded-2xl border border-white/10">
-                <h2 className="text-2xl font-bold text-white mb-6">{t('sendMessage')}</h2>
+              <div className="bg-gray-50 p-8 rounded-2xl border border-gray-200">
+                <h2 className="text-2xl font-bold text-gray-900 mb-6">{t('sendMessage')}</h2>
 
                 {isSuccess && (
                   <motion.div
@@ -222,11 +222,11 @@ export default function ContactPage() {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {/* Name */}
                     <div>
-                      <Label htmlFor="name" className="text-white">{t('form.name')}</Label>
+                      <Label htmlFor="name" className="text-gray-900">{t('form.name')}</Label>
                       <Input
                         id="name"
                         {...register('name')}
-                        className="mt-2 bg-dark border-white/10 text-white"
+                        className="mt-2 bg-white border-gray-200 text-gray-900"
                         placeholder={t('form.namePlaceholder')}
                       />
                       {errors.name && (
@@ -236,12 +236,12 @@ export default function ContactPage() {
 
                     {/* Email */}
                     <div>
-                      <Label htmlFor="email" className="text-white">{t('form.email')}</Label>
+                      <Label htmlFor="email" className="text-gray-900">{t('form.email')}</Label>
                       <Input
                         id="email"
                         type="email"
                         {...register('email')}
-                        className="mt-2 bg-dark border-white/10 text-white"
+                        className="mt-2 bg-white border-gray-200 text-gray-900"
                         placeholder={t('form.emailPlaceholder')}
                       />
                       {errors.email && (
@@ -251,11 +251,11 @@ export default function ContactPage() {
 
                     {/* Phone */}
                     <div>
-                      <Label htmlFor="phone" className="text-white">{t('form.phone')}</Label>
+                      <Label htmlFor="phone" className="text-gray-900">{t('form.phone')}</Label>
                       <Input
                         id="phone"
                         {...register('phone')}
-                        className="mt-2 bg-dark border-white/10 text-white"
+                        className="mt-2 bg-white border-gray-200 text-gray-900"
                         placeholder={t('form.phonePlaceholder')}
                       />
                       {errors.phone && (
@@ -265,11 +265,11 @@ export default function ContactPage() {
 
                     {/* Company */}
                     <div>
-                      <Label htmlFor="company" className="text-white">{t('form.company')}</Label>
+                      <Label htmlFor="company" className="text-gray-900">{t('form.company')}</Label>
                       <Input
                         id="company"
                         {...register('company')}
-                        className="mt-2 bg-dark border-white/10 text-white"
+                        className="mt-2 bg-white border-gray-200 text-gray-900"
                         placeholder={t('form.companyPlaceholder')}
                       />
                     </div>
@@ -277,12 +277,12 @@ export default function ContactPage() {
 
                   {/* Subject */}
                   <div>
-                    <Label className="text-white">{t('form.subject')}</Label>
+                    <Label className="text-gray-900">{t('form.subject')}</Label>
                     <Select onValueChange={(value) => setValue('subject', value)}>
-                      <SelectTrigger className="mt-2 bg-dark border-white/10 text-white">
+                      <SelectTrigger className="mt-2 bg-white border-gray-200 text-gray-900">
                         <SelectValue placeholder={t('form.subjectPlaceholder')} />
                       </SelectTrigger>
-                      <SelectContent className="bg-dark border-white/10">
+                      <SelectContent className="bg-white border-gray-200">
                         {subjects.map((subject) => (
                           <SelectItem key={subject.value} value={subject.value}>
                             {subject.label}
@@ -297,11 +297,11 @@ export default function ContactPage() {
 
                   {/* Message */}
                   <div>
-                    <Label htmlFor="message" className="text-white">{t('form.message')}</Label>
+                    <Label htmlFor="message" className="text-gray-900">{t('form.message')}</Label>
                     <Textarea
                       id="message"
                       {...register('message')}
-                      className="mt-2 bg-dark border-white/10 text-white min-h-[150px]"
+                      className="mt-2 bg-white border-gray-200 text-gray-900 min-h-[150px]"
                       placeholder={t('form.messagePlaceholder')}
                     />
                     {errors.message && (
@@ -339,7 +339,7 @@ export default function ContactPage() {
       </section>
 
       {/* Map Section */}
-      <section className="py-20 bg-dark-50">
+      <section className="py-20 bg-gray-50">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -347,11 +347,11 @@ export default function ContactPage() {
             viewport={{ once: true }}
             className="text-center mb-12"
           >
-            <h2 className="text-3xl font-bold text-white mb-4">{t('findUs')}</h2>
-            <p className="text-gray-400">{t('findUsDesc')}</p>
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">{t('findUs')}</h2>
+            <p className="text-gray-600">{t('findUsDesc')}</p>
           </motion.div>
 
-          <div className="h-96 rounded-2xl overflow-hidden border border-white/10">
+          <div className="h-96 rounded-2xl overflow-hidden border border-gray-200">
             <iframe
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3456.123456789!2d31.7654321!3d30.1234567!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzDCsDA3JzI0LjQiTiAzMcKwNDUnNTUuNiJF!5e0!3m2!1sen!2seg!4v1234567890"
               width="100%"

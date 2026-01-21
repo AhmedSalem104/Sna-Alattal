@@ -40,7 +40,7 @@ export function Navbar() {
       className={cn(
         'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
         isScrolled
-          ? 'bg-dark/95 backdrop-blur-md shadow-lg border-b border-white/10'
+          ? 'bg-white/95 backdrop-blur-md shadow-lg border-b border-gray-200'
           : 'bg-transparent'
       )}
     >
@@ -59,7 +59,7 @@ export function Navbar() {
               <h1 className="text-lg font-bold text-primary leading-tight">
                 S.N.A AL-ATTAL
               </h1>
-              <p className="text-xs text-gray-400">Engineering Industries</p>
+              <p className="text-xs text-gray-600">Engineering Industries</p>
             </div>
           </Link>
 
@@ -69,7 +69,7 @@ export function Navbar() {
               <Link
                 key={item.key}
                 href={item.href}
-                className="px-4 py-2 text-sm text-gray-300 hover:text-primary transition-colors rounded-md hover:bg-white/5"
+                className="px-4 py-2 text-sm text-gray-700 hover:text-primary transition-colors rounded-md hover:bg-gray-100"
               >
                 {t(item.key)}
               </Link>
@@ -93,7 +93,7 @@ export function Navbar() {
             <Button
               variant="ghost"
               size="icon"
-              className="lg:hidden text-gray-300"
+              className="lg:hidden text-gray-700"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             >
               {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -109,7 +109,7 @@ export function Navbar() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="lg:hidden bg-dark-50 border-t border-white/10"
+            className="lg:hidden bg-gray-50 border-t border-gray-200"
           >
             <div className="container-custom py-4 space-y-2">
               {navItems.map((item) => (
@@ -117,12 +117,12 @@ export function Navbar() {
                   key={item.key}
                   href={item.href}
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="block px-4 py-3 text-gray-300 hover:text-primary hover:bg-white/5 rounded-md transition-colors"
+                  className="block px-4 py-3 text-gray-700 hover:text-primary hover:bg-gray-100 rounded-md transition-colors"
                 >
                   {t(item.key)}
                 </Link>
               ))}
-              <div className="pt-4 border-t border-white/10">
+              <div className="pt-4 border-t border-gray-200">
                 <Button variant="gold" className="w-full" asChild>
                   <Link href="/contact">{t('contact')}</Link>
                 </Button>

@@ -42,7 +42,7 @@ export function TVSection() {
 
   return (
     <>
-      <section ref={ref} className="section-padding bg-dark relative overflow-hidden">
+      <section ref={ref} className="section-padding bg-white relative overflow-hidden">
         {/* Background */}
         <div className="absolute inset-0">
           <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
@@ -60,8 +60,8 @@ export function TVSection() {
               <Tv size={16} />
               المقابلات التلفزيونية
             </div>
-            <h2 className="heading-2 text-white mb-4">ظهورنا الإعلامي</h2>
-            <p className="text-gray-400">نشارك خبراتنا ورؤيتنا في أهم القنوات والمنصات الإعلامية</p>
+            <h2 className="heading-2 text-gray-900 mb-4">ظهورنا الإعلامي</h2>
+            <p className="text-gray-600">نشارك خبراتنا ورؤيتنا في أهم القنوات والمنصات الإعلامية</p>
           </motion.div>
 
           {/* Videos Grid */}
@@ -74,7 +74,7 @@ export function TVSection() {
                 transition={{ duration: 0.6, delay: index * 0.1 }}
               >
                 <div
-                  className="group relative bg-white/5 rounded-2xl overflow-hidden border border-white/10 hover:border-primary/50 transition-all duration-300 cursor-pointer"
+                  className="group relative bg-gray-100 rounded-2xl overflow-hidden border border-gray-200 hover:border-primary/50 transition-all duration-300 cursor-pointer"
                   onClick={() => setActiveVideo(interview.videoUrl)}
                 >
                   {/* Thumbnail */}
@@ -85,12 +85,12 @@ export function TVSection() {
                       fill
                       className="object-cover group-hover:scale-110 transition-transform duration-500"
                     />
-                    <div className="absolute inset-0 bg-dark/50 group-hover:bg-dark/30 transition-colors" />
+                    <div className="absolute inset-0 bg-gray-100/50 group-hover:bg-gray-100/30 transition-colors" />
 
                     {/* Play Button */}
                     <div className="absolute inset-0 flex items-center justify-center">
                       <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center group-hover:scale-110 transition-transform shadow-xl">
-                        <Play size={28} className="text-dark ml-1" fill="currentColor" />
+                        <Play size={28} className="text-gray-900 ml-1" fill="currentColor" />
                       </div>
                     </div>
                   </div>
@@ -98,7 +98,7 @@ export function TVSection() {
                   {/* Content */}
                   <div className="p-4">
                     <p className="text-xs text-primary mb-1">{interview.channel}</p>
-                    <h3 className="text-white font-semibold group-hover:text-primary transition-colors">
+                    <h3 className="text-gray-900 font-semibold group-hover:text-primary transition-colors">
                       {interview.title}
                     </h3>
                   </div>
@@ -115,13 +115,13 @@ export function TVSection() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-50 bg-dark/95 backdrop-blur-sm flex items-center justify-center p-4"
+          className="fixed inset-0 z-50 bg-white/95 backdrop-blur-sm flex items-center justify-center p-4"
           onClick={() => setActiveVideo(null)}
         >
           <motion.div
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            className="relative w-full max-w-4xl aspect-video bg-dark rounded-xl overflow-hidden"
+            className="relative w-full max-w-4xl aspect-video bg-white rounded-xl overflow-hidden"
             onClick={(e) => e.stopPropagation()}
           >
             <iframe
@@ -133,7 +133,7 @@ export function TVSection() {
             <Button
               variant="ghost"
               size="icon"
-              className="absolute top-4 right-4 bg-dark/50 hover:bg-dark text-white"
+              className="absolute top-4 right-4 bg-gray-100/50 hover:bg-white text-gray-900"
               onClick={() => setActiveVideo(null)}
             >
               <X size={24} />

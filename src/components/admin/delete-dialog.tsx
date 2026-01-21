@@ -52,23 +52,23 @@ export function DeleteDialog({
           <Button
             variant="ghost"
             size="icon"
-            className="text-gray-400 hover:text-red-400"
+            className="text-gray-600 hover:text-red-400"
           >
             <Trash2 size={18} />
           </Button>
         )}
       </AlertDialogTrigger>
-      <AlertDialogContent className="bg-dark-50 border-white/10">
+      <AlertDialogContent className="bg-gray-50 border-gray-200">
         <AlertDialogHeader>
-          <AlertDialogTitle className="text-white">{title}</AlertDialogTitle>
-          <AlertDialogDescription className="text-gray-400">
+          <AlertDialogTitle className="text-gray-900">{title}</AlertDialogTitle>
+          <AlertDialogDescription className="text-gray-600">
             {isPermanent
               ? 'سيتم حذف هذا العنصر نهائياً ولا يمكن استرجاعه.'
               : description}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter className="gap-2">
-          <AlertDialogCancel className="bg-dark border-white/10 text-white hover:bg-white/10">
+          <AlertDialogCancel className="bg-white border-gray-200 text-gray-900 hover:bg-gray-100">
             إلغاء
           </AlertDialogCancel>
           <AlertDialogAction
@@ -76,8 +76,8 @@ export function DeleteDialog({
             disabled={isLoading}
             className={
               isPermanent
-                ? 'bg-red-500 hover:bg-red-600 text-white'
-                : 'bg-primary hover:bg-primary/90 text-dark'
+                ? 'bg-red-500 hover:bg-red-600 text-gray-900'
+                : 'bg-primary hover:bg-primary/90 text-gray-900'
             }
           >
             {isLoading ? (

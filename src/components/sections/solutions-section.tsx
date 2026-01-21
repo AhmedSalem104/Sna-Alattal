@@ -53,7 +53,7 @@ export function SolutionsSection() {
   const isInView = useInView(ref, { once: true, margin: '-100px' });
 
   return (
-    <section ref={ref} className="section-padding bg-dark-50 relative overflow-hidden">
+    <section ref={ref} className="section-padding bg-gray-50 relative overflow-hidden">
       {/* Background Pattern */}
       <div className="absolute inset-0">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/5 rounded-full blur-3xl" />
@@ -71,8 +71,8 @@ export function SolutionsSection() {
             <span className="w-2 h-2 bg-primary rounded-full" />
             {t('solutions.title')}
           </div>
-          <h2 className="heading-2 text-white mb-4">{t('solutions.subtitle')}</h2>
-          <p className="text-gray-400">{t('solutions.description')}</p>
+          <h2 className="heading-2 text-gray-900 mb-4">{t('solutions.subtitle')}</h2>
+          <p className="text-gray-600">{t('solutions.description')}</p>
         </motion.div>
 
         {/* Solutions Grid */}
@@ -85,21 +85,21 @@ export function SolutionsSection() {
               transition={{ duration: 0.6, delay: index * 0.1 }}
             >
               <Link href={`/solutions/${solution.id}`}>
-                <div className="group relative p-6 rounded-2xl bg-white/5 border border-white/10 hover:border-primary/50 transition-all duration-300 h-full">
+                <div className="group relative p-6 rounded-2xl bg-gray-100 border border-gray-200 hover:border-primary/50 transition-all duration-300 h-full">
                   {/* Background Gradient */}
                   <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${solution.color} opacity-0 group-hover:opacity-100 transition-opacity`} />
 
                   <div className="relative z-10">
                     {/* Icon */}
-                    <div className={`w-14 h-14 rounded-xl bg-white/10 flex items-center justify-center mb-6 ${solution.iconColor} group-hover:scale-110 transition-transform`}>
+                    <div className={`w-14 h-14 rounded-xl bg-gray-100 flex items-center justify-center mb-6 ${solution.iconColor} group-hover:scale-110 transition-transform`}>
                       <solution.icon size={28} />
                     </div>
 
                     {/* Content */}
-                    <h3 className="text-xl font-semibold text-white mb-2 group-hover:text-primary transition-colors">
+                    <h3 className="text-xl font-semibold text-gray-900 mb-2 group-hover:text-primary transition-colors">
                       {solution.titleAr}
                     </h3>
-                    <p className="text-sm text-gray-400 mb-4">{solution.descAr}</p>
+                    <p className="text-sm text-gray-600 mb-4">{solution.descAr}</p>
 
                     {/* Link */}
                     <div className="flex items-center text-primary text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity">

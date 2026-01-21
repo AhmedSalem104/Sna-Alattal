@@ -65,9 +65,9 @@ export default function ExhibitionsPage() {
   const pastExhibitions = exhibitions.filter((e) => e.status === 'past');
 
   return (
-    <div className="min-h-screen bg-dark">
+    <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="relative py-32 bg-gradient-to-b from-primary/20 via-dark to-dark overflow-hidden">
+      <section className="relative py-32 bg-gradient-to-b from-primary/20 via-white to-white overflow-hidden">
         <div className="absolute inset-0">
           <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl" />
           <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-primary/5 rounded-full blur-3xl" />
@@ -83,10 +83,10 @@ export default function ExhibitionsPage() {
             <span className="inline-block px-4 py-1 bg-primary/20 text-primary rounded-full text-sm mb-4">
               {t('badge')}
             </span>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
               {t('title')}
             </h1>
-            <p className="text-xl text-gray-300">
+            <p className="text-xl text-gray-700">
               {t('subtitle')}
             </p>
           </motion.div>
@@ -103,8 +103,8 @@ export default function ExhibitionsPage() {
               viewport={{ once: true }}
               className="mb-12"
             >
-              <h2 className="text-3xl font-bold text-white mb-2">{t('upcoming')}</h2>
-              <p className="text-gray-400">{t('upcomingDesc')}</p>
+              <h2 className="text-3xl font-bold text-gray-900 mb-2">{t('upcoming')}</h2>
+              <p className="text-gray-600">{t('upcomingDesc')}</p>
             </motion.div>
 
             <div className="space-y-8">
@@ -127,15 +127,15 @@ export default function ExhibitionsPage() {
                         sizes="(max-width: 1024px) 100vw, 33vw"
                         className="object-cover"
                       />
-                      <div className="absolute top-4 right-4 px-3 py-1 bg-primary text-dark rounded-full text-sm font-medium">
+                      <div className="absolute top-4 right-4 px-3 py-1 bg-primary text-gray-900 rounded-full text-sm font-medium">
                         {t('comingSoon')}
                       </div>
                     </div>
 
                     {/* Content */}
                     <div className="lg:col-span-2 p-8">
-                      <h3 className="text-2xl font-bold text-white mb-4">{exhibition.name}</h3>
-                      <p className="text-gray-300 mb-6">{exhibition.description}</p>
+                      <h3 className="text-2xl font-bold text-gray-900 mb-4">{exhibition.name}</h3>
+                      <p className="text-gray-700 mb-6">{exhibition.description}</p>
 
                       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
                         <div className="flex items-center gap-3">
@@ -143,8 +143,8 @@ export default function ExhibitionsPage() {
                             <Calendar className="text-primary" size={20} />
                           </div>
                           <div>
-                            <p className="text-gray-400 text-sm">{t('date')}</p>
-                            <p className="text-white">{exhibition.date}</p>
+                            <p className="text-gray-600 text-sm">{t('date')}</p>
+                            <p className="text-gray-900">{exhibition.date}</p>
                           </div>
                         </div>
                         <div className="flex items-center gap-3">
@@ -152,8 +152,8 @@ export default function ExhibitionsPage() {
                             <MapPin className="text-primary" size={20} />
                           </div>
                           <div>
-                            <p className="text-gray-400 text-sm">{t('location')}</p>
-                            <p className="text-white">{exhibition.location}</p>
+                            <p className="text-gray-600 text-sm">{t('location')}</p>
+                            <p className="text-gray-900">{exhibition.location}</p>
                           </div>
                         </div>
                         <div className="flex items-center gap-3">
@@ -161,8 +161,8 @@ export default function ExhibitionsPage() {
                             <ExternalLink className="text-primary" size={20} />
                           </div>
                           <div>
-                            <p className="text-gray-400 text-sm">{t('booth')}</p>
-                            <p className="text-white">{exhibition.booth}</p>
+                            <p className="text-gray-600 text-sm">{t('booth')}</p>
+                            <p className="text-gray-900">{exhibition.booth}</p>
                           </div>
                         </div>
                       </div>
@@ -183,7 +183,7 @@ export default function ExhibitionsPage() {
       )}
 
       {/* Past Exhibitions */}
-      <section className="py-20 bg-dark-50">
+      <section className="py-20 bg-gray-50">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -191,8 +191,8 @@ export default function ExhibitionsPage() {
             viewport={{ once: true }}
             className="mb-12"
           >
-            <h2 className="text-3xl font-bold text-white mb-2">{t('past')}</h2>
-            <p className="text-gray-400">{t('pastDesc')}</p>
+            <h2 className="text-3xl font-bold text-gray-900 mb-2">{t('past')}</h2>
+            <p className="text-gray-600">{t('pastDesc')}</p>
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -203,7 +203,7 @@ export default function ExhibitionsPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
-                className="group bg-dark rounded-2xl overflow-hidden border border-white/10 hover:border-white/20 transition-all"
+                className="group bg-white rounded-2xl overflow-hidden border border-gray-200 hover:border-gray-300 transition-all"
               >
                 {/* Image */}
                 <div className="relative h-48 overflow-hidden">
@@ -218,20 +218,20 @@ export default function ExhibitionsPage() {
 
                 {/* Content */}
                 <div className="p-6">
-                  <h3 className="text-xl font-bold text-white mb-3">{exhibition.name}</h3>
+                  <h3 className="text-xl font-bold text-gray-900 mb-3">{exhibition.name}</h3>
 
                   <div className="space-y-2 mb-4">
-                    <div className="flex items-center gap-2 text-gray-400 text-sm">
+                    <div className="flex items-center gap-2 text-gray-600 text-sm">
                       <Calendar size={16} />
                       <span>{exhibition.date}</span>
                     </div>
-                    <div className="flex items-center gap-2 text-gray-400 text-sm">
+                    <div className="flex items-center gap-2 text-gray-600 text-sm">
                       <MapPin size={16} />
                       <span>{exhibition.location}</span>
                     </div>
                   </div>
 
-                  <p className="text-gray-400 text-sm">{exhibition.description}</p>
+                  <p className="text-gray-600 text-sm">{exhibition.description}</p>
                 </div>
               </motion.div>
             ))}
@@ -240,17 +240,17 @@ export default function ExhibitionsPage() {
       </section>
 
       {/* CTA */}
-      <section className="py-20 bg-gradient-to-r from-primary/20 via-dark to-primary/20">
+      <section className="py-20 bg-gradient-to-r from-primary/20 via-white to-primary/20">
         <div className="container mx-auto px-4 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
               {t('cta.title')}
             </h2>
-            <p className="text-gray-300 mb-8 max-w-2xl mx-auto">
+            <p className="text-gray-700 mb-8 max-w-2xl mx-auto">
               {t('cta.subtitle')}
             </p>
             <Link href="/contact">

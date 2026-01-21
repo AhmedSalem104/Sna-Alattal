@@ -17,18 +17,18 @@ export function LanguageSwitcher() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="icon" className="text-gray-400 hover:text-white">
+        <Button variant="ghost" size="icon" className="text-gray-600 hover:text-primary">
           <Globe className="h-5 w-5" />
           <span className="sr-only">تغيير اللغة</span>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="bg-dark-50 border-white/10">
+      <DropdownMenuContent align="end" className="bg-gray-50 border-gray-200">
         {locales.map((loc) => (
           <DropdownMenuItem
             key={loc}
             onClick={() => changeLocale(loc as Locale)}
             className={`cursor-pointer ${
-              locale === loc ? 'text-primary' : 'text-gray-300 hover:text-white'
+              locale === loc ? 'text-primary' : 'text-gray-700 hover:text-primary'
             }`}
           >
             {localeNames[loc as Locale]}

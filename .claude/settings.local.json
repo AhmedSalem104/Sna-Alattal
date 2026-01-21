@@ -39,7 +39,15 @@
       "Bash(npx tsx:*)",
       "Bash(npm run db:seed:*)",
       "Bash(powershell -Command \"cd ''C:\\\\Users\\\\B-SMART\\\\Desktop\\\\Al-attal S.N.A\\\\Sna-Alattal''; npm run db:seed\")",
-      "Bash(git commit:*)"
+      "Bash(git commit:*)",
+      "Bash(node -e:*)",
+      "Bash(netstat:*)",
+      "Bash(findstr:*)",
+      "Bash(powershell:*)",
+      "Bash(start cmd /k \"npm run dev\")",
+      "Bash(cmd /c \"cd /d \"\"C:\\\\Users\\\\B-SMART\\\\Desktop\\\\Al-attal S.N.A\\\\Sna-Alattal\"\" && start /B npm run dev > dev-output.log 2>&1\")",
+      "Bash(find:*)",
+      "Bash(grep:*)"
     ]
   }
 }

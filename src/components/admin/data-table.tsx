@@ -71,27 +71,27 @@ export function DataTable<TData, TValue>({
       {searchKey && (
         <div className="flex items-center gap-4">
           <div className="relative flex-1 max-w-sm">
-            <Search className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+            <Search className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-600" size={18} />
             <Input
               placeholder={searchPlaceholder}
               value={(table.getColumn(searchKey)?.getFilterValue() as string) ?? ''}
               onChange={(event) =>
                 table.getColumn(searchKey)?.setFilterValue(event.target.value)
               }
-              className="pr-10 bg-dark-50 border-white/10 text-white"
+              className="pr-10 bg-gray-50 border-gray-200 text-gray-900"
             />
           </div>
         </div>
       )}
 
       {/* Table */}
-      <div className="rounded-xl border border-white/10 overflow-hidden">
+      <div className="rounded-xl border border-gray-200 overflow-hidden">
         <Table>
-          <TableHeader className="bg-dark-50">
+          <TableHeader className="bg-gray-50">
             {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id} className="border-white/10 hover:bg-transparent">
+              <TableRow key={headerGroup.id} className="border-gray-200 hover:bg-transparent">
                 {headerGroup.headers.map((header) => (
-                  <TableHead key={header.id} className="text-gray-400 font-medium">
+                  <TableHead key={header.id} className="text-gray-600 font-medium">
                     {header.isPlaceholder
                       ? null
                       : flexRender(
@@ -109,10 +109,10 @@ export function DataTable<TData, TValue>({
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && 'selected'}
-                  className="border-white/10 hover:bg-white/5"
+                  className="border-gray-200 hover:bg-gray-100"
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id} className="text-white">
+                    <TableCell key={cell.id} className="text-gray-900">
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()
@@ -125,7 +125,7 @@ export function DataTable<TData, TValue>({
               <TableRow>
                 <TableCell
                   colSpan={columns.length}
-                  className="h-24 text-center text-gray-400"
+                  className="h-24 text-center text-gray-600"
                 >
                   لا توجد بيانات
                 </TableCell>
@@ -137,7 +137,7 @@ export function DataTable<TData, TValue>({
 
       {/* Pagination */}
       <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2 text-sm text-gray-400">
+        <div className="flex items-center gap-2 text-sm text-gray-600">
           <span>عرض</span>
           <Select
             value={`${table.getState().pagination.pageSize}`}
@@ -145,10 +145,10 @@ export function DataTable<TData, TValue>({
               table.setPageSize(Number(value));
             }}
           >
-            <SelectTrigger className="h-8 w-[70px] bg-dark-50 border-white/10">
+            <SelectTrigger className="h-8 w-[70px] bg-gray-50 border-gray-200">
               <SelectValue placeholder={table.getState().pagination.pageSize} />
             </SelectTrigger>
-            <SelectContent className="bg-dark-50 border-white/10">
+            <SelectContent className="bg-gray-50 border-gray-200">
               {[10, 20, 30, 40, 50].map((pageSize) => (
                 <SelectItem key={pageSize} value={`${pageSize}`}>
                   {pageSize}
@@ -160,7 +160,7 @@ export function DataTable<TData, TValue>({
         </div>
 
         <div className="flex items-center gap-2">
-          <div className="text-sm text-gray-400">
+          <div className="text-sm text-gray-600">
             صفحة {table.getState().pagination.pageIndex + 1} من{' '}
             {table.getPageCount()}
           </div>
@@ -168,7 +168,7 @@ export function DataTable<TData, TValue>({
             <Button
               variant="outline"
               size="icon"
-              className="h-8 w-8 border-white/10"
+              className="h-8 w-8 border-gray-200"
               onClick={() => table.setPageIndex(0)}
               disabled={!table.getCanPreviousPage()}
             >
@@ -177,7 +177,7 @@ export function DataTable<TData, TValue>({
             <Button
               variant="outline"
               size="icon"
-              className="h-8 w-8 border-white/10"
+              className="h-8 w-8 border-gray-200"
               onClick={() => table.previousPage()}
               disabled={!table.getCanPreviousPage()}
             >
@@ -186,7 +186,7 @@ export function DataTable<TData, TValue>({
             <Button
               variant="outline"
               size="icon"
-              className="h-8 w-8 border-white/10"
+              className="h-8 w-8 border-gray-200"
               onClick={() => table.nextPage()}
               disabled={!table.getCanNextPage()}
             >
@@ -195,7 +195,7 @@ export function DataTable<TData, TValue>({
             <Button
               variant="outline"
               size="icon"
-              className="h-8 w-8 border-white/10"
+              className="h-8 w-8 border-gray-200"
               onClick={() => table.setPageIndex(table.getPageCount() - 1)}
               disabled={!table.getCanNextPage()}
             >

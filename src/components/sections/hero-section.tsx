@@ -75,11 +75,11 @@ export function HeroSection() {
   return (
     <section
       ref={containerRef}
-      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-dark"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-white"
     >
       {/* Background Image with Parallax */}
       <motion.div style={{ y }} className="absolute inset-0 z-0">
-        <div className="absolute inset-0 bg-gradient-to-b from-dark/80 via-dark/60 to-dark z-10" />
+        <div className="absolute inset-0 bg-gradient-to-b from-white/80 via-white/60 to-white z-10" />
         <Image
           src="/images/logo.jpg"
           alt="Background"
@@ -116,7 +116,7 @@ export function HeroSection() {
         </motion.div>
 
         {/* Title */}
-        <h1 className="hero-title heading-1 text-white mb-6 overflow-hidden">
+        <h1 className="hero-title heading-1 text-gray-900 mb-6 overflow-hidden">
           {titleWords.map((word, wordIndex) => (
             <span key={wordIndex} className="inline-block mx-2 text-primary">
               {word}
@@ -130,7 +130,7 @@ export function HeroSection() {
         </p>
 
         {/* Description */}
-        <p className="hero-description text-lg text-gray-300 max-w-2xl mx-auto mb-10">
+        <p className="hero-description text-lg text-gray-700 max-w-2xl mx-auto mb-10">
           {t('hero.description')}
         </p>
 
@@ -161,7 +161,7 @@ export function HeroSection() {
               <div className="text-4xl md:text-5xl font-bold text-primary mb-2">
                 {stat.value}
               </div>
-              <div className="text-sm text-gray-400">{stat.label}</div>
+              <div className="text-sm text-gray-600">{stat.label}</div>
             </div>
           ))}
         </div>
@@ -177,7 +177,7 @@ export function HeroSection() {
         <motion.div
           animate={{ y: [0, 10, 0] }}
           transition={{ duration: 1.5, repeat: Infinity }}
-          className="flex flex-col items-center text-gray-400"
+          className="flex flex-col items-center text-gray-600"
         >
           <span className="text-xs mb-2">Scroll</span>
           <ChevronDown size={24} className="text-primary" />

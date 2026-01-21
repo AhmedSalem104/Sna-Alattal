@@ -113,7 +113,7 @@ export default function MessagesPage() {
       cell: ({ row }) => (
         <div className="w-8">
           {row.original.isRead ? (
-            <MailOpen size={18} className="text-gray-500" />
+            <MailOpen size={18} className="text-gray-600" />
           ) : (
             <Mail size={18} className="text-primary" />
           )}
@@ -125,10 +125,10 @@ export default function MessagesPage() {
       header: 'المرسل',
       cell: ({ row }) => (
         <div>
-          <p className={`font-medium ${!row.original.isRead ? 'text-white' : 'text-gray-300'}`}>
+          <p className={`font-medium ${!row.original.isRead ? 'text-gray-900' : 'text-gray-700'}`}>
             {row.original.name}
           </p>
-          <p className="text-xs text-gray-400">{row.original.email}</p>
+          <p className="text-xs text-gray-600">{row.original.email}</p>
         </div>
       ),
     },
@@ -136,7 +136,7 @@ export default function MessagesPage() {
       accessorKey: 'subject',
       header: 'الموضوع',
       cell: ({ row }) => (
-        <Badge variant="outline" className="border-white/20">
+        <Badge variant="outline" className="border-gray-300">
           {row.original.subject === 'quote'
             ? 'طلب عرض سعر'
             : row.original.subject === 'support'
@@ -153,14 +153,14 @@ export default function MessagesPage() {
       accessorKey: 'message',
       header: 'الرسالة',
       cell: ({ row }) => (
-        <p className="text-gray-400 truncate max-w-xs">{row.original.message}</p>
+        <p className="text-gray-600 truncate max-w-xs">{row.original.message}</p>
       ),
     },
     {
       accessorKey: 'createdAt',
       header: 'التاريخ',
       cell: ({ row }) => (
-        <span className="text-gray-400 text-sm flex items-center gap-1">
+        <span className="text-gray-600 text-sm flex items-center gap-1">
           <Calendar size={14} />
           {new Date(row.original.createdAt).toLocaleDateString('ar-EG')}
         </span>
@@ -176,7 +176,7 @@ export default function MessagesPage() {
               <MoreHorizontal size={18} />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="bg-dark-50 border-white/10">
+          <DropdownMenuContent align="end" className="bg-gray-50 border-gray-200">
             <DropdownMenuItem onClick={() => viewMessage(row.original)} className="cursor-pointer">
               <Eye size={16} className="ml-2" />
               عرض
@@ -215,8 +215,8 @@ export default function MessagesPage() {
         className="flex items-center justify-between"
       >
         <div>
-          <h1 className="text-2xl font-bold text-white">الرسائل</h1>
-          <p className="text-gray-400">
+          <h1 className="text-2xl font-bold text-gray-900">الرسائل</h1>
+          <p className="text-gray-600">
             {unreadCount > 0 ? `${unreadCount} رسالة غير مقروءة` : 'لا توجد رسائل جديدة'}
           </p>
         </div>
@@ -228,7 +228,7 @@ export default function MessagesPage() {
         transition={{ delay: 0.1 }}
       >
         {isLoading ? (
-          <div className="text-center py-12 text-gray-400">جاري التحميل...</div>
+          <div className="text-center py-12 text-gray-600">جاري التحميل...</div>
         ) : (
           <DataTable
             columns={columns}
@@ -241,26 +241,26 @@ export default function MessagesPage() {
 
       {/* Message Detail Dialog */}
       <Dialog open={!!selectedMessage} onOpenChange={() => setSelectedMessage(null)}>
-        <DialogContent className="bg-dark-50 border-white/10 max-w-2xl">
+        <DialogContent className="bg-gray-50 border-gray-200 max-w-2xl">
           <DialogHeader>
-            <DialogTitle className="text-white">تفاصيل الرسالة</DialogTitle>
+            <DialogTitle className="text-gray-900">تفاصيل الرسالة</DialogTitle>
           </DialogHeader>
           {selectedMessage && (
             <div className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <p className="text-gray-400 text-sm">الاسم</p>
-                  <p className="text-white font-medium">{selectedMessage.name}</p>
+                  <p className="text-gray-600 text-sm">الاسم</p>
+                  <p className="text-gray-900 font-medium">{selectedMessage.name}</p>
                 </div>
                 <div>
-                  <p className="text-gray-400 text-sm">البريد الإلكتروني</p>
+                  <p className="text-gray-600 text-sm">البريد الإلكتروني</p>
                   <a href={`mailto:${selectedMessage.email}`} className="text-primary hover:underline">
                     {selectedMessage.email}
                   </a>
                 </div>
                 {selectedMessage.phone && (
                   <div>
-                    <p className="text-gray-400 text-sm">الهاتف</p>
+                    <p className="text-gray-600 text-sm">الهاتف</p>
                     <a href={`tel:${selectedMessage.phone}`} className="text-primary hover:underline flex items-center gap-1">
                       <Phone size={14} />
                       {selectedMessage.phone}
@@ -269,14 +269,14 @@ export default function MessagesPage() {
                 )}
                 {selectedMessage.company && (
                   <div>
-                    <p className="text-gray-400 text-sm">الشركة</p>
-                    <p className="text-white">{selectedMessage.company}</p>
+                    <p className="text-gray-600 text-sm">الشركة</p>
+                    <p className="text-gray-900">{selectedMessage.company}</p>
                   </div>
                 )}
               </div>
               <div>
-                <p className="text-gray-400 text-sm mb-2">الموضوع</p>
-                <Badge variant="outline" className="border-white/20">
+                <p className="text-gray-600 text-sm mb-2">الموضوع</p>
+                <Badge variant="outline" className="border-gray-300">
                   {selectedMessage.subject === 'quote'
                     ? 'طلب عرض سعر'
                     : selectedMessage.subject === 'support'
@@ -289,13 +289,13 @@ export default function MessagesPage() {
                 </Badge>
               </div>
               <div>
-                <p className="text-gray-400 text-sm mb-2">الرسالة</p>
-                <div className="bg-dark rounded-xl p-4 text-white whitespace-pre-wrap">
+                <p className="text-gray-600 text-sm mb-2">الرسالة</p>
+                <div className="bg-white rounded-xl p-4 text-gray-900 whitespace-pre-wrap">
                   {selectedMessage.message}
                 </div>
               </div>
-              <div className="flex justify-between items-center pt-4 border-t border-white/10">
-                <span className="text-gray-400 text-sm flex items-center gap-1">
+              <div className="flex justify-between items-center pt-4 border-t border-gray-200">
+                <span className="text-gray-600 text-sm flex items-center gap-1">
                   <Calendar size={14} />
                   {new Date(selectedMessage.createdAt).toLocaleDateString('ar-EG', {
                     year: 'numeric',

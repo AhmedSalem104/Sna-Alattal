@@ -34,9 +34,9 @@ export default function ClientsPage() {
   const tCommon = useTranslations('clients');
 
   return (
-    <div className="min-h-screen bg-dark">
+    <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="relative py-32 bg-gradient-to-b from-primary/20 via-dark to-dark overflow-hidden">
+      <section className="relative py-32 bg-gradient-to-b from-primary/20 via-white to-white overflow-hidden">
         <div className="absolute inset-0">
           <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl" />
           <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-primary/5 rounded-full blur-3xl" />
@@ -52,10 +52,10 @@ export default function ClientsPage() {
             <span className="inline-block px-4 py-1 bg-primary/20 text-primary rounded-full text-sm mb-4">
               {t('badge')}
             </span>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
               {t('title')}
             </h1>
-            <p className="text-xl text-gray-300">
+            <p className="text-xl text-gray-700">
               {t('subtitle')}
             </p>
           </motion.div>
@@ -63,7 +63,7 @@ export default function ClientsPage() {
       </section>
 
       {/* Stats Section */}
-      <section className="py-16 bg-dark-50">
+      <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {stats.map((stat, index) => (
@@ -81,7 +81,7 @@ export default function ClientsPage() {
                 <div className="text-3xl md:text-4xl font-bold text-primary mb-2">
                   {stat.value}
                 </div>
-                <div className="text-gray-400">{t(stat.labelKey)}</div>
+                <div className="text-gray-600">{t(stat.labelKey)}</div>
               </motion.div>
             ))}
           </div>
@@ -97,10 +97,10 @@ export default function ClientsPage() {
             viewport={{ once: true }}
             className="text-center mb-12"
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
               {t('ourClients')}
             </h2>
-            <p className="text-gray-400 max-w-2xl mx-auto">
+            <p className="text-gray-600 max-w-2xl mx-auto">
               {t('ourClientsDesc')}
             </p>
           </motion.div>
@@ -115,7 +115,7 @@ export default function ClientsPage() {
                 transition={{ duration: 0.4, delay: index * 0.05 }}
                 className="group"
               >
-                <div className="aspect-square bg-white/5 rounded-xl p-6 flex items-center justify-center border border-white/10 hover:border-primary/50 hover:bg-white/10 transition-all duration-300">
+                <div className="aspect-square bg-gray-100 rounded-xl p-6 flex items-center justify-center border border-gray-200 hover:border-primary/50 hover:bg-gray-100 transition-all duration-300">
                   <Image
                     src={client.logo}
                     alt={client.name}
@@ -131,7 +131,7 @@ export default function ClientsPage() {
       </section>
 
       {/* Trust Indicators */}
-      <section className="py-20 bg-dark-50">
+      <section className="py-20 bg-gray-50">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -139,10 +139,10 @@ export default function ClientsPage() {
             viewport={{ once: true }}
             className="text-center mb-12"
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
               {t('whyTrustUs')}
             </h2>
-            <p className="text-gray-400 max-w-2xl mx-auto">
+            <p className="text-gray-600 max-w-2xl mx-auto">
               {t('whyTrustUsDesc')}
             </p>
           </motion.div>
@@ -152,13 +152,13 @@ export default function ClientsPage() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="bg-dark p-8 rounded-2xl border border-white/10"
+              className="bg-white p-8 rounded-2xl border border-gray-200"
             >
               <div className="w-14 h-14 bg-primary/20 rounded-xl flex items-center justify-center mb-6">
                 <Award className="text-primary" size={28} />
               </div>
-              <h3 className="text-xl font-bold text-white mb-3">{t('trust.quality.title')}</h3>
-              <p className="text-gray-400">{t('trust.quality.desc')}</p>
+              <h3 className="text-xl font-bold text-gray-900 mb-3">{t('trust.quality.title')}</h3>
+              <p className="text-gray-600">{t('trust.quality.desc')}</p>
             </motion.div>
 
             <motion.div
@@ -166,13 +166,13 @@ export default function ClientsPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.1 }}
-              className="bg-dark p-8 rounded-2xl border border-white/10"
+              className="bg-white p-8 rounded-2xl border border-gray-200"
             >
               <div className="w-14 h-14 bg-primary/20 rounded-xl flex items-center justify-center mb-6">
                 <Users className="text-primary" size={28} />
               </div>
-              <h3 className="text-xl font-bold text-white mb-3">{t('trust.support.title')}</h3>
-              <p className="text-gray-400">{t('trust.support.desc')}</p>
+              <h3 className="text-xl font-bold text-gray-900 mb-3">{t('trust.support.title')}</h3>
+              <p className="text-gray-600">{t('trust.support.desc')}</p>
             </motion.div>
 
             <motion.div
@@ -180,30 +180,30 @@ export default function ClientsPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.2 }}
-              className="bg-dark p-8 rounded-2xl border border-white/10"
+              className="bg-white p-8 rounded-2xl border border-gray-200"
             >
               <div className="w-14 h-14 bg-primary/20 rounded-xl flex items-center justify-center mb-6">
                 <Globe className="text-primary" size={28} />
               </div>
-              <h3 className="text-xl font-bold text-white mb-3">{t('trust.global.title')}</h3>
-              <p className="text-gray-400">{t('trust.global.desc')}</p>
+              <h3 className="text-xl font-bold text-gray-900 mb-3">{t('trust.global.title')}</h3>
+              <p className="text-gray-600">{t('trust.global.desc')}</p>
             </motion.div>
           </div>
         </div>
       </section>
 
       {/* CTA */}
-      <section className="py-20 bg-gradient-to-r from-primary/20 via-dark to-primary/20">
+      <section className="py-20 bg-gradient-to-r from-primary/20 via-white to-primary/20">
         <div className="container mx-auto px-4 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
               {t('cta.title')}
             </h2>
-            <p className="text-gray-300 mb-8 max-w-2xl mx-auto">
+            <p className="text-gray-700 mb-8 max-w-2xl mx-auto">
               {t('cta.subtitle')}
             </p>
             <Link href="/contact">

@@ -99,9 +99,9 @@ export default function ProductsPage() {
   });
 
   return (
-    <div className="min-h-screen bg-dark">
+    <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="relative py-32 bg-gradient-to-b from-primary/20 via-dark to-dark overflow-hidden">
+      <section className="relative py-32 bg-gradient-to-b from-primary/20 via-white to-white overflow-hidden">
         <div className="absolute inset-0">
           <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl" />
           <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-primary/5 rounded-full blur-3xl" />
@@ -117,10 +117,10 @@ export default function ProductsPage() {
             <span className="inline-block px-4 py-1 bg-primary/20 text-primary rounded-full text-sm mb-4">
               {t('badge')}
             </span>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
               {t('title')}
             </h1>
-            <p className="text-xl text-gray-300">
+            <p className="text-xl text-gray-700">
               {t('subtitle')}
             </p>
           </motion.div>
@@ -128,17 +128,17 @@ export default function ProductsPage() {
       </section>
 
       {/* Filters Section */}
-      <section className="py-8 border-b border-white/10">
+      <section className="py-8 border-b border-gray-200">
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
             {/* Search */}
             <div className="relative w-full md:w-96">
-              <Search className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
+              <Search className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-600" size={20} />
               <Input
                 placeholder={t('searchPlaceholder')}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pr-10 bg-dark-50 border-white/10 text-white"
+                className="pr-10 bg-gray-50 border-gray-200 text-gray-900"
               />
             </div>
 
@@ -150,7 +150,7 @@ export default function ProductsPage() {
                   variant={selectedCategory === category.id ? 'gold' : 'outline'}
                   size="sm"
                   onClick={() => setSelectedCategory(category.id)}
-                  className={selectedCategory !== category.id ? 'border-white/20 text-gray-300 hover:text-white' : ''}
+                  className={selectedCategory !== category.id ? 'border-gray-300 text-gray-700 hover:text-primary' : ''}
                 >
                   {t(category.nameKey)}
                 </Button>
@@ -165,7 +165,7 @@ export default function ProductsPage() {
         <div className="container mx-auto px-4">
           {filteredProducts.length === 0 ? (
             <div className="text-center py-20">
-              <p className="text-gray-400 text-xl">{t('noProducts')}</p>
+              <p className="text-gray-600 text-xl">{t('noProducts')}</p>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -177,10 +177,10 @@ export default function ProductsPage() {
                   transition={{ duration: 0.5, delay: index * 0.1 }}
                 >
                   <Link href={`/products/${product.slug}`}>
-                    <div className="group relative bg-dark-50 rounded-2xl overflow-hidden border border-white/10 hover:border-primary/50 transition-all duration-300">
+                    <div className="group relative bg-gray-50 rounded-2xl overflow-hidden border border-gray-200 hover:border-primary/50 transition-all duration-300">
                       {/* Featured Badge */}
                       {product.featured && (
-                        <div className="absolute top-4 right-4 z-10 flex items-center gap-1 px-3 py-1 bg-primary text-dark rounded-full text-sm font-medium">
+                        <div className="absolute top-4 right-4 z-10 flex items-center gap-1 px-3 py-1 bg-primary text-gray-900 rounded-full text-sm font-medium">
                           <Star size={14} fill="currentColor" />
                           {t('featured')}
                         </div>
@@ -188,7 +188,7 @@ export default function ProductsPage() {
 
                       {/* Image */}
                       <div className="relative h-64 overflow-hidden">
-                        <div className="absolute inset-0 bg-gradient-to-t from-dark-50 via-transparent to-transparent z-10" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-white-50 via-transparent to-transparent z-10" />
                         <Image
                           src={product.image}
                           alt={t(product.nameKey)}
@@ -200,10 +200,10 @@ export default function ProductsPage() {
 
                       {/* Content */}
                       <div className="p-6">
-                        <h3 className="text-xl font-bold text-white mb-2 group-hover:text-primary transition-colors">
+                        <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-primary transition-colors">
                           {t(product.nameKey)}
                         </h3>
-                        <p className="text-gray-400 mb-4 line-clamp-2">
+                        <p className="text-gray-600 mb-4 line-clamp-2">
                           {t(product.descKey)}
                         </p>
 
@@ -212,7 +212,7 @@ export default function ProductsPage() {
                           {product.specs.map((spec, i) => (
                             <span
                               key={i}
-                              className="px-2 py-1 bg-white/5 text-gray-300 text-xs rounded"
+                              className="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded"
                             >
                               {spec}
                             </span>
@@ -235,17 +235,17 @@ export default function ProductsPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-primary/20 via-dark to-primary/20">
+      <section className="py-20 bg-gradient-to-r from-primary/20 via-white to-primary/20">
         <div className="container mx-auto px-4 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
               {t('cta.title')}
             </h2>
-            <p className="text-gray-300 mb-8 max-w-2xl mx-auto">
+            <p className="text-gray-700 mb-8 max-w-2xl mx-auto">
               {t('cta.subtitle')}
             </p>
             <Link href="/contact">

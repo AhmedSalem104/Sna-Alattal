@@ -53,9 +53,9 @@ export default function AboutPage() {
   const t = useTranslations('aboutPage');
 
   return (
-    <div className="min-h-screen bg-dark">
+    <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="relative py-32 bg-gradient-to-b from-primary/20 via-dark to-dark overflow-hidden">
+      <section className="relative py-32 bg-gradient-to-b from-primary/20 via-white to-white overflow-hidden">
         <div className="absolute inset-0">
           <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl" />
           <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-primary/5 rounded-full blur-3xl" />
@@ -71,10 +71,10 @@ export default function AboutPage() {
             <span className="inline-block px-4 py-1 bg-primary/20 text-primary rounded-full text-sm mb-4">
               {t('badge')}
             </span>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
               {t('title')}
             </h1>
-            <p className="text-xl text-gray-300">
+            <p className="text-xl text-gray-700">
               {t('subtitle')}
             </p>
           </motion.div>
@@ -102,7 +102,7 @@ export default function AboutPage() {
                   />
                 </div>
                 {/* Experience Badge */}
-                <div className="absolute -bottom-6 -left-6 bg-primary text-dark p-6 rounded-2xl shadow-xl">
+                <div className="absolute -bottom-6 -left-6 bg-primary text-gray-900 p-6 rounded-2xl shadow-xl">
                   <div className="text-4xl font-bold">30+</div>
                   <div className="text-sm font-medium">{t('yearsExperience')}</div>
                 </div>
@@ -115,27 +115,27 @@ export default function AboutPage() {
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.2 }}
             >
-              <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
                 {t('story.title')}
               </h2>
-              <p className="text-gray-300 mb-6 leading-relaxed">
+              <p className="text-gray-700 mb-6 leading-relaxed">
                 {t('story.p1')}
               </p>
-              <p className="text-gray-300 mb-6 leading-relaxed">
+              <p className="text-gray-700 mb-6 leading-relaxed">
                 {t('story.p2')}
               </p>
               <div className="flex flex-wrap gap-8">
                 <div>
                   <div className="text-3xl font-bold text-primary">500+</div>
-                  <div className="text-gray-400">{t('stats.projects')}</div>
+                  <div className="text-gray-600">{t('stats.projects')}</div>
                 </div>
                 <div>
                   <div className="text-3xl font-bold text-primary">300+</div>
-                  <div className="text-gray-400">{t('stats.clients')}</div>
+                  <div className="text-gray-600">{t('stats.clients')}</div>
                 </div>
                 <div>
                   <div className="text-3xl font-bold text-primary">15+</div>
-                  <div className="text-gray-400">{t('stats.countries')}</div>
+                  <div className="text-gray-600">{t('stats.countries')}</div>
                 </div>
               </div>
             </motion.div>
@@ -144,7 +144,7 @@ export default function AboutPage() {
       </section>
 
       {/* Vision & Mission */}
-      <section className="py-20 bg-dark-50">
+      <section className="py-20 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* Vision */}
@@ -152,13 +152,13 @@ export default function AboutPage() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="bg-dark p-8 rounded-2xl border border-white/10"
+              className="bg-white p-8 rounded-2xl border border-gray-200"
             >
               <div className="w-16 h-16 bg-primary/20 rounded-xl flex items-center justify-center mb-6">
                 <Eye className="text-primary" size={32} />
               </div>
-              <h3 className="text-2xl font-bold text-white mb-4">{t('vision.title')}</h3>
-              <p className="text-gray-300 leading-relaxed">{t('vision.content')}</p>
+              <h3 className="text-2xl font-bold text-gray-900 mb-4">{t('vision.title')}</h3>
+              <p className="text-gray-700 leading-relaxed">{t('vision.content')}</p>
             </motion.div>
 
             {/* Mission */}
@@ -167,13 +167,13 @@ export default function AboutPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.1 }}
-              className="bg-dark p-8 rounded-2xl border border-white/10"
+              className="bg-white p-8 rounded-2xl border border-gray-200"
             >
               <div className="w-16 h-16 bg-primary/20 rounded-xl flex items-center justify-center mb-6">
                 <Target className="text-primary" size={32} />
               </div>
-              <h3 className="text-2xl font-bold text-white mb-4">{t('mission.title')}</h3>
-              <p className="text-gray-300 leading-relaxed">{t('mission.content')}</p>
+              <h3 className="text-2xl font-bold text-gray-900 mb-4">{t('mission.title')}</h3>
+              <p className="text-gray-700 leading-relaxed">{t('mission.content')}</p>
             </motion.div>
           </div>
         </div>
@@ -188,10 +188,10 @@ export default function AboutPage() {
             viewport={{ once: true }}
             className="text-center mb-12"
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
               {t('values.title')}
             </h2>
-            <p className="text-gray-400 max-w-2xl mx-auto">
+            <p className="text-gray-600 max-w-2xl mx-auto">
               {t('values.subtitle')}
             </p>
           </motion.div>
@@ -204,13 +204,13 @@ export default function AboutPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
-                className="bg-dark-50 p-6 rounded-2xl border border-white/10 hover:border-primary/50 transition-colors group"
+                className="bg-gray-50 p-6 rounded-2xl border border-gray-200 hover:border-primary/50 transition-colors group"
               >
                 <div className="w-14 h-14 bg-primary/20 rounded-xl flex items-center justify-center mb-4 group-hover:bg-primary/30 transition-colors">
                   <value.icon className="text-primary" size={28} />
                 </div>
-                <h3 className="text-xl font-bold text-white mb-2">{t(value.titleKey)}</h3>
-                <p className="text-gray-400">{t(value.descKey)}</p>
+                <h3 className="text-xl font-bold text-gray-900 mb-2">{t(value.titleKey)}</h3>
+                <p className="text-gray-600">{t(value.descKey)}</p>
               </motion.div>
             ))}
           </div>
@@ -218,7 +218,7 @@ export default function AboutPage() {
       </section>
 
       {/* Timeline */}
-      <section className="py-20 bg-dark-50">
+      <section className="py-20 bg-gray-50">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -226,10 +226,10 @@ export default function AboutPage() {
             viewport={{ once: true }}
             className="text-center mb-12"
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
               {t('timeline.title')}
             </h2>
-            <p className="text-gray-400">{t('timeline.subtitle')}</p>
+            <p className="text-gray-600">{t('timeline.subtitle')}</p>
           </motion.div>
 
           <div className="max-w-4xl mx-auto">
@@ -249,12 +249,12 @@ export default function AboutPage() {
                   }`}
                 >
                   <div className="flex-1">
-                    <div className="bg-dark p-6 rounded-xl border border-white/10">
+                    <div className="bg-white p-6 rounded-xl border border-gray-200">
                       <div className="flex items-center gap-2 mb-2">
                         <Calendar className="text-primary" size={18} />
                         <span className="text-primary font-bold">{item.year}</span>
                       </div>
-                      <p className="text-gray-300">{item.event}</p>
+                      <p className="text-gray-700">{item.event}</p>
                     </div>
                   </div>
                   <div className="w-4 h-4 bg-primary rounded-full relative z-10 flex-shrink-0" />
@@ -267,17 +267,17 @@ export default function AboutPage() {
       </section>
 
       {/* CTA */}
-      <section className="py-20 bg-gradient-to-r from-primary/20 via-dark to-primary/20">
+      <section className="py-20 bg-gradient-to-r from-primary/20 via-white to-primary/20">
         <div className="container mx-auto px-4 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
               {t('cta.title')}
             </h2>
-            <p className="text-gray-300 mb-8 max-w-2xl mx-auto">
+            <p className="text-gray-700 mb-8 max-w-2xl mx-auto">
               {t('cta.subtitle')}
             </p>
             <Link href="/contact">

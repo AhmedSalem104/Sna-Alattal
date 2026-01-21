@@ -54,7 +54,7 @@ export function ContactSection() {
   };
 
   return (
-    <section ref={ref} className="section-padding bg-dark relative overflow-hidden">
+    <section ref={ref} className="section-padding bg-white relative overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0">
         <div className="absolute bottom-0 right-0 w-1/2 h-1/2 bg-primary/5 rounded-full blur-3xl" />
@@ -72,7 +72,7 @@ export function ContactSection() {
             <Mail size={16} />
             {t('contact.title')}
           </div>
-          <h2 className="heading-2 text-white mb-4">{t('contact.subtitle')}</h2>
+          <h2 className="heading-2 text-gray-900 mb-4">{t('contact.subtitle')}</h2>
         </motion.div>
 
         <div className="grid lg:grid-cols-2 gap-12">
@@ -84,8 +84,8 @@ export function ContactSection() {
             className="space-y-8"
           >
             {/* Egypt Office */}
-            <div className="p-6 bg-white/5 rounded-2xl border border-white/10">
-              <h3 className="text-xl font-semibold text-white mb-4">
+            <div className="p-6 bg-gray-100 rounded-2xl border border-gray-200">
+              <h3 className="text-xl font-semibold text-gray-900 mb-4">
                 {t('contact.info.egypt.title')}
               </h3>
               <div className="space-y-4">
@@ -93,13 +93,13 @@ export function ContactSection() {
                   <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center shrink-0">
                     <MapPin className="text-primary" size={20} />
                   </div>
-                  <p className="text-gray-400">{t('contact.info.egypt.address')}</p>
+                  <p className="text-gray-600">{t('contact.info.egypt.address')}</p>
                 </div>
                 <div className="flex items-center gap-4">
                   <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center shrink-0">
                     <Phone className="text-primary" size={20} />
                   </div>
-                  <a href="tel:+201032221038" className="text-gray-400 hover:text-primary transition-colors">
+                  <a href="tel:+201032221038" className="text-gray-600 hover:text-primary transition-colors">
                     {t('contact.info.egypt.phone')}
                   </a>
                 </div>
@@ -107,7 +107,7 @@ export function ContactSection() {
                   <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center shrink-0">
                     <Mail className="text-primary" size={20} />
                   </div>
-                  <a href="mailto:info@sna-attal.com" className="text-gray-400 hover:text-primary transition-colors">
+                  <a href="mailto:info@sna-attal.com" className="text-gray-600 hover:text-primary transition-colors">
                     info@sna-attal.com
                   </a>
                 </div>
@@ -115,8 +115,8 @@ export function ContactSection() {
             </div>
 
             {/* Turkey Office */}
-            <div className="p-6 bg-white/5 rounded-2xl border border-white/10">
-              <h3 className="text-xl font-semibold text-white mb-4">
+            <div className="p-6 bg-gray-100 rounded-2xl border border-gray-200">
+              <h3 className="text-xl font-semibold text-gray-900 mb-4">
                 {t('contact.info.turkey.title')}
               </h3>
               <div className="space-y-4">
@@ -124,13 +124,13 @@ export function ContactSection() {
                   <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center shrink-0">
                     <MapPin className="text-primary" size={20} />
                   </div>
-                  <p className="text-gray-400">{t('contact.info.turkey.address')}</p>
+                  <p className="text-gray-600">{t('contact.info.turkey.address')}</p>
                 </div>
                 <div className="flex items-center gap-4">
                   <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center shrink-0">
                     <Phone className="text-primary" size={20} />
                   </div>
-                  <span className="text-gray-400">{t('contact.info.turkey.phone')}</span>
+                  <span className="text-gray-600">{t('contact.info.turkey.phone')}</span>
                 </div>
               </div>
             </div>
@@ -145,20 +145,20 @@ export function ContactSection() {
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label htmlFor="name" className="text-white">{t('contact.form.name')}</Label>
+                  <Label htmlFor="name" className="text-gray-900">{t('contact.form.name')}</Label>
                   <Input
                     id="name"
-                    className="bg-white/5 border-white/10 text-white"
+                    className="bg-gray-100 border-gray-200 text-gray-900"
                     {...register('name')}
                   />
                   {errors.name && <p className="text-sm text-red-500">{errors.name.message}</p>}
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="email" className="text-white">{t('contact.form.email')}</Label>
+                  <Label htmlFor="email" className="text-gray-900">{t('contact.form.email')}</Label>
                   <Input
                     id="email"
                     type="email"
-                    className="bg-white/5 border-white/10 text-white"
+                    className="bg-gray-100 border-gray-200 text-gray-900"
                     {...register('email')}
                   />
                   {errors.email && <p className="text-sm text-red-500">{errors.email.message}</p>}
@@ -167,39 +167,39 @@ export function ContactSection() {
 
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label htmlFor="phone" className="text-white">{t('contact.form.phone')}</Label>
+                  <Label htmlFor="phone" className="text-gray-900">{t('contact.form.phone')}</Label>
                   <Input
                     id="phone"
-                    className="bg-white/5 border-white/10 text-white"
+                    className="bg-gray-100 border-gray-200 text-gray-900"
                     {...register('phone')}
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="company" className="text-white">{t('contact.form.company')}</Label>
+                  <Label htmlFor="company" className="text-gray-900">{t('contact.form.company')}</Label>
                   <Input
                     id="company"
-                    className="bg-white/5 border-white/10 text-white"
+                    className="bg-gray-100 border-gray-200 text-gray-900"
                     {...register('company')}
                   />
                 </div>
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="subject" className="text-white">{t('contact.form.subject')}</Label>
+                <Label htmlFor="subject" className="text-gray-900">{t('contact.form.subject')}</Label>
                 <Input
                   id="subject"
-                  className="bg-white/5 border-white/10 text-white"
+                  className="bg-gray-100 border-gray-200 text-gray-900"
                   {...register('subject')}
                 />
                 {errors.subject && <p className="text-sm text-red-500">{errors.subject.message}</p>}
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="message" className="text-white">{t('contact.form.message')}</Label>
+                <Label htmlFor="message" className="text-gray-900">{t('contact.form.message')}</Label>
                 <Textarea
                   id="message"
                   rows={5}
-                  className="bg-white/5 border-white/10 text-white resize-none"
+                  className="bg-gray-100 border-gray-200 text-gray-900 resize-none"
                   {...register('message')}
                 />
                 {errors.message && <p className="text-sm text-red-500">{errors.message.message}</p>}

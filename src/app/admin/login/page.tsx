@@ -61,8 +61,8 @@ export default function AdminLoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-dark p-4">
-      <Card className="w-full max-w-md bg-dark-50 border-white/10">
+    <div className="min-h-screen flex items-center justify-center bg-white p-4">
+      <Card className="w-full max-w-md bg-gray-50 border-gray-200">
         <CardHeader className="text-center">
           <div className="mx-auto mb-4">
             <Image
@@ -73,22 +73,22 @@ export default function AdminLoginPage() {
               className="rounded-lg"
             />
           </div>
-          <CardTitle className="text-2xl text-white">لوحة التحكم</CardTitle>
-          <CardDescription className="text-gray-400">
+          <CardTitle className="text-2xl text-gray-900">لوحة التحكم</CardTitle>
+          <CardDescription className="text-gray-600">
             قم بتسجيل الدخول للوصول إلى لوحة التحكم
           </CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="email" className="text-white">
+              <Label htmlFor="email" className="text-gray-900">
                 البريد الإلكتروني
               </Label>
               <Input
                 id="email"
                 type="email"
                 placeholder="admin@sna-attal.com"
-                className="bg-dark border-white/20 text-white placeholder:text-gray-500"
+                className="bg-white border-gray-300 text-gray-900 placeholder:text-gray-600"
                 {...register('email')}
               />
               {errors.email && (
@@ -97,7 +97,7 @@ export default function AdminLoginPage() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="password" className="text-white">
+              <Label htmlFor="password" className="text-gray-900">
                 كلمة المرور
               </Label>
               <div className="relative">
@@ -105,13 +105,13 @@ export default function AdminLoginPage() {
                   id="password"
                   type={showPassword ? 'text' : 'password'}
                   placeholder="••••••••"
-                  className="bg-dark border-white/20 text-white placeholder:text-gray-500 pr-10"
+                  className="bg-white border-gray-300 text-gray-900 placeholder:text-gray-600 pr-10"
                   {...register('password')}
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white"
+                  className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-600 hover:text-primary"
                 >
                   {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                 </button>

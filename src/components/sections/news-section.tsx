@@ -53,7 +53,7 @@ export function NewsSection() {
   };
 
   return (
-    <section ref={ref} className="section-padding bg-dark-50 relative overflow-hidden">
+    <section ref={ref} className="section-padding bg-gray-50 relative overflow-hidden">
       <div className="container-custom relative z-10">
         {/* Header */}
         <motion.div
@@ -67,7 +67,7 @@ export function NewsSection() {
               <Newspaper size={16} />
               {t('news.title')}
             </div>
-            <h2 className="heading-2 text-white">{t('news.subtitle')}</h2>
+            <h2 className="heading-2 text-gray-900">{t('news.subtitle')}</h2>
           </div>
 
           <Button variant="goldOutline" asChild className="group shrink-0">
@@ -88,7 +88,7 @@ export function NewsSection() {
             className="lg:col-span-2"
           >
             <Link href={`/news/${newsArticles[0].id}`}>
-              <div className="group relative h-full bg-white/5 rounded-2xl overflow-hidden border border-white/10 hover:border-primary/50 transition-all duration-300">
+              <div className="group relative h-full bg-gray-100 rounded-2xl overflow-hidden border border-gray-200 hover:border-primary/50 transition-all duration-300">
                 <div className="relative aspect-[16/9] lg:aspect-auto lg:absolute lg:inset-0 overflow-hidden">
                   <Image
                     src={newsArticles[0].image}
@@ -97,16 +97,16 @@ export function NewsSection() {
                     sizes="(max-width: 1024px) 100vw, 50vw"
                     className="object-cover group-hover:scale-110 transition-transform duration-500"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-dark via-dark/70 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-white via-white/70 to-transparent" />
                 </div>
 
                 <div className="relative lg:absolute lg:bottom-0 lg:left-0 lg:right-0 p-6 lg:p-8">
                   <Badge variant="gold" className="mb-4">{newsArticles[0].category}</Badge>
-                  <h3 className="text-2xl font-bold text-white group-hover:text-primary transition-colors mb-3">
+                  <h3 className="text-2xl font-bold text-gray-900 group-hover:text-primary transition-colors mb-3">
                     {newsArticles[0].title}
                   </h3>
-                  <p className="text-gray-400 mb-4 line-clamp-2">{newsArticles[0].excerpt}</p>
-                  <div className="flex items-center gap-2 text-sm text-gray-500">
+                  <p className="text-gray-600 mb-4 line-clamp-2">{newsArticles[0].excerpt}</p>
+                  <div className="flex items-center gap-2 text-sm text-gray-600">
                     <Calendar size={14} />
                     <span>{formatDate(newsArticles[0].date)}</span>
                   </div>
@@ -125,7 +125,7 @@ export function NewsSection() {
                 transition={{ duration: 0.6, delay: (index + 1) * 0.1 }}
               >
                 <Link href={`/news/${article.id}`}>
-                  <div className="group flex gap-4 p-4 bg-white/5 rounded-xl border border-white/10 hover:border-primary/50 transition-all duration-300">
+                  <div className="group flex gap-4 p-4 bg-gray-100 rounded-xl border border-gray-200 hover:border-primary/50 transition-all duration-300">
                     <div className="relative w-24 h-24 shrink-0 rounded-lg overflow-hidden">
                       <Image
                         src={article.image}
@@ -137,10 +137,10 @@ export function NewsSection() {
                     </div>
                     <div className="flex-1 min-w-0">
                       <p className="text-xs text-primary mb-1">{article.category}</p>
-                      <h4 className="font-semibold text-white group-hover:text-primary transition-colors line-clamp-2 mb-2">
+                      <h4 className="font-semibold text-gray-900 group-hover:text-primary transition-colors line-clamp-2 mb-2">
                         {article.title}
                       </h4>
-                      <div className="flex items-center gap-2 text-xs text-gray-500">
+                      <div className="flex items-center gap-2 text-xs text-gray-600">
                         <Calendar size={12} />
                         <span>{formatDate(article.date)}</span>
                       </div>

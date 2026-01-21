@@ -23,7 +23,7 @@ export function ClientsSection() {
   const isInView = useInView(ref, { once: true, margin: '-100px' });
 
   return (
-    <section ref={ref} className="section-padding bg-dark relative overflow-hidden">
+    <section ref={ref} className="section-padding bg-white relative overflow-hidden">
       <div className="container-custom relative z-10">
         {/* Header */}
         <motion.div
@@ -36,8 +36,8 @@ export function ClientsSection() {
             <span className="w-2 h-2 bg-primary rounded-full" />
             {t('clients.title')}
           </div>
-          <h2 className="heading-2 text-white mb-4">{t('clients.subtitle')}</h2>
-          <p className="text-gray-400">{t('clients.description')}</p>
+          <h2 className="heading-2 text-gray-900 mb-4">{t('clients.subtitle')}</h2>
+          <p className="text-gray-600">{t('clients.description')}</p>
         </motion.div>
 
         {/* Clients Logo Grid */}
@@ -50,7 +50,7 @@ export function ClientsSection() {
               transition={{ duration: 0.4, delay: index * 0.05 }}
               className="group"
             >
-              <div className="aspect-square bg-white/5 rounded-xl p-4 flex items-center justify-center border border-white/10 hover:border-primary/50 hover:bg-white/10 transition-all duration-300">
+              <div className="aspect-square bg-gray-100 rounded-xl p-4 flex items-center justify-center border border-gray-200 hover:border-primary/50 hover:bg-gray-100 transition-all duration-300">
                 <Image
                   src={client.logo}
                   alt={client.name}
@@ -70,7 +70,7 @@ export function ClientsSection() {
           transition={{ delay: 0.5 }}
           className="mt-12 text-center"
         >
-          <p className="text-gray-500 text-sm">
+          <p className="text-gray-600 text-sm">
             نفخر بثقة أكثر من <span className="text-primary font-bold">300+</span> عميل من كبرى الشركات
           </p>
         </motion.div>

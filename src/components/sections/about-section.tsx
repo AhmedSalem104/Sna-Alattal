@@ -34,7 +34,7 @@ export function AboutSection() {
   };
 
   return (
-    <section ref={ref} className="section-padding bg-dark-50 relative overflow-hidden">
+    <section ref={ref} className="section-padding bg-gray-50 relative overflow-hidden">
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-5">
         <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_30%_20%,_#F9BF0F_0%,_transparent_50%)]" />
@@ -57,7 +57,7 @@ export function AboutSection() {
                 sizes="(max-width: 768px) 100vw, 50vw"
                 className="object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-dark/60 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-white/60 to-transparent" />
             </div>
 
             {/* Experience Badge */}
@@ -65,7 +65,7 @@ export function AboutSection() {
               initial={{ scale: 0 }}
               animate={isInView ? { scale: 1 } : { scale: 0 }}
               transition={{ delay: 0.5, type: 'spring' }}
-              className="absolute -bottom-6 -right-6 bg-primary text-dark p-6 rounded-2xl shadow-xl"
+              className="absolute -bottom-6 -right-6 bg-primary text-gray-900 p-6 rounded-2xl shadow-xl"
             >
               <div className="text-4xl font-bold">30+</div>
               <div className="text-sm font-medium">{t('about.experience')}</div>
@@ -81,12 +81,12 @@ export function AboutSection() {
             </div>
 
             {/* Title */}
-            <h2 className="heading-2 text-white">
+            <h2 className="heading-2 text-gray-900">
               {t('about.subtitle')}
             </h2>
 
             {/* Description */}
-            <p className="text-gray-400 leading-relaxed">
+            <p className="text-gray-600 leading-relaxed">
               {t('about.description')}
             </p>
 
@@ -96,12 +96,12 @@ export function AboutSection() {
                 <motion.div
                   key={feature.key}
                   variants={itemVariants}
-                  className="flex items-center gap-3 p-4 bg-white/5 rounded-xl"
+                  className="flex items-center gap-3 p-4 bg-gray-100 rounded-xl"
                 >
                   <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
                     <feature.icon size={20} className="text-primary" />
                   </div>
-                  <span className="text-sm text-gray-300">
+                  <span className="text-sm text-gray-700">
                     {feature.key === 'manufacturing' && 'تصنيع محلي'}
                     {feature.key === 'global' && 'تواجد عالمي'}
                     {feature.key === 'team' && 'فريق خبراء'}

@@ -79,10 +79,10 @@ export default function DashboardPage() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <h1 className="text-3xl font-bold text-white mb-2">
+        <h1 className="text-3xl font-bold text-gray-900 mb-2">
           مرحباً، {session?.user?.name}
         </h1>
-        <p className="text-gray-400">
+        <p className="text-gray-600">
           مرحباً بك في لوحة تحكم S.N.A العطال للصناعات الهندسية
         </p>
       </motion.div>
@@ -131,16 +131,16 @@ export default function DashboardPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
         >
-          <Card className="bg-dark-50 border-white/10 h-full">
+          <Card className="bg-gray-50 border-gray-200 h-full">
             <CardHeader>
-              <CardTitle className="text-lg text-white">روابط سريعة</CardTitle>
+              <CardTitle className="text-lg text-gray-900">روابط سريعة</CardTitle>
             </CardHeader>
             <CardContent className="space-y-2">
               {quickLinks.map((link) => (
                 <Link key={link.href} href={link.href}>
                   <Button
                     variant="ghost"
-                    className="w-full justify-between text-gray-300 hover:text-white hover:bg-white/5"
+                    className="w-full justify-between text-gray-700 hover:text-primary hover:bg-gray-100"
                   >
                     <span className="flex items-center gap-3">
                       <link.icon size={18} className="text-primary" />
@@ -161,9 +161,9 @@ export default function DashboardPage() {
           transition={{ duration: 0.5, delay: 0.3 }}
           className="lg:col-span-2"
         >
-          <Card className="bg-dark-50 border-white/10 h-full">
+          <Card className="bg-gray-50 border-gray-200 h-full">
             <CardHeader className="flex flex-row items-center justify-between">
-              <CardTitle className="text-lg text-white">النشاط الأخير</CardTitle>
+              <CardTitle className="text-lg text-gray-900">النشاط الأخير</CardTitle>
               <Link href="/admin/activity">
                 <Button variant="ghost" size="sm" className="text-primary">
                   عرض الكل
@@ -176,17 +176,17 @@ export default function DashboardPage() {
                   {recentActivities.map((activity) => (
                     <div
                       key={activity.id}
-                      className="flex items-center gap-4 p-3 rounded-lg bg-dark hover:bg-white/5 transition-colors"
+                      className="flex items-center gap-4 p-3 rounded-lg bg-white hover:bg-gray-100 transition-colors"
                     >
                       <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center">
                         <Clock className="text-primary" size={18} />
                       </div>
                       <div className="flex-1">
-                        <p className="text-white text-sm">
+                        <p className="text-gray-900 text-sm">
                           <span className="text-primary">{activity.action}</span>{' '}
                           {activity.entity}: {activity.entityName}
                         </p>
-                        <p className="text-gray-500 text-xs flex items-center gap-1 mt-1">
+                        <p className="text-gray-600 text-xs flex items-center gap-1 mt-1">
                           <Calendar size={12} />
                           {new Date(activity.createdAt).toLocaleDateString('ar-EG', {
                             year: 'numeric',
@@ -201,7 +201,7 @@ export default function DashboardPage() {
                   ))}
                 </div>
               ) : (
-                <div className="text-center py-8 text-gray-400">
+                <div className="text-center py-8 text-gray-600">
                   <Clock className="mx-auto mb-2 opacity-50" size={40} />
                   <p>لا يوجد نشاط حديث</p>
                 </div>
@@ -217,9 +217,9 @@ export default function DashboardPage() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.4 }}
       >
-        <Card className="bg-dark-50 border-white/10">
+        <Card className="bg-gray-50 border-gray-200">
           <CardHeader className="flex flex-row items-center justify-between">
-            <CardTitle className="text-lg text-white">آخر الرسائل</CardTitle>
+            <CardTitle className="text-lg text-gray-900">آخر الرسائل</CardTitle>
             <Link href="/admin/messages">
               <Button variant="ghost" size="sm" className="text-primary">
                 عرض الكل
@@ -227,7 +227,7 @@ export default function DashboardPage() {
             </Link>
           </CardHeader>
           <CardContent>
-            <div className="text-center py-8 text-gray-400">
+            <div className="text-center py-8 text-gray-600">
               <MessageSquare className="mx-auto mb-2 opacity-50" size={40} />
               <p>لا توجد رسائل جديدة</p>
             </div>
@@ -242,43 +242,43 @@ export default function DashboardPage() {
         transition={{ duration: 0.5, delay: 0.5 }}
         className="grid grid-cols-1 md:grid-cols-3 gap-6"
       >
-        <Card className="bg-dark-50 border-white/10">
+        <Card className="bg-gray-50 border-gray-200">
           <CardContent className="pt-6">
             <div className="flex items-center gap-4">
               <div className="w-12 h-12 rounded-full bg-green-500/20 flex items-center justify-center">
                 <div className="w-3 h-3 rounded-full bg-green-500" />
               </div>
               <div>
-                <p className="text-white font-medium">حالة النظام</p>
+                <p className="text-gray-900 font-medium">حالة النظام</p>
                 <p className="text-green-400 text-sm">يعمل بشكل طبيعي</p>
               </div>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="bg-dark-50 border-white/10">
+        <Card className="bg-gray-50 border-gray-200">
           <CardContent className="pt-6">
             <div className="flex items-center gap-4">
               <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center">
                 <Eye className="text-primary" size={20} />
               </div>
               <div>
-                <p className="text-white font-medium">زيارات اليوم</p>
-                <p className="text-gray-400 text-sm">قريباً</p>
+                <p className="text-gray-900 font-medium">زيارات اليوم</p>
+                <p className="text-gray-600 text-sm">قريباً</p>
               </div>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="bg-dark-50 border-white/10">
+        <Card className="bg-gray-50 border-gray-200">
           <CardContent className="pt-6">
             <div className="flex items-center gap-4">
               <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center">
                 <TrendingUp className="text-primary" size={20} />
               </div>
               <div>
-                <p className="text-white font-medium">أداء الموقع</p>
-                <p className="text-gray-400 text-sm">ممتاز</p>
+                <p className="text-gray-900 font-medium">أداء الموقع</p>
+                <p className="text-gray-600 text-sm">ممتاز</p>
               </div>
             </div>
           </CardContent>

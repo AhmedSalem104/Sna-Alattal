@@ -117,7 +117,7 @@ export default function ClientsPage() {
       cell: ({ row }) => (
         <div>
           <p className="font-medium">{row.original.nameAr}</p>
-          <p className="text-xs text-gray-400">{row.original.nameEn}</p>
+          <p className="text-xs text-gray-600">{row.original.nameEn}</p>
         </div>
       ),
     },
@@ -136,7 +136,7 @@ export default function ClientsPage() {
             زيارة
           </a>
         ) : (
-          <span className="text-gray-500">-</span>
+          <span className="text-gray-600">-</span>
         ),
     },
     {
@@ -145,7 +145,7 @@ export default function ClientsPage() {
       cell: ({ row }) => (
         <Badge
           variant={row.original.isActive ? 'default' : 'secondary'}
-          className={row.original.isActive ? 'bg-green-500/20 text-green-400' : 'bg-gray-500/20 text-gray-400'}
+          className={row.original.isActive ? 'bg-green-500/20 text-green-400' : 'bg-gray-500/20 text-gray-600'}
         >
           {row.original.isActive ? 'نشط' : 'غير نشط'}
         </Badge>
@@ -159,7 +159,7 @@ export default function ClientsPage() {
           variant="ghost"
           size="icon"
           onClick={() => toggleFeatured(row.original.id, row.original.isFeatured)}
-          className={row.original.isFeatured ? 'text-primary' : 'text-gray-500'}
+          className={row.original.isFeatured ? 'text-primary' : 'text-gray-600'}
         >
           <Star size={18} fill={row.original.isFeatured ? 'currentColor' : 'none'} />
         </Button>
@@ -179,7 +179,7 @@ export default function ClientsPage() {
               <MoreHorizontal size={18} />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="bg-dark-50 border-white/10">
+          <DropdownMenuContent align="end" className="bg-gray-50 border-gray-200">
             <DropdownMenuItem asChild>
               <Link href={`/admin/clients/${row.original.id}`} className="cursor-pointer">
                 <Pencil size={16} className="ml-2" />
@@ -227,8 +227,8 @@ export default function ClientsPage() {
         className="flex items-center justify-between"
       >
         <div>
-          <h1 className="text-2xl font-bold text-white">العملاء</h1>
-          <p className="text-gray-400">إدارة عملاء الشركة</p>
+          <h1 className="text-2xl font-bold text-gray-900">العملاء</h1>
+          <p className="text-gray-600">إدارة عملاء الشركة</p>
         </div>
         <Link href="/admin/clients/new">
           <Button variant="gold">
@@ -244,7 +244,7 @@ export default function ClientsPage() {
         transition={{ delay: 0.1 }}
       >
         {isLoading ? (
-          <div className="text-center py-12 text-gray-400">جاري التحميل...</div>
+          <div className="text-center py-12 text-gray-600">جاري التحميل...</div>
         ) : (
           <DataTable
             columns={columns}

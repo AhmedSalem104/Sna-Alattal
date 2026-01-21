@@ -42,10 +42,10 @@ export function DashboardShell({ children }: DashboardShellProps) {
   // Show loading state
   if (status === 'loading') {
     return (
-      <div className="min-h-screen bg-dark flex items-center justify-center">
+      <div className="min-h-screen bg-white flex items-center justify-center">
         <div className="flex flex-col items-center gap-4">
           <Loader2 className="h-8 w-8 animate-spin text-primary" />
-          <p className="text-gray-400">جاري التحميل...</p>
+          <p className="text-gray-600">جاري التحميل...</p>
         </div>
       </div>
     );
@@ -57,7 +57,7 @@ export function DashboardShell({ children }: DashboardShellProps) {
   }
 
   return (
-    <div className="min-h-screen bg-dark">
+    <div className="min-h-screen bg-white">
       {/* Sidebar - Desktop */}
       <div className="hidden lg:block">
         <Sidebar isCollapsed={isCollapsed} onToggle={toggleSidebar} />

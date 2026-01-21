@@ -21,28 +21,28 @@ const phases: OnboardingPhase[] = [
     id: 1,
     titleKey: 'phase1.title',
     subtitleKey: 'phase1.subtitle',
-    bgColor: 'from-dark via-dark-50 to-dark',
+    bgColor: 'from-white via-white-50 to-white',
     icon: <Sparkles className="text-primary" size={40} />,
   },
   {
     id: 2,
     titleKey: 'phase2.title',
     subtitleKey: 'phase2.subtitle',
-    bgColor: 'from-primary/20 via-dark to-dark',
+    bgColor: 'from-primary/20 via-white to-white',
     icon: <span className="text-5xl">🏭</span>,
   },
   {
     id: 3,
     titleKey: 'phase3.title',
     subtitleKey: 'phase3.subtitle',
-    bgColor: 'from-dark via-primary/10 to-dark',
+    bgColor: 'from-white via-primary/10 to-white',
     icon: <span className="text-5xl">⚙️</span>,
   },
   {
     id: 4,
     titleKey: 'phase4.title',
     subtitleKey: 'phase4.subtitle',
-    bgColor: 'from-dark to-primary/20',
+    bgColor: 'from-white to-primary/20',
     icon: <span className="text-5xl">🌍</span>,
   },
 ];
@@ -85,14 +85,14 @@ export function OnboardingExperience() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="fixed inset-0 z-[100] bg-dark"
+        className="fixed inset-0 z-[100] bg-white"
       >
         {/* Skip Button */}
         <Button
           variant="ghost"
           size="sm"
           onClick={handleSkip}
-          className="absolute top-6 right-6 z-10 text-gray-400 hover:text-white"
+          className="absolute top-6 right-6 z-10 text-gray-600 hover:text-primary"
         >
           {t('skip')}
           <X size={18} className="mr-2" />
@@ -141,10 +141,10 @@ export function OnboardingExperience() {
               transition={{ delay: 0.4 }}
               className="text-center px-6 max-w-md"
             >
-              <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
                 {t(phases[currentPhase].titleKey)}
               </h2>
-              <p className="text-lg text-gray-300">
+              <p className="text-lg text-gray-700">
                 {t(phases[currentPhase].subtitleKey)}
               </p>
             </motion.div>

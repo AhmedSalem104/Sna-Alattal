@@ -99,9 +99,9 @@ export default function NewsPage() {
   const regularArticles = filteredArticles.filter((a) => !a.featured);
 
   return (
-    <div className="min-h-screen bg-dark">
+    <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="relative py-32 bg-gradient-to-b from-primary/20 via-dark to-dark overflow-hidden">
+      <section className="relative py-32 bg-gradient-to-b from-primary/20 via-white to-white overflow-hidden">
         <div className="absolute inset-0">
           <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl" />
           <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-primary/5 rounded-full blur-3xl" />
@@ -117,10 +117,10 @@ export default function NewsPage() {
             <span className="inline-block px-4 py-1 bg-primary/20 text-primary rounded-full text-sm mb-4">
               {t('badge')}
             </span>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
               {t('title')}
             </h1>
-            <p className="text-xl text-gray-300">
+            <p className="text-xl text-gray-700">
               {t('subtitle')}
             </p>
           </motion.div>
@@ -128,17 +128,17 @@ export default function NewsPage() {
       </section>
 
       {/* Filters */}
-      <section className="py-8 border-b border-white/10">
+      <section className="py-8 border-b border-gray-200">
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
             {/* Search */}
             <div className="relative w-full md:w-96">
-              <Search className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
+              <Search className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-600" size={20} />
               <Input
                 placeholder={t('searchPlaceholder')}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pr-10 bg-dark-50 border-white/10 text-white"
+                className="pr-10 bg-gray-50 border-gray-200 text-gray-900"
               />
             </div>
 
@@ -150,7 +150,7 @@ export default function NewsPage() {
                   variant={selectedCategory === category.id ? 'gold' : 'outline'}
                   size="sm"
                   onClick={() => setSelectedCategory(category.id)}
-                  className={selectedCategory !== category.id ? 'border-white/20 text-gray-300 hover:text-white' : ''}
+                  className={selectedCategory !== category.id ? 'border-gray-300 text-gray-700 hover:text-primary' : ''}
                 >
                   {category.label}
                 </Button>
@@ -170,7 +170,7 @@ export default function NewsPage() {
               transition={{ duration: 0.6 }}
             >
               <Link href={`/news/${featuredArticle.slug}`}>
-                <div className="group relative rounded-2xl overflow-hidden bg-dark-50 border border-white/10 hover:border-primary/50 transition-all">
+                <div className="group relative rounded-2xl overflow-hidden bg-gray-50 border border-gray-200 hover:border-primary/50 transition-all">
                   <div className="grid grid-cols-1 lg:grid-cols-2">
                     {/* Image */}
                     <div className="relative h-64 lg:h-96">
@@ -181,7 +181,7 @@ export default function NewsPage() {
                         sizes="(max-width: 1024px) 100vw, 50vw"
                         className="object-cover group-hover:scale-105 transition-transform duration-500"
                       />
-                      <div className="absolute top-4 right-4 px-3 py-1 bg-primary text-dark rounded-full text-sm font-medium">
+                      <div className="absolute top-4 right-4 px-3 py-1 bg-primary text-gray-900 rounded-full text-sm font-medium">
                         {t('featured')}
                       </div>
                     </div>
@@ -189,24 +189,24 @@ export default function NewsPage() {
                     {/* Content */}
                     <div className="p-8 lg:p-12 flex flex-col justify-center">
                       <div className="flex items-center gap-4 mb-4">
-                        <span className="px-3 py-1 bg-white/10 rounded-full text-gray-400 text-sm">
+                        <span className="px-3 py-1 bg-gray-100 rounded-full text-gray-600 text-sm">
                           {t(`categories.${featuredArticle.category}`)}
                         </span>
-                        <span className="flex items-center gap-1 text-gray-400 text-sm">
+                        <span className="flex items-center gap-1 text-gray-600 text-sm">
                           <Calendar size={14} />
                           {new Date(featuredArticle.date).toLocaleDateString('ar-EG')}
                         </span>
-                        <span className="flex items-center gap-1 text-gray-400 text-sm">
+                        <span className="flex items-center gap-1 text-gray-600 text-sm">
                           <Clock size={14} />
                           {featuredArticle.readTime}
                         </span>
                       </div>
 
-                      <h2 className="text-2xl lg:text-3xl font-bold text-white mb-4 group-hover:text-primary transition-colors">
+                      <h2 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-4 group-hover:text-primary transition-colors">
                         {t(featuredArticle.titleKey)}
                       </h2>
 
-                      <p className="text-gray-400 mb-6 line-clamp-3">
+                      <p className="text-gray-600 mb-6 line-clamp-3">
                         {t(featuredArticle.excerptKey)}
                       </p>
 
@@ -235,7 +235,7 @@ export default function NewsPage() {
                 transition={{ duration: 0.5, delay: index * 0.1 }}
               >
                 <Link href={`/news/${article.slug}`}>
-                  <div className="group bg-dark-50 rounded-2xl overflow-hidden border border-white/10 hover:border-primary/50 transition-all h-full">
+                  <div className="group bg-gray-50 rounded-2xl overflow-hidden border border-gray-200 hover:border-primary/50 transition-all h-full">
                     {/* Image */}
                     <div className="relative h-48 overflow-hidden">
                       <Image
@@ -245,7 +245,7 @@ export default function NewsPage() {
                         sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                         className="object-cover group-hover:scale-105 transition-transform duration-500"
                       />
-                      <div className="absolute top-4 right-4 px-3 py-1 bg-dark/80 backdrop-blur rounded-full text-gray-300 text-xs">
+                      <div className="absolute top-4 right-4 px-3 py-1 bg-white/80 backdrop-blur rounded-full text-gray-700 text-xs">
                         {t(`categories.${article.category}`)}
                       </div>
                     </div>
@@ -253,21 +253,21 @@ export default function NewsPage() {
                     {/* Content */}
                     <div className="p-6">
                       <div className="flex items-center gap-4 mb-3">
-                        <span className="flex items-center gap-1 text-gray-400 text-sm">
+                        <span className="flex items-center gap-1 text-gray-600 text-sm">
                           <Calendar size={14} />
                           {new Date(article.date).toLocaleDateString('ar-EG')}
                         </span>
-                        <span className="flex items-center gap-1 text-gray-400 text-sm">
+                        <span className="flex items-center gap-1 text-gray-600 text-sm">
                           <Clock size={14} />
                           {article.readTime}
                         </span>
                       </div>
 
-                      <h3 className="text-xl font-bold text-white mb-2 group-hover:text-primary transition-colors line-clamp-2">
+                      <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-primary transition-colors line-clamp-2">
                         {t(article.titleKey)}
                       </h3>
 
-                      <p className="text-gray-400 mb-4 line-clamp-2">
+                      <p className="text-gray-600 mb-4 line-clamp-2">
                         {t(article.excerptKey)}
                       </p>
 
@@ -284,7 +284,7 @@ export default function NewsPage() {
 
           {/* Load More */}
           <div className="text-center mt-12">
-            <Button variant="outline" size="lg" className="border-white/20 text-gray-300 hover:text-white">
+            <Button variant="outline" size="lg" className="border-gray-300 text-gray-700 hover:text-primary">
               {t('loadMore')}
             </Button>
           </div>
@@ -292,7 +292,7 @@ export default function NewsPage() {
       </section>
 
       {/* Newsletter */}
-      <section className="py-20 bg-gradient-to-r from-primary/20 via-dark to-primary/20">
+      <section className="py-20 bg-gradient-to-r from-primary/20 via-white to-primary/20">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -300,13 +300,13 @@ export default function NewsPage() {
             viewport={{ once: true }}
             className="max-w-2xl mx-auto text-center"
           >
-            <h2 className="text-3xl font-bold text-white mb-4">{t('newsletter.title')}</h2>
-            <p className="text-gray-300 mb-8">{t('newsletter.subtitle')}</p>
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">{t('newsletter.title')}</h2>
+            <p className="text-gray-700 mb-8">{t('newsletter.subtitle')}</p>
             <form className="flex flex-col sm:flex-row gap-4">
               <Input
                 type="email"
                 placeholder={t('newsletter.placeholder')}
-                className="flex-1 bg-dark border-white/10 text-white"
+                className="flex-1 bg-white border-gray-200 text-gray-900"
               />
               <Button variant="gold" size="lg">
                 {t('newsletter.subscribe')}

@@ -46,16 +46,16 @@ export default function SolutionDetailPage({ params }: SolutionDetailPageProps) 
   const solution = solutionData[params.slug as keyof typeof solutionData] || solutionData['food-beverage'];
 
   return (
-    <div className="min-h-screen bg-dark">
+    <div className="min-h-screen bg-white">
       {/* Breadcrumb */}
-      <div className="bg-dark-50 border-b border-white/10">
+      <div className="bg-gray-50 border-b border-gray-200">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center gap-2 text-sm">
-            <Link href="/" className="text-gray-400 hover:text-primary transition-colors">
+            <Link href="/" className="text-gray-600 hover:text-primary transition-colors">
               {t('breadcrumb.home')}
             </Link>
             <ChevronLeft size={16} className="text-gray-600 rtl:rotate-180" />
-            <Link href="/solutions" className="text-gray-400 hover:text-primary transition-colors">
+            <Link href="/solutions" className="text-gray-600 hover:text-primary transition-colors">
               {t('breadcrumb.solutions')}
             </Link>
             <ChevronLeft size={16} className="text-gray-600 rtl:rotate-180" />
@@ -73,7 +73,7 @@ export default function SolutionDetailPage({ params }: SolutionDetailPageProps) 
             fill
             className="object-cover opacity-30"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-dark via-dark/80 to-dark" />
+          <div className="absolute inset-0 bg-gradient-to-b from-white via-white/80 to-white" />
         </div>
 
         <div className="container mx-auto px-4 relative z-10">
@@ -83,10 +83,10 @@ export default function SolutionDetailPage({ params }: SolutionDetailPageProps) 
             transition={{ duration: 0.6 }}
             className="max-w-3xl"
           >
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
               {t(solution.titleKey)}
             </h1>
-            <p className="text-xl text-gray-300 mb-8">
+            <p className="text-xl text-gray-700 mb-8">
               {t(solution.descKey)}
             </p>
             <div className="flex flex-wrap gap-4">
@@ -96,7 +96,7 @@ export default function SolutionDetailPage({ params }: SolutionDetailPageProps) 
                   {t('getQuote')}
                 </Button>
               </Link>
-              <Button variant="outline" size="lg" className="border-white/20 text-white hover:bg-white/10">
+              <Button variant="outline" size="lg" className="border-gray-300 text-gray-900 hover:bg-gray-100">
                 <FileText size={18} className="ml-2" />
                 {t('downloadCatalog')}
               </Button>
@@ -129,8 +129,8 @@ export default function SolutionDetailPage({ params }: SolutionDetailPageProps) 
                   </div>
                 </div>
                 <div className={index % 2 === 1 ? 'lg:order-1' : ''}>
-                  <h2 className="text-3xl font-bold text-white mb-4">{section.title}</h2>
-                  <p className="text-gray-300 text-lg">{section.description}</p>
+                  <h2 className="text-3xl font-bold text-gray-900 mb-4">{section.title}</h2>
+                  <p className="text-gray-700 text-lg">{section.description}</p>
                 </div>
               </motion.div>
             ))}
@@ -139,7 +139,7 @@ export default function SolutionDetailPage({ params }: SolutionDetailPageProps) 
       </section>
 
       {/* Products Table */}
-      <section className="py-20 bg-dark-50">
+      <section className="py-20 bg-gray-50">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -147,24 +147,24 @@ export default function SolutionDetailPage({ params }: SolutionDetailPageProps) 
             viewport={{ once: true }}
             className="text-center mb-12"
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
               {t('availableProducts')}
             </h2>
           </motion.div>
 
           <div className="max-w-3xl mx-auto">
-            <div className="bg-dark rounded-2xl border border-white/10 overflow-hidden">
-              <div className="grid grid-cols-2 gap-4 p-4 bg-primary/10 border-b border-white/10">
+            <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden">
+              <div className="grid grid-cols-2 gap-4 p-4 bg-primary/10 border-b border-gray-200">
                 <span className="text-primary font-semibold">{t('productName')}</span>
                 <span className="text-primary font-semibold">{t('capacity')}</span>
               </div>
               {solution.products.map((product, index) => (
                 <div
                   key={index}
-                  className="grid grid-cols-2 gap-4 p-4 border-b border-white/5 last:border-0 hover:bg-white/5 transition-colors"
+                  className="grid grid-cols-2 gap-4 p-4 border-b border-white/5 last:border-0 hover:bg-gray-100 transition-colors"
                 >
-                  <span className="text-white">{product.name}</span>
-                  <span className="text-gray-400">{product.capacity}</span>
+                  <span className="text-gray-900">{product.name}</span>
+                  <span className="text-gray-600">{product.capacity}</span>
                 </div>
               ))}
             </div>
@@ -181,8 +181,8 @@ export default function SolutionDetailPage({ params }: SolutionDetailPageProps) 
             viewport={{ once: true }}
             className="text-center mb-12"
           >
-            <h2 className="text-3xl font-bold text-white mb-4">{t('certifications')}</h2>
-            <p className="text-gray-400">{t('certificationsDesc')}</p>
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">{t('certifications')}</h2>
+            <p className="text-gray-600">{t('certificationsDesc')}</p>
           </motion.div>
 
           <div className="flex flex-wrap justify-center gap-8">
@@ -193,7 +193,7 @@ export default function SolutionDetailPage({ params }: SolutionDetailPageProps) 
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
-                className="w-32 h-32 flex items-center justify-center bg-dark-50 rounded-2xl border border-white/10"
+                className="w-32 h-32 flex items-center justify-center bg-gray-50 rounded-2xl border border-gray-200"
               >
                 <span className="text-2xl font-bold text-primary">{cert}</span>
               </motion.div>
@@ -203,17 +203,17 @@ export default function SolutionDetailPage({ params }: SolutionDetailPageProps) 
       </section>
 
       {/* CTA */}
-      <section className="py-20 bg-gradient-to-r from-primary/20 via-dark to-primary/20">
+      <section className="py-20 bg-gradient-to-r from-primary/20 via-white to-primary/20">
         <div className="container mx-auto px-4 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
               {t('cta.title')}
             </h2>
-            <p className="text-gray-300 mb-8 max-w-2xl mx-auto">
+            <p className="text-gray-700 mb-8 max-w-2xl mx-auto">
               {t('cta.subtitle')}
             </p>
             <div className="flex flex-wrap justify-center gap-4">

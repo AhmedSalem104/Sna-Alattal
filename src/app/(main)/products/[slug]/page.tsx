@@ -74,16 +74,16 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
   };
 
   return (
-    <div className="min-h-screen bg-dark">
+    <div className="min-h-screen bg-white">
       {/* Breadcrumb */}
-      <div className="bg-dark-50 border-b border-white/10">
+      <div className="bg-gray-50 border-b border-gray-200">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center gap-2 text-sm">
-            <Link href="/" className="text-gray-400 hover:text-primary transition-colors">
+            <Link href="/" className="text-gray-600 hover:text-primary transition-colors">
               {t('breadcrumb.home')}
             </Link>
             <ChevronLeft size={16} className="text-gray-600 rtl:rotate-180" />
-            <Link href="/products" className="text-gray-400 hover:text-primary transition-colors">
+            <Link href="/products" className="text-gray-600 hover:text-primary transition-colors">
               {t('breadcrumb.products')}
             </Link>
             <ChevronLeft size={16} className="text-gray-600 rtl:rotate-180" />
@@ -104,7 +104,7 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
             >
               <div className="relative">
                 {/* Main Image */}
-                <div className="relative h-96 md:h-[500px] rounded-2xl overflow-hidden bg-dark-50">
+                <div className="relative h-96 md:h-[500px] rounded-2xl overflow-hidden bg-gray-50">
                   <Image
                     src={product.images[activeImage]}
                     alt={t(product.nameKey)}
@@ -117,13 +117,13 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
                     onClick={prevImage}
                     className="absolute left-4 top-1/2 -translate-y-1/2 p-2 bg-black/50 rounded-full hover:bg-primary transition-colors"
                   >
-                    <ChevronRight size={24} className="text-white" />
+                    <ChevronRight size={24} className="text-gray-900" />
                   </button>
                   <button
                     onClick={nextImage}
                     className="absolute right-4 top-1/2 -translate-y-1/2 p-2 bg-black/50 rounded-full hover:bg-primary transition-colors"
                   >
-                    <ChevronLeft size={24} className="text-white" />
+                    <ChevronLeft size={24} className="text-gray-900" />
                   </button>
                 </div>
 
@@ -154,50 +154,50 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
                 {t(`categories.${product.category}`)}
               </span>
 
-              <h1 className="text-3xl md:text-4xl font-bold text-white mb-4">
+              <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
                 {t(product.nameKey)}
               </h1>
 
-              <p className="text-gray-300 text-lg mb-8">
+              <p className="text-gray-700 text-lg mb-8">
                 {t(product.descKey)}
               </p>
 
               {/* Key Features Icons */}
               <div className="grid grid-cols-2 gap-4 mb-8">
-                <div className="flex items-center gap-3 p-4 bg-dark-50 rounded-xl">
+                <div className="flex items-center gap-3 p-4 bg-gray-50 rounded-xl">
                   <div className="p-2 bg-primary/20 rounded-lg">
                     <Zap className="text-primary" size={24} />
                   </div>
                   <div>
-                    <p className="text-white font-medium">{t('features.highSpeed')}</p>
-                    <p className="text-gray-400 text-sm">{t('features.highSpeedDesc')}</p>
+                    <p className="text-gray-900 font-medium">{t('features.highSpeed')}</p>
+                    <p className="text-gray-600 text-sm">{t('features.highSpeedDesc')}</p>
                   </div>
                 </div>
-                <div className="flex items-center gap-3 p-4 bg-dark-50 rounded-xl">
+                <div className="flex items-center gap-3 p-4 bg-gray-50 rounded-xl">
                   <div className="p-2 bg-primary/20 rounded-lg">
                     <Shield className="text-primary" size={24} />
                   </div>
                   <div>
-                    <p className="text-white font-medium">{t('features.quality')}</p>
-                    <p className="text-gray-400 text-sm">{t('features.qualityDesc')}</p>
+                    <p className="text-gray-900 font-medium">{t('features.quality')}</p>
+                    <p className="text-gray-600 text-sm">{t('features.qualityDesc')}</p>
                   </div>
                 </div>
-                <div className="flex items-center gap-3 p-4 bg-dark-50 rounded-xl">
+                <div className="flex items-center gap-3 p-4 bg-gray-50 rounded-xl">
                   <div className="p-2 bg-primary/20 rounded-lg">
                     <Settings className="text-primary" size={24} />
                   </div>
                   <div>
-                    <p className="text-white font-medium">{t('features.customizable')}</p>
-                    <p className="text-gray-400 text-sm">{t('features.customizableDesc')}</p>
+                    <p className="text-gray-900 font-medium">{t('features.customizable')}</p>
+                    <p className="text-gray-600 text-sm">{t('features.customizableDesc')}</p>
                   </div>
                 </div>
-                <div className="flex items-center gap-3 p-4 bg-dark-50 rounded-xl">
+                <div className="flex items-center gap-3 p-4 bg-gray-50 rounded-xl">
                   <div className="p-2 bg-primary/20 rounded-lg">
                     <Award className="text-primary" size={24} />
                   </div>
                   <div>
-                    <p className="text-white font-medium">{t('features.certified')}</p>
-                    <p className="text-gray-400 text-sm">{t('features.certifiedDesc')}</p>
+                    <p className="text-gray-900 font-medium">{t('features.certified')}</p>
+                    <p className="text-gray-600 text-sm">{t('features.certifiedDesc')}</p>
                   </div>
                 </div>
               </div>
@@ -210,7 +210,7 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
                     {t('requestQuote')}
                   </Button>
                 </Link>
-                <Button variant="outline" size="lg" className="border-white/20 text-white hover:bg-white/10">
+                <Button variant="outline" size="lg" className="border-gray-300 text-gray-900 hover:bg-gray-100">
                   <Download size={18} className="ml-2" />
                   {t('downloadBrochure')}
                 </Button>
@@ -224,7 +224,7 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
       <section className="py-12">
         <div className="container mx-auto px-4">
           <Tabs defaultValue="specifications" className="w-full">
-            <TabsList className="grid w-full max-w-2xl mx-auto grid-cols-3 bg-dark-50 mb-8">
+            <TabsList className="grid w-full max-w-2xl mx-auto grid-cols-3 bg-gray-50 mb-8">
               <TabsTrigger value="specifications">{t('tabs.specifications')}</TabsTrigger>
               <TabsTrigger value="features">{t('tabs.features')}</TabsTrigger>
               <TabsTrigger value="applications">{t('tabs.applications')}</TabsTrigger>
@@ -234,17 +234,17 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="bg-dark-50 rounded-2xl p-8"
+                className="bg-gray-50 rounded-2xl p-8"
               >
-                <h3 className="text-2xl font-bold text-white mb-6">{t('technicalSpecs')}</h3>
+                <h3 className="text-2xl font-bold text-gray-900 mb-6">{t('technicalSpecs')}</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {product.specifications.map((spec, index) => (
                     <div
                       key={index}
-                      className="flex justify-between items-center p-4 bg-dark rounded-xl border border-white/10"
+                      className="flex justify-between items-center p-4 bg-white rounded-xl border border-gray-200"
                     >
-                      <span className="text-gray-400">{spec.label}</span>
-                      <span className="text-white font-medium">{spec.value}</span>
+                      <span className="text-gray-600">{spec.label}</span>
+                      <span className="text-gray-900 font-medium">{spec.value}</span>
                     </div>
                   ))}
                 </div>
@@ -255,19 +255,19 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="bg-dark-50 rounded-2xl p-8"
+                className="bg-gray-50 rounded-2xl p-8"
               >
-                <h3 className="text-2xl font-bold text-white mb-6">{t('keyFeatures')}</h3>
+                <h3 className="text-2xl font-bold text-gray-900 mb-6">{t('keyFeatures')}</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {product.features.map((feature, index) => (
                     <div
                       key={index}
-                      className="flex items-center gap-3 p-4 bg-dark rounded-xl border border-white/10"
+                      className="flex items-center gap-3 p-4 bg-white rounded-xl border border-gray-200"
                     >
                       <div className="p-1 bg-primary/20 rounded-full">
                         <Check className="text-primary" size={16} />
                       </div>
-                      <span className="text-gray-300">{feature}</span>
+                      <span className="text-gray-700">{feature}</span>
                     </div>
                   ))}
                 </div>
@@ -278,9 +278,9 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="bg-dark-50 rounded-2xl p-8"
+                className="bg-gray-50 rounded-2xl p-8"
               >
-                <h3 className="text-2xl font-bold text-white mb-6">{t('suitableFor')}</h3>
+                <h3 className="text-2xl font-bold text-gray-900 mb-6">{t('suitableFor')}</h3>
                 <div className="flex flex-wrap gap-4">
                   {product.applications.map((app, index) => (
                     <div
@@ -298,13 +298,13 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
       </section>
 
       {/* Contact CTA */}
-      <section className="py-20 bg-gradient-to-r from-primary/20 via-dark to-primary/20">
+      <section className="py-20 bg-gradient-to-r from-primary/20 via-white to-primary/20">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center">
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
               {t('cta.title')}
             </h2>
-            <p className="text-gray-300 mb-8">
+            <p className="text-gray-700 mb-8">
               {t('cta.subtitle')}
             </p>
             <div className="flex flex-wrap justify-center gap-4">
@@ -315,7 +315,7 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
                 </Button>
               </Link>
               <a href="tel:+201234567890">
-                <Button variant="outline" size="xl" className="border-white/20 text-white hover:bg-white/10">
+                <Button variant="outline" size="xl" className="border-gray-300 text-gray-900 hover:bg-gray-100">
                   <Phone size={20} className="ml-2" />
                   {t('cta.call')}
                 </Button>

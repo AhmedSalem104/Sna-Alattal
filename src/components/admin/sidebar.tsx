@@ -78,12 +78,12 @@ export function Sidebar({ isCollapsed, onToggle }: SidebarProps) {
     <TooltipProvider delayDuration={0}>
       <aside
         className={cn(
-          'fixed top-0 right-0 z-40 h-screen bg-dark-50 border-l border-white/10 transition-all duration-300 flex flex-col',
+          'fixed top-0 right-0 z-40 h-screen bg-gray-50 border-l border-gray-200 transition-all duration-300 flex flex-col',
           isCollapsed ? 'w-20' : 'w-64'
         )}
       >
         {/* Logo */}
-        <div className="h-16 flex items-center justify-between px-4 border-b border-white/10">
+        <div className="h-16 flex items-center justify-between px-4 border-b border-gray-200">
           {!isCollapsed && (
             <Link href="/admin" className="flex items-center gap-3">
               <Image
@@ -93,7 +93,7 @@ export function Sidebar({ isCollapsed, onToggle }: SidebarProps) {
                 height={40}
                 className="rounded-lg"
               />
-              <span className="font-bold text-white">لوحة التحكم</span>
+              <span className="font-bold text-gray-900">لوحة التحكم</span>
             </Link>
           )}
           {isCollapsed && (
@@ -111,7 +111,7 @@ export function Sidebar({ isCollapsed, onToggle }: SidebarProps) {
             variant="ghost"
             size="icon"
             onClick={onToggle}
-            className={cn('text-gray-400 hover:text-white', isCollapsed && 'hidden')}
+            className={cn('text-gray-600 hover:text-primary', isCollapsed && 'hidden')}
           >
             <ChevronRight size={20} />
           </Button>
@@ -129,8 +129,8 @@ export function Sidebar({ isCollapsed, onToggle }: SidebarProps) {
                       className={cn(
                         'flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-200',
                         isActive(item.href)
-                          ? 'bg-primary text-dark font-medium'
-                          : 'text-gray-400 hover:text-white hover:bg-white/5',
+                          ? 'bg-primary text-gray-900 font-medium'
+                          : 'text-gray-600 hover:text-primary hover:bg-gray-100',
                         isCollapsed && 'justify-center'
                       )}
                     >
@@ -139,7 +139,7 @@ export function Sidebar({ isCollapsed, onToggle }: SidebarProps) {
                     </Link>
                   </TooltipTrigger>
                   {isCollapsed && (
-                    <TooltipContent side="left" className="bg-dark-50 border-white/10">
+                    <TooltipContent side="left" className="bg-gray-50 border-gray-200">
                       <p>{item.title}</p>
                     </TooltipContent>
                   )}
@@ -149,7 +149,7 @@ export function Sidebar({ isCollapsed, onToggle }: SidebarProps) {
           </ul>
 
           {/* Separator */}
-          <div className="my-4 border-t border-white/10" />
+          <div className="my-4 border-t border-gray-200" />
 
           {/* Bottom Menu */}
           <ul className="space-y-1">
@@ -162,8 +162,8 @@ export function Sidebar({ isCollapsed, onToggle }: SidebarProps) {
                       className={cn(
                         'flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-200',
                         isActive(item.href)
-                          ? 'bg-primary text-dark font-medium'
-                          : 'text-gray-400 hover:text-white hover:bg-white/5',
+                          ? 'bg-primary text-gray-900 font-medium'
+                          : 'text-gray-600 hover:text-primary hover:bg-gray-100',
                         isCollapsed && 'justify-center'
                       )}
                     >
@@ -172,7 +172,7 @@ export function Sidebar({ isCollapsed, onToggle }: SidebarProps) {
                     </Link>
                   </TooltipTrigger>
                   {isCollapsed && (
-                    <TooltipContent side="left" className="bg-dark-50 border-white/10">
+                    <TooltipContent side="left" className="bg-gray-50 border-gray-200">
                       <p>{item.title}</p>
                     </TooltipContent>
                   )}
@@ -183,17 +183,17 @@ export function Sidebar({ isCollapsed, onToggle }: SidebarProps) {
         </nav>
 
         {/* User Section */}
-        <div className="p-4 border-t border-white/10">
+        <div className="p-4 border-t border-gray-200">
           {!isCollapsed ? (
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center">
                 <UserCircle className="text-primary" size={24} />
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-white truncate">
+                <p className="text-sm font-medium text-gray-900 truncate">
                   {session?.user?.name}
                 </p>
-                <p className="text-xs text-gray-400 truncate">
+                <p className="text-xs text-gray-600 truncate">
                   {session?.user?.email}
                 </p>
               </div>
@@ -201,7 +201,7 @@ export function Sidebar({ isCollapsed, onToggle }: SidebarProps) {
                 variant="ghost"
                 size="icon"
                 onClick={() => signOut({ callbackUrl: '/admin/login' })}
-                className="text-gray-400 hover:text-red-400"
+                className="text-gray-600 hover:text-red-400"
               >
                 <LogOut size={18} />
               </Button>
@@ -213,12 +213,12 @@ export function Sidebar({ isCollapsed, onToggle }: SidebarProps) {
                   variant="ghost"
                   size="icon"
                   onClick={() => signOut({ callbackUrl: '/admin/login' })}
-                  className="w-full text-gray-400 hover:text-red-400"
+                  className="w-full text-gray-600 hover:text-red-400"
                 >
                   <LogOut size={20} />
                 </Button>
               </TooltipTrigger>
-              <TooltipContent side="left" className="bg-dark-50 border-white/10">
+              <TooltipContent side="left" className="bg-gray-50 border-gray-200">
                 <p>تسجيل الخروج</p>
               </TooltipContent>
             </Tooltip>
@@ -231,7 +231,7 @@ export function Sidebar({ isCollapsed, onToggle }: SidebarProps) {
             variant="ghost"
             size="icon"
             onClick={onToggle}
-            className="absolute top-4 -left-3 w-6 h-6 rounded-full bg-dark-50 border border-white/10 text-gray-400 hover:text-white"
+            className="absolute top-4 -left-3 w-6 h-6 rounded-full bg-gray-50 border border-gray-200 text-gray-600 hover:text-primary"
           >
             <ChevronLeft size={14} />
           </Button>
@@ -261,7 +261,7 @@ export function MobileSidebar() {
         variant="ghost"
         size="icon"
         onClick={() => setIsOpen(true)}
-        className="lg:hidden text-gray-400"
+        className="lg:hidden text-gray-600"
       >
         <Menu size={24} />
       </Button>
@@ -277,12 +277,12 @@ export function MobileSidebar() {
       {/* Sidebar */}
       <aside
         className={cn(
-          'fixed top-0 right-0 z-50 h-screen w-64 bg-dark-50 border-l border-white/10 transition-transform duration-300 lg:hidden flex flex-col',
+          'fixed top-0 right-0 z-50 h-screen w-64 bg-gray-50 border-l border-gray-200 transition-transform duration-300 lg:hidden flex flex-col',
           isOpen ? 'translate-x-0' : 'translate-x-full'
         )}
       >
         {/* Header */}
-        <div className="h-16 flex items-center justify-between px-4 border-b border-white/10">
+        <div className="h-16 flex items-center justify-between px-4 border-b border-gray-200">
           <Link href="/admin" className="flex items-center gap-3" onClick={() => setIsOpen(false)}>
             <Image
               src="/images/logo.jpg"
@@ -291,13 +291,13 @@ export function MobileSidebar() {
               height={40}
               className="rounded-lg"
             />
-            <span className="font-bold text-white">لوحة التحكم</span>
+            <span className="font-bold text-gray-900">لوحة التحكم</span>
           </Link>
           <Button
             variant="ghost"
             size="icon"
             onClick={() => setIsOpen(false)}
-            className="text-gray-400 hover:text-white"
+            className="text-gray-600 hover:text-primary"
           >
             <X size={20} />
           </Button>
@@ -314,8 +314,8 @@ export function MobileSidebar() {
                   className={cn(
                     'flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-200',
                     isActive(item.href)
-                      ? 'bg-primary text-dark font-medium'
-                      : 'text-gray-400 hover:text-white hover:bg-white/5'
+                      ? 'bg-primary text-gray-900 font-medium'
+                      : 'text-gray-600 hover:text-primary hover:bg-gray-100'
                   )}
                 >
                   <item.icon size={20} />
@@ -325,7 +325,7 @@ export function MobileSidebar() {
             ))}
           </ul>
 
-          <div className="my-4 border-t border-white/10" />
+          <div className="my-4 border-t border-gray-200" />
 
           <ul className="space-y-1">
             {bottomMenuItems.map((item) => (
@@ -336,8 +336,8 @@ export function MobileSidebar() {
                   className={cn(
                     'flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-200',
                     isActive(item.href)
-                      ? 'bg-primary text-dark font-medium'
-                      : 'text-gray-400 hover:text-white hover:bg-white/5'
+                      ? 'bg-primary text-gray-900 font-medium'
+                      : 'text-gray-600 hover:text-primary hover:bg-gray-100'
                   )}
                 >
                   <item.icon size={20} />
@@ -349,16 +349,16 @@ export function MobileSidebar() {
         </nav>
 
         {/* User Section */}
-        <div className="p-4 border-t border-white/10">
+        <div className="p-4 border-t border-gray-200">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center">
               <UserCircle className="text-primary" size={24} />
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium text-white truncate">
+              <p className="text-sm font-medium text-gray-900 truncate">
                 {session?.user?.name}
               </p>
-              <p className="text-xs text-gray-400 truncate">
+              <p className="text-xs text-gray-600 truncate">
                 {session?.user?.email}
               </p>
             </div>
@@ -366,7 +366,7 @@ export function MobileSidebar() {
               variant="ghost"
               size="icon"
               onClick={() => signOut({ callbackUrl: '/admin/login' })}
-              className="text-gray-400 hover:text-red-400"
+              className="text-gray-600 hover:text-red-400"
             >
               <LogOut size={18} />
             </Button>

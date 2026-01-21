@@ -49,7 +49,7 @@ export function TeamSection() {
   const isInView = useInView(ref, { once: true, margin: '-100px' });
 
   return (
-    <section ref={ref} className="section-padding bg-dark-50 relative overflow-hidden">
+    <section ref={ref} className="section-padding bg-gray-50 relative overflow-hidden">
       <div className="container-custom relative z-10">
         {/* Header */}
         <motion.div
@@ -63,8 +63,8 @@ export function TeamSection() {
               <span className="w-2 h-2 bg-primary rounded-full" />
               {t('team.title')}
             </div>
-            <h2 className="heading-2 text-white">{t('team.subtitle')}</h2>
-            <p className="text-gray-400 mt-2 max-w-xl">{t('team.description')}</p>
+            <h2 className="heading-2 text-gray-900">{t('team.subtitle')}</h2>
+            <p className="text-gray-600 mt-2 max-w-xl">{t('team.description')}</p>
           </div>
 
           <Button variant="goldOutline" asChild className="group shrink-0">
@@ -85,7 +85,7 @@ export function TeamSection() {
               transition={{ duration: 0.6, delay: index * 0.1 }}
               className="group"
             >
-              <div className="relative bg-white/5 rounded-2xl overflow-hidden border border-white/10 hover:border-primary/50 transition-all duration-300">
+              <div className="relative bg-gray-100 rounded-2xl overflow-hidden border border-gray-200 hover:border-primary/50 transition-all duration-300">
                 {/* Image */}
                 <div className="relative aspect-square overflow-hidden">
                   <Image
@@ -94,19 +94,19 @@ export function TeamSection() {
                     fill
                     className="object-cover group-hover:scale-110 transition-transform duration-500"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-dark via-dark/50 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-white via-white/50 to-transparent" />
 
                   {/* Social Links */}
                   <div className="absolute bottom-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                     <a
                       href="#"
-                      className="w-10 h-10 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-primary hover:text-dark transition-all"
+                      className="w-10 h-10 bg-gray-100 backdrop-blur-sm rounded-full flex items-center justify-center text-gray-900 hover:bg-primary hover:text-primary transition-all"
                     >
                       <Linkedin size={18} />
                     </a>
                     <a
                       href="#"
-                      className="w-10 h-10 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-primary hover:text-dark transition-all"
+                      className="w-10 h-10 bg-gray-100 backdrop-blur-sm rounded-full flex items-center justify-center text-gray-900 hover:bg-primary hover:text-primary transition-all"
                     >
                       <Mail size={18} />
                     </a>
@@ -115,7 +115,7 @@ export function TeamSection() {
 
                 {/* Info */}
                 <div className="p-4 text-center">
-                  <h3 className="text-lg font-semibold text-white group-hover:text-primary transition-colors">
+                  <h3 className="text-lg font-semibold text-gray-900 group-hover:text-primary transition-colors">
                     {member.name}
                   </h3>
                   <p className="text-sm text-primary/80">{member.position}</p>

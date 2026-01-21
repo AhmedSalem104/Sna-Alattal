@@ -182,21 +182,21 @@ export default function EditProductPage({ params }: EditProductPageProps) {
         className="flex items-center justify-between"
       >
         <div>
-          <div className="flex items-center gap-2 text-gray-400 mb-2">
-            <Link href="/admin/products" className="hover:text-white transition-colors">
+          <div className="flex items-center gap-2 text-gray-600 mb-2">
+            <Link href="/admin/products" className="hover:text-primary transition-colors">
               المنتجات
             </Link>
             <ArrowRight size={16} />
-            <span className="text-white">تعديل المنتج</span>
+            <span className="text-gray-900">تعديل المنتج</span>
           </div>
-          <h1 className="text-2xl font-bold text-white">تعديل المنتج</h1>
+          <h1 className="text-2xl font-bold text-gray-900">تعديل المنتج</h1>
         </div>
       </motion.div>
 
       {/* Form */}
       <form onSubmit={handleSubmit(onSubmit)}>
         <Tabs defaultValue="basic" className="space-y-6">
-          <TabsList className="bg-dark-50 border border-white/10">
+          <TabsList className="bg-gray-50 border border-gray-200">
             <TabsTrigger value="basic">المعلومات الأساسية</TabsTrigger>
             <TabsTrigger value="content">المحتوى</TabsTrigger>
             <TabsTrigger value="media">الصور</TabsTrigger>
@@ -205,38 +205,38 @@ export default function EditProductPage({ params }: EditProductPageProps) {
 
           {/* Basic Info */}
           <TabsContent value="basic" className="space-y-6">
-            <Card className="bg-dark-50 border-white/10">
+            <Card className="bg-gray-50 border-gray-200">
               <CardHeader>
-                <CardTitle className="text-white">المعلومات الأساسية</CardTitle>
+                <CardTitle className="text-gray-900">المعلومات الأساسية</CardTitle>
               </CardHeader>
               <CardContent className="space-y-6">
                 {/* Names */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <div>
-                    <Label className="text-white">اسم المنتج (عربي) *</Label>
+                    <Label className="text-gray-900">اسم المنتج (عربي) *</Label>
                     <Input
                       {...register('nameAr')}
-                      className="mt-2 bg-dark border-white/10 text-white"
+                      className="mt-2 bg-white border-gray-200 text-gray-900"
                     />
                     {errors.nameAr && (
                       <p className="text-red-400 text-sm mt-1">{errors.nameAr.message}</p>
                     )}
                   </div>
                   <div>
-                    <Label className="text-white">اسم المنتج (إنجليزي) *</Label>
+                    <Label className="text-gray-900">اسم المنتج (إنجليزي) *</Label>
                     <Input
                       {...register('nameEn')}
-                      className="mt-2 bg-dark border-white/10 text-white"
+                      className="mt-2 bg-white border-gray-200 text-gray-900"
                     />
                     {errors.nameEn && (
                       <p className="text-red-400 text-sm mt-1">{errors.nameEn.message}</p>
                     )}
                   </div>
                   <div>
-                    <Label className="text-white">اسم المنتج (تركي) *</Label>
+                    <Label className="text-gray-900">اسم المنتج (تركي) *</Label>
                     <Input
                       {...register('nameTr')}
-                      className="mt-2 bg-dark border-white/10 text-white"
+                      className="mt-2 bg-white border-gray-200 text-gray-900"
                     />
                     {errors.nameTr && (
                       <p className="text-red-400 text-sm mt-1">{errors.nameTr.message}</p>
@@ -247,25 +247,25 @@ export default function EditProductPage({ params }: EditProductPageProps) {
                 {/* Slug & Category */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <Label className="text-white">Slug *</Label>
+                    <Label className="text-gray-900">Slug *</Label>
                     <Input
                       {...register('slug')}
-                      className="mt-2 bg-dark border-white/10 text-white"
+                      className="mt-2 bg-white border-gray-200 text-gray-900"
                     />
                     {errors.slug && (
                       <p className="text-red-400 text-sm mt-1">{errors.slug.message}</p>
                     )}
                   </div>
                   <div>
-                    <Label className="text-white">التصنيف</Label>
+                    <Label className="text-gray-900">التصنيف</Label>
                     <Select
                       value={watch('categoryId')}
                       onValueChange={(value) => setValue('categoryId', value)}
                     >
-                      <SelectTrigger className="mt-2 bg-dark border-white/10 text-white">
+                      <SelectTrigger className="mt-2 bg-white border-gray-200 text-gray-900">
                         <SelectValue placeholder="اختر التصنيف" />
                       </SelectTrigger>
-                      <SelectContent className="bg-dark-50 border-white/10">
+                      <SelectContent className="bg-gray-50 border-gray-200">
                         {categories.map((cat) => (
                           <SelectItem key={cat.id} value={cat.id}>
                             {cat.nameAr}
@@ -284,7 +284,7 @@ export default function EditProductPage({ params }: EditProductPageProps) {
                       checked={watch('isActive')}
                       onCheckedChange={(checked) => setValue('isActive', checked)}
                     />
-                    <Label htmlFor="isActive" className="text-white cursor-pointer">
+                    <Label htmlFor="isActive" className="text-gray-900 cursor-pointer">
                       نشط
                     </Label>
                   </div>
@@ -294,16 +294,16 @@ export default function EditProductPage({ params }: EditProductPageProps) {
                       checked={watch('isFeatured')}
                       onCheckedChange={(checked) => setValue('isFeatured', checked)}
                     />
-                    <Label htmlFor="isFeatured" className="text-white cursor-pointer">
+                    <Label htmlFor="isFeatured" className="text-gray-900 cursor-pointer">
                       منتج مميز
                     </Label>
                   </div>
                   <div className="flex items-center gap-3">
-                    <Label className="text-white">الترتيب</Label>
+                    <Label className="text-gray-900">الترتيب</Label>
                     <Input
                       type="number"
                       {...register('order', { valueAsNumber: true })}
-                      className="w-20 bg-dark border-white/10 text-white"
+                      className="w-20 bg-white border-gray-200 text-gray-900"
                     />
                   </div>
                 </div>
@@ -313,59 +313,59 @@ export default function EditProductPage({ params }: EditProductPageProps) {
 
           {/* Content */}
           <TabsContent value="content" className="space-y-6">
-            <Card className="bg-dark-50 border-white/10">
+            <Card className="bg-gray-50 border-gray-200">
               <CardHeader>
-                <CardTitle className="text-white">الوصف المختصر</CardTitle>
+                <CardTitle className="text-gray-900">الوصف المختصر</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div>
-                  <Label className="text-white">الوصف المختصر (عربي)</Label>
+                  <Label className="text-gray-900">الوصف المختصر (عربي)</Label>
                   <Textarea
                     {...register('shortDescAr')}
-                    className="mt-2 bg-dark border-white/10 text-white min-h-[100px]"
+                    className="mt-2 bg-white border-gray-200 text-gray-900 min-h-[100px]"
                   />
                 </div>
                 <div>
-                  <Label className="text-white">الوصف المختصر (إنجليزي)</Label>
+                  <Label className="text-gray-900">الوصف المختصر (إنجليزي)</Label>
                   <Textarea
                     {...register('shortDescEn')}
-                    className="mt-2 bg-dark border-white/10 text-white min-h-[100px]"
+                    className="mt-2 bg-white border-gray-200 text-gray-900 min-h-[100px]"
                   />
                 </div>
                 <div>
-                  <Label className="text-white">الوصف المختصر (تركي)</Label>
+                  <Label className="text-gray-900">الوصف المختصر (تركي)</Label>
                   <Textarea
                     {...register('shortDescTr')}
-                    className="mt-2 bg-dark border-white/10 text-white min-h-[100px]"
+                    className="mt-2 bg-white border-gray-200 text-gray-900 min-h-[100px]"
                   />
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="bg-dark-50 border-white/10">
+            <Card className="bg-gray-50 border-gray-200">
               <CardHeader>
-                <CardTitle className="text-white">الوصف الكامل</CardTitle>
+                <CardTitle className="text-gray-900">الوصف الكامل</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div>
-                  <Label className="text-white">الوصف الكامل (عربي)</Label>
+                  <Label className="text-gray-900">الوصف الكامل (عربي)</Label>
                   <Textarea
                     {...register('descriptionAr')}
-                    className="mt-2 bg-dark border-white/10 text-white min-h-[200px]"
+                    className="mt-2 bg-white border-gray-200 text-gray-900 min-h-[200px]"
                   />
                 </div>
                 <div>
-                  <Label className="text-white">الوصف الكامل (إنجليزي)</Label>
+                  <Label className="text-gray-900">الوصف الكامل (إنجليزي)</Label>
                   <Textarea
                     {...register('descriptionEn')}
-                    className="mt-2 bg-dark border-white/10 text-white min-h-[200px]"
+                    className="mt-2 bg-white border-gray-200 text-gray-900 min-h-[200px]"
                   />
                 </div>
                 <div>
-                  <Label className="text-white">الوصف الكامل (تركي)</Label>
+                  <Label className="text-gray-900">الوصف الكامل (تركي)</Label>
                   <Textarea
                     {...register('descriptionTr')}
-                    className="mt-2 bg-dark border-white/10 text-white min-h-[200px]"
+                    className="mt-2 bg-white border-gray-200 text-gray-900 min-h-[200px]"
                   />
                 </div>
               </CardContent>
@@ -374,9 +374,9 @@ export default function EditProductPage({ params }: EditProductPageProps) {
 
           {/* Media */}
           <TabsContent value="media" className="space-y-6">
-            <Card className="bg-dark-50 border-white/10">
+            <Card className="bg-gray-50 border-gray-200">
               <CardHeader>
-                <CardTitle className="text-white">صور المنتج</CardTitle>
+                <CardTitle className="text-gray-900">صور المنتج</CardTitle>
               </CardHeader>
               <CardContent>
                 <ImageUpload
@@ -391,54 +391,54 @@ export default function EditProductPage({ params }: EditProductPageProps) {
 
           {/* SEO */}
           <TabsContent value="seo" className="space-y-6">
-            <Card className="bg-dark-50 border-white/10">
+            <Card className="bg-gray-50 border-gray-200">
               <CardHeader>
-                <CardTitle className="text-white">تحسين محركات البحث (SEO)</CardTitle>
+                <CardTitle className="text-gray-900">تحسين محركات البحث (SEO)</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <div>
-                    <Label className="text-white">عنوان SEO (عربي)</Label>
+                    <Label className="text-gray-900">عنوان SEO (عربي)</Label>
                     <Input
                       {...register('seoTitleAr')}
-                      className="mt-2 bg-dark border-white/10 text-white"
+                      className="mt-2 bg-white border-gray-200 text-gray-900"
                     />
                   </div>
                   <div>
-                    <Label className="text-white">عنوان SEO (إنجليزي)</Label>
+                    <Label className="text-gray-900">عنوان SEO (إنجليزي)</Label>
                     <Input
                       {...register('seoTitleEn')}
-                      className="mt-2 bg-dark border-white/10 text-white"
+                      className="mt-2 bg-white border-gray-200 text-gray-900"
                     />
                   </div>
                   <div>
-                    <Label className="text-white">عنوان SEO (تركي)</Label>
+                    <Label className="text-gray-900">عنوان SEO (تركي)</Label>
                     <Input
                       {...register('seoTitleTr')}
-                      className="mt-2 bg-dark border-white/10 text-white"
+                      className="mt-2 bg-white border-gray-200 text-gray-900"
                     />
                   </div>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <div>
-                    <Label className="text-white">وصف SEO (عربي)</Label>
+                    <Label className="text-gray-900">وصف SEO (عربي)</Label>
                     <Textarea
                       {...register('seoDescAr')}
-                      className="mt-2 bg-dark border-white/10 text-white"
+                      className="mt-2 bg-white border-gray-200 text-gray-900"
                     />
                   </div>
                   <div>
-                    <Label className="text-white">وصف SEO (إنجليزي)</Label>
+                    <Label className="text-gray-900">وصف SEO (إنجليزي)</Label>
                     <Textarea
                       {...register('seoDescEn')}
-                      className="mt-2 bg-dark border-white/10 text-white"
+                      className="mt-2 bg-white border-gray-200 text-gray-900"
                     />
                   </div>
                   <div>
-                    <Label className="text-white">وصف SEO (تركي)</Label>
+                    <Label className="text-gray-900">وصف SEO (تركي)</Label>
                     <Textarea
                       {...register('seoDescTr')}
-                      className="mt-2 bg-dark border-white/10 text-white"
+                      className="mt-2 bg-white border-gray-200 text-gray-900"
                     />
                   </div>
                 </div>
@@ -450,7 +450,7 @@ export default function EditProductPage({ params }: EditProductPageProps) {
         {/* Submit Button */}
         <div className="flex justify-end gap-4 mt-6">
           <Link href="/admin/products">
-            <Button type="button" variant="outline" className="border-white/20 text-white">
+            <Button type="button" variant="outline" className="border-gray-300 text-gray-900">
               إلغاء
             </Button>
           </Link>

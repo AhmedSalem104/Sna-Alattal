@@ -69,9 +69,9 @@ export default function CertificatesPage() {
   const t = useTranslations('certificatesPage');
 
   return (
-    <div className="min-h-screen bg-dark">
+    <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="relative py-32 bg-gradient-to-b from-primary/20 via-dark to-dark overflow-hidden">
+      <section className="relative py-32 bg-gradient-to-b from-primary/20 via-white to-white overflow-hidden">
         <div className="absolute inset-0">
           <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl" />
           <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-primary/5 rounded-full blur-3xl" />
@@ -87,10 +87,10 @@ export default function CertificatesPage() {
             <span className="inline-block px-4 py-1 bg-primary/20 text-primary rounded-full text-sm mb-4">
               {t('badge')}
             </span>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
               {t('title')}
             </h1>
-            <p className="text-xl text-gray-300">
+            <p className="text-xl text-gray-700">
               {t('subtitle')}
             </p>
           </motion.div>
@@ -108,7 +108,7 @@ export default function CertificatesPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
-                className={`group relative bg-gradient-to-br ${cert.color} to-dark-50 rounded-2xl overflow-hidden border border-white/10 hover:border-white/20 transition-all`}
+                className={`group relative bg-gradient-to-br ${cert.color} to-white-50 rounded-2xl overflow-hidden border border-gray-200 hover:border-gray-300 transition-all`}
               >
                 <div className="p-8">
                   {/* Header */}
@@ -118,9 +118,9 @@ export default function CertificatesPage() {
                         <Award className="text-primary" size={24} />
                         <span className="text-xl font-bold text-primary">{cert.name}</span>
                       </div>
-                      <h3 className="text-2xl font-bold text-white">{cert.title}</h3>
+                      <h3 className="text-2xl font-bold text-gray-900">{cert.title}</h3>
                     </div>
-                    <div className="relative w-20 h-20 rounded-xl overflow-hidden bg-white/10">
+                    <div className="relative w-20 h-20 rounded-xl overflow-hidden bg-gray-100">
                       <Image
                         src={cert.image}
                         alt={cert.name}
@@ -131,22 +131,22 @@ export default function CertificatesPage() {
                   </div>
 
                   {/* Description */}
-                  <p className="text-gray-300 mb-6">{cert.description}</p>
+                  <p className="text-gray-700 mb-6">{cert.description}</p>
 
                   {/* Details */}
                   <div className="grid grid-cols-2 gap-4 mb-6">
-                    <div className="bg-dark/50 rounded-xl p-4">
-                      <p className="text-gray-400 text-sm">{t('issuedBy')}</p>
-                      <p className="text-white font-medium">{cert.issuer}</p>
+                    <div className="bg-gray-100/50 rounded-xl p-4">
+                      <p className="text-gray-600 text-sm">{t('issuedBy')}</p>
+                      <p className="text-gray-900 font-medium">{cert.issuer}</p>
                     </div>
-                    <div className="bg-dark/50 rounded-xl p-4">
-                      <p className="text-gray-400 text-sm">{t('validUntil')}</p>
-                      <p className="text-white font-medium">{cert.validUntil}</p>
+                    <div className="bg-gray-100/50 rounded-xl p-4">
+                      <p className="text-gray-600 text-sm">{t('validUntil')}</p>
+                      <p className="text-gray-900 font-medium">{cert.validUntil}</p>
                     </div>
                   </div>
 
                   {/* Download */}
-                  <Button variant="outline" className="border-white/20 text-white hover:bg-white/10 w-full">
+                  <Button variant="outline" className="border-gray-300 text-gray-900 hover:bg-gray-100 w-full">
                     <Download size={18} className="ml-2" />
                     {t('downloadCertificate')}
                   </Button>
@@ -158,7 +158,7 @@ export default function CertificatesPage() {
       </section>
 
       {/* Why It Matters */}
-      <section className="py-20 bg-dark-50">
+      <section className="py-20 bg-gray-50">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -166,10 +166,10 @@ export default function CertificatesPage() {
             viewport={{ once: true }}
             className="text-center mb-12"
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
               {t('whyMatters.title')}
             </h2>
-            <p className="text-gray-400 max-w-2xl mx-auto">
+            <p className="text-gray-600 max-w-2xl mx-auto">
               {t('whyMatters.subtitle')}
             </p>
           </motion.div>
@@ -198,13 +198,13 @@ export default function CertificatesPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
-                className="text-center p-8 bg-dark rounded-2xl border border-white/10"
+                className="text-center p-8 bg-white rounded-2xl border border-gray-200"
               >
                 <div className="w-16 h-16 bg-primary/20 rounded-xl flex items-center justify-center mx-auto mb-4">
                   <benefit.icon className="text-primary" size={32} />
                 </div>
-                <h3 className="text-xl font-bold text-white mb-2">{benefit.title}</h3>
-                <p className="text-gray-400">{benefit.desc}</p>
+                <h3 className="text-xl font-bold text-gray-900 mb-2">{benefit.title}</h3>
+                <p className="text-gray-600">{benefit.desc}</p>
               </motion.div>
             ))}
           </div>
@@ -220,8 +220,8 @@ export default function CertificatesPage() {
             viewport={{ once: true }}
             className="text-center mb-12"
           >
-            <h2 className="text-3xl font-bold text-white mb-4">{t('accreditation.title')}</h2>
-            <p className="text-gray-400">{t('accreditation.subtitle')}</p>
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">{t('accreditation.title')}</h2>
+            <p className="text-gray-600">{t('accreditation.subtitle')}</p>
           </motion.div>
 
           <div className="flex flex-wrap justify-center gap-8">
@@ -248,17 +248,17 @@ export default function CertificatesPage() {
       </section>
 
       {/* CTA */}
-      <section className="py-20 bg-gradient-to-r from-primary/20 via-dark to-primary/20">
+      <section className="py-20 bg-gradient-to-r from-primary/20 via-white to-primary/20">
         <div className="container mx-auto px-4 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
               {t('cta.title')}
             </h2>
-            <p className="text-gray-300 mb-8 max-w-2xl mx-auto">
+            <p className="text-gray-700 mb-8 max-w-2xl mx-auto">
               {t('cta.subtitle')}
             </p>
             <Link href="/contact">

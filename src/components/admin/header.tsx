@@ -98,23 +98,23 @@ export function Header({ isCollapsed }: HeaderProps) {
   const breadcrumbs = getBreadcrumbs();
 
   return (
-    <header className="sticky top-0 z-30 h-16 bg-dark border-b border-white/10 flex items-center justify-between px-6">
+    <header className="sticky top-0 z-30 h-16 bg-white border-b border-gray-200 flex items-center justify-between px-6">
       {/* Right Side - Mobile Menu & Breadcrumbs */}
       <div className="flex items-center gap-4">
         <MobileSidebar />
 
         {/* Breadcrumbs */}
         <nav className="hidden md:flex items-center gap-2 text-sm">
-          <Link href="/admin" className="text-gray-400 hover:text-white transition-colors">
+          <Link href="/admin" className="text-gray-600 hover:text-primary transition-colors">
             <Home size={16} />
           </Link>
           {breadcrumbs.map((crumb, index) => (
             <div key={crumb.href} className="flex items-center gap-2">
               <ChevronLeft size={14} className="text-gray-600" />
               {index === breadcrumbs.length - 1 ? (
-                <span className="text-white font-medium">{crumb.label}</span>
+                <span className="text-gray-900 font-medium">{crumb.label}</span>
               ) : (
-                <Link href={crumb.href} className="text-gray-400 hover:text-white transition-colors">
+                <Link href={crumb.href} className="text-gray-600 hover:text-primary transition-colors">
                   {crumb.label}
                 </Link>
               )}
@@ -123,17 +123,17 @@ export function Header({ isCollapsed }: HeaderProps) {
         </nav>
 
         {/* Mobile Title */}
-        <h1 className="md:hidden text-lg font-bold text-white">{getPageTitle()}</h1>
+        <h1 className="md:hidden text-lg font-bold text-gray-900">{getPageTitle()}</h1>
       </div>
 
       {/* Left Side - Actions */}
       <div className="flex items-center gap-3">
         {/* Search */}
         <div className="hidden lg:block relative">
-          <Search className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+          <Search className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-600" size={18} />
           <Input
             placeholder="بحث..."
-            className="w-64 pr-10 bg-dark-50 border-white/10 text-white placeholder:text-gray-500"
+            className="w-64 pr-10 bg-gray-50 border-gray-200 text-gray-900 placeholder:text-gray-600"
           />
         </div>
 
@@ -145,12 +145,12 @@ export function Header({ isCollapsed }: HeaderProps) {
               إضافة جديد
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-48 bg-dark-50 border-white/10">
-            <DropdownMenuLabel className="text-gray-400">إضافة سريعة</DropdownMenuLabel>
-            <DropdownMenuSeparator className="bg-white/10" />
+          <DropdownMenuContent align="end" className="w-48 bg-gray-50 border-gray-200">
+            <DropdownMenuLabel className="text-gray-600">إضافة سريعة</DropdownMenuLabel>
+            <DropdownMenuSeparator className="bg-gray-100" />
             {quickActions.map((action) => (
               <DropdownMenuItem key={action.href} asChild>
-                <Link href={action.href} className="text-white hover:text-primary cursor-pointer">
+                <Link href={action.href} className="text-gray-900 hover:text-primary cursor-pointer">
                   {action.label}
                 </Link>
               </DropdownMenuItem>
@@ -161,15 +161,15 @@ export function Header({ isCollapsed }: HeaderProps) {
         {/* Notifications */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" size="icon" className="relative text-gray-400 hover:text-white">
+            <Button variant="ghost" size="icon" className="relative text-gray-600 hover:text-primary">
               <Bell size={20} />
               <span className="absolute top-1 left-1 w-2 h-2 bg-primary rounded-full" />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-80 bg-dark-50 border-white/10">
-            <DropdownMenuLabel className="text-gray-400">الإشعارات</DropdownMenuLabel>
-            <DropdownMenuSeparator className="bg-white/10" />
-            <div className="p-4 text-center text-gray-400 text-sm">
+          <DropdownMenuContent align="end" className="w-80 bg-gray-50 border-gray-200">
+            <DropdownMenuLabel className="text-gray-600">الإشعارات</DropdownMenuLabel>
+            <DropdownMenuSeparator className="bg-gray-100" />
+            <div className="p-4 text-center text-gray-600 text-sm">
               لا توجد إشعارات جديدة
             </div>
           </DropdownMenuContent>
@@ -177,7 +177,7 @@ export function Header({ isCollapsed }: HeaderProps) {
 
         {/* Visit Site */}
         <Link href="/" target="_blank">
-          <Button variant="outline" size="sm" className="hidden sm:flex border-white/20 text-gray-300 hover:text-white">
+          <Button variant="outline" size="sm" className="hidden sm:flex border-gray-300 text-gray-700 hover:text-primary">
             زيارة الموقع
           </Button>
         </Link>

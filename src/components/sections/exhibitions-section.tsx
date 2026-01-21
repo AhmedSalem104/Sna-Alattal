@@ -56,7 +56,7 @@ export function ExhibitionsSection() {
   };
 
   return (
-    <section ref={ref} className="section-padding bg-dark-50 relative overflow-hidden">
+    <section ref={ref} className="section-padding bg-gray-50 relative overflow-hidden">
       <div className="container-custom relative z-10">
         {/* Header */}
         <motion.div
@@ -70,8 +70,8 @@ export function ExhibitionsSection() {
               <Calendar size={16} />
               {t('exhibitions.title')}
             </div>
-            <h2 className="heading-2 text-white">{t('exhibitions.subtitle')}</h2>
-            <p className="text-gray-400 mt-2">{t('exhibitions.description')}</p>
+            <h2 className="heading-2 text-gray-900">{t('exhibitions.subtitle')}</h2>
+            <p className="text-gray-600 mt-2">{t('exhibitions.description')}</p>
           </div>
 
           <Button variant="goldOutline" asChild className="group shrink-0">
@@ -92,7 +92,7 @@ export function ExhibitionsSection() {
               transition={{ duration: 0.6, delay: index * 0.1 }}
             >
               <Link href={`/exhibitions/${exhibition.id}`}>
-                <div className="group relative bg-white/5 rounded-2xl overflow-hidden border border-white/10 hover:border-primary/50 transition-all duration-300 h-full">
+                <div className="group relative bg-gray-100 rounded-2xl overflow-hidden border border-gray-200 hover:border-primary/50 transition-all duration-300 h-full">
                   {/* Image */}
                   <div className="relative aspect-video overflow-hidden">
                     <Image
@@ -102,7 +102,7 @@ export function ExhibitionsSection() {
                       sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                       className="object-cover group-hover:scale-110 transition-transform duration-500"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-dark to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-white to-transparent" />
 
                     {/* Status Badge */}
                     {exhibition.isUpcoming && (
@@ -114,11 +114,11 @@ export function ExhibitionsSection() {
 
                   {/* Content */}
                   <div className="p-6">
-                    <h3 className="text-lg font-semibold text-white group-hover:text-primary transition-colors mb-3">
+                    <h3 className="text-lg font-semibold text-gray-900 group-hover:text-primary transition-colors mb-3">
                       {exhibition.name}
                     </h3>
 
-                    <div className="space-y-2 text-sm text-gray-400">
+                    <div className="space-y-2 text-sm text-gray-600">
                       <div className="flex items-center gap-2">
                         <MapPin size={14} className="text-primary" />
                         <span>{exhibition.location}</span>

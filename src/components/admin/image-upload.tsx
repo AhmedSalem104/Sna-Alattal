@@ -103,7 +103,7 @@ export function ImageUpload({
           'border-2 border-dashed rounded-xl p-6 text-center cursor-pointer transition-all',
           isDragActive
             ? 'border-primary bg-primary/10'
-            : 'border-white/20 hover:border-white/40',
+            : 'border-gray-300 hover:border-white/40',
           (disabled || isUploading) && 'opacity-50 cursor-not-allowed',
           multiple && images.length >= maxFiles && 'hidden'
         )}
@@ -113,17 +113,17 @@ export function ImageUpload({
           {isUploading ? (
             <>
               <Loader2 className="h-10 w-10 animate-spin text-primary" />
-              <p className="text-gray-400">جاري الرفع...</p>
+              <p className="text-gray-600">جاري الرفع...</p>
             </>
           ) : (
             <>
-              <Upload className="h-10 w-10 text-gray-400" />
-              <p className="text-gray-400">
+              <Upload className="h-10 w-10 text-gray-600" />
+              <p className="text-gray-600">
                 {isDragActive
                   ? 'أفلت الصور هنا'
                   : 'اسحب الصور هنا أو انقر للاختيار'}
               </p>
-              <p className="text-xs text-gray-500">
+              <p className="text-xs text-gray-600">
                 PNG, JPG, GIF, WEBP (حد أقصى {maxSize / 1024 / 1024}MB)
               </p>
             </>
@@ -137,7 +137,7 @@ export function ImageUpload({
           {images.map((image, index) => (
             <div
               key={index}
-              className="relative aspect-video rounded-xl overflow-hidden bg-dark-50 group"
+              className="relative aspect-video rounded-xl overflow-hidden bg-gray-50 group"
             >
               <Image
                 src={image}
@@ -151,7 +151,7 @@ export function ImageUpload({
                   variant="ghost"
                   size="icon"
                   onClick={() => removeImage(index)}
-                  className="text-white hover:text-red-400"
+                  className="text-gray-900 hover:text-red-400"
                 >
                   <X size={20} />
                 </Button>
@@ -163,8 +163,8 @@ export function ImageUpload({
 
       {/* No Image Placeholder */}
       {images.length === 0 && !isUploading && (
-        <div className="flex items-center justify-center aspect-video rounded-xl bg-dark-50 border border-white/10">
-          <div className="text-center text-gray-400">
+        <div className="flex items-center justify-center aspect-video rounded-xl bg-gray-50 border border-gray-200">
+          <div className="text-center text-gray-600">
             <ImageIcon className="h-12 w-12 mx-auto mb-2 opacity-50" />
             <p className="text-sm">لم يتم اختيار صورة</p>
           </div>
