@@ -190,6 +190,7 @@ export default function CataloguesPage() {
                     src={featuredCatalogue.image}
                     alt={featuredCatalogue.title}
                     fill
+                    sizes="(max-width: 1024px) 100vw, 50vw"
                     className="object-cover"
                   />
                   <div className="absolute top-4 right-4 px-3 py-1 bg-primary text-gray-900 rounded-full text-sm font-medium flex items-center gap-1">
@@ -252,6 +253,7 @@ export default function CataloguesPage() {
                     src={catalogue.image}
                     alt={catalogue.title}
                     fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     className="object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-white-50 to-transparent" />

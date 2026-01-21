@@ -84,7 +84,7 @@ export function CataloguesSection() {
                 <div className="relative aspect-[4/3] overflow-hidden">
                   <Image
                     src={catalogue.thumbnail}
-                    alt={catalogue.name}
+                    alt={t(catalogue.nameKey)}
                     fill
                     sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     className="object-cover group-hover:scale-110 transition-transform duration-500"

@@ -72,6 +72,7 @@ export default function NewsDetailPage({ params }: NewsDetailPageProps) {
           src={article.image}
           alt={t(article.titleKey)}
           fill
+          sizes="100vw"
           className="object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-white via-white/50 to-transparent" />
@@ -126,6 +127,7 @@ export default function NewsDetailPage({ params }: NewsDetailPageProps) {
                   src={article.authorImage}
                   alt={article.author}
                   fill
+                  sizes="48px"
                   className="object-cover"
                 />
               </div>
@@ -210,6 +212,7 @@ export default function NewsDetailPage({ params }: NewsDetailPageProps) {
                         src={related.image}
                         alt={t(related.titleKey)}
                         fill
+                        sizes="128px"
                         className="object-cover group-hover:scale-105 transition-transform duration-300"
                       />
                     </div>

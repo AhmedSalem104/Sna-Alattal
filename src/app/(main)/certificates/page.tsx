@@ -125,6 +125,7 @@ export default function CertificatesPage() {
                         src={cert.image}
                         alt={cert.name}
                         fill
+                        sizes="80px"
                         className="object-contain p-2"
                       />
                     </div>

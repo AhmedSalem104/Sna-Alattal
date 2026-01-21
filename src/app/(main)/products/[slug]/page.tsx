@@ -109,6 +109,7 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
                     src={product.images[activeImage]}
                     alt={t(product.nameKey)}
                     fill
+                    sizes="(max-width: 1024px) 100vw, 50vw"
                     className="object-cover"
                   />
 

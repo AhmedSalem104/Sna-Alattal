@@ -83,6 +83,7 @@ export function TVSection() {
                       src={interview.thumbnail}
                       alt={interview.title}
                       fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                       className="object-cover group-hover:scale-110 transition-transform duration-500"
                     />
                     <div className="absolute inset-0 bg-gray-100/50 group-hover:bg-gray-100/30 transition-colors" />
