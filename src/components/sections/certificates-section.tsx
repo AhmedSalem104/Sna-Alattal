@@ -11,21 +11,21 @@ const certificates = [
     id: '1',
     name: 'ISO 9001:2015',
     issuer: 'International Organization for Standardization',
-    description: 'شهادة نظام إدارة الجودة',
+    descriptionKey: 'certificates.items.iso9001.description',
     image: '/images/logo.jpg',
   },
   {
     id: '2',
     name: 'CE Marking',
     issuer: 'European Union',
-    description: 'علامة المطابقة الأوروبية',
+    descriptionKey: 'certificates.items.ce.description',
     image: '/images/logo.jpg',
   },
   {
     id: '3',
     name: 'ISO 14001',
     issuer: 'International Organization for Standardization',
-    description: 'شهادة نظام الإدارة البيئية',
+    descriptionKey: 'certificates.items.iso14001.description',
     image: '/images/logo.jpg',
   },
 ];
@@ -86,12 +86,12 @@ export function CertificatesSection() {
                 {/* Content */}
                 <h3 className="text-xl font-bold text-primary mb-2">{cert.name}</h3>
                 <p className="text-sm text-gray-600 mb-2">{cert.issuer}</p>
-                <p className="text-gray-700">{cert.description}</p>
+                <p className="text-gray-700">{t(cert.descriptionKey)}</p>
 
                 {/* Verified Badge */}
                 <div className="mt-6 inline-flex items-center gap-2 text-green-500 text-sm">
                   <CheckCircle size={16} />
-                  <span>موثق ومعتمد</span>
+                  <span>{t('certificates.verified')}</span>
                 </div>
               </div>
             </motion.div>

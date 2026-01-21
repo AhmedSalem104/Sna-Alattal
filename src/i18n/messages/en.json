@@ -64,7 +64,19 @@
   "certificates": {
     "title": "Certificates",
     "subtitle": "Quality and Accreditation",
-    "description": "International quality and accreditation certificates"
+    "description": "International quality and accreditation certificates",
+    "verified": "Verified and Accredited",
+    "items": {
+      "iso9001": {
+        "description": "Quality Management System Certificate"
+      },
+      "ce": {
+        "description": "European Conformity Marking"
+      },
+      "iso14001": {
+        "description": "Environmental Management System Certificate"
+      }
+    }
   },
   "catalogues": {
     "title": "Catalogues",
@@ -90,7 +102,23 @@
   "exhibitions": {
     "title": "Exhibitions",
     "subtitle": "Our Global Presence",
-    "description": "We participate in the most important specialized international exhibitions"
+    "description": "We participate in the most important specialized international exhibitions",
+    "viewAll": "All Exhibitions",
+    "upcoming": "Upcoming",
+    "items": {
+      "gulfood": {
+        "name": "Gulfood 2024",
+        "location": "Dubai, UAE"
+      },
+      "packExpo": {
+        "name": "Pack Expo",
+        "location": "Chicago, USA"
+      },
+      "propak": {
+        "name": "ProPak Asia",
+        "location": "Bangkok, Thailand"
+      }
+    }
   },
   "news": {
     "title": "News",
@@ -111,7 +139,13 @@
       "submit": "Send Message",
       "sending": "Sending...",
       "success": "Your message has been sent successfully",
-      "error": "An error occurred, please try again"
+      "error": "An error occurred, please try again",
+      "validation": {
+        "nameRequired": "Name is required",
+        "emailInvalid": "Invalid email address",
+        "subjectRequired": "Subject is required",
+        "messageMinLength": "Message must be at least 10 characters"
+      }
     },
     "info": {
       "egypt": {

@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useRef, useState, useMemo } from 'react';
 import { useTranslations } from 'next-intl';
 import { motion, useInView } from 'framer-motion';
 import { useForm } from 'react-hook-form';
@@ -13,22 +13,26 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { toast } from 'sonner';
 
-const contactSchema = z.object({
-  name: z.string().min(2, 'الاسم مطلوب'),
-  email: z.string().email('البريد الإلكتروني غير صحيح'),
-  phone: z.string().optional(),
-  company: z.string().optional(),
-  subject: z.string().min(2, 'الموضوع مطلوب'),
-  message: z.string().min(10, 'الرسالة يجب أن تكون 10 أحرف على الأقل'),
-});
-
-type ContactFormData = z.infer<typeof contactSchema>;
-
 export function ContactSection() {
   const t = useTranslations();
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const contactSchema = useMemo(
+    () =>
+      z.object({
+        name: z.string().min(2, t('contact.form.validation.nameRequired')),
+        email: z.string().email(t('contact.form.validation.emailInvalid')),
+        phone: z.string().optional(),
+        company: z.string().optional(),
+        subject: z.string().min(2, t('contact.form.validation.subjectRequired')),
+        message: z.string().min(10, t('contact.form.validation.messageMinLength')),
+      }),
+    [t]
+  );
+
+  type ContactFormData = z.infer<typeof contactSchema>;
 
   const {
     register,

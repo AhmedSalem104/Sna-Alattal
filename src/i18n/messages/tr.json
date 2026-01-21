@@ -64,7 +64,19 @@
   "certificates": {
     "title": "Sertifikalar",
     "subtitle": "Kalite ve Akreditasyon",
-    "description": "Uluslararası kalite ve akreditasyon sertifikaları"
+    "description": "Uluslararası kalite ve akreditasyon sertifikaları",
+    "verified": "Doğrulanmış ve Akredite",
+    "items": {
+      "iso9001": {
+        "description": "Kalite Yönetim Sistemi Sertifikası"
+      },
+      "ce": {
+        "description": "Avrupa Uygunluk İşaretlemesi"
+      },
+      "iso14001": {
+        "description": "Çevre Yönetim Sistemi Sertifikası"
+      }
+    }
   },
   "catalogues": {
     "title": "Kataloglar",
@@ -90,7 +102,23 @@
   "exhibitions": {
     "title": "Fuarlar",
     "subtitle": "Küresel Varlığımız",
-    "description": "En önemli uluslararası uzmanlık fuarlarına katılıyoruz"
+    "description": "En önemli uluslararası uzmanlık fuarlarına katılıyoruz",
+    "viewAll": "Tüm Fuarlar",
+    "upcoming": "Yaklaşan",
+    "items": {
+      "gulfood": {
+        "name": "Gulfood 2024",
+        "location": "Dubai, BAE"
+      },
+      "packExpo": {
+        "name": "Pack Expo",
+        "location": "Chicago, ABD"
+      },
+      "propak": {
+        "name": "ProPak Asia",
+        "location": "Bangkok, Tayland"
+      }
+    }
   },
   "news": {
     "title": "Haberler",
@@ -111,7 +139,13 @@
       "submit": "Mesaj Gönder",
       "sending": "Gönderiliyor...",
       "success": "Mesajınız başarıyla gönderildi",
-      "error": "Bir hata oluştu, lütfen tekrar deneyin"
+      "error": "Bir hata oluştu, lütfen tekrar deneyin",
+      "validation": {
+        "nameRequired": "Ad gerekli",
+        "emailInvalid": "Geçersiz e-posta adresi",
+        "subjectRequired": "Konu gerekli",
+        "messageMinLength": "Mesaj en az 10 karakter olmalıdır"
+      }
     },
     "info": {
       "egypt": {

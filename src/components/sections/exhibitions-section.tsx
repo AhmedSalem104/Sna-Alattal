@@ -12,9 +12,8 @@ import { Badge } from '@/components/ui/badge';
 const exhibitions = [
   {
     id: '1',
-    name: 'معرض جلفود 2024',
-    nameEn: 'Gulfood 2024',
-    location: 'دبي، الإمارات',
+    nameKey: 'exhibitions.items.gulfood.name',
+    locationKey: 'exhibitions.items.gulfood.location',
     date: '2024-02-19',
     endDate: '2024-02-23',
     image: '/images/logo.jpg',
@@ -22,9 +21,8 @@ const exhibitions = [
   },
   {
     id: '2',
-    name: 'معرض باك إكسبو',
-    nameEn: 'Pack Expo',
-    location: 'شيكاغو، أمريكا',
+    nameKey: 'exhibitions.items.packExpo.name',
+    locationKey: 'exhibitions.items.packExpo.location',
     date: '2024-11-03',
     endDate: '2024-11-06',
     image: '/images/logo.jpg',
@@ -32,9 +30,8 @@ const exhibitions = [
   },
   {
     id: '3',
-    name: 'معرض بروباك آسيا',
-    nameEn: 'ProPak Asia',
-    location: 'بانكوك، تايلاند',
+    nameKey: 'exhibitions.items.propak.name',
+    locationKey: 'exhibitions.items.propak.location',
     date: '2024-06-12',
     endDate: '2024-06-15',
     image: '/images/logo.jpg',
@@ -76,7 +73,7 @@ export function ExhibitionsSection() {
 
           <Button variant="goldOutline" asChild className="group shrink-0">
             <Link href="/exhibitions">
-              جميع المعارض
+              {t('exhibitions.viewAll')}
               <ArrowRight className="mr-2 rtl:rotate-180 group-hover:translate-x-1 transition-transform" size={18} />
             </Link>
           </Button>
@@ -107,7 +104,7 @@ export function ExhibitionsSection() {
                     {/* Status Badge */}
                     {exhibition.isUpcoming && (
                       <Badge variant="gold" className="absolute top-4 right-4">
-                        قادم
+                        {t('exhibitions.upcoming')}
                       </Badge>
                     )}
                   </div>
@@ -115,13 +112,13 @@ export function ExhibitionsSection() {
                   {/* Content */}
                   <div className="p-6">
                     <h3 className="text-lg font-semibold text-gray-900 group-hover:text-primary transition-colors mb-3">
-                      {exhibition.name}
+                      {t(exhibition.nameKey)}
                     </h3>
 
                     <div className="space-y-2 text-sm text-gray-600">
                       <div className="flex items-center gap-2">
                         <MapPin size={14} className="text-primary" />
-                        <span>{exhibition.location}</span>
+                        <span>{t(exhibition.locationKey)}</span>
                       </div>
                       <div className="flex items-center gap-2">
                         <Calendar size={14} className="text-primary" />
