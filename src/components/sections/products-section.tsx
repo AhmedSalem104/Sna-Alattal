@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef } from 'react';
+import { useRef, memo } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
@@ -46,7 +46,7 @@ const sampleProducts = [
   },
 ];
 
-export function ProductsSection() {
+export const ProductsSection = memo(function ProductsSection() {
   const t = useTranslations();
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
@@ -132,4 +132,4 @@ export function ProductsSection() {
       </div>
     </section>
   );
-}
+});

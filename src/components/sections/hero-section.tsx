@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef } from 'react';
+import { useRef, memo } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
@@ -8,7 +8,7 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
-export function HeroSection() {
+export const HeroSection = memo(function HeroSection() {
   const t = useTranslations();
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
@@ -207,4 +207,4 @@ export function HeroSection() {
       </motion.div>
     </section>
   );
-}
+});

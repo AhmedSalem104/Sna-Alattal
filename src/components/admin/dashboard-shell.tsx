@@ -72,7 +72,7 @@ export function DashboardShell({ children }: DashboardShellProps) {
         )}
       >
         <Header isCollapsed={isCollapsed} />
-        <main className="p-6">{children}</main>
+        <main className="admin-content-padding">{children}</main>
       </div>
     </div>
   );

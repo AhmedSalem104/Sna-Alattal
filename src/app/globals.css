@@ -47,6 +47,26 @@
     --input: 214 32% 91%;
     --ring: 45 95% 52%;
   }
+
+  /* High Contrast Mode Support - WCAG AAA */
+  @media (prefers-contrast: high) {
+    :root {
+      --primary: 45 95% 40%; /* Darker gold for better contrast */
+      --primary-foreground: 0 0% 0%; /* Pure black text on gold */
+      --border: 214 32% 70%; /* Stronger borders */
+      --muted-foreground: 215 16% 35%; /* Darker muted text */
+      --ring: 45 95% 40%; /* Darker focus ring */
+    }
+  }
+
+  /* Forced Colors Mode (Windows High Contrast) */
+  @media (forced-colors: active) {
+    :root {
+      --primary: CanvasText;
+      --primary-foreground: Canvas;
+      --border: CanvasText;
+    }
+  }
 }
 
 @layer base {

@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef } from 'react';
+import { useRef, memo } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
@@ -39,7 +39,7 @@ const newsArticles = [
   },
 ];
 
-export function NewsSection() {
+export const NewsSection = memo(function NewsSection() {
   const t = useTranslations();
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
@@ -155,4 +155,4 @@ export function NewsSection() {
       </div>
     </section>
   );
-}
+});

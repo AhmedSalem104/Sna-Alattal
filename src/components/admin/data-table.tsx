@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, memo } from 'react';
 import {
   ColumnDef,
   flexRender,
@@ -38,7 +38,7 @@ interface DataTableProps<TData, TValue> {
   searchPlaceholder?: string;
 }
 
-export function DataTable<TData, TValue>({
+function DataTableComponent<TData, TValue>({
   columns,
   data,
   searchKey,
@@ -78,20 +78,32 @@ export function DataTable<TData, TValue>({
               onChange={(event) =>
                 table.getColumn(searchKey)?.setFilterValue(event.target.value)
               }
-              className="pr-10 bg-gray-50 border-gray-200 text-gray-900"
+              className="pr-10 bg-gray-50 border-gray-200 text-gray-900 touch-input"
+              aria-label="بحث في الجدول"
             />
           </div>
         </div>
       )}
 
-      {/* Table */}
+      {/* Table - Responsive wrapper for horizontal scroll on mobile */}
       <div className="rounded-xl border border-gray-200 overflow-hidden">
-        <Table>
+        <div className="overflow-x-auto">
+          <Table className="min-w-full">
           <TableHeader className="bg-gray-50">
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id} className="border-gray-200 hover:bg-transparent">
                 {headerGroup.headers.map((header) => (
-                  <TableHead key={header.id} className="text-gray-600 font-medium">
+                  <TableHead
+                    key={header.id}
+                    className="text-gray-600 font-medium px-3 sm:px-4 md:px-6"
+                    aria-sort={
+                      header.column.getIsSorted() === 'asc'
+                        ? 'ascending'
+                        : header.column.getIsSorted() === 'desc'
+                        ? 'descending'
+                        : 'none'
+                    }
+                  >
                     {header.isPlaceholder
                       ? null
                       : flexRender(
@@ -112,7 +124,7 @@ export function DataTable<TData, TValue>({
                   className="border-gray-200 hover:bg-gray-100"
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id} className="text-gray-900">
+                    <TableCell key={cell.id} className="text-gray-900 px-3 sm:px-4 md:px-6">
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()
@@ -133,6 +145,7 @@ export function DataTable<TData, TValue>({
             )}
           </TableBody>
         </Table>
+        </div>
       </div>
 
       {/* Pagination */}
@@ -207,3 +220,15 @@ export function DataTable<TData, TValue>({
     </div>
   );
 }
+
+// Memoized version with custom comparison
+export const DataTable = memo(
+  DataTableComponent,
+  (prevProps, nextProps) => {
+    return (
+      prevProps.data === nextProps.data &&
+      prevProps.searchKey === nextProps.searchKey &&
+      prevProps.columns.length === nextProps.columns.length
+    );
+  }
+) as typeof DataTableComponent;
