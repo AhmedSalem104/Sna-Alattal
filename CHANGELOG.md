@@ -5,6 +5,29 @@ All notable changes and improvements to this project are documented here.
 
 ---
 
+## [Release 7] - 2026-01-22 - Onboarding Optimization
+
+### Performance
+- Added `memo()` wrapper to prevent unnecessary re-renders
+- Converted handlers to `useCallback()` for stable references
+- Added cleanup function in useEffect for proper unmounting
+- Added `priority` to logo image for faster LCP
+
+### RTL/LTR Support
+- Skip button position flips correctly
+- X icon margin flips in RTL
+- All directional elements now RTL-aware
+
+### Accessibility
+- Added `aria-label` to skip button
+- Progress indicators with proper ARIA attributes
+- Better screen reader support
+
+### Visual
+- Improved inactive indicator visibility (bg-gray-300)
+
+---
+
 ## [Release 6] - 2026-01-22 - Bundle Optimization
 
 ### GSAP Removal (~60KB saved)
