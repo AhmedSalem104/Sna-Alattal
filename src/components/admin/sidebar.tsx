@@ -201,7 +201,8 @@ export function Sidebar({ isCollapsed, onToggle, isPinned, onPinToggle }: Sideba
         className={cn(
           'h-screen flex flex-col flex-shrink-0',
           'bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900',
-          'border-l border-slate-700/50'
+          'border-l border-slate-700/50',
+          'order-last'
         )}
       >
         {/* Logo Section */}
@@ -293,7 +294,7 @@ export function Sidebar({ isCollapsed, onToggle, isPinned, onPinToggle }: Sideba
                   onClick={onToggle}
                   className="text-slate-400 hover:text-white hover:bg-slate-700/50 h-8 w-8"
                 >
-                  <ChevronRight size={16} />
+                  <ChevronLeft size={16} />
                 </Button>
               </motion.div>
             )}
@@ -574,7 +575,7 @@ export function Sidebar({ isCollapsed, onToggle, isPinned, onPinToggle }: Sideba
               onClick={onToggle}
               className="w-full text-slate-400 hover:text-white hover:bg-slate-700/50"
             >
-              <ChevronLeft size={18} />
+              <ChevronRight size={18} />
             </Button>
           </div>
         )}

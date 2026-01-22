@@ -78,18 +78,8 @@ export function DashboardShell({ children }: DashboardShellProps) {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-50 flex flex-row-reverse">
-      {/* Sidebar - Desktop (flex layout, not fixed) */}
-      <div className="hidden lg:flex">
-        <Sidebar
-          isCollapsed={isCollapsed}
-          onToggle={toggleSidebar}
-          isPinned={isPinned}
-          onPinToggle={togglePin}
-        />
-      </div>
-
-      {/* Main Content */}
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-50 flex">
+      {/* Main Content - comes first in DOM but flex makes sidebar appear on right in RTL */}
       <div className="flex-1 min-h-screen flex flex-col transition-all duration-400">
         <Header isCollapsed={isCollapsed} />
         <main className="flex-1 p-4 sm:p-6 lg:p-8">
@@ -97,6 +87,16 @@ export function DashboardShell({ children }: DashboardShellProps) {
             {children}
           </div>
         </main>
+      </div>
+
+      {/* Sidebar - Desktop (on the right side for RTL) */}
+      <div className="hidden lg:flex">
+        <Sidebar
+          isCollapsed={isCollapsed}
+          onToggle={toggleSidebar}
+          isPinned={isPinned}
+          onPinToggle={togglePin}
+        />
       </div>
     </div>
   );
