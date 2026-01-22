@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { cn } from '@/lib/utils';
@@ -16,21 +16,34 @@ export function DashboardShell({ children }: DashboardShellProps) {
   const { status } = useSession();
   const router = useRouter();
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const [isPinned, setIsPinned] = useState(true);
 
-  // Load collapsed state from localStorage
+  // Load states from localStorage
   useEffect(() => {
-    const saved = localStorage.getItem('sidebar_collapsed');
-    if (saved) {
-      setIsCollapsed(JSON.parse(saved));
+    const savedCollapsed = localStorage.getItem('sidebar_collapsed');
+    const savedPinned = localStorage.getItem('sidebar_pinned');
+
+    if (savedCollapsed) {
+      setIsCollapsed(JSON.parse(savedCollapsed));
+    }
+    if (savedPinned !== null) {
+      setIsPinned(JSON.parse(savedPinned));
     }
   }, []);
 
-  // Save collapsed state to localStorage
-  const toggleSidebar = () => {
+  // Toggle sidebar collapsed state
+  const toggleSidebar = useCallback(() => {
     const newState = !isCollapsed;
     setIsCollapsed(newState);
     localStorage.setItem('sidebar_collapsed', JSON.stringify(newState));
-  };
+  }, [isCollapsed]);
+
+  // Toggle pin state
+  const togglePin = useCallback(() => {
+    const newState = !isPinned;
+    setIsPinned(newState);
+    localStorage.setItem('sidebar_pinned', JSON.stringify(newState));
+  }, [isPinned]);
 
   // Redirect if not authenticated
   useEffect(() => {
@@ -65,22 +78,21 @@ export function DashboardShell({ children }: DashboardShellProps) {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-50">
-      {/* Sidebar - Desktop */}
-      <div className="hidden lg:block">
-        <Sidebar isCollapsed={isCollapsed} onToggle={toggleSidebar} />
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-50 flex flex-row-reverse">
+      {/* Sidebar - Desktop (flex layout, not fixed) */}
+      <div className="hidden lg:flex">
+        <Sidebar
+          isCollapsed={isCollapsed}
+          onToggle={toggleSidebar}
+          isPinned={isPinned}
+          onPinToggle={togglePin}
+        />
       </div>
 
       {/* Main Content */}
-      <div
-        className={cn(
-          'min-h-screen transition-all duration-300',
-          'lg:mr-72 lg:rtl:mr-0 lg:rtl:ml-72',
-          isCollapsed && 'lg:mr-20 lg:rtl:mr-0 lg:rtl:ml-20'
-        )}
-      >
+      <div className="flex-1 min-h-screen flex flex-col transition-all duration-400">
         <Header isCollapsed={isCollapsed} />
-        <main className="p-4 sm:p-6 lg:p-8">
+        <main className="flex-1 p-4 sm:p-6 lg:p-8">
           <div className="max-w-7xl mx-auto">
             {children}
           </div>
