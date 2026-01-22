@@ -201,8 +201,7 @@ export function Sidebar({ isCollapsed, onToggle, isPinned, onPinToggle }: Sideba
         className={cn(
           'h-screen flex flex-col flex-shrink-0',
           'bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900',
-          'border-l border-slate-700/50',
-          'order-last'
+          'border-l border-slate-700/50'
         )}
       >
         {/* Logo Section */}
