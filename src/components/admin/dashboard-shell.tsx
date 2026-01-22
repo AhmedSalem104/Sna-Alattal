@@ -42,10 +42,18 @@ export function DashboardShell({ children }: DashboardShellProps) {
   // Show loading state
   if (status === 'loading') {
     return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
-        <div className="flex flex-col items-center gap-4">
-          <Loader2 className="h-8 w-8 animate-spin text-primary" />
-          <p className="text-gray-600">جاري التحميل...</p>
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 flex items-center justify-center">
+        <div className="flex flex-col items-center gap-4 p-8 bg-white rounded-2xl shadow-xl">
+          <div className="relative">
+            <Loader2 className="h-12 w-12 animate-spin text-primary" />
+            <div className="absolute inset-0 h-12 w-12 animate-ping text-primary/20">
+              <Loader2 className="h-12 w-12" />
+            </div>
+          </div>
+          <div className="text-center">
+            <p className="text-lg font-semibold text-gray-900">جاري التحميل...</p>
+            <p className="text-sm text-gray-500">يرجى الانتظار</p>
+          </div>
         </div>
       </div>
     );
@@ -57,7 +65,7 @@ export function DashboardShell({ children }: DashboardShellProps) {
   }
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-50">
       {/* Sidebar - Desktop */}
       <div className="hidden lg:block">
         <Sidebar isCollapsed={isCollapsed} onToggle={toggleSidebar} />
@@ -67,12 +75,16 @@ export function DashboardShell({ children }: DashboardShellProps) {
       <div
         className={cn(
           'min-h-screen transition-all duration-300',
-          'lg:mr-64 lg:rtl:mr-0 lg:rtl:ml-64',
+          'lg:mr-72 lg:rtl:mr-0 lg:rtl:ml-72',
           isCollapsed && 'lg:mr-20 lg:rtl:mr-0 lg:rtl:ml-20'
         )}
       >
         <Header isCollapsed={isCollapsed} />
-        <main className="admin-content-padding">{children}</main>
+        <main className="p-4 sm:p-6 lg:p-8">
+          <div className="max-w-7xl mx-auto">
+            {children}
+          </div>
+        </main>
       </div>
     </div>
   );

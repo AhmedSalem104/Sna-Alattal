@@ -1,11 +1,26 @@
 'use client';
 
+import { useState } from 'react';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
-import { Bell, Search, Plus, ChevronLeft, Home } from 'lucide-react';
+import {
+  Bell,
+  Search,
+  Plus,
+  ChevronLeft,
+  Home,
+  ExternalLink,
+  Package,
+  Newspaper,
+  Users,
+  ImageIcon,
+  RefreshCw,
+  X
+} from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { MobileSidebar } from './sidebar';
+import { Badge } from '@/components/ui/badge';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,9 +29,19 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import {
+  CommandDialog,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+  CommandSeparator,
+} from '@/components/ui/command';
+import { cn } from '@/lib/utils';
 
 const pageTitles: Record<string, string> = {
-  '/admin': 'الرئيسية',
+  '/admin': 'لوحة التحكم',
   '/admin/products': 'المنتجات',
   '/admin/products/new': 'إضافة منتج جديد',
   '/admin/categories': 'التصنيفات',
@@ -47,10 +72,20 @@ const pageTitles: Record<string, string> = {
 };
 
 const quickActions = [
-  { label: 'منتج جديد', href: '/admin/products/new' },
-  { label: 'خبر جديد', href: '/admin/news/new' },
-  { label: 'عميل جديد', href: '/admin/clients/new' },
-  { label: 'شريحة جديدة', href: '/admin/slides/new' },
+  { label: 'منتج جديد', href: '/admin/products/new', icon: Package },
+  { label: 'خبر جديد', href: '/admin/news/new', icon: Newspaper },
+  { label: 'عميل جديد', href: '/admin/clients/new', icon: Users },
+  { label: 'شريحة جديدة', href: '/admin/slides/new', icon: ImageIcon },
+];
+
+const searchCommands = [
+  { group: 'الصفحات', items: [
+    { label: 'لوحة التحكم', href: '/admin', icon: Home },
+    { label: 'المنتجات', href: '/admin/products', icon: Package },
+    { label: 'العملاء', href: '/admin/clients', icon: Users },
+    { label: 'الأخبار', href: '/admin/news', icon: Newspaper },
+  ]},
+  { group: 'الإجراءات السريعة', items: quickActions },
 ];
 
 interface HeaderProps {
@@ -59,14 +94,14 @@ interface HeaderProps {
 
 export function Header({ isCollapsed }: HeaderProps) {
   const pathname = usePathname();
+  const [commandOpen, setCommandOpen] = useState(false);
+  const [isRefreshing, setIsRefreshing] = useState(false);
 
   const getPageTitle = () => {
-    // Check for exact match first
     if (pageTitles[pathname]) {
       return pageTitles[pathname];
     }
 
-    // Check for edit pages (e.g., /admin/products/123)
     const segments = pathname.split('/');
     if (segments.length === 4 && segments[3] !== 'new') {
       const basePath = `/${segments[1]}/${segments[2]}`;
@@ -95,93 +130,248 @@ export function Header({ isCollapsed }: HeaderProps) {
     return breadcrumbs;
   };
 
+  const handleRefresh = async () => {
+    setIsRefreshing(true);
+    window.location.reload();
+  };
+
   const breadcrumbs = getBreadcrumbs();
 
   return (
-    <header className="sticky top-0 z-30 h-16 bg-white border-b border-gray-200 flex items-center justify-between px-6">
-      {/* Right Side - Mobile Menu & Breadcrumbs */}
-      <div className="flex items-center gap-4">
-        <MobileSidebar />
+    <>
+      <header className="sticky top-0 z-30 bg-white/80 backdrop-blur-xl border-b border-gray-100 shadow-sm">
+        <div className="h-16 flex items-center justify-between px-4 sm:px-6">
+          {/* Right Side - Mobile Menu & Breadcrumbs */}
+          <div className="flex items-center gap-4">
+            <MobileSidebar />
 
-        {/* Breadcrumbs */}
-        <nav className="hidden md:flex items-center gap-2 text-sm">
-          <Link href="/admin" className="text-gray-600 hover:text-primary transition-colors">
-            <Home size={16} />
-          </Link>
-          {breadcrumbs.map((crumb, index) => (
-            <div key={crumb.href} className="flex items-center gap-2">
-              <ChevronLeft size={14} className="text-gray-600 rtl:rotate-180" />
-              {index === breadcrumbs.length - 1 ? (
-                <span className="text-gray-900 font-medium">{crumb.label}</span>
-              ) : (
-                <Link href={crumb.href} className="text-gray-600 hover:text-primary transition-colors">
-                  {crumb.label}
-                </Link>
-              )}
-            </div>
-          ))}
-        </nav>
+            {/* Breadcrumbs - Desktop */}
+            <nav className="hidden md:flex items-center gap-2 text-sm">
+              <Link
+                href="/admin"
+                className="flex items-center gap-1.5 text-gray-500 hover:text-primary transition-colors p-1.5 rounded-lg hover:bg-gray-100"
+              >
+                <Home size={16} />
+                <span className="hidden lg:inline">الرئيسية</span>
+              </Link>
+              {breadcrumbs.map((crumb, index) => (
+                <div key={crumb.href} className="flex items-center gap-2">
+                  <ChevronLeft size={14} className="text-gray-400 rtl:rotate-180" />
+                  {index === breadcrumbs.length - 1 ? (
+                    <span className="text-gray-900 font-semibold bg-primary/10 px-3 py-1 rounded-full">
+                      {crumb.label}
+                    </span>
+                  ) : (
+                    <Link
+                      href={crumb.href}
+                      className="text-gray-500 hover:text-primary transition-colors"
+                    >
+                      {crumb.label}
+                    </Link>
+                  )}
+                </div>
+              ))}
+            </nav>
 
-        {/* Mobile Title */}
-        <h1 className="md:hidden text-lg font-bold text-gray-900">{getPageTitle()}</h1>
-      </div>
+            {/* Mobile Title */}
+            <h1 className="md:hidden text-lg font-bold text-gray-900">{getPageTitle()}</h1>
+          </div>
 
-      {/* Left Side - Actions */}
-      <div className="flex items-center gap-3">
-        {/* Search */}
-        <div className="hidden lg:block relative">
-          <Search className="absolute right-3 rtl:right-auto rtl:left-3 top-1/2 -translate-y-1/2 text-gray-600" size={18} />
-          <Input
-            placeholder="بحث..."
-            className="w-64 pr-10 rtl:pr-4 rtl:pl-10 bg-gray-50 border-gray-200 text-gray-900 placeholder:text-gray-600"
-          />
+          {/* Left Side - Actions */}
+          <div className="flex items-center gap-2 sm:gap-3">
+            {/* Search Trigger */}
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setCommandOpen(true)}
+              className="hidden sm:flex items-center gap-2 text-gray-500 border-gray-200 hover:border-primary/50 hover:bg-gray-50 w-48 lg:w-64 justify-start"
+            >
+              <Search size={16} />
+              <span className="text-gray-400">بحث سريع...</span>
+              <kbd className="mr-auto hidden lg:inline-flex h-5 items-center gap-1 rounded border bg-gray-100 px-1.5 font-mono text-[10px] text-gray-500">
+                ⌘K
+              </kbd>
+            </Button>
+
+            {/* Mobile Search */}
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setCommandOpen(true)}
+              className="sm:hidden text-gray-500 hover:text-primary"
+            >
+              <Search size={20} />
+            </Button>
+
+            {/* Refresh */}
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={handleRefresh}
+              disabled={isRefreshing}
+              className="text-gray-500 hover:text-primary hover:bg-gray-100"
+            >
+              <RefreshCw size={18} className={cn(isRefreshing && 'animate-spin')} />
+            </Button>
+
+            {/* Quick Add */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  size="sm"
+                  className="hidden sm:flex bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 text-slate-900 font-medium shadow-md shadow-primary/20"
+                >
+                  <Plus size={16} className="ml-1.5 rtl:ml-0 rtl:mr-1.5" />
+                  إضافة جديد
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-52 bg-white border-gray-200 shadow-xl">
+                <DropdownMenuLabel className="text-gray-500 text-xs uppercase tracking-wider">
+                  إضافة سريعة
+                </DropdownMenuLabel>
+                <DropdownMenuSeparator className="bg-gray-100" />
+                {quickActions.map((action) => (
+                  <DropdownMenuItem key={action.href} asChild>
+                    <Link
+                      href={action.href}
+                      className="flex items-center gap-3 text-gray-700 hover:text-primary cursor-pointer py-2.5"
+                    >
+                      <div className="p-1.5 rounded-lg bg-primary/10">
+                        <action.icon size={16} className="text-primary" />
+                      </div>
+                      {action.label}
+                    </Link>
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
+
+            {/* Mobile Add */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  size="icon"
+                  className="sm:hidden bg-primary hover:bg-primary/90 text-slate-900"
+                >
+                  <Plus size={20} />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-52 bg-white border-gray-200">
+                {quickActions.map((action) => (
+                  <DropdownMenuItem key={action.href} asChild>
+                    <Link href={action.href} className="flex items-center gap-3">
+                      <action.icon size={16} className="text-primary" />
+                      {action.label}
+                    </Link>
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
+
+            {/* Notifications */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="relative text-gray-500 hover:text-primary hover:bg-gray-100"
+                >
+                  <Bell size={20} />
+                  <span className="absolute top-1.5 right-1.5 rtl:right-auto rtl:left-1.5 w-2 h-2 bg-red-500 rounded-full animate-pulse" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-80 bg-white border-gray-200 shadow-xl">
+                <DropdownMenuLabel className="flex items-center justify-between">
+                  <span className="text-gray-700 font-semibold">الإشعارات</span>
+                  <Badge variant="secondary" className="bg-primary/10 text-primary text-xs">
+                    3 جديدة
+                  </Badge>
+                </DropdownMenuLabel>
+                <DropdownMenuSeparator className="bg-gray-100" />
+                <div className="max-h-80 overflow-y-auto">
+                  {/* Notification Items */}
+                  <div className="p-3 hover:bg-gray-50 cursor-pointer border-b border-gray-100">
+                    <div className="flex gap-3">
+                      <div className="p-2 rounded-full bg-blue-100">
+                        <Package size={16} className="text-blue-600" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-medium text-gray-900">منتج جديد تمت إضافته</p>
+                        <p className="text-xs text-gray-500 mt-0.5">منذ 5 دقائق</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="p-3 hover:bg-gray-50 cursor-pointer border-b border-gray-100">
+                    <div className="flex gap-3">
+                      <div className="p-2 rounded-full bg-green-100">
+                        <Users size={16} className="text-green-600" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-medium text-gray-900">رسالة جديدة من عميل</p>
+                        <p className="text-xs text-gray-500 mt-0.5">منذ 15 دقيقة</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="p-3 hover:bg-gray-50 cursor-pointer">
+                    <div className="flex gap-3">
+                      <div className="p-2 rounded-full bg-purple-100">
+                        <Newspaper size={16} className="text-purple-600" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-medium text-gray-900">تم نشر خبر جديد</p>
+                        <p className="text-xs text-gray-500 mt-0.5">منذ ساعة</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <DropdownMenuSeparator className="bg-gray-100" />
+                <div className="p-2">
+                  <Button variant="ghost" size="sm" className="w-full text-primary hover:bg-primary/10">
+                    عرض كل الإشعارات
+                  </Button>
+                </div>
+              </DropdownMenuContent>
+            </DropdownMenu>
+
+            {/* Visit Site */}
+            <Link href="/" target="_blank">
+              <Button
+                variant="outline"
+                size="sm"
+                className="hidden lg:flex items-center gap-2 border-gray-200 text-gray-600 hover:text-primary hover:border-primary/50"
+              >
+                <ExternalLink size={14} />
+                زيارة الموقع
+              </Button>
+            </Link>
+          </div>
         </div>
+      </header>
 
-        {/* Quick Add */}
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="gold" size="sm" className="hidden sm:flex">
-              <Plus size={16} className="ml-1 rtl:ml-0 rtl:mr-1" />
-              إضافة جديد
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-48 bg-gray-50 border-gray-200">
-            <DropdownMenuLabel className="text-gray-600">إضافة سريعة</DropdownMenuLabel>
-            <DropdownMenuSeparator className="bg-gray-100" />
-            {quickActions.map((action) => (
-              <DropdownMenuItem key={action.href} asChild>
-                <Link href={action.href} className="text-gray-900 hover:text-primary cursor-pointer">
-                  {action.label}
-                </Link>
-              </DropdownMenuItem>
-            ))}
-          </DropdownMenuContent>
-        </DropdownMenu>
-
-        {/* Notifications */}
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" size="icon" className="relative text-gray-600 hover:text-primary">
-              <Bell size={20} />
-              <span className="absolute top-1 left-1 rtl:left-auto rtl:right-1 w-2 h-2 bg-primary rounded-full" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-80 bg-gray-50 border-gray-200">
-            <DropdownMenuLabel className="text-gray-600">الإشعارات</DropdownMenuLabel>
-            <DropdownMenuSeparator className="bg-gray-100" />
-            <div className="p-4 text-center text-gray-600 text-sm">
-              لا توجد إشعارات جديدة
-            </div>
-          </DropdownMenuContent>
-        </DropdownMenu>
-
-        {/* Visit Site */}
-        <Link href="/" target="_blank">
-          <Button variant="outline" size="sm" className="hidden sm:flex border-gray-300 text-gray-700 hover:text-primary">
-            زيارة الموقع
-          </Button>
-        </Link>
-      </div>
-    </header>
+      {/* Command Palette */}
+      <CommandDialog open={commandOpen} onOpenChange={setCommandOpen}>
+        <CommandInput placeholder="ابحث عن صفحة أو إجراء..." className="text-right" />
+        <CommandList>
+          <CommandEmpty>لا توجد نتائج</CommandEmpty>
+          {searchCommands.map((group) => (
+            <CommandGroup key={group.group} heading={group.group}>
+              {group.items.map((item) => (
+                <CommandItem
+                  key={item.href}
+                  onSelect={() => {
+                    setCommandOpen(false);
+                    window.location.href = item.href;
+                  }}
+                  className="flex items-center gap-3 cursor-pointer"
+                >
+                  <item.icon size={16} className="text-gray-500" />
+                  <span>{item.label}</span>
+                </CommandItem>
+              ))}
+            </CommandGroup>
+          ))}
+        </CommandList>
+      </CommandDialog>
+    </>
   );
 }
