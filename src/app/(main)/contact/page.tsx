@@ -1,7 +1,6 @@
 'use client';
 
-import { useState } from 'react';
-import Image from 'next/image';
+import { useState, useCallback, memo } from 'react';
 import { useTranslations } from 'next-intl';
 import { motion } from 'framer-motion';
 import { useForm } from 'react-hook-form';
@@ -212,7 +211,9 @@ export default function ContactPage() {
                   <motion.div
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="bg-green-500/20 border border-green-500/50 text-green-400 p-4 rounded-xl mb-6"
+                    role="alert"
+                    aria-live="polite"
+                    className="bg-green-100 border border-green-500 text-green-700 p-4 rounded-xl mb-6"
                   >
                     {t('successMessage')}
                   </motion.div>
@@ -222,44 +223,50 @@ export default function ContactPage() {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {/* Name */}
                     <div>
-                      <Label htmlFor="name" className="text-gray-900">{t('form.name')}</Label>
+                      <Label htmlFor="name" className="text-gray-900">{t('form.name')} <span className="text-red-500">*</span></Label>
                       <Input
                         id="name"
                         {...register('name')}
+                        aria-invalid={!!errors.name}
+                        aria-describedby={errors.name ? 'name-error' : undefined}
                         className="mt-2 bg-white border-gray-200 text-gray-900"
                         placeholder={t('form.namePlaceholder')}
                       />
                       {errors.name && (
-                        <p className="text-red-400 text-sm mt-1">{errors.name.message}</p>
+                        <p id="name-error" role="alert" className="text-red-500 text-sm mt-1">{errors.name.message}</p>
                       )}
                     </div>
 
                     {/* Email */}
                     <div>
-                      <Label htmlFor="email" className="text-gray-900">{t('form.email')}</Label>
+                      <Label htmlFor="email" className="text-gray-900">{t('form.email')} <span className="text-red-500">*</span></Label>
                       <Input
                         id="email"
                         type="email"
                         {...register('email')}
+                        aria-invalid={!!errors.email}
+                        aria-describedby={errors.email ? 'email-error' : undefined}
                         className="mt-2 bg-white border-gray-200 text-gray-900"
                         placeholder={t('form.emailPlaceholder')}
                       />
                       {errors.email && (
-                        <p className="text-red-400 text-sm mt-1">{errors.email.message}</p>
+                        <p id="email-error" role="alert" className="text-red-500 text-sm mt-1">{errors.email.message}</p>
                       )}
                     </div>
 
                     {/* Phone */}
                     <div>
-                      <Label htmlFor="phone" className="text-gray-900">{t('form.phone')}</Label>
+                      <Label htmlFor="phone" className="text-gray-900">{t('form.phone')} <span className="text-red-500">*</span></Label>
                       <Input
                         id="phone"
                         {...register('phone')}
+                        aria-invalid={!!errors.phone}
+                        aria-describedby={errors.phone ? 'phone-error' : undefined}
                         className="mt-2 bg-white border-gray-200 text-gray-900"
                         placeholder={t('form.phonePlaceholder')}
                       />
                       {errors.phone && (
-                        <p className="text-red-400 text-sm mt-1">{errors.phone.message}</p>
+                        <p id="phone-error" role="alert" className="text-red-500 text-sm mt-1">{errors.phone.message}</p>
                       )}
                     </div>
 
@@ -277,9 +284,13 @@ export default function ContactPage() {
 
                   {/* Subject */}
                   <div>
-                    <Label className="text-gray-900">{t('form.subject')}</Label>
+                    <Label className="text-gray-900">{t('form.subject')} <span className="text-red-500">*</span></Label>
                     <Select onValueChange={(value) => setValue('subject', value)}>
-                      <SelectTrigger className="mt-2 bg-white border-gray-200 text-gray-900">
+                      <SelectTrigger
+                        className="mt-2 bg-white border-gray-200 text-gray-900"
+                        aria-invalid={!!errors.subject}
+                        aria-describedby={errors.subject ? 'subject-error' : undefined}
+                      >
                         <SelectValue placeholder={t('form.subjectPlaceholder')} />
                       </SelectTrigger>
                       <SelectContent className="bg-white border-gray-200">
@@ -291,21 +302,23 @@ export default function ContactPage() {
                       </SelectContent>
                     </Select>
                     {errors.subject && (
-                      <p className="text-red-400 text-sm mt-1">{errors.subject.message}</p>
+                      <p id="subject-error" role="alert" className="text-red-500 text-sm mt-1">{errors.subject.message}</p>
                     )}
                   </div>
 
                   {/* Message */}
                   <div>
-                    <Label htmlFor="message" className="text-gray-900">{t('form.message')}</Label>
+                    <Label htmlFor="message" className="text-gray-900">{t('form.message')} <span className="text-red-500">*</span></Label>
                     <Textarea
                       id="message"
                       {...register('message')}
+                      aria-invalid={!!errors.message}
+                      aria-describedby={errors.message ? 'message-error' : undefined}
                       className="mt-2 bg-white border-gray-200 text-gray-900 min-h-[150px]"
                       placeholder={t('form.messagePlaceholder')}
                     />
                     {errors.message && (
-                      <p className="text-red-400 text-sm mt-1">{errors.message.message}</p>
+                      <p id="message-error" role="alert" className="text-red-500 text-sm mt-1">{errors.message.message}</p>
                     )}
                   </div>
 
@@ -360,6 +373,8 @@ export default function ContactPage() {
               allowFullScreen
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
+              title="S.N.A Al-Attal Location Map"
+              aria-label="Google Maps showing S.N.A Al-Attal headquarters location"
             />
           </div>
         </div>
