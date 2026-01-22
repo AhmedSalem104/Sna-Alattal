@@ -114,9 +114,10 @@ interface SidebarProps {
   onToggle: () => void;
   isPinned: boolean;
   onPinToggle: () => void;
+  isHovering?: boolean;
 }
 
-export function Sidebar({ isCollapsed, onToggle, isPinned, onPinToggle }: SidebarProps) {
+export function Sidebar({ isCollapsed, onToggle, isPinned, onPinToggle, isHovering }: SidebarProps) {
   const pathname = usePathname();
   const { data: session } = useSession();
   const [searchQuery, setSearchQuery] = useState('');
@@ -196,16 +197,33 @@ export function Sidebar({ isCollapsed, onToggle, isPinned, onPinToggle }: Sideba
     <TooltipProvider delayDuration={0}>
       <motion.aside
         initial={false}
-        animate={{ width: isExpanded ? 280 : 80 }}
-        transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
+        animate={{
+          width: isExpanded ? 280 : 80,
+          boxShadow: isHovering && !isPinned
+            ? '0 25px 50px -12px rgba(0, 0, 0, 0.4), 0 0 30px rgba(249, 191, 15, 0.1)'
+            : '0 10px 15px -3px rgba(0, 0, 0, 0.2)'
+        }}
+        transition={{
+          duration: 0.35,
+          ease: [0.25, 0.46, 0.45, 0.94],
+          width: { duration: 0.35, ease: [0.25, 0.46, 0.45, 0.94] },
+          boxShadow: { duration: 0.5, ease: 'easeOut' }
+        }}
         className={cn(
           'h-full min-h-screen flex flex-col flex-shrink-0',
           'bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900',
-          'border-l border-slate-700/50'
+          'border-l border-slate-700/50',
+          isHovering && !isPinned && 'ring-1 ring-primary/20'
         )}
       >
         {/* Logo Section */}
-        <div className="h-16 flex items-center justify-between px-4 border-b border-slate-700/50">
+        <motion.div
+          className="h-16 flex items-center justify-between px-4 border-b border-slate-700/50"
+          animate={{
+            backgroundColor: isHovering && !isPinned ? 'rgba(249, 191, 15, 0.05)' : 'transparent'
+          }}
+          transition={{ duration: 0.3 }}
+        >
           <AnimatePresence mode="wait">
             {isExpanded ? (
               <motion.div
@@ -298,7 +316,7 @@ export function Sidebar({ isCollapsed, onToggle, isPinned, onPinToggle }: Sideba
               </motion.div>
             )}
           </AnimatePresence>
-        </div>
+        </motion.div>
 
         {/* Search & Actions Section */}
         <AnimatePresence>

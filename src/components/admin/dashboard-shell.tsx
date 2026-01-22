@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { cn } from '@/lib/utils';
@@ -17,6 +17,11 @@ export function DashboardShell({ children }: DashboardShellProps) {
   const router = useRouter();
   const [isCollapsed, setIsCollapsed] = useState(true);
   const [isPinned, setIsPinned] = useState(false);
+  const [isHovering, setIsHovering] = useState(false);
+
+  // Refs for smart hover timing
+  const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const leaveTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   // Load states from localStorage
   useEffect(() => {
@@ -29,6 +34,49 @@ export function DashboardShell({ children }: DashboardShellProps) {
       setIsCollapsed(!pinned);
     }
   }, []);
+
+  // Cleanup timeouts on unmount
+  useEffect(() => {
+    return () => {
+      if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
+      if (leaveTimeoutRef.current) clearTimeout(leaveTimeoutRef.current);
+    };
+  }, []);
+
+  // Smart hover handlers with delays
+  const handleMouseEnter = useCallback(() => {
+    if (isPinned) return;
+
+    // Clear any pending leave timeout
+    if (leaveTimeoutRef.current) {
+      clearTimeout(leaveTimeoutRef.current);
+      leaveTimeoutRef.current = null;
+    }
+
+    setIsHovering(true);
+
+    // Small delay before opening (150ms) - feels responsive but prevents accidental triggers
+    hoverTimeoutRef.current = setTimeout(() => {
+      setIsCollapsed(false);
+    }, 150);
+  }, [isPinned]);
+
+  const handleMouseLeave = useCallback(() => {
+    if (isPinned) return;
+
+    // Clear any pending hover timeout
+    if (hoverTimeoutRef.current) {
+      clearTimeout(hoverTimeoutRef.current);
+      hoverTimeoutRef.current = null;
+    }
+
+    setIsHovering(false);
+
+    // Longer delay before closing (400ms) - gives user time to return
+    leaveTimeoutRef.current = setTimeout(() => {
+      setIsCollapsed(true);
+    }, 400);
+  }, [isPinned]);
 
   // Toggle sidebar collapsed state
   const toggleSidebar = useCallback(() => {
@@ -83,14 +131,15 @@ export function DashboardShell({ children }: DashboardShellProps) {
       {/* Sidebar - Desktop (on the right side for RTL) */}
       <div
         className="hidden lg:block sticky top-0 h-screen"
-        onMouseEnter={() => !isPinned && setIsCollapsed(false)}
-        onMouseLeave={() => !isPinned && setIsCollapsed(true)}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
       >
         <Sidebar
           isCollapsed={isCollapsed}
           onToggle={toggleSidebar}
           isPinned={isPinned}
           onPinToggle={togglePin}
+          isHovering={isHovering}
         />
       </div>
 
