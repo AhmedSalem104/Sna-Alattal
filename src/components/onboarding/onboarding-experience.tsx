@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import { motion, AnimatePresence } from 'framer-motion';
-import { gsap } from 'gsap';
 import { ChevronRight, X, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
