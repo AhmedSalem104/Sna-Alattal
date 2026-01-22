@@ -15,19 +15,18 @@ interface DashboardShellProps {
 export function DashboardShell({ children }: DashboardShellProps) {
   const { status } = useSession();
   const router = useRouter();
-  const [isCollapsed, setIsCollapsed] = useState(false);
-  const [isPinned, setIsPinned] = useState(true);
+  const [isCollapsed, setIsCollapsed] = useState(true);
+  const [isPinned, setIsPinned] = useState(false);
 
   // Load states from localStorage
   useEffect(() => {
-    const savedCollapsed = localStorage.getItem('sidebar_collapsed');
     const savedPinned = localStorage.getItem('sidebar_pinned');
 
-    if (savedCollapsed) {
-      setIsCollapsed(JSON.parse(savedCollapsed));
-    }
     if (savedPinned !== null) {
-      setIsPinned(JSON.parse(savedPinned));
+      const pinned = JSON.parse(savedPinned);
+      setIsPinned(pinned);
+      // If pinned, start expanded; otherwise start collapsed
+      setIsCollapsed(!pinned);
     }
   }, []);
 
@@ -42,6 +41,8 @@ export function DashboardShell({ children }: DashboardShellProps) {
   const togglePin = useCallback(() => {
     const newState = !isPinned;
     setIsPinned(newState);
+    // If pinning, expand; if unpinning, collapse
+    setIsCollapsed(!newState);
     localStorage.setItem('sidebar_pinned', JSON.stringify(newState));
   }, [isPinned]);
 
@@ -80,7 +81,11 @@ export function DashboardShell({ children }: DashboardShellProps) {
   return (
     <div dir="rtl" className="min-h-screen h-screen bg-gradient-to-br from-slate-50 via-white to-slate-50 flex">
       {/* Sidebar - Desktop (on the right side for RTL) */}
-      <div className="hidden lg:block sticky top-0 h-screen">
+      <div
+        className="hidden lg:block sticky top-0 h-screen"
+        onMouseEnter={() => !isPinned && setIsCollapsed(false)}
+        onMouseLeave={() => !isPinned && setIsCollapsed(true)}
+      >
         <Sidebar
           isCollapsed={isCollapsed}
           onToggle={toggleSidebar}
