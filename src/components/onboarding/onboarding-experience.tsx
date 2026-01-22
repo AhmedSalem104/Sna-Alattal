@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, memo, useCallback } from 'react';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -48,7 +48,7 @@ const phases: OnboardingPhase[] = [
 
 const ONBOARDING_KEY = 'sna_onboarding_completed';
 
-export function OnboardingExperience() {
+export const OnboardingExperience = memo(function OnboardingExperience() {
   const t = useTranslations('onboarding');
   const [currentPhase, setCurrentPhase] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
@@ -60,21 +60,30 @@ export function OnboardingExperience() {
       setIsVisible(true);
       document.body.style.overflow = 'hidden';
     }
+
+    // Cleanup on unmount
+    return () => {
+      document.body.style.overflow = '';
+    };
   }, []);
 
-  const handleSkip = () => {
+  const handleSkip = useCallback(() => {
     localStorage.setItem(ONBOARDING_KEY, 'true');
     setIsVisible(false);
     document.body.style.overflow = '';
-  };
+  }, []);
 
-  const handleNext = () => {
+  const handleNext = useCallback(() => {
     if (currentPhase < phases.length - 1) {
-      setCurrentPhase(currentPhase + 1);
+      setCurrentPhase(prev => prev + 1);
     } else {
       handleSkip();
     }
-  };
+  }, [currentPhase, handleSkip]);
+
+  const handlePhaseClick = useCallback((index: number) => {
+    setCurrentPhase(index);
+  }, []);
 
   if (!isVisible) return null;
 
@@ -91,10 +100,11 @@ export function OnboardingExperience() {
           variant="ghost"
           size="sm"
           onClick={handleSkip}
-          className="absolute top-6 right-6 z-10 text-gray-600 hover:text-primary"
+          className="absolute top-6 right-6 rtl:right-auto rtl:left-6 z-10 text-gray-600 hover:text-primary"
+          aria-label={t('skip')}
         >
           {t('skip')}
-          <X size={18} className="mr-2" />
+          <X size={18} className="mr-2 rtl:mr-0 rtl:ml-2" />
         </Button>
 
         {/* Phase Content */}
@@ -120,6 +130,7 @@ export function OnboardingExperience() {
                 width={120}
                 height={120}
                 className="rounded-xl shadow-2xl"
+                priority
               />
             </motion.div>
 
@@ -154,17 +165,22 @@ export function OnboardingExperience() {
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.5 }}
               className="flex gap-2 mt-12"
+              role="tablist"
+              aria-label="Onboarding phases"
             >
               {phases.map((_, index) => (
                 <button
                   key={index}
-                  onClick={() => setCurrentPhase(index)}
+                  onClick={() => handlePhaseClick(index)}
+                  role="tab"
+                  aria-selected={index === currentPhase}
+                  aria-label={`Phase ${index + 1} of ${phases.length}`}
                   className={`h-2 rounded-full transition-all duration-300 ${
                     index === currentPhase
                       ? 'w-8 bg-primary'
                       : index < currentPhase
                       ? 'w-2 bg-primary/60'
-                      : 'w-2 bg-white/20'
+                      : 'w-2 bg-gray-300'
                   }`}
                 />
               ))}
@@ -215,4 +231,4 @@ export function OnboardingExperience() {
       </motion.div>
     </AnimatePresence>
   );
-}
+});
