@@ -1,13 +1,11 @@
 'use client';
 
-import { useState } from 'react';
+import { use, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { motion } from 'framer-motion';
 import {
-  ArrowRight,
-  ArrowLeft,
   Check,
   Download,
   Phone,
@@ -23,9 +21,7 @@ import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 interface ProductDetailPageProps {
-  params: {
-    slug: string;
-  };
+  params: Promise<{ slug: string }>;
 }
 
 const productData = {
@@ -60,10 +56,11 @@ const productData = {
 };
 
 export default function ProductDetailPage({ params }: ProductDetailPageProps) {
+  const { slug } = use(params);
   const t = useTranslations('productDetail');
   const [activeImage, setActiveImage] = useState(0);
 
-  const product = productData[params.slug as keyof typeof productData] || productData['automatic-filling-machine'];
+  const product = productData[slug as keyof typeof productData] || productData['automatic-filling-machine'];
 
   const nextImage = () => {
     setActiveImage((prev) => (prev + 1) % product.images.length);

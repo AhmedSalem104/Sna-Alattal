@@ -1,5 +1,6 @@
 'use client';
 
+import { use } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
@@ -8,9 +9,7 @@ import { Calendar, Clock, ChevronLeft, Share2, Facebook, Twitter, Linkedin, Arro
 import { Button } from '@/components/ui/button';
 
 interface NewsDetailPageProps {
-  params: {
-    slug: string;
-  };
+  params: Promise<{ slug: string }>;
 }
 
 const articleData = {
@@ -44,8 +43,9 @@ const relatedArticles = [
 ];
 
 export default function NewsDetailPage({ params }: NewsDetailPageProps) {
+  const { slug } = use(params);
   const t = useTranslations('newsDetail');
-  const article = articleData[params.slug as keyof typeof articleData] || articleData['new-production-line-2024'];
+  const article = articleData[slug as keyof typeof articleData] || articleData['new-production-line-2024'];
 
   return (
     <div className="min-h-screen bg-white">

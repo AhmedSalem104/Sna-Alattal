@@ -1,16 +1,15 @@
 'use client';
 
+import { use } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { motion } from 'framer-motion';
-import { ArrowRight, Check, ChevronLeft, Phone, Mail, FileText } from 'lucide-react';
+import { ChevronLeft, Phone, Mail, FileText } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 interface SolutionDetailPageProps {
-  params: {
-    slug: string;
-  };
+  params: Promise<{ slug: string }>;
 }
 
 const solutionData = {
@@ -42,8 +41,9 @@ const solutionData = {
 };
 
 export default function SolutionDetailPage({ params }: SolutionDetailPageProps) {
+  const { slug } = use(params);
   const t = useTranslations('solutionDetail');
-  const solution = solutionData[params.slug as keyof typeof solutionData] || solutionData['food-beverage'];
+  const solution = solutionData[slug as keyof typeof solutionData] || solutionData['food-beverage'];
 
   return (
     <div className="min-h-screen bg-white">
