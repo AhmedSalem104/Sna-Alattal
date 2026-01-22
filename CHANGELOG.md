@@ -5,6 +5,24 @@ All notable changes and improvements to this project are documented here.
 
 ---
 
+## [Release 8] - 2026-01-22 - Contact Page Accessibility
+
+### Form Accessibility (WCAG 2.1 AA)
+- Added `aria-invalid` to form inputs with errors
+- Added `aria-describedby` linking inputs to error messages
+- Added `role="alert"` to error messages
+- Added required field indicators (*)
+
+### Visual Improvements
+- Success message: Better visibility with green-100 background
+- Error messages: Improved contrast (text-red-500)
+- Clear required field markers
+
+### Map Accessibility
+- Added `title` and `aria-label` to iframe
+
+---
+
 ## [Release 7] - 2026-01-22 - Onboarding Optimization
 
 ### Performance
