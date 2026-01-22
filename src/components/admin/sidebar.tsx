@@ -199,7 +199,7 @@ export function Sidebar({ isCollapsed, onToggle, isPinned, onPinToggle }: Sideba
         animate={{ width: isExpanded ? 280 : 80 }}
         transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
         className={cn(
-          'h-screen flex flex-col flex-shrink-0',
+          'h-full min-h-screen flex flex-col flex-shrink-0',
           'bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900',
           'border-l border-slate-700/50'
         )}

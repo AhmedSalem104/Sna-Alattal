@@ -78,9 +78,9 @@ export function DashboardShell({ children }: DashboardShellProps) {
   }
 
   return (
-    <div dir="rtl" className="h-screen bg-gradient-to-br from-slate-50 via-white to-slate-50 flex overflow-hidden">
+    <div dir="rtl" className="min-h-screen h-screen bg-gradient-to-br from-slate-50 via-white to-slate-50 flex">
       {/* Sidebar - Desktop (on the right side for RTL) */}
-      <div className="hidden lg:block h-full">
+      <div className="hidden lg:block sticky top-0 h-screen">
         <Sidebar
           isCollapsed={isCollapsed}
           onToggle={toggleSidebar}
@@ -90,7 +90,7 @@ export function DashboardShell({ children }: DashboardShellProps) {
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 h-full flex flex-col overflow-hidden">
+      <div className="flex-1 flex flex-col min-h-screen">
         <Header isCollapsed={isCollapsed} />
         <main className="flex-1 p-4 sm:p-6 lg:p-8 overflow-y-auto">
           <div className="max-w-7xl mx-auto">
