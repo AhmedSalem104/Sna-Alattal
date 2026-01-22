@@ -206,13 +206,13 @@ export function Sidebar({ isCollapsed, onToggle }: SidebarProps) {
         onMouseLeave={() => setIsHovering(false)}
         className={cn(
           'fixed top-0 right-0 z-40 h-screen flex flex-col',
-          'bg-white/95 backdrop-blur-xl',
-          'border-l border-gray-200/80',
-          'shadow-xl shadow-gray-200/50'
+          'bg-white/80 backdrop-blur-xl',
+          'border-l border-gray-100',
+          'shadow-sm'
         )}
       >
-        {/* Logo Section */}
-        <div className="h-16 flex items-center justify-between px-4 border-b border-gray-100 bg-white/80">
+        {/* Logo Section - Same height as navbar */}
+        <div className="h-16 flex items-center justify-between px-4 border-b border-gray-100">
           <AnimatePresence mode="wait">
             {isExpanded ? (
               <motion.div
@@ -467,7 +467,7 @@ export function Sidebar({ isCollapsed, onToggle }: SidebarProps) {
         </nav>
 
         {/* User Section */}
-        <div className="p-4 border-t border-gray-100 bg-gray-50/50">
+        <div className="p-4 border-t border-gray-100">
           <AnimatePresence mode="wait">
             {isExpanded ? (
               <motion.div
@@ -622,10 +622,10 @@ export function MobileSidebar() {
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
             transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
-            className="fixed top-0 right-0 z-50 h-screen w-80 bg-white/95 backdrop-blur-xl border-l border-gray-200 lg:hidden flex flex-col shadow-2xl"
+            className="fixed top-0 right-0 z-50 h-screen w-80 bg-white/80 backdrop-blur-xl border-l border-gray-100 lg:hidden flex flex-col shadow-lg"
           >
             {/* Header */}
-            <div className="h-16 flex items-center justify-between px-4 border-b border-gray-100 bg-white/80">
+            <div className="h-16 flex items-center justify-between px-4 border-b border-gray-100">
               <Link href="/admin" className="flex items-center gap-3" onClick={() => setIsOpen(false)}>
                 <div className="relative">
                   <Image
@@ -742,7 +742,7 @@ export function MobileSidebar() {
             </nav>
 
             {/* User Section */}
-            <div className="p-4 border-t border-gray-100 bg-gray-50/50">
+            <div className="p-4 border-t border-gray-100">
               <div className="flex items-center gap-3">
                 <div className="relative">
                   <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center ring-2 ring-primary/10">
