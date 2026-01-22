@@ -28,12 +28,7 @@ import {
   Menu,
   X,
   Search,
-  Pin,
-  PinOff,
   ChevronDown,
-  Star,
-  Clock,
-  Sparkles,
   Building2,
   GalleryHorizontalEnd,
   BookOpen,
@@ -61,7 +56,7 @@ const menuCategories = [
     title: 'الرئيسية',
     icon: LayoutDashboard,
     items: [
-      { title: 'لوحة التحكم', href: '/admin', icon: LayoutDashboard, badge: null },
+      { title: 'لوحة التحكم', href: '/admin', icon: LayoutDashboard },
     ],
   },
   {
@@ -69,12 +64,11 @@ const menuCategories = [
     title: 'إدارة المحتوى',
     icon: Package,
     items: [
-      { title: 'المنتجات', href: '/admin/products', icon: Package, badge: null },
-      { title: 'التصنيفات', href: '/admin/categories', icon: FolderTree, badge: null },
-      { title: 'الحلول', href: '/admin/solutions', icon: Lightbulb, badge: null },
-      { title: 'الأخبار', href: '/admin/news', icon: Newspaper, badge: null },
-      { title: 'السلايدر', href: '/admin/slides', icon: ImageIcon, badge: null },
-      { title: 'الصفحات', href: '/admin/pages', icon: FileText, badge: null },
+      { title: 'المنتجات', href: '/admin/products', icon: Package },
+      { title: 'التصنيفات', href: '/admin/categories', icon: FolderTree },
+      { title: 'الحلول', href: '/admin/solutions', icon: Lightbulb },
+      { title: 'الأخبار', href: '/admin/news', icon: Newspaper },
+      { title: 'السلايدر', href: '/admin/slides', icon: ImageIcon },
     ],
   },
   {
@@ -82,9 +76,9 @@ const menuCategories = [
     title: 'الشركة',
     icon: Building2,
     items: [
-      { title: 'العملاء', href: '/admin/clients', icon: Users, badge: null },
-      { title: 'فريق العمل', href: '/admin/team', icon: UserCircle, badge: null },
-      { title: 'الشهادات', href: '/admin/certificates', icon: Award, badge: null },
+      { title: 'العملاء', href: '/admin/clients', icon: Users },
+      { title: 'فريق العمل', href: '/admin/team', icon: UserCircle },
+      { title: 'الشهادات', href: '/admin/certificates', icon: Award },
     ],
   },
   {
@@ -92,9 +86,9 @@ const menuCategories = [
     title: 'الوسائط والفعاليات',
     icon: GalleryHorizontalEnd,
     items: [
-      { title: 'المعارض', href: '/admin/exhibitions', icon: CalendarDays, badge: null },
-      { title: 'المقابلات التلفزيونية', href: '/admin/tv-interviews', icon: Tv, badge: null },
-      { title: 'الكتالوجات', href: '/admin/catalogues', icon: BookOpen, badge: null },
+      { title: 'المعارض', href: '/admin/exhibitions', icon: CalendarDays },
+      { title: 'المقابلات التلفزيونية', href: '/admin/tv-interviews', icon: Tv },
+      { title: 'الكتالوجات', href: '/admin/catalogues', icon: BookOpen },
     ],
   },
   {
@@ -102,7 +96,7 @@ const menuCategories = [
     title: 'التواصل',
     icon: MessageSquare,
     items: [
-      { title: 'الرسائل', href: '/admin/messages', icon: MessageSquare, badge: 'new' },
+      { title: 'الرسائل', href: '/admin/messages', icon: MessageSquare, hasBadge: true },
     ],
   },
 ];
@@ -122,19 +116,12 @@ export function Sidebar({ isCollapsed, onToggle }: SidebarProps) {
   const { data: session } = useSession();
   const [searchQuery, setSearchQuery] = useState('');
   const [expandedCategories, setExpandedCategories] = useState<string[]>(['main', 'content']);
-  const [pinnedItems, setPinnedItems] = useState<string[]>([]);
-  const [recentItems, setRecentItems] = useState<string[]>([]);
   const [isHovering, setIsHovering] = useState(false);
   const [unreadMessages, setUnreadMessages] = useState(0);
 
   // Load saved states from localStorage
   useEffect(() => {
-    const savedPinned = localStorage.getItem('sidebar_pinned');
-    const savedRecent = localStorage.getItem('sidebar_recent');
     const savedExpanded = localStorage.getItem('sidebar_expanded');
-
-    if (savedPinned) setPinnedItems(JSON.parse(savedPinned));
-    if (savedRecent) setRecentItems(JSON.parse(savedRecent));
     if (savedExpanded) setExpandedCategories(JSON.parse(savedExpanded));
   }, []);
 
@@ -152,21 +139,9 @@ export function Sidebar({ isCollapsed, onToggle }: SidebarProps) {
       }
     };
     fetchUnread();
-    const interval = setInterval(fetchUnread, 60000); // Refresh every minute
+    const interval = setInterval(fetchUnread, 60000);
     return () => clearInterval(interval);
   }, []);
-
-  // Track recent items
-  useEffect(() => {
-    if (pathname && pathname !== '/admin') {
-      setRecentItems(prev => {
-        const filtered = prev.filter(item => item !== pathname);
-        const newRecent = [pathname, ...filtered].slice(0, 5);
-        localStorage.setItem('sidebar_recent', JSON.stringify(newRecent));
-        return newRecent;
-      });
-    }
-  }, [pathname]);
 
   const isActive = useCallback((href: string) => {
     if (href === '/admin') {
@@ -185,16 +160,6 @@ export function Sidebar({ isCollapsed, onToggle }: SidebarProps) {
     });
   }, []);
 
-  const togglePin = useCallback((href: string) => {
-    setPinnedItems(prev => {
-      const newPinned = prev.includes(href)
-        ? prev.filter(item => item !== href)
-        : [...prev, href];
-      localStorage.setItem('sidebar_pinned', JSON.stringify(newPinned));
-      return newPinned;
-    });
-  }, []);
-
   // Filter menu items based on search
   const filteredCategories = useMemo(() => {
     if (!searchQuery.trim()) return menuCategories;
@@ -207,54 +172,55 @@ export function Sidebar({ isCollapsed, onToggle }: SidebarProps) {
     })).filter(category => category.items.length > 0);
   }, [searchQuery]);
 
-  // Get item title from href
-  const getItemTitle = useCallback((href: string) => {
-    for (const category of menuCategories) {
-      const item = category.items.find(i => i.href === href);
-      if (item) return item.title;
-    }
-    for (const item of bottomMenuItems) {
-      if (item.href === href) return item.title;
-    }
-    return href;
-  }, []);
-
-  // Get item icon from href
-  const getItemIcon = useCallback((href: string) => {
-    for (const category of menuCategories) {
-      const item = category.items.find(i => i.href === href);
-      if (item) return item.icon;
-    }
-    for (const item of bottomMenuItems) {
-      if (item.href === href) return item.icon;
-    }
-    return FileText;
-  }, []);
-
   // Expanded state based on hover or actual state
   const isExpanded = !isCollapsed || isHovering;
 
+  // Animation variants for smooth transitions
+  const sidebarVariants = {
+    expanded: { width: 280 },
+    collapsed: { width: 80 }
+  };
+
+  const contentVariants = {
+    hidden: { opacity: 0, x: 20 },
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: { duration: 0.3, ease: 'easeOut' }
+    },
+    exit: {
+      opacity: 0,
+      x: 20,
+      transition: { duration: 0.2, ease: 'easeIn' }
+    }
+  };
+
   return (
     <TooltipProvider delayDuration={0}>
-      <aside
+      <motion.aside
+        initial={false}
+        animate={isExpanded ? 'expanded' : 'collapsed'}
+        variants={sidebarVariants}
+        transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
         onMouseEnter={() => isCollapsed && setIsHovering(true)}
         onMouseLeave={() => setIsHovering(false)}
         className={cn(
-          'fixed top-0 right-0 z-40 h-screen transition-all duration-300 flex flex-col',
-          'bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900',
-          'border-l border-slate-700/50',
-          'shadow-2xl shadow-black/20',
-          isExpanded ? 'w-72' : 'w-20'
+          'fixed top-0 right-0 z-40 h-screen flex flex-col',
+          'bg-white/95 backdrop-blur-xl',
+          'border-l border-gray-200/80',
+          'shadow-xl shadow-gray-200/50'
         )}
       >
         {/* Logo Section */}
-        <div className="h-16 flex items-center justify-between px-4 border-b border-slate-700/50 bg-slate-900/50">
+        <div className="h-16 flex items-center justify-between px-4 border-b border-gray-100 bg-white/80">
           <AnimatePresence mode="wait">
             {isExpanded ? (
               <motion.div
-                initial={{ opacity: 0, x: -10 }}
+                key="expanded-logo"
+                initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -10 }}
+                exit={{ opacity: 0, x: 20 }}
+                transition={{ duration: 0.3, ease: 'easeOut' }}
                 className="flex items-center gap-3"
               >
                 <Link href="/admin" className="flex items-center gap-3">
@@ -262,48 +228,59 @@ export function Sidebar({ isCollapsed, onToggle }: SidebarProps) {
                     <Image
                       src="/images/logo.jpg"
                       alt="S.N.A"
-                      width={42}
-                      height={42}
-                      className="rounded-xl ring-2 ring-primary/30"
+                      width={40}
+                      height={40}
+                      className="rounded-xl ring-2 ring-primary/20 shadow-sm"
                     />
-                    <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-emerald-500 rounded-full border-2 border-slate-900" />
+                    <div className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-emerald-500 rounded-full border-2 border-white" />
                   </div>
                   <div>
-                    <span className="font-bold text-white text-lg">لوحة التحكم</span>
-                    <p className="text-xs text-slate-400">S.N.A Al-Attal</p>
+                    <span className="font-bold text-gray-800 text-base">لوحة التحكم</span>
+                    <p className="text-xs text-gray-400">S.N.A Al-Attal</p>
                   </div>
                 </Link>
               </motion.div>
             ) : (
               <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
+                key="collapsed-logo"
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.8 }}
+                transition={{ duration: 0.3, ease: 'easeOut' }}
                 className="mx-auto"
               >
                 <Link href="/admin">
                   <Image
                     src="/images/logo.jpg"
                     alt="S.N.A"
-                    width={42}
-                    height={42}
-                    className="rounded-xl ring-2 ring-primary/30"
+                    width={40}
+                    height={40}
+                    className="rounded-xl ring-2 ring-primary/20 shadow-sm"
                   />
                 </Link>
               </motion.div>
             )}
           </AnimatePresence>
 
-          {isExpanded && !isCollapsed && (
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={onToggle}
-              className="text-slate-400 hover:text-white hover:bg-slate-700/50"
-            >
-              <ChevronRight size={18} />
-            </Button>
-          )}
+          <AnimatePresence>
+            {isExpanded && !isCollapsed && (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.8 }}
+                transition={{ duration: 0.2 }}
+              >
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={onToggle}
+                  className="text-gray-400 hover:text-gray-600 hover:bg-gray-100 h-8 w-8"
+                >
+                  <ChevronRight size={16} />
+                </Button>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
 
         {/* Search Section */}
@@ -313,20 +290,21 @@ export function Sidebar({ isCollapsed, onToggle }: SidebarProps) {
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
-              className="px-4 py-3 border-b border-slate-700/50"
+              transition={{ duration: 0.3, ease: 'easeOut' }}
+              className="px-4 py-3 border-b border-gray-100"
             >
               <div className="relative">
-                <Search className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
+                <Search className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400" size={16} />
                 <Input
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="بحث في القائمة..."
-                  className="w-full pr-9 bg-slate-800/50 border-slate-600/50 text-white placeholder:text-slate-500 focus:border-primary/50 focus:ring-primary/20"
+                  className="w-full pr-9 bg-gray-50/80 border-gray-200 text-gray-700 placeholder:text-gray-400 focus:border-primary/50 focus:ring-primary/20 h-9 text-sm"
                 />
                 {searchQuery && (
                   <button
                     onClick={() => setSearchQuery('')}
-                    className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white"
+                    className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
                   >
                     <X size={14} />
                   </button>
@@ -336,82 +314,8 @@ export function Sidebar({ isCollapsed, onToggle }: SidebarProps) {
           )}
         </AnimatePresence>
 
-        {/* Pinned Items */}
-        <AnimatePresence>
-          {isExpanded && pinnedItems.length > 0 && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              className="px-3 py-2 border-b border-slate-700/50"
-            >
-              <div className="flex items-center gap-2 px-2 mb-2">
-                <Star size={12} className="text-primary" />
-                <span className="text-xs font-medium text-slate-400">المثبتة</span>
-              </div>
-              <div className="flex flex-wrap gap-1">
-                {pinnedItems.map((href) => {
-                  const Icon = getItemIcon(href);
-                  return (
-                    <Link
-                      key={href}
-                      href={href}
-                      className={cn(
-                        'flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs transition-all',
-                        isActive(href)
-                          ? 'bg-primary text-slate-900 font-medium'
-                          : 'bg-slate-700/50 text-slate-300 hover:bg-slate-700 hover:text-white'
-                      )}
-                    >
-                      <Icon size={14} />
-                      {getItemTitle(href)}
-                    </Link>
-                  );
-                })}
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-
-        {/* Recent Items */}
-        <AnimatePresence>
-          {isExpanded && recentItems.length > 0 && !searchQuery && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              className="px-3 py-2 border-b border-slate-700/50"
-            >
-              <div className="flex items-center gap-2 px-2 mb-2">
-                <Clock size={12} className="text-slate-400" />
-                <span className="text-xs font-medium text-slate-400">الأخيرة</span>
-              </div>
-              <div className="flex flex-wrap gap-1">
-                {recentItems.slice(0, 3).map((href) => {
-                  const Icon = getItemIcon(href);
-                  return (
-                    <Link
-                      key={href}
-                      href={href}
-                      className={cn(
-                        'flex items-center gap-2 px-2 py-1 rounded-md text-xs transition-all',
-                        isActive(href)
-                          ? 'bg-slate-700 text-white'
-                          : 'text-slate-400 hover:bg-slate-700/50 hover:text-slate-200'
-                      )}
-                    >
-                      <Icon size={12} />
-                      {getItemTitle(href)}
-                    </Link>
-                  );
-                })}
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-
         {/* Navigation */}
-        <nav className="flex-1 overflow-y-auto py-3 px-3 custom-scrollbar">
+        <nav className="flex-1 overflow-y-auto py-4 px-3 custom-scrollbar">
           {/* Categories */}
           {filteredCategories.map((category) => (
             <div key={category.id} className="mb-2">
@@ -421,71 +325,62 @@ export function Sidebar({ isCollapsed, onToggle }: SidebarProps) {
                   onOpenChange={() => !searchQuery && toggleCategory(category.id)}
                 >
                   <CollapsibleTrigger className="w-full">
-                    <div className="flex items-center justify-between px-3 py-2 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-700/30 transition-colors">
+                    <motion.div
+                      className="flex items-center justify-between px-3 py-2 rounded-lg text-gray-500 hover:text-gray-700 hover:bg-gray-100/80 transition-all duration-200"
+                      whileHover={{ x: -2 }}
+                      transition={{ duration: 0.2 }}
+                    >
                       <div className="flex items-center gap-2">
-                        <category.icon size={16} />
+                        <category.icon size={15} className="text-gray-400" />
                         <span className="text-xs font-semibold uppercase tracking-wider">
                           {category.title}
                         </span>
                       </div>
-                      <ChevronDown
-                        size={14}
-                        className={cn(
-                          'transition-transform duration-200',
-                          expandedCategories.includes(category.id) && 'rotate-180'
-                        )}
-                      />
-                    </div>
+                      <motion.div
+                        animate={{ rotate: expandedCategories.includes(category.id) ? 180 : 0 }}
+                        transition={{ duration: 0.3, ease: 'easeOut' }}
+                      >
+                        <ChevronDown size={14} />
+                      </motion.div>
+                    </motion.div>
                   </CollapsibleTrigger>
                   <CollapsibleContent>
                     <motion.ul
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
+                      transition={{ duration: 0.3, delay: 0.1 }}
                       className="mt-1 space-y-0.5"
                     >
-                      {category.items.map((item) => (
-                        <li key={item.href} className="group relative">
+                      {category.items.map((item, index) => (
+                        <motion.li
+                          key={item.href}
+                          initial={{ opacity: 0, x: 10 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ duration: 0.3, delay: index * 0.05 }}
+                        >
                           <Link
                             href={item.href}
                             className={cn(
-                              'flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-200',
+                              'flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-300',
                               isActive(item.href)
-                                ? 'bg-gradient-to-l from-primary/20 to-primary/5 text-primary border-r-2 border-primary'
-                                : 'text-slate-300 hover:text-white hover:bg-slate-700/50'
+                                ? 'bg-primary/10 text-primary border-r-3 border-primary shadow-sm'
+                                : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100/80'
                             )}
                           >
                             <item.icon size={18} className={cn(
-                              isActive(item.href) ? 'text-primary' : 'text-slate-400 group-hover:text-slate-200'
+                              'transition-colors duration-200',
+                              isActive(item.href) ? 'text-primary' : 'text-gray-400'
                             )} />
-                            <span className="flex-1">{item.title}</span>
+                            <span className="flex-1 text-sm font-medium">{item.title}</span>
 
                             {/* Badge for messages */}
                             {item.href === '/admin/messages' && unreadMessages > 0 && (
-                              <Badge className="bg-red-500 text-white text-xs px-1.5 py-0 min-w-[20px] h-5 flex items-center justify-center">
+                              <Badge className="bg-red-500 text-white text-xs px-1.5 py-0 min-w-[20px] h-5 flex items-center justify-center rounded-full">
                                 {unreadMessages}
                               </Badge>
                             )}
-
-                            {/* Pin button */}
-                            <button
-                              onClick={(e) => {
-                                e.preventDefault();
-                                e.stopPropagation();
-                                togglePin(item.href);
-                              }}
-                              className={cn(
-                                'opacity-0 group-hover:opacity-100 transition-opacity p-1 rounded hover:bg-slate-600',
-                                pinnedItems.includes(item.href) && 'opacity-100 text-primary'
-                              )}
-                            >
-                              {pinnedItems.includes(item.href) ? (
-                                <PinOff size={14} />
-                              ) : (
-                                <Pin size={14} />
-                              )}
-                            </button>
                           </Link>
-                        </li>
+                        </motion.li>
                       ))}
                     </motion.ul>
                   </CollapsibleContent>
@@ -500,19 +395,19 @@ export function Sidebar({ isCollapsed, onToggle }: SidebarProps) {
                           <Link
                             href={item.href}
                             className={cn(
-                              'flex items-center justify-center p-3 rounded-lg transition-all duration-200 relative',
+                              'flex items-center justify-center p-3 rounded-xl transition-all duration-300 relative',
                               isActive(item.href)
-                                ? 'bg-primary/20 text-primary'
-                                : 'text-slate-400 hover:text-white hover:bg-slate-700/50'
+                                ? 'bg-primary/10 text-primary shadow-sm'
+                                : 'text-gray-400 hover:text-gray-700 hover:bg-gray-100'
                             )}
                           >
                             <item.icon size={20} />
                             {item.href === '/admin/messages' && unreadMessages > 0 && (
-                              <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full" />
+                              <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full" />
                             )}
                           </Link>
                         </TooltipTrigger>
-                        <TooltipContent side="left" className="bg-slate-800 border-slate-700 text-white">
+                        <TooltipContent side="left" className="bg-gray-800 border-gray-700 text-white text-sm">
                           <p>{item.title}</p>
                         </TooltipContent>
                       </Tooltip>
@@ -524,7 +419,7 @@ export function Sidebar({ isCollapsed, onToggle }: SidebarProps) {
           ))}
 
           {/* Separator */}
-          <div className="my-3 border-t border-slate-700/50" />
+          <div className="my-4 border-t border-gray-200/80" />
 
           {/* Bottom Menu */}
           <ul className="space-y-1">
@@ -534,16 +429,17 @@ export function Sidebar({ isCollapsed, onToggle }: SidebarProps) {
                   <Link
                     href={item.href}
                     className={cn(
-                      'flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-200',
+                      'flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-300',
                       isActive(item.href)
-                        ? 'bg-gradient-to-l from-primary/20 to-primary/5 text-primary border-r-2 border-primary'
-                        : 'text-slate-300 hover:text-white hover:bg-slate-700/50'
+                        ? 'bg-primary/10 text-primary border-r-3 border-primary shadow-sm'
+                        : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100/80'
                     )}
                   >
                     <item.icon size={18} className={cn(
-                      isActive(item.href) ? 'text-primary' : 'text-slate-400'
+                      'transition-colors duration-200',
+                      isActive(item.href) ? 'text-primary' : 'text-gray-400'
                     )} />
-                    <span>{item.title}</span>
+                    <span className="text-sm font-medium">{item.title}</span>
                   </Link>
                 ) : (
                   <Tooltip>
@@ -551,16 +447,16 @@ export function Sidebar({ isCollapsed, onToggle }: SidebarProps) {
                       <Link
                         href={item.href}
                         className={cn(
-                          'flex items-center justify-center p-3 rounded-lg transition-all duration-200',
+                          'flex items-center justify-center p-3 rounded-xl transition-all duration-300',
                           isActive(item.href)
-                            ? 'bg-primary/20 text-primary'
-                            : 'text-slate-400 hover:text-white hover:bg-slate-700/50'
+                            ? 'bg-primary/10 text-primary shadow-sm'
+                            : 'text-gray-400 hover:text-gray-700 hover:bg-gray-100'
                         )}
                       >
                         <item.icon size={20} />
                       </Link>
                     </TooltipTrigger>
-                    <TooltipContent side="left" className="bg-slate-800 border-slate-700 text-white">
+                    <TooltipContent side="left" className="bg-gray-800 border-gray-700 text-white text-sm">
                       <p>{item.title}</p>
                     </TooltipContent>
                   </Tooltip>
@@ -571,63 +467,89 @@ export function Sidebar({ isCollapsed, onToggle }: SidebarProps) {
         </nav>
 
         {/* User Section */}
-        <div className="p-4 border-t border-slate-700/50 bg-slate-900/30">
-          {isExpanded ? (
-            <div className="flex items-center gap-3">
-              <div className="relative">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary/30 to-primary/10 flex items-center justify-center ring-2 ring-primary/20">
-                  <UserCircle className="text-primary" size={24} />
-                </div>
-                <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-emerald-500 rounded-full border-2 border-slate-900" />
-              </div>
-              <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-white truncate">
-                  {session?.user?.name || 'مدير النظام'}
-                </p>
-                <p className="text-xs text-slate-400 truncate">
-                  {session?.user?.email}
-                </p>
-              </div>
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => signOut({ callbackUrl: '/admin/login' })}
-                className="text-slate-400 hover:text-red-400 hover:bg-red-400/10"
+        <div className="p-4 border-t border-gray-100 bg-gray-50/50">
+          <AnimatePresence mode="wait">
+            {isExpanded ? (
+              <motion.div
+                key="expanded-user"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 10 }}
+                transition={{ duration: 0.3, ease: 'easeOut' }}
+                className="flex items-center gap-3"
               >
-                <LogOut size={18} />
-              </Button>
-            </div>
-          ) : (
-            <Tooltip>
-              <TooltipTrigger asChild>
+                <div className="relative">
+                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center ring-2 ring-primary/10 shadow-sm">
+                    <UserCircle className="text-primary" size={22} />
+                  </div>
+                  <div className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-emerald-500 rounded-full border-2 border-white" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-semibold text-gray-800 truncate">
+                    {session?.user?.name || 'مدير النظام'}
+                  </p>
+                  <p className="text-xs text-gray-400 truncate">
+                    {session?.user?.email}
+                  </p>
+                </div>
                 <Button
                   variant="ghost"
                   size="icon"
                   onClick={() => signOut({ callbackUrl: '/admin/login' })}
-                  className="w-full text-slate-400 hover:text-red-400 hover:bg-red-400/10"
+                  className="text-gray-400 hover:text-red-500 hover:bg-red-50 h-9 w-9 transition-all duration-200"
                 >
-                  <LogOut size={20} />
+                  <LogOut size={18} />
                 </Button>
-              </TooltipTrigger>
-              <TooltipContent side="left" className="bg-slate-800 border-slate-700 text-white">
-                <p>تسجيل الخروج</p>
-              </TooltipContent>
-            </Tooltip>
-          )}
+              </motion.div>
+            ) : (
+              <motion.div
+                key="collapsed-user"
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.8 }}
+                transition={{ duration: 0.3, ease: 'easeOut' }}
+              >
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={() => signOut({ callbackUrl: '/admin/login' })}
+                      className="w-full text-gray-400 hover:text-red-500 hover:bg-red-50 transition-all duration-200"
+                    >
+                      <LogOut size={20} />
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent side="left" className="bg-gray-800 border-gray-700 text-white text-sm">
+                    <p>تسجيل الخروج</p>
+                  </TooltipContent>
+                </Tooltip>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
 
         {/* Collapse Toggle (shown when collapsed and not hovering) */}
-        {isCollapsed && !isHovering && (
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={onToggle}
-            className="absolute top-4 -left-3 w-6 h-6 rounded-full bg-slate-800 border border-slate-600 text-slate-400 hover:text-white hover:bg-slate-700"
-          >
-            <ChevronLeft size={14} />
-          </Button>
-        )}
-      </aside>
+        <AnimatePresence>
+          {isCollapsed && !isHovering && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.8 }}
+              transition={{ duration: 0.2 }}
+            >
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={onToggle}
+                className="absolute top-4 -left-3 w-6 h-6 rounded-full bg-white border border-gray-200 text-gray-400 hover:text-primary hover:bg-gray-50 shadow-md transition-all duration-200"
+              >
+                <ChevronLeft size={14} />
+              </Button>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </motion.aside>
     </TooltipProvider>
   );
 }
@@ -673,7 +595,7 @@ export function MobileSidebar() {
         variant="ghost"
         size="icon"
         onClick={() => setIsOpen(true)}
-        className="lg:hidden text-slate-600 hover:text-primary"
+        className="lg:hidden text-gray-600 hover:text-primary hover:bg-gray-100"
       >
         <Menu size={24} />
       </Button>
@@ -685,7 +607,8 @@ export function MobileSidebar() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 lg:hidden"
+            transition={{ duration: 0.3, ease: 'easeOut' }}
+            className="fixed inset-0 bg-black/40 backdrop-blur-sm z-40 lg:hidden"
             onClick={() => setIsOpen(false)}
           />
         )}
@@ -698,51 +621,51 @@ export function MobileSidebar() {
             initial={{ x: '100%' }}
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
-            transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-            className="fixed top-0 right-0 z-50 h-screen w-80 bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 border-l border-slate-700/50 lg:hidden flex flex-col"
+            transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
+            className="fixed top-0 right-0 z-50 h-screen w-80 bg-white/95 backdrop-blur-xl border-l border-gray-200 lg:hidden flex flex-col shadow-2xl"
           >
             {/* Header */}
-            <div className="h-16 flex items-center justify-between px-4 border-b border-slate-700/50 bg-slate-900/50">
+            <div className="h-16 flex items-center justify-between px-4 border-b border-gray-100 bg-white/80">
               <Link href="/admin" className="flex items-center gap-3" onClick={() => setIsOpen(false)}>
                 <div className="relative">
                   <Image
                     src="/images/logo.jpg"
                     alt="S.N.A"
-                    width={42}
-                    height={42}
-                    className="rounded-xl ring-2 ring-primary/30"
+                    width={40}
+                    height={40}
+                    className="rounded-xl ring-2 ring-primary/20 shadow-sm"
                   />
                 </div>
                 <div>
-                  <span className="font-bold text-white">لوحة التحكم</span>
-                  <p className="text-xs text-slate-400">S.N.A Al-Attal</p>
+                  <span className="font-bold text-gray-800">لوحة التحكم</span>
+                  <p className="text-xs text-gray-400">S.N.A Al-Attal</p>
                 </div>
               </Link>
               <Button
                 variant="ghost"
                 size="icon"
                 onClick={() => setIsOpen(false)}
-                className="text-slate-400 hover:text-white hover:bg-slate-700/50"
+                className="text-gray-400 hover:text-gray-600 hover:bg-gray-100"
               >
                 <X size={20} />
               </Button>
             </div>
 
             {/* Search */}
-            <div className="px-4 py-3 border-b border-slate-700/50">
+            <div className="px-4 py-3 border-b border-gray-100">
               <div className="relative">
-                <Search className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
+                <Search className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400" size={16} />
                 <Input
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="بحث في القائمة..."
-                  className="w-full pr-9 bg-slate-800/50 border-slate-600/50 text-white placeholder:text-slate-500"
+                  className="w-full pr-9 bg-gray-50/80 border-gray-200 text-gray-700 placeholder:text-gray-400 h-9 text-sm"
                 />
               </div>
             </div>
 
             {/* Navigation */}
-            <nav className="flex-1 overflow-y-auto py-3 px-3">
+            <nav className="flex-1 overflow-y-auto py-4 px-3">
               {filteredCategories.map((category) => (
                 <div key={category.id} className="mb-2">
                   <Collapsible
@@ -750,9 +673,9 @@ export function MobileSidebar() {
                     onOpenChange={() => !searchQuery && toggleCategory(category.id)}
                   >
                     <CollapsibleTrigger className="w-full">
-                      <div className="flex items-center justify-between px-3 py-2 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-700/30">
+                      <div className="flex items-center justify-between px-3 py-2 rounded-lg text-gray-500 hover:text-gray-700 hover:bg-gray-100/80 transition-all duration-200">
                         <div className="flex items-center gap-2">
-                          <category.icon size={16} />
+                          <category.icon size={15} className="text-gray-400" />
                           <span className="text-xs font-semibold uppercase tracking-wider">
                             {category.title}
                           </span>
@@ -760,7 +683,7 @@ export function MobileSidebar() {
                         <ChevronDown
                           size={14}
                           className={cn(
-                            'transition-transform',
+                            'transition-transform duration-300',
                             expandedCategories.includes(category.id) && 'rotate-180'
                           )}
                         />
@@ -774,16 +697,16 @@ export function MobileSidebar() {
                               href={item.href}
                               onClick={() => setIsOpen(false)}
                               className={cn(
-                                'flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all',
+                                'flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-300',
                                 isActive(item.href)
-                                  ? 'bg-gradient-to-l from-primary/20 to-primary/5 text-primary border-r-2 border-primary'
-                                  : 'text-slate-300 hover:text-white hover:bg-slate-700/50'
+                                  ? 'bg-primary/10 text-primary border-r-3 border-primary'
+                                  : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100/80'
                               )}
                             >
                               <item.icon size={18} className={cn(
-                                isActive(item.href) ? 'text-primary' : 'text-slate-400'
+                                isActive(item.href) ? 'text-primary' : 'text-gray-400'
                               )} />
-                              <span>{item.title}</span>
+                              <span className="text-sm font-medium">{item.title}</span>
                             </Link>
                           </li>
                         ))}
@@ -793,7 +716,7 @@ export function MobileSidebar() {
                 </div>
               ))}
 
-              <div className="my-3 border-t border-slate-700/50" />
+              <div className="my-4 border-t border-gray-200/80" />
 
               <ul className="space-y-1">
                 {bottomMenuItems.map((item) => (
@@ -802,16 +725,16 @@ export function MobileSidebar() {
                       href={item.href}
                       onClick={() => setIsOpen(false)}
                       className={cn(
-                        'flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all',
+                        'flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-300',
                         isActive(item.href)
-                          ? 'bg-gradient-to-l from-primary/20 to-primary/5 text-primary border-r-2 border-primary'
-                          : 'text-slate-300 hover:text-white hover:bg-slate-700/50'
+                          ? 'bg-primary/10 text-primary border-r-3 border-primary'
+                          : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100/80'
                       )}
                     >
                       <item.icon size={18} className={cn(
-                        isActive(item.href) ? 'text-primary' : 'text-slate-400'
+                        isActive(item.href) ? 'text-primary' : 'text-gray-400'
                       )} />
-                      <span>{item.title}</span>
+                      <span className="text-sm font-medium">{item.title}</span>
                     </Link>
                   </li>
                 ))}
@@ -819,19 +742,19 @@ export function MobileSidebar() {
             </nav>
 
             {/* User Section */}
-            <div className="p-4 border-t border-slate-700/50 bg-slate-900/30">
+            <div className="p-4 border-t border-gray-100 bg-gray-50/50">
               <div className="flex items-center gap-3">
                 <div className="relative">
-                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary/30 to-primary/10 flex items-center justify-center">
-                    <UserCircle className="text-primary" size={24} />
+                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center ring-2 ring-primary/10">
+                    <UserCircle className="text-primary" size={22} />
                   </div>
-                  <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-emerald-500 rounded-full border-2 border-slate-900" />
+                  <div className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-emerald-500 rounded-full border-2 border-white" />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-white truncate">
+                  <p className="text-sm font-semibold text-gray-800 truncate">
                     {session?.user?.name || 'مدير النظام'}
                   </p>
-                  <p className="text-xs text-slate-400 truncate">
+                  <p className="text-xs text-gray-400 truncate">
                     {session?.user?.email}
                   </p>
                 </div>
@@ -839,7 +762,7 @@ export function MobileSidebar() {
                   variant="ghost"
                   size="icon"
                   onClick={() => signOut({ callbackUrl: '/admin/login' })}
-                  className="text-slate-400 hover:text-red-400 hover:bg-red-400/10"
+                  className="text-gray-400 hover:text-red-500 hover:bg-red-50 h-9 w-9"
                 >
                   <LogOut size={18} />
                 </Button>
