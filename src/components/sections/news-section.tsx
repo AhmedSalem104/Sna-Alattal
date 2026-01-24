@@ -73,26 +73,14 @@ export const NewsSection = memo(function NewsSection() {
   return (
     <section
       ref={ref}
-      className="py-20 lg:py-28 bg-metal-50 relative overflow-hidden"
+      className="py-20 lg:py-28 bg-gradient-to-b from-neutral-50 to-white relative overflow-hidden"
       dir={isRTL ? 'rtl' : 'ltr'}
     >
-      {/* Industrial Background Pattern */}
+      {/* Modern Subtle Background */}
       <div className="absolute inset-0 z-0">
-        <div
-          className="absolute inset-0 opacity-[0.03]"
-          style={{
-            backgroundImage: `
-              linear-gradient(rgba(212, 160, 10, 0.3) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(212, 160, 10, 0.3) 1px, transparent 1px)
-            `,
-            backgroundSize: '50px 50px',
-          }}
-        />
+        <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-primary/5 rounded-full blur-3xl" />
+        <div className="absolute top-0 left-0 w-80 h-80 bg-copper-500/5 rounded-full blur-3xl" />
       </div>
-
-      {/* Decorative Elements */}
-      <div className="absolute bottom-0 left-0 w-32 h-1 bg-primary" />
-      <div className="absolute bottom-0 right-0 w-32 h-1 bg-primary" />
 
       <div className="container-custom relative z-10">
         {/* Header */}
@@ -104,26 +92,24 @@ export const NewsSection = memo(function NewsSection() {
         >
           <div>
             {/* Section Tag */}
-            <div className="inline-flex items-center gap-2 border-2 border-primary/30 bg-primary/5 px-4 py-2 mb-4">
-              <Newspaper size={16} className="text-primary" />
-              <span className="text-primary text-sm font-bold uppercase tracking-widest">
+            <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full mb-4">
+              <Newspaper size={16} />
+              <span className="text-sm font-semibold">
                 {t('news.title')}
               </span>
             </div>
 
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-steel-900 uppercase tracking-wide">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-steel-900 tracking-tight">
               {t('news.subtitle')}
             </h2>
 
-            {/* Gold Divider */}
-            <div className="flex items-center gap-4 mt-4">
-              <div className="h-1 w-16 bg-primary" />
-              <div className="h-1 w-8 bg-primary/50" />
-              <div className="h-1 w-4 bg-primary/25" />
+            {/* Modern Divider */}
+            <div className="flex items-center gap-2 mt-4">
+              <div className="h-1 w-12 bg-gradient-to-r from-primary to-primary/50 rounded-full" />
             </div>
           </div>
 
-          <Button variant="industrial" asChild className="group shrink-0">
+          <Button asChild className="group shrink-0">
             <Link href="/news">
               {t('news.viewAll')}
               <ArrowRight
@@ -144,8 +130,8 @@ export const NewsSection = memo(function NewsSection() {
         {/* Empty State */}
         {!loading && news.length === 0 && (
           <div className="text-center py-20">
-            <Newspaper className="w-16 h-16 mx-auto text-metal-300 mb-4" />
-            <p className="text-metal-500 text-lg">{t('news.noNews')}</p>
+            <Newspaper className="w-16 h-16 mx-auto text-neutral-300 mb-4" />
+            <p className="text-neutral-500 text-lg">{t('news.noNews')}</p>
           </div>
         )}
 
@@ -160,11 +146,8 @@ export const NewsSection = memo(function NewsSection() {
               className="lg:col-span-2"
             >
               <Link href={`/news/${news[0].slug}`}>
-                <div className="group relative h-full bg-white border-2 border-metal-200 overflow-hidden hover:border-primary transition-all duration-300">
-                  {/* Gold Accent Bar */}
-                  <div className="absolute top-0 left-0 w-1 h-full bg-primary z-10" />
-
-                  <div className="relative aspect-[16/9] sm:aspect-[16/10] md:aspect-[2/1] overflow-hidden">
+                <div className="group relative h-full bg-white rounded-2xl border border-neutral-200 overflow-hidden hover:border-primary/30 hover:shadow-soft-xl transition-all duration-300">
+                  <div className="relative aspect-[16/9] sm:aspect-[16/10] md:aspect-[2/1] overflow-hidden rounded-t-2xl">
                     <Image
                       src={news[0].image || '/images/news/news-placeholder.jpg'}
                       alt={getTitle(news[0])}
@@ -173,20 +156,20 @@ export const NewsSection = memo(function NewsSection() {
                       className="object-cover group-hover:scale-105 transition-transform duration-500"
                       loading="lazy"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-steel-900/80 via-steel-900/40 to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-steel-900/70 via-steel-900/30 to-transparent" />
 
                     {/* Content Overlay */}
                     <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8">
-                      <Badge variant="featured" className="mb-4">
+                      <Badge variant="gold" className="mb-4">
                         {t('news.title')}
                       </Badge>
-                      <h3 className="text-xl md:text-2xl font-bold text-white group-hover:text-primary transition-colors mb-3 uppercase tracking-wide">
+                      <h3 className="text-xl md:text-2xl font-bold text-white group-hover:text-primary transition-colors mb-3">
                         {getTitle(news[0])}
                       </h3>
-                      <p className="text-metal-300 mb-4 line-clamp-2">
+                      <p className="text-neutral-200 mb-4 line-clamp-2">
                         {getExcerpt(news[0])}
                       </p>
-                      <div className="flex items-center gap-2 text-sm text-metal-400">
+                      <div className="flex items-center gap-2 text-sm text-neutral-300">
                         <Calendar size={14} />
                         <span>{formatDate(news[0].publishedAt)}</span>
                       </div>
@@ -206,28 +189,25 @@ export const NewsSection = memo(function NewsSection() {
                   transition={{ duration: 0.6, delay: (index + 1) * 0.1 }}
                 >
                   <Link href={`/news/${article.slug}`}>
-                    <div className="group flex gap-4 p-4 bg-white border-2 border-metal-200 hover:border-primary transition-all duration-300">
-                      {/* Gold Accent Bar */}
-                      <div className="absolute top-0 left-0 w-1 h-full bg-primary opacity-0 group-hover:opacity-100 transition-opacity" />
-
-                      <div className="relative w-28 h-28 shrink-0 overflow-hidden border border-metal-200">
+                    <div className="group flex gap-4 p-4 bg-white rounded-xl border border-neutral-200 hover:border-primary/30 hover:shadow-soft-lg transition-all duration-300">
+                      <div className="relative w-28 h-28 shrink-0 overflow-hidden rounded-lg">
                         <Image
                           src={article.image || '/images/news/news-placeholder.jpg'}
                           alt={getTitle(article)}
                           fill
                           sizes="112px"
-                          className="object-cover group-hover:scale-110 transition-transform duration-500"
+                          className="object-cover group-hover:scale-105 transition-transform duration-500"
                           loading="lazy"
                         />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <span className="text-xs text-primary font-bold uppercase tracking-wider">
+                        <span className="text-xs text-primary font-semibold">
                           {t('news.title')}
                         </span>
-                        <h4 className="font-bold text-steel-900 group-hover:text-primary transition-colors line-clamp-2 mt-1 mb-2 uppercase tracking-wide text-sm">
+                        <h4 className="font-semibold text-steel-900 group-hover:text-primary transition-colors line-clamp-2 mt-1 mb-2 text-sm">
                           {getTitle(article)}
                         </h4>
-                        <div className="flex items-center gap-2 text-xs text-metal-500">
+                        <div className="flex items-center gap-2 text-xs text-neutral-500">
                           <Calendar size={12} />
                           <span>{formatDate(article.publishedAt)}</span>
                         </div>

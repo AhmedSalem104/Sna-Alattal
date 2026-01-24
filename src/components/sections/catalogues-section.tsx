@@ -79,25 +79,13 @@ export function CataloguesSection() {
   return (
     <section
       ref={ref}
-      className="py-20 lg:py-28 bg-steel-900 relative overflow-hidden"
+      className="py-20 lg:py-28 bg-gradient-to-b from-steel-900 to-steel-950 relative overflow-hidden"
       dir={isRTL ? 'rtl' : 'ltr'}
     >
-      {/* Industrial Background Pattern */}
+      {/* Modern Gradient Background */}
       <div className="absolute inset-0 z-0">
-        <div
-          className="absolute inset-0 opacity-[0.02]"
-          style={{
-            backgroundImage: `
-              linear-gradient(rgba(212, 160, 10, 0.5) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(212, 160, 10, 0.5) 1px, transparent 1px)
-            `,
-            backgroundSize: '50px 50px',
-          }}
-        />
+        <div className="absolute bottom-0 left-1/2 w-[800px] h-[400px] bg-primary/10 rounded-full blur-3xl -translate-x-1/2 opacity-50" />
       </div>
-
-      {/* Top Gold Border */}
-      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary via-primary/80 to-primary" />
 
       <div className="container-custom relative z-10">
         {/* Header */}
@@ -108,27 +96,23 @@ export function CataloguesSection() {
           className="text-center max-w-3xl mx-auto mb-16"
         >
           {/* Section Tag */}
-          <div className="inline-flex items-center gap-2 border-2 border-primary/30 bg-primary/10 px-4 py-2 mb-6">
-            <BookOpen size={16} className="text-primary" />
-            <span className="text-primary text-sm font-bold uppercase tracking-widest">
+          <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full mb-6">
+            <BookOpen size={16} />
+            <span className="text-sm font-semibold">
               {t('catalogues.title')}
             </span>
           </div>
 
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white uppercase tracking-wide mb-4">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white tracking-tight mb-4">
             {t('catalogues.heading')}
           </h2>
 
-          {/* Gold Divider */}
-          <div className="flex items-center justify-center gap-4 mb-6">
-            <div className="h-1 w-8 bg-primary/25" />
-            <div className="h-1 w-16 bg-primary/50" />
-            <div className="h-1 w-24 bg-primary" />
-            <div className="h-1 w-16 bg-primary/50" />
-            <div className="h-1 w-8 bg-primary/25" />
+          {/* Modern Divider */}
+          <div className="flex items-center justify-center gap-2 mb-6">
+            <div className="h-1 w-16 bg-gradient-to-r from-transparent via-primary to-transparent rounded-full" />
           </div>
 
-          <p className="text-metal-300">{t('catalogues.description')}</p>
+          <p className="text-neutral-300">{t('catalogues.description')}</p>
         </motion.div>
 
         {/* Loading State */}
@@ -141,8 +125,8 @@ export function CataloguesSection() {
         {/* Empty State */}
         {!loading && catalogues.length === 0 && (
           <div className="text-center py-20">
-            <BookOpen className="w-16 h-16 text-metal-500 mx-auto mb-4" />
-            <p className="text-metal-400 text-lg">
+            <BookOpen className="w-16 h-16 text-neutral-500 mx-auto mb-4" />
+            <p className="text-neutral-400 text-lg">
               {t('catalogues.noCatalogues') || 'No catalogues available at the moment.'}
             </p>
           </div>
@@ -158,36 +142,32 @@ export function CataloguesSection() {
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
               >
-                <div className="group relative bg-steel-800 border-2 border-steel-700 overflow-hidden hover:border-primary transition-all duration-300 h-full">
-                  {/* Gold Accent Bar */}
-                  <div className="absolute top-0 left-0 w-1 h-full bg-primary z-10" />
-
+                <div className="group relative bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 overflow-hidden hover:bg-white/10 hover:border-primary/30 transition-all duration-300 h-full">
                   {/* Thumbnail */}
-                  <div className="relative aspect-[4/3] overflow-hidden">
+                  <div className="relative aspect-[4/3] overflow-hidden rounded-t-2xl">
                     <Image
                       src={catalogue.coverImage || '/images/catalogues/default-catalog.jpg'}
                       alt={getTitle(catalogue)}
                       fill
                       sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                      className="object-cover group-hover:scale-110 transition-transform duration-500"
+                      className="object-cover group-hover:scale-105 transition-transform duration-500"
                       loading="lazy"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-steel-900 via-steel-900/50 to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-steel-900 via-steel-900/30 to-transparent" />
 
                     {/* Hover Actions */}
                     <div className="absolute inset-0 flex items-center justify-center gap-3 opacity-0 group-hover:opacity-100 transition-opacity">
                       <Button
-                        variant="industrial"
                         size="icon"
                         onClick={() => handleDownload(catalogue)}
-                        className="w-12 h-12"
+                        className="w-12 h-12 rounded-full bg-primary hover:bg-primary-600"
                       >
                         <Download size={20} />
                       </Button>
                       <Button
-                        variant="industrialOutline"
+                        variant="outline"
                         size="icon"
-                        className="w-12 h-12"
+                        className="w-12 h-12 rounded-full border-white/20 text-white hover:bg-white/10"
                         onClick={() => handleDownload(catalogue)}
                       >
                         <Eye size={20} />
@@ -196,11 +176,11 @@ export function CataloguesSection() {
 
                     {/* File Info Badge */}
                     <div className="absolute bottom-4 left-4 flex items-center gap-2">
-                      <span className="px-3 py-1 bg-steel-900/80 text-white text-xs font-bold uppercase tracking-wider">
+                      <span className="px-3 py-1.5 bg-white/10 backdrop-blur-sm text-white text-xs font-medium rounded-full">
                         PDF
                       </span>
                       {catalogue.fileSize && (
-                        <span className="px-3 py-1 bg-primary text-steel-900 text-xs font-bold uppercase tracking-wider">
+                        <span className="px-3 py-1.5 bg-primary text-steel-900 text-xs font-medium rounded-full">
                           {catalogue.fileSize}
                         </span>
                       )}
@@ -209,16 +189,15 @@ export function CataloguesSection() {
 
                   {/* Content */}
                   <div className="p-6">
-                    <h3 className="text-lg font-bold text-white uppercase tracking-wider mb-2 group-hover:text-primary transition-colors">
+                    <h3 className="text-lg font-semibold text-white mb-2 group-hover:text-primary transition-colors">
                       {getTitle(catalogue)}
                     </h3>
-                    <p className="text-sm text-metal-400 mb-4">{getDescription(catalogue)}</p>
+                    <p className="text-sm text-neutral-400 mb-4">{getDescription(catalogue)}</p>
                   </div>
 
                   {/* Download Button */}
                   <div className="px-6 pb-6">
                     <Button
-                      variant="industrial"
                       className="w-full group/btn"
                       onClick={() => handleDownload(catalogue)}
                     >
@@ -237,11 +216,11 @@ export function CataloguesSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.5 }}
-          className="mt-12 text-center"
+          className="mt-16 text-center"
         >
-          <div className="inline-flex items-center gap-3 bg-primary px-6 py-3">
+          <div className="inline-flex items-center gap-3 bg-gradient-to-r from-primary to-primary-600 px-6 py-3 rounded-full">
             <FileText size={20} className="text-steel-900" />
-            <span className="text-steel-900 font-bold uppercase tracking-wider">
+            <span className="text-steel-900 font-medium">
               {t('catalogues.request_custom') || 'Need a custom catalogue? Contact us'}
             </span>
           </div>

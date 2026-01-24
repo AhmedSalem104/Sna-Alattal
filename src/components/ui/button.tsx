@@ -5,65 +5,69 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '@/lib/utils';
 
 const buttonVariants = cva(
-  'inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-semibold ring-offset-background transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0',
+  // Base styles - modern, clean, with smooth transitions
+  'inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-all duration-200 ease-smooth focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 active:scale-[0.98]',
   {
     variants: {
       variant: {
-        // Primary Industrial - Gold with offset shadow
+        // Default - Premium gold button
         default:
-          'bg-primary text-primary-foreground hover:bg-primary-600 shadow-sm hover:shadow-md rounded-sm',
+          'bg-primary text-primary-foreground rounded-lg shadow-soft hover:shadow-soft-md hover:bg-primary-600 hover:scale-[1.02]',
 
-        // Industrial - Full industrial style with offset shadow
-        industrial:
-          'bg-gradient-to-r from-primary to-primary-600 text-steel-900 font-bold uppercase tracking-wider shadow-offset hover:shadow-none hover:translate-x-0.5 hover:translate-y-0.5 rounded-none',
-
-        // Industrial Outline
-        industrialOutline:
-          'bg-transparent text-primary border-2 border-primary hover:bg-primary hover:text-steel-900 font-bold uppercase tracking-wider rounded-none',
-
-        // Industrial Dark
-        industrialDark:
-          'bg-steel-800 text-white border-2 border-steel-700 hover:bg-steel-700 hover:border-primary font-bold uppercase tracking-wider rounded-none',
-
-        // Destructive
-        destructive:
-          'bg-destructive text-destructive-foreground hover:bg-destructive/90 rounded-sm',
-
-        // Outline
-        outline:
-          'border-2 border-input bg-background hover:bg-accent hover:text-accent-foreground rounded-sm',
-
-        // Secondary
+        // Secondary - Subtle, muted background
         secondary:
-          'bg-secondary text-secondary-foreground hover:bg-secondary/80 rounded-sm',
+          'bg-secondary text-secondary-foreground rounded-lg hover:bg-secondary/80 hover:shadow-soft',
 
-        // Ghost
-        ghost: 'hover:bg-accent hover:text-accent-foreground rounded-sm',
+        // Outline - Border with transparent background
+        outline:
+          'border border-input bg-transparent rounded-lg hover:bg-accent hover:text-accent-foreground hover:border-primary/50 hover:shadow-soft',
 
-        // Link
-        link: 'text-primary underline-offset-4 hover:underline',
+        // Ghost - Minimal, no background
+        ghost:
+          'rounded-lg hover:bg-accent hover:text-accent-foreground',
 
-        // Gold (legacy support)
-        gold: 'bg-primary text-steel-900 hover:bg-primary-600 font-semibold rounded-sm',
+        // Destructive - For dangerous actions
+        destructive:
+          'bg-destructive text-destructive-foreground rounded-lg shadow-soft hover:bg-destructive/90 hover:shadow-soft-md hover:scale-[1.02]',
 
-        // Gold Outline (legacy support)
+        // Link - Text only, underline on hover
+        link:
+          'text-primary underline-offset-4 hover:underline p-0 h-auto',
+
+        // ============================================
+        // Legacy variants (mapped to new styles for backward compatibility)
+        // ============================================
+
+        // Industrial variants -> mapped to default/outline
+        industrial:
+          'bg-primary text-primary-foreground font-semibold uppercase tracking-wide rounded-lg shadow-soft-md hover:shadow-soft-lg hover:bg-primary-600 hover:scale-[1.02]',
+
+        industrialOutline:
+          'border-2 border-primary text-primary bg-transparent font-semibold uppercase tracking-wide rounded-lg hover:bg-primary hover:text-primary-foreground hover:shadow-soft-md',
+
+        industrialDark:
+          'bg-steel-800 text-white border border-steel-700 font-semibold uppercase tracking-wide rounded-lg hover:bg-steel-700 hover:border-primary/50 hover:shadow-soft',
+
+        // Gold variants -> mapped to default
+        gold:
+          'bg-primary text-primary-foreground rounded-lg shadow-soft hover:shadow-soft-md hover:bg-primary-600 hover:scale-[1.02]',
+
         goldOutline:
-          'border-2 border-primary text-primary hover:bg-primary hover:text-steel-900 font-semibold rounded-sm',
+          'border-2 border-primary text-primary bg-transparent rounded-lg hover:bg-primary hover:text-primary-foreground hover:shadow-soft-md',
 
-        // Success
+        // Status variants
         success:
-          'bg-industrial-success text-white hover:bg-industrial-success/90 rounded-sm',
+          'bg-industrial-success text-white rounded-lg shadow-soft hover:bg-industrial-success/90 hover:shadow-soft-md hover:scale-[1.02]',
 
-        // Warning
         warning:
-          'bg-industrial-warning text-steel-900 hover:bg-industrial-warning/90 rounded-sm',
+          'bg-industrial-warning text-steel-900 rounded-lg shadow-soft hover:bg-industrial-warning/90 hover:shadow-soft-md hover:scale-[1.02]',
       },
       size: {
         default: 'h-10 px-4 py-2',
         sm: 'h-9 px-3 text-xs',
-        lg: 'h-11 px-8 text-base',
-        xl: 'h-12 px-10 text-base',
-        '2xl': 'h-14 px-12 text-lg',
+        lg: 'h-11 px-6 text-base',
+        xl: 'h-12 px-8 text-base font-semibold',
+        '2xl': 'h-14 px-10 text-lg font-semibold',
         icon: 'h-10 w-10',
         'icon-sm': 'h-8 w-8',
         'icon-lg': 'h-12 w-12',
@@ -100,6 +104,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
+              aria-hidden="true"
             >
               <circle
                 className="opacity-25"

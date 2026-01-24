@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { motion, useInView } from 'framer-motion';
-import { ArrowRight, Factory, Globe, Users, Award, Cog, Target } from 'lucide-react';
+import { ArrowRight, Factory, Globe, Users, Award, Settings, Target } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useLocale } from '@/hooks/useLocale';
 
@@ -18,7 +18,7 @@ const features = [
 
 const highlights = [
   { icon: Target, value: '100%', labelKey: 'about.highlights.quality' },
-  { icon: Cog, value: '50+', labelKey: 'about.highlights.machines' },
+  { icon: Settings, value: '50+', labelKey: 'about.highlights.machines' },
 ];
 
 export const AboutSection = memo(function AboutSection() {
@@ -46,23 +46,11 @@ export const AboutSection = memo(function AboutSection() {
       className="py-20 lg:py-28 bg-white relative overflow-hidden"
       dir={isRTL ? 'rtl' : 'ltr'}
     >
-      {/* Industrial Background Pattern */}
+      {/* Modern Subtle Background */}
       <div className="absolute inset-0 z-0">
-        <div
-          className="absolute inset-0 opacity-[0.02]"
-          style={{
-            backgroundImage: `
-              linear-gradient(rgba(26, 26, 46, 0.3) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(26, 26, 46, 0.3) 1px, transparent 1px)
-            `,
-            backgroundSize: '60px 60px',
-          }}
-        />
+        <div className="absolute top-1/2 left-0 w-[600px] h-[600px] bg-primary/5 rounded-full blur-3xl -translate-y-1/2" />
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-copper-500/5 rounded-full blur-3xl" />
       </div>
-
-      {/* Decorative Elements */}
-      <div className="absolute top-0 left-0 w-1 h-32 bg-primary" />
-      <div className="absolute bottom-0 right-0 w-1 h-32 bg-primary" />
 
       <div className="container-custom relative z-10">
         <motion.div
@@ -75,7 +63,7 @@ export const AboutSection = memo(function AboutSection() {
           <motion.div variants={itemVariants} className="relative">
             {/* Main Image */}
             <div className="relative">
-              <div className="relative aspect-[4/3] overflow-hidden border-4 border-steel-900">
+              <div className="relative aspect-[4/3] overflow-hidden rounded-2xl shadow-soft-xl">
                 <Image
                   src="/images/factory-about.jpg"
                   alt="About S.N.A Al-Attal"
@@ -84,12 +72,8 @@ export const AboutSection = memo(function AboutSection() {
                   className="object-cover"
                   loading="lazy"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-steel-900/40 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-steel-900/30 to-transparent" />
               </div>
-
-              {/* Corner Accents */}
-              <div className="absolute -top-3 -left-3 w-12 h-12 border-t-4 border-l-4 border-primary" />
-              <div className="absolute -bottom-3 -right-3 w-12 h-12 border-b-4 border-r-4 border-primary" />
 
               {/* Floating Stats */}
               <div className="absolute -bottom-6 left-4 right-4 md:left-6 md:right-6 flex gap-4">
@@ -99,17 +83,17 @@ export const AboutSection = memo(function AboutSection() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                     transition={{ delay: 0.5 + index * 0.1 }}
-                    className="flex-1 bg-steel-900 border-2 border-steel-700 p-4"
+                    className="flex-1 bg-white rounded-xl shadow-soft-lg p-4 border border-neutral-100"
                   >
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 bg-primary flex items-center justify-center">
-                        <item.icon size={20} className="text-steel-900" />
+                      <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
+                        <item.icon size={20} className="text-primary" />
                       </div>
                       <div>
-                        <div className="text-2xl font-bold text-primary font-mono">
+                        <div className="text-2xl font-bold text-steel-900">
                           {item.value}
                         </div>
-                        <div className="text-xs text-metal-400 uppercase tracking-wider">
+                        <div className="text-xs text-neutral-500">
                           {t(item.labelKey) || item.labelKey.split('.').pop()}
                         </div>
                       </div>
@@ -119,17 +103,17 @@ export const AboutSection = memo(function AboutSection() {
               </div>
             </div>
 
-            {/* Experience Badge - Repositioned */}
+            {/* Experience Badge */}
             <motion.div
               initial={{ scale: 0 }}
               animate={isInView ? { scale: 1 } : { scale: 0 }}
               transition={{ delay: 0.6, type: 'spring' }}
-              className="absolute -top-4 -right-4 md:-top-6 md:-right-6 bg-primary p-4 md:p-6 shadow-offset z-10"
+              className="absolute -top-4 -right-4 md:-top-6 md:-right-6 bg-gradient-to-br from-primary to-primary-600 rounded-2xl p-4 md:p-6 shadow-soft-xl z-10"
             >
-              <div className="text-3xl md:text-4xl font-bold text-steel-900 font-mono">
+              <div className="text-3xl md:text-4xl font-bold text-white">
                 30+
               </div>
-              <div className="text-xs md:text-sm font-bold text-steel-800 uppercase tracking-wider">
+              <div className="text-xs md:text-sm font-medium text-white/90">
                 {t('about.experience')}
               </div>
             </motion.div>
@@ -138,31 +122,29 @@ export const AboutSection = memo(function AboutSection() {
           {/* Content Side */}
           <motion.div variants={itemVariants} className="space-y-6 lg:space-y-8">
             {/* Section Tag */}
-            <div className="inline-flex items-center gap-2 border-2 border-primary/30 bg-primary/5 px-4 py-2">
-              <Factory size={16} className="text-primary" />
-              <span className="text-primary text-sm font-bold uppercase tracking-widest">
+            <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full">
+              <Factory size={16} />
+              <span className="text-sm font-semibold">
                 {t('about.title')}
               </span>
             </div>
 
             {/* Title */}
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-steel-900 uppercase tracking-wide leading-tight">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-steel-900 tracking-tight leading-tight">
               {t('about.subtitle')}
             </h2>
 
-            {/* Gold Divider */}
-            <div className="flex items-center gap-4">
-              <div className="h-1 w-16 bg-primary" />
-              <div className="h-1 w-8 bg-primary/50" />
-              <div className="h-1 w-4 bg-primary/25" />
+            {/* Modern Divider */}
+            <div className="flex items-center gap-2">
+              <div className="h-1 w-12 bg-gradient-to-r from-primary to-primary/50 rounded-full" />
             </div>
 
             {/* Description */}
-            <p className="text-metal-600 leading-relaxed text-base md:text-lg">
+            <p className="text-neutral-600 leading-relaxed text-base md:text-lg">
               {t('about.description')}
             </p>
 
-            {/* Features Grid - Industrial Style */}
+            {/* Features Grid - Modern Style */}
             <div className="grid grid-cols-2 gap-4 py-4">
               {features.map((feature, index) => (
                 <motion.div
@@ -174,15 +156,15 @@ export const AboutSection = memo(function AboutSection() {
                       : { opacity: 0, x: isRTL ? 20 : -20 }
                   }
                   transition={{ delay: 0.3 + index * 0.1 }}
-                  className="flex items-center gap-3 p-4 bg-metal-50 border-l-4 border-primary hover:bg-metal-100 transition-colors group"
+                  className="flex items-center gap-3 p-4 bg-neutral-50 rounded-xl hover:bg-primary/5 transition-colors group"
                 >
-                  <div className="w-10 h-10 bg-steel-900 flex items-center justify-center group-hover:bg-primary transition-colors">
+                  <div className="w-10 h-10 bg-white rounded-lg shadow-soft flex items-center justify-center group-hover:bg-primary/10 transition-colors">
                     <feature.icon
                       size={20}
-                      className="text-primary group-hover:text-steel-900 transition-colors"
+                      className="text-primary"
                     />
                   </div>
-                  <span className="text-sm font-semibold text-steel-800 uppercase tracking-wider">
+                  <span className="text-sm font-medium text-steel-800">
                     {t(feature.labelKey)}
                   </span>
                 </motion.div>
@@ -191,7 +173,7 @@ export const AboutSection = memo(function AboutSection() {
 
             {/* CTA */}
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
-              <Button variant="industrial" size="lg" asChild className="group">
+              <Button size="lg" asChild className="group">
                 <Link href="/about">
                   {t('about.learnMore')}
                   <ArrowRight
@@ -200,7 +182,7 @@ export const AboutSection = memo(function AboutSection() {
                   />
                 </Link>
               </Button>
-              <Button variant="industrialOutline" size="lg" asChild>
+              <Button variant="outline" size="lg" asChild>
                 <Link href="/contact">{t('about.contactUs') || t('nav.contact')}</Link>
               </Button>
             </div>

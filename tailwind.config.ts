@@ -23,26 +23,42 @@ const config: Config = {
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
 
-        // Industrial Primary - Gold
+        // Modern Industrial Primary - Gold (refined)
         primary: {
           DEFAULT: '#D4A00A',
-          50: '#FDF8E7',
-          100: '#FCF0C3',
-          200: '#F9E08A',
-          300: '#F5CF51',
-          400: '#EABC1A',
+          50: '#FFFBEB',
+          100: '#FEF3C7',
+          200: '#FDE68A',
+          300: '#FCD34D',
+          400: '#FBBF24',
           500: '#D4A00A',
           600: '#B8860B',
-          700: '#8B6914',
-          800: '#5C4A16',
-          900: '#2D2509',
+          700: '#92650D',
+          800: '#6B4A0F',
+          900: '#452F0D',
+          950: '#2A1C06',
           foreground: '#0A0A0A',
         },
 
-        // Industrial Secondary - Steel
+        // Secondary - Warm accent (Copper/Bronze)
         secondary: {
           DEFAULT: 'hsl(var(--secondary))',
           foreground: 'hsl(var(--secondary-foreground))',
+        },
+
+        // Accent Colors - Modern additions
+        copper: {
+          DEFAULT: '#B87333',
+          50: '#FDF4ED',
+          100: '#FAE5D3',
+          200: '#F5CBA7',
+          300: '#E8A87C',
+          400: '#D4845A',
+          500: '#B87333',
+          600: '#96582A',
+          700: '#724323',
+          800: '#4E2E1C',
+          900: '#2A1910',
         },
 
         destructive: {
@@ -70,35 +86,51 @@ const config: Config = {
           foreground: 'hsl(var(--card-foreground))',
         },
 
-        // Industrial Dark Colors - Steel/Metal
+        // Modern Steel - Slightly warmer
         steel: {
-          DEFAULT: '#1A1A2E',
-          50: '#F4F4F6',
-          100: '#E4E4E9',
-          200: '#C9C9D3',
-          300: '#A3A3B3',
-          400: '#71718A',
-          500: '#4A4A62',
-          600: '#2D3142',
-          700: '#232538',
-          800: '#1A1A2E',
-          900: '#0F0F1A',
-          950: '#08080D',
+          DEFAULT: '#1C1C28',
+          50: '#F7F7F8',
+          100: '#EEEEF0',
+          200: '#DCDCE1',
+          300: '#B8B8C4',
+          400: '#8E8EA0',
+          500: '#6B6B7D',
+          600: '#4A4A5E',
+          700: '#36364A',
+          800: '#26263A',
+          900: '#1C1C28',
+          950: '#0E0E14',
         },
 
-        // Industrial Metal Gray
+        // Modern Neutral - Warmer grays
+        neutral: {
+          DEFAULT: '#525264',
+          50: '#FAFAFA',
+          100: '#F5F5F6',
+          200: '#E8E8EC',
+          300: '#D4D4DC',
+          400: '#A3A3B2',
+          500: '#737385',
+          600: '#525264',
+          700: '#3D3D4D',
+          800: '#27273A',
+          900: '#18181F',
+          950: '#0C0C10',
+        },
+
+        // Legacy metal (updated to be warmer)
         metal: {
-          DEFAULT: '#2D3142',
-          50: '#F8F9FA',
-          100: '#E9ECEF',
-          200: '#DEE2E6',
-          300: '#CED4DA',
-          400: '#ADB5BD',
-          500: '#6C757D',
-          600: '#495057',
-          700: '#343A40',
-          800: '#2D3142',
-          900: '#212529',
+          DEFAULT: '#3D3D4D',
+          50: '#FAFAFA',
+          100: '#F4F4F5',
+          200: '#E4E4E7',
+          300: '#D4D4D8',
+          400: '#A1A1AA',
+          500: '#71717A',
+          600: '#52525B',
+          700: '#3F3F46',
+          800: '#27272A',
+          900: '#18181B',
         },
 
         // Legacy dark colors (for compatibility)
@@ -116,29 +148,49 @@ const config: Config = {
           900: '#0F172A',
         },
 
-        // Industrial Gold (extended)
+        // Gold extended (kept for compatibility)
         gold: {
           DEFAULT: '#D4A00A',
-          light: '#F4D03F',
-          dark: '#B8860B',
-          50: '#FDF8E7',
-          100: '#FCF0C3',
-          200: '#F9E08A',
-          300: '#F5CF51',
-          400: '#EABC1A',
+          light: '#FCD34D',
+          dark: '#92650D',
+          50: '#FFFBEB',
+          100: '#FEF3C7',
+          200: '#FDE68A',
+          300: '#FCD34D',
+          400: '#FBBF24',
           500: '#D4A00A',
           600: '#B8860B',
-          700: '#8B6914',
-          800: '#5C4A16',
-          900: '#2D2509',
+          700: '#92650D',
+          800: '#6B4A0F',
+          900: '#452F0D',
         },
 
-        // Industrial Status Colors
+        // Status Colors - Modernized
         industrial: {
-          success: '#22C55E',
+          success: '#10B981',
           warning: '#F59E0B',
           error: '#EF4444',
           info: '#3B82F6',
+        },
+
+        // Semantic success/error
+        success: {
+          DEFAULT: '#10B981',
+          50: '#ECFDF5',
+          500: '#10B981',
+          600: '#059669',
+        },
+        warning: {
+          DEFAULT: '#F59E0B',
+          50: '#FFFBEB',
+          500: '#F59E0B',
+          600: '#D97706',
+        },
+        error: {
+          DEFAULT: '#EF4444',
+          50: '#FEF2F2',
+          500: '#EF4444',
+          600: '#DC2626',
         },
       },
 
@@ -148,31 +200,51 @@ const config: Config = {
         cairo: ['var(--font-cairo)', 'Cairo', 'sans-serif'],
         arabic: ['var(--font-cairo)', 'Cairo', 'sans-serif'],
         mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
-        industrial: ['var(--font-inter)', 'system-ui', 'sans-serif'],
       },
 
       borderRadius: {
         lg: 'var(--radius)',
         md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)',
-        // Industrial: Sharp edges
-        'industrial': '0px',
-        'industrial-sm': '2px',
-        'industrial-md': '4px',
+        // Modern Industrial: Softer edges
+        'none': '0px',
+        'xs': '4px',
+        'modern': '8px',
+        'modern-lg': '12px',
+        'modern-xl': '16px',
+        'modern-2xl': '20px',
       },
 
       boxShadow: {
-        // Industrial shadows - Sharp, directional
-        'industrial-sm': '0 2px 4px rgba(0, 0, 0, 0.1)',
-        'industrial': '0 4px 8px rgba(0, 0, 0, 0.15)',
-        'industrial-md': '0 6px 12px rgba(0, 0, 0, 0.2)',
-        'industrial-lg': '0 8px 24px rgba(0, 0, 0, 0.25)',
-        'industrial-xl': '0 12px 48px rgba(0, 0, 0, 0.3)',
-        // Gold glow
-        'gold-sm': '0 2px 8px rgba(212, 160, 10, 0.2)',
-        'gold': '0 4px 16px rgba(212, 160, 10, 0.3)',
-        'gold-lg': '0 8px 32px rgba(212, 160, 10, 0.4)',
-        // Offset shadow (industrial feel)
+        // Modern shadows - Layered, softer
+        'soft-sm': '0 1px 2px 0 rgb(0 0 0 / 0.05)',
+        'soft': '0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)',
+        'soft-md': '0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)',
+        'soft-lg': '0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)',
+        'soft-xl': '0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)',
+        'soft-2xl': '0 25px 50px -12px rgb(0 0 0 / 0.25)',
+        // Elevation shadows (Material-like)
+        'elevation-1': '0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)',
+        'elevation-2': '0 3px 6px rgba(0,0,0,0.15), 0 2px 4px rgba(0,0,0,0.12)',
+        'elevation-3': '0 10px 20px rgba(0,0,0,0.15), 0 3px 6px rgba(0,0,0,0.1)',
+        'elevation-4': '0 15px 25px rgba(0,0,0,0.15), 0 5px 10px rgba(0,0,0,0.05)',
+        'elevation-5': '0 20px 40px rgba(0,0,0,0.2)',
+        // Gold glow - Modern
+        'gold-glow': '0 0 20px rgba(212, 160, 10, 0.15)',
+        'gold-glow-lg': '0 0 40px rgba(212, 160, 10, 0.2)',
+        // Card hover
+        'card-hover': '0 12px 24px -8px rgba(0, 0, 0, 0.15)',
+        // Inner shadows
+        'inner-soft': 'inset 0 2px 4px 0 rgb(0 0 0 / 0.05)',
+        // Legacy (kept for compatibility)
+        'industrial-sm': '0 2px 4px rgba(0, 0, 0, 0.08)',
+        'industrial': '0 4px 8px rgba(0, 0, 0, 0.1)',
+        'industrial-md': '0 6px 16px rgba(0, 0, 0, 0.12)',
+        'industrial-lg': '0 8px 24px rgba(0, 0, 0, 0.14)',
+        'industrial-xl': '0 12px 48px rgba(0, 0, 0, 0.18)',
+        'gold-sm': '0 2px 8px rgba(212, 160, 10, 0.15)',
+        'gold': '0 4px 16px rgba(212, 160, 10, 0.2)',
+        'gold-lg': '0 8px 32px rgba(212, 160, 10, 0.25)',
         'offset': '4px 4px 0 #1A1A2E',
         'offset-sm': '2px 2px 0 #1A1A2E',
         'offset-gold': '4px 4px 0 #D4A00A',
@@ -192,34 +264,46 @@ const config: Config = {
           '100%': { transform: 'translateX(100%)' },
         },
         'fade-in': {
-          '0%': { opacity: '0', transform: 'translateY(10px)' },
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
+        },
+        'fade-up': {
+          '0%': { opacity: '0', transform: 'translateY(16px)' },
           '100%': { opacity: '1', transform: 'translateY(0)' },
         },
-        'fade-in-up': {
-          '0%': { opacity: '0', transform: 'translateY(20px)' },
+        'fade-down': {
+          '0%': { opacity: '0', transform: 'translateY(-16px)' },
           '100%': { opacity: '1', transform: 'translateY(0)' },
         },
         'slide-in-right': {
-          '0%': { transform: 'translateX(100%)' },
-          '100%': { transform: 'translateX(0)' },
+          '0%': { transform: 'translateX(100%)', opacity: '0' },
+          '100%': { transform: 'translateX(0)', opacity: '1' },
         },
         'slide-in-left': {
-          '0%': { transform: 'translateX(-100%)' },
-          '100%': { transform: 'translateX(0)' },
+          '0%': { transform: 'translateX(-100%)', opacity: '0' },
+          '100%': { transform: 'translateX(0)', opacity: '1' },
         },
         'scale-in': {
-          '0%': { opacity: '0', transform: 'scale(0.95)' },
+          '0%': { opacity: '0', transform: 'scale(0.96)' },
           '100%': { opacity: '1', transform: 'scale(1)' },
         },
-        'pulse-gold': {
-          '0%, 100%': { boxShadow: '0 0 0 0 rgba(212, 160, 10, 0.4)' },
-          '50%': { boxShadow: '0 0 0 10px rgba(212, 160, 10, 0)' },
+        'scale-out': {
+          from: { opacity: '1', transform: 'scale(1)' },
+          to: { opacity: '0', transform: 'scale(0.96)' },
         },
-        'count-up': {
-          '0%': { opacity: '0', transform: 'translateY(20px)' },
-          '100%': { opacity: '1', transform: 'translateY(0)' },
+        'pulse-soft': {
+          '0%, 100%': { opacity: '1' },
+          '50%': { opacity: '0.7' },
         },
-        'gear-spin': {
+        'float': {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-8px)' },
+        },
+        'glow-pulse': {
+          '0%, 100%': { boxShadow: '0 0 20px rgba(212, 160, 10, 0.2)' },
+          '50%': { boxShadow: '0 0 30px rgba(212, 160, 10, 0.4)' },
+        },
+        'spin-slow': {
           '0%': { transform: 'rotate(0deg)' },
           '100%': { transform: 'rotate(360deg)' },
         },
@@ -229,15 +313,17 @@ const config: Config = {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
         'shimmer': 'shimmer 2s infinite',
-        'fade-in': 'fade-in 0.5s ease-out',
-        'fade-in-up': 'fade-in-up 0.6s ease-out',
-        'slide-in-right': 'slide-in-right 0.4s ease-out',
-        'slide-in-left': 'slide-in-left 0.4s ease-out',
-        'scale-in': 'scale-in 0.3s ease-out',
-        'pulse-gold': 'pulse-gold 2s infinite',
-        'count-up': 'count-up 0.8s ease-out',
-        'gear-spin': 'gear-spin 8s linear infinite',
-        'gear-spin-slow': 'gear-spin 12s linear infinite',
+        'fade-in': 'fade-in 0.3s ease-out',
+        'fade-up': 'fade-up 0.4s ease-out',
+        'fade-down': 'fade-down 0.4s ease-out',
+        'slide-in-right': 'slide-in-right 0.3s ease-out',
+        'slide-in-left': 'slide-in-left 0.3s ease-out',
+        'scale-in': 'scale-in 0.2s ease-out',
+        'scale-out': 'scale-out 0.2s ease-out',
+        'pulse-soft': 'pulse-soft 2s ease-in-out infinite',
+        'float': 'float 3s ease-in-out infinite',
+        'glow-pulse': 'glow-pulse 2s ease-in-out infinite',
+        'spin-slow': 'spin-slow 20s linear infinite',
       },
 
       spacing: {
@@ -249,23 +335,34 @@ const config: Config = {
       },
 
       backgroundImage: {
-        // Industrial gradients
-        'gradient-industrial': 'linear-gradient(135deg, #2D3142 0%, #1A1A2E 100%)',
-        'gradient-steel': 'linear-gradient(180deg, #2D3142 0%, #1A1A2E 100%)',
-        'gradient-gold': 'linear-gradient(135deg, #D4A00A 0%, #B8860B 100%)',
-        'gradient-gold-shine': 'linear-gradient(90deg, #D4A00A 0%, #F4D03F 50%, #D4A00A 100%)',
-        // Metal texture overlay
-        'metal-texture': 'repeating-linear-gradient(45deg, transparent, transparent 2px, rgba(255,255,255,0.03) 2px, rgba(255,255,255,0.03) 4px)',
-        // Diagonal stripes (industrial pattern)
-        'industrial-stripes': 'repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(212, 160, 10, 0.05) 10px, rgba(212, 160, 10, 0.05) 20px)',
+        // Modern gradients
+        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+        'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+        // Premium gold gradient
+        'gradient-gold': 'linear-gradient(135deg, #D4A00A 0%, #F4D03F 50%, #D4A00A 100%)',
+        'gradient-gold-subtle': 'linear-gradient(135deg, rgba(212,160,10,0.1) 0%, rgba(212,160,10,0.05) 100%)',
+        // Dark gradients
+        'gradient-dark': 'linear-gradient(180deg, #1C1C28 0%, #0E0E14 100%)',
+        'gradient-dark-radial': 'radial-gradient(ellipse at center, #26263A 0%, #1C1C28 70%)',
+        // Subtle patterns
+        'dots-pattern': 'radial-gradient(circle, rgba(212,160,10,0.1) 1px, transparent 1px)',
+        'grid-pattern': 'linear-gradient(rgba(212,160,10,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(212,160,10,0.03) 1px, transparent 1px)',
       },
 
       transitionTimingFunction: {
-        'industrial': 'cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+        'smooth': 'cubic-bezier(0.4, 0, 0.2, 1)',
+        'bounce-in': 'cubic-bezier(0.68, -0.55, 0.265, 1.55)',
+        'ease-out-back': 'cubic-bezier(0.34, 1.56, 0.64, 1)',
       },
 
       transitionDuration: {
+        '250': '250ms',
+        '350': '350ms',
         '400': '400ms',
+      },
+
+      backdropBlur: {
+        xs: '2px',
       },
     },
   },

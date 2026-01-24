@@ -4,35 +4,70 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '@/lib/utils';
 
 const cardVariants = cva(
-  'bg-white text-steel-900 transition-all duration-300',
+  'bg-white text-neutral-900 transition-all duration-300 ease-out',
   {
     variants: {
       variant: {
-        // Default - Light with industrial shadow
-        default: 'rounded-none border-2 border-metal-200 shadow-sm hover:shadow-md hover:border-primary/30',
+        // Default - White bg, subtle border, soft shadow with gold accent on hover
+        default: [
+          'rounded-xl',
+          'border border-neutral-200',
+          'shadow-sm',
+          'hover:shadow-lg hover:shadow-neutral-200/50',
+          'hover:border-amber-400/60',
+          'relative',
+          'before:absolute before:inset-y-0 before:right-0 before:w-0.5',
+          'before:bg-transparent before:transition-all before:duration-300 before:rounded-l-full',
+          'hover:before:bg-amber-500',
+        ].join(' '),
 
-        // Industrial - Sharp edges with gold accent bar
-        industrial:
-          'rounded-none border-2 border-metal-200 bg-white relative before:absolute before:top-0 before:left-0 before:w-1 before:h-full before:bg-primary before:transition-all before:duration-300 hover:border-primary hover:shadow-industrial-md hover:-translate-y-1 hover:before:w-1.5',
+        // Elevated - Stronger shadow, no border
+        elevated: [
+          'rounded-xl',
+          'border-0',
+          'shadow-lg shadow-neutral-200/60',
+          'hover:shadow-xl hover:shadow-neutral-300/60',
+          'hover:-translate-y-0.5',
+          'relative',
+          'before:absolute before:inset-y-4 before:right-0 before:w-0.5',
+          'before:bg-transparent before:transition-all before:duration-300 before:rounded-l-full',
+          'hover:before:bg-amber-500',
+        ].join(' '),
 
-        // Industrial Dark - For dark backgrounds (hero sections, etc.)
-        industrialDark:
-          'rounded-none bg-steel-800 border border-steel-700 text-white relative before:absolute before:top-0 before:left-0 before:w-1 before:h-full before:bg-primary hover:border-primary hover:shadow-gold',
+        // Outline - Border only, transparent bg
+        outline: [
+          'rounded-xl',
+          'border-2 border-neutral-200',
+          'bg-transparent',
+          'shadow-none',
+          'hover:border-amber-500',
+          'hover:bg-amber-50/30',
+        ].join(' '),
 
-        // Elevated - More prominent shadow
-        elevated: 'rounded-sm border-0 shadow-industrial-md hover:shadow-industrial-lg',
+        // Ghost - No border, no shadow, subtle hover bg with gold accent
+        ghost: [
+          'rounded-xl',
+          'border-0',
+          'bg-transparent',
+          'shadow-none',
+          'hover:bg-neutral-50',
+          'relative',
+          'before:absolute before:inset-y-2 before:right-0 before:w-0.5',
+          'before:bg-transparent before:transition-all before:duration-300 before:rounded-l-full',
+          'hover:before:bg-amber-500/70',
+        ].join(' '),
 
-        // Outline - Just border, no shadow
-        outline: 'rounded-sm border-2 border-metal-200 shadow-none hover:border-primary',
-
-        // Ghost - Minimal styling
-        ghost: 'rounded-sm border-0 shadow-none bg-transparent hover:bg-metal-50',
-
-        // Glass - Glassmorphism effect
-        glass: 'rounded-sm bg-white/10 backdrop-blur-md border border-white/20',
-
-        // Stat - For statistics/metrics display
-        stat: 'rounded-none bg-steel-800 border-l-4 border-primary text-white relative overflow-hidden before:absolute before:top-0 before:right-0 before:w-32 before:h-32 before:bg-primary/5 before:rounded-full before:-translate-y-1/2 before:translate-x-1/2',
+        // Glass - Backdrop blur effect with gold accent
+        glass: [
+          'rounded-xl',
+          'bg-white/60 dark:bg-neutral-900/60',
+          'backdrop-blur-xl backdrop-saturate-150',
+          'border border-white/40 dark:border-neutral-700/40',
+          'shadow-lg shadow-neutral-200/30',
+          'hover:bg-white/70 dark:hover:bg-neutral-900/70',
+          'hover:border-amber-400/40',
+          'hover:shadow-xl hover:shadow-amber-200/20',
+        ].join(' '),
       },
     },
     defaultVariants: {
@@ -53,7 +88,7 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
       ref={ref}
       className={cn(
         cardVariants({ variant }),
-        hover && 'cursor-pointer',
+        hover && 'cursor-pointer active:scale-[0.98]',
         className
       )}
       {...props}
@@ -68,7 +103,7 @@ const CardHeader = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn('flex flex-col space-y-1.5 p-6', className)}
+    className={cn('flex flex-col space-y-1.5 p-5 pb-3', className)}
     {...props}
   />
 ));
@@ -81,7 +116,7 @@ const CardTitle = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      'text-xl font-bold leading-none tracking-tight',
+      'text-lg font-semibold leading-tight tracking-tight text-neutral-900',
       className
     )}
     {...props}
@@ -95,7 +130,7 @@ const CardDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn('text-sm text-muted-foreground mt-1', className)}
+    className={cn('text-sm text-neutral-500 mt-1.5 leading-relaxed', className)}
     {...props}
   />
 ));
@@ -105,7 +140,7 @@ const CardContent = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => (
-  <div ref={ref} className={cn('p-6 pt-0', className)} {...props} />
+  <div ref={ref} className={cn('p-5 pt-0', className)} {...props} />
 ));
 CardContent.displayName = 'CardContent';
 
@@ -115,35 +150,41 @@ const CardFooter = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn('flex items-center p-6 pt-0', className)}
+    className={cn(
+      'flex items-center p-5 pt-3 border-t border-neutral-100',
+      className
+    )}
     {...props}
   />
 ));
 CardFooter.displayName = 'CardFooter';
 
-// Industrial Card Image component
+// Modern Card Image component with smooth overlay
 const CardImage = React.forwardRef<
   HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement> & { aspectRatio?: 'video' | 'square' | 'product' }
+  React.HTMLAttributes<HTMLDivElement> & {
+    aspectRatio?: 'video' | 'square' | 'product' | 'wide';
+  }
 >(({ className, aspectRatio = 'video', children, ...props }, ref) => (
   <div
     ref={ref}
     className={cn(
-      'relative overflow-hidden',
+      'relative overflow-hidden rounded-t-xl',
       aspectRatio === 'video' && 'aspect-video',
       aspectRatio === 'square' && 'aspect-square',
       aspectRatio === 'product' && 'aspect-[4/3]',
+      aspectRatio === 'wide' && 'aspect-[21/9]',
       className
     )}
     {...props}
   >
     {children}
-    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+    <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 transition-opacity duration-300 ease-out group-hover:opacity-100" />
   </div>
 ));
 CardImage.displayName = 'CardImage';
 
-// Industrial Badge for cards
+// Modern Badge for cards
 const CardBadge = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement> & {
@@ -153,12 +194,13 @@ const CardBadge = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      'absolute top-4 left-4 px-3 py-1 text-xs font-bold uppercase tracking-wider',
-      variant === 'default' && 'bg-steel-800 text-white',
-      variant === 'gold' && 'bg-primary text-steel-900',
-      variant === 'success' && 'bg-industrial-success text-white',
-      variant === 'warning' && 'bg-industrial-warning text-steel-900',
-      variant === 'error' && 'bg-industrial-error text-white',
+      'absolute top-3 left-3 px-2.5 py-1 text-xs font-medium rounded-md',
+      'backdrop-blur-sm transition-all duration-200',
+      variant === 'default' && 'bg-neutral-900/80 text-white',
+      variant === 'gold' && 'bg-amber-500/90 text-white',
+      variant === 'success' && 'bg-emerald-500/90 text-white',
+      variant === 'warning' && 'bg-amber-400/90 text-neutral-900',
+      variant === 'error' && 'bg-red-500/90 text-white',
       className
     )}
     {...props}

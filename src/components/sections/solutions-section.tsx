@@ -4,7 +4,7 @@ import { useRef, useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { motion, useInView } from 'framer-motion';
-import { ArrowRight, Lightbulb, Cog, Loader2, Beaker } from 'lucide-react';
+import { ArrowRight, Lightbulb, Loader2, Beaker } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useLocale } from '@/hooks/useLocale';
 
@@ -62,42 +62,23 @@ export function SolutionsSection() {
   };
 
   const accentColors = [
-    'bg-orange-500',
-    'bg-blue-500',
-    'bg-pink-500',
-    'bg-green-500',
+    'from-orange-500 to-orange-600',
+    'from-blue-500 to-blue-600',
+    'from-pink-500 to-pink-600',
+    'from-green-500 to-green-600',
   ];
 
   return (
     <section
       ref={ref}
-      className="py-20 lg:py-28 bg-steel-900 relative overflow-hidden"
+      className="py-20 lg:py-28 bg-gradient-to-b from-steel-900 to-steel-950 relative overflow-hidden"
       dir={isRTL ? 'rtl' : 'ltr'}
     >
-      {/* Industrial Background Pattern */}
+      {/* Modern Gradient Background */}
       <div className="absolute inset-0 z-0">
-        <div
-          className="absolute inset-0 opacity-[0.02]"
-          style={{
-            backgroundImage: `
-              linear-gradient(rgba(212, 160, 10, 0.5) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(212, 160, 10, 0.5) 1px, transparent 1px)
-            `,
-            backgroundSize: '60px 60px',
-          }}
-        />
-        {/* Decorative Gear */}
-        <motion.div
-          animate={{ rotate: 360 }}
-          transition={{ duration: 30, repeat: Infinity, ease: 'linear' }}
-          className="absolute -bottom-32 -right-32 text-primary/5"
-        >
-          <Cog size={350} strokeWidth={0.5} />
-        </motion.div>
+        <div className="absolute top-0 left-1/2 w-[800px] h-[400px] bg-primary/10 rounded-full blur-3xl -translate-x-1/2 opacity-50" />
+        <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-copper-500/10 rounded-full blur-3xl opacity-30" />
       </div>
-
-      {/* Top Gold Border */}
-      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary via-primary/80 to-primary" />
 
       <div className="container-custom relative z-10">
         {/* Header */}
@@ -108,27 +89,23 @@ export function SolutionsSection() {
           className="text-center max-w-3xl mx-auto mb-16"
         >
           {/* Section Tag */}
-          <div className="inline-flex items-center gap-2 border-2 border-primary/30 bg-primary/10 px-4 py-2 mb-6">
-            <Lightbulb size={16} className="text-primary" />
-            <span className="text-primary text-sm font-bold uppercase tracking-widest">
+          <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full mb-6">
+            <Lightbulb size={16} />
+            <span className="text-sm font-semibold">
               {t('solutions.title')}
             </span>
           </div>
 
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white uppercase tracking-wide mb-4">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white tracking-tight mb-4">
             {t('solutions.subtitle')}
           </h2>
 
-          {/* Gold Divider */}
-          <div className="flex items-center justify-center gap-4 mb-6">
-            <div className="h-1 w-8 bg-primary/25" />
-            <div className="h-1 w-16 bg-primary/50" />
-            <div className="h-1 w-24 bg-primary" />
-            <div className="h-1 w-16 bg-primary/50" />
-            <div className="h-1 w-8 bg-primary/25" />
+          {/* Modern Divider */}
+          <div className="flex items-center justify-center gap-2 mb-6">
+            <div className="h-1 w-16 bg-gradient-to-r from-transparent via-primary to-transparent rounded-full" />
           </div>
 
-          <p className="text-metal-300 text-lg">{t('solutions.description')}</p>
+          <p className="text-neutral-300 text-lg">{t('solutions.description')}</p>
         </motion.div>
 
         {/* Loading State */}
@@ -141,8 +118,8 @@ export function SolutionsSection() {
         {/* Empty State */}
         {!loading && solutions.length === 0 && (
           <div className="text-center py-20">
-            <Beaker className="h-16 w-16 text-metal-500 mx-auto mb-4" />
-            <p className="text-metal-400 text-lg">
+            <Beaker className="h-16 w-16 text-neutral-500 mx-auto mb-4" />
+            <p className="text-neutral-400 text-lg">
               {locale === 'ar' ? 'لا توجد حلول متاحة حالياً' : locale === 'tr' ? 'Şu anda mevcut çözüm yok' : 'No solutions available at the moment'}
             </p>
           </div>
@@ -159,38 +136,35 @@ export function SolutionsSection() {
                 transition={{ duration: 0.6, delay: index * 0.1 }}
               >
                 <Link href={`/solutions/${solution.slug}`}>
-                  <div className="group relative bg-steel-800 border-2 border-steel-700 p-6 h-full hover:border-primary transition-all duration-300 overflow-hidden">
-                    {/* Accent Color Bar */}
-                    <div className={`absolute top-0 left-0 w-full h-1 ${accentColors[index % accentColors.length]}`} />
-
-                    {/* Gold Bar on Hover */}
-                    <div className="absolute bottom-0 left-0 w-full h-1 bg-primary transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300" />
+                  <div className="group relative bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 p-6 h-full hover:bg-white/10 hover:border-primary/30 transition-all duration-300 overflow-hidden">
+                    {/* Gradient Accent */}
+                    <div className={`absolute top-0 left-0 right-0 h-1 bg-gradient-to-r ${accentColors[index % accentColors.length]} rounded-t-2xl`} />
 
                     {/* Icon */}
-                    <div className="w-16 h-16 bg-steel-700 border border-steel-600 flex items-center justify-center mb-6 group-hover:bg-primary group-hover:border-primary transition-all duration-300">
+                    <div className="w-14 h-14 bg-white/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-primary/20 transition-all duration-300">
                       {solution.icon ? (
                         <span className="text-3xl">{solution.icon}</span>
                       ) : (
                         <Beaker
-                          size={32}
-                          className="text-primary group-hover:text-steel-900 transition-colors duration-300"
+                          size={28}
+                          className="text-primary"
                         />
                       )}
                     </div>
 
                     {/* Content */}
-                    <h3 className="text-xl font-bold text-white uppercase tracking-wider mb-3 group-hover:text-primary transition-colors">
+                    <h3 className="text-lg font-semibold text-white mb-3 group-hover:text-primary transition-colors">
                       {getTitle(solution)}
                     </h3>
-                    <p className="text-metal-400 text-sm mb-6">
+                    <p className="text-neutral-400 text-sm mb-6 line-clamp-3">
                       {getDescription(solution)}
                     </p>
 
                     {/* Link */}
-                    <div className="flex items-center text-primary text-sm font-bold uppercase tracking-wider opacity-0 group-hover:opacity-100 transition-opacity">
+                    <div className="flex items-center text-primary text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity">
                       <span>{t('solutions.learnMore') || 'Learn More'}</span>
                       <ArrowRight
-                        className={`${isRTL ? 'mr-2 rotate-180' : 'ml-2'}`}
+                        className={`${isRTL ? 'mr-2 rotate-180' : 'ml-2'} transition-transform group-hover:translate-x-1`}
                         size={16}
                       />
                     </div>
@@ -206,9 +180,9 @@ export function SolutionsSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.5 }}
-          className="mt-12 text-center"
+          className="mt-16 text-center"
         >
-          <Button variant="industrial" size="lg" asChild className="group">
+          <Button size="lg" asChild className="group">
             <Link href="/solutions">
               {t('solutions.viewAll') || 'View All Solutions'}
               <ArrowRight

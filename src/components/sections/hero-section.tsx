@@ -4,8 +4,8 @@ import { useRef, memo, useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
-import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
-import { ChevronDown, Factory, Cog, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { ChevronDown, Factory, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useLocale } from '@/hooks/useLocale';
 import useEmblaCarousel from 'embla-carousel-react';
@@ -154,12 +154,6 @@ export const HeroSection = memo(function HeroSection() {
     }),
   };
 
-  const slideVariants = {
-    enter: { opacity: 0 },
-    center: { opacity: 1 },
-    exit: { opacity: 0 },
-  };
-
   const stats = [
     { value: '30+', label: t('about.experience') },
     { value: '500+', label: t('about.projects') },
@@ -184,12 +178,12 @@ export const HeroSection = memo(function HeroSection() {
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 uppercase tracking-wider"
+          className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 tracking-tight"
         >
           {title}
         </motion.h1>
 
-        {/* Subtitle with Industrial Divider */}
+        {/* Subtitle with Modern Divider */}
         {subtitle && (
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -198,7 +192,7 @@ export const HeroSection = memo(function HeroSection() {
             className="flex items-center justify-center gap-4 mb-6"
           >
             <div className="h-px w-12 sm:w-20 bg-gradient-to-r from-transparent to-primary" />
-            <p className="text-lg sm:text-xl md:text-2xl text-primary font-semibold uppercase tracking-wider">
+            <p className="text-lg sm:text-xl md:text-2xl text-primary font-medium">
               {subtitle}
             </p>
             <div className="h-px w-12 sm:w-20 bg-gradient-to-l from-transparent to-primary" />
@@ -211,7 +205,7 @@ export const HeroSection = memo(function HeroSection() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
-            className="text-base sm:text-lg text-metal-300 max-w-3xl mx-auto mb-12 leading-relaxed"
+            className="text-base sm:text-lg text-neutral-300 max-w-3xl mx-auto mb-12 leading-relaxed"
           >
             {description}
           </motion.p>
@@ -224,7 +218,7 @@ export const HeroSection = memo(function HeroSection() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.6 }}
           >
-            <Button variant="industrial" size="xl" asChild className="group">
+            <Button size="lg" asChild className="group">
               <Link href={slide.buttonLink}>
                 {buttonText}
                 <ArrowRight
@@ -250,15 +244,15 @@ export const HeroSection = memo(function HeroSection() {
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="inline-flex items-center gap-2 px-4 py-2 mb-8 border-2 border-primary/30 bg-primary/10"
+        className="inline-flex items-center gap-2 px-5 py-2.5 mb-8 bg-primary/10 backdrop-blur-sm rounded-full"
       >
         <Factory size={18} className="text-primary" />
-        <span className="text-primary text-sm font-bold uppercase tracking-widest">
+        <span className="text-primary text-sm font-semibold">
           {t('hero.badge') || '1994'}
         </span>
       </motion.div>
 
-      {/* Logo with Industrial Frame */}
+      {/* Logo with Modern Frame */}
       <motion.div
         initial={{ scale: 0.8, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
@@ -271,19 +265,16 @@ export const HeroSection = memo(function HeroSection() {
             alt="S.N.A Al-Attal"
             width={140}
             height={140}
-            className="mx-auto border-4 border-primary shadow-gold"
+            className="mx-auto rounded-2xl shadow-soft-xl"
             priority
           />
-          {/* Corner Accents */}
-          <div className="absolute -top-2 -left-2 w-6 h-6 border-t-4 border-l-4 border-primary" />
-          <div className="absolute -top-2 -right-2 w-6 h-6 border-t-4 border-r-4 border-primary" />
-          <div className="absolute -bottom-2 -left-2 w-6 h-6 border-b-4 border-l-4 border-primary" />
-          <div className="absolute -bottom-2 -right-2 w-6 h-6 border-b-4 border-r-4 border-primary" />
+          {/* Modern Glow Effect */}
+          <div className="absolute inset-0 rounded-2xl bg-primary/20 blur-xl -z-10" />
         </div>
       </motion.div>
 
       {/* Title */}
-      <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 uppercase tracking-wider">
+      <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 tracking-tight">
         <motion.span
           custom={0}
           variants={titleVariants}
@@ -304,7 +295,7 @@ export const HeroSection = memo(function HeroSection() {
         </motion.span>
       </h1>
 
-      {/* Subtitle with Industrial Divider */}
+      {/* Subtitle with Modern Divider */}
       <motion.div
         custom={0.8}
         variants={fadeUpVariants}
@@ -313,7 +304,7 @@ export const HeroSection = memo(function HeroSection() {
         className="flex items-center justify-center gap-4 mb-6"
       >
         <div className="h-px w-12 sm:w-20 bg-gradient-to-r from-transparent to-primary" />
-        <p className="text-lg sm:text-xl md:text-2xl text-primary font-semibold uppercase tracking-wider">
+        <p className="text-lg sm:text-xl md:text-2xl text-primary font-medium">
           {t('hero.subtitle')}
         </p>
         <div className="h-px w-12 sm:w-20 bg-gradient-to-l from-transparent to-primary" />
@@ -325,7 +316,7 @@ export const HeroSection = memo(function HeroSection() {
         variants={fadeUpVariants}
         initial="hidden"
         animate="visible"
-        className="text-base sm:text-lg text-metal-300 max-w-3xl mx-auto mb-12 leading-relaxed"
+        className="text-base sm:text-lg text-neutral-300 max-w-3xl mx-auto mb-12 leading-relaxed"
       >
         {t('hero.description')}
       </motion.p>
@@ -338,7 +329,7 @@ export const HeroSection = memo(function HeroSection() {
         animate="visible"
         className="flex flex-col sm:flex-row gap-4 justify-center mb-20"
       >
-        <Button variant="industrial" size="xl" asChild className="group">
+        <Button size="lg" asChild className="group">
           <Link href="/products">
             {t('hero.cta')}
             <ArrowRight
@@ -347,12 +338,12 @@ export const HeroSection = memo(function HeroSection() {
             />
           </Link>
         </Button>
-        <Button variant="industrialOutline" size="xl" asChild>
+        <Button variant="outline" size="lg" asChild className="border-white/20 text-white hover:bg-white/10">
           <Link href="/contact">{t('hero.secondary_cta')}</Link>
         </Button>
       </motion.div>
 
-      {/* Stats Grid - Industrial Style */}
+      {/* Stats Grid - Modern Style */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 max-w-5xl mx-auto">
         {stats.map((stat, index) => (
           <motion.div
@@ -363,14 +354,11 @@ export const HeroSection = memo(function HeroSection() {
             animate="visible"
             className="relative group"
           >
-            <div className="bg-steel-800/80 border-2 border-steel-700 p-4 sm:p-6 transition-all duration-300 hover:border-primary hover:bg-steel-800">
-              {/* Gold Accent Bar */}
-              <div className="absolute top-0 left-0 w-full h-1 bg-primary transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300" />
-
-              <div className="text-3xl sm:text-4xl md:text-5xl font-bold text-primary mb-2 font-mono">
+            <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-4 sm:p-6 transition-all duration-300 hover:bg-white/10 border border-white/10">
+              <div className="text-3xl sm:text-4xl md:text-5xl font-bold text-primary mb-2">
                 {stat.value}
               </div>
-              <div className="text-xs sm:text-sm text-metal-400 uppercase tracking-wider">
+              <div className="text-xs sm:text-sm text-neutral-400">
                 {stat.label}
               </div>
             </div>
@@ -386,33 +374,12 @@ export const HeroSection = memo(function HeroSection() {
       className="relative min-h-screen flex items-center justify-center overflow-hidden bg-steel-900"
       dir={isRTL ? 'rtl' : 'ltr'}
     >
-      {/* Industrial Background Pattern */}
+      {/* Modern Gradient Background */}
       <div className="absolute inset-0 z-0">
-        {/* Grid Pattern */}
-        <div
-          className="absolute inset-0 opacity-[0.03]"
-          style={{
-            backgroundImage: `
-              linear-gradient(rgba(212, 160, 10, 0.3) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(212, 160, 10, 0.3) 1px, transparent 1px)
-            `,
-            backgroundSize: '50px 50px',
-          }}
-        />
-
-        {/* Diagonal Lines */}
-        <div
-          className="absolute inset-0 opacity-[0.02]"
-          style={{
-            backgroundImage: `repeating-linear-gradient(
-              45deg,
-              transparent,
-              transparent 35px,
-              rgba(212, 160, 10, 0.1) 35px,
-              rgba(212, 160, 10, 0.1) 70px
-            )`,
-          }}
-        />
+        <div className="absolute inset-0 bg-gradient-to-br from-steel-950 via-steel-900 to-steel-800" />
+        {/* Subtle gradient orbs */}
+        <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-primary/10 rounded-full blur-3xl opacity-50" />
+        <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-copper-500/10 rounded-full blur-3xl opacity-30" />
       </div>
 
       {/* Background Image with Parallax - for default hero or loading */}
@@ -424,36 +391,11 @@ export const HeroSection = memo(function HeroSection() {
             alt="Factory Background"
             fill
             sizes="100vw"
-            className="object-cover opacity-40"
+            className="object-cover opacity-30"
             priority
           />
         </motion.div>
       )}
-
-      {/* Animated Industrial Elements */}
-      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-        {/* Rotating Gear - Top Right */}
-        <motion.div
-          animate={{ rotate: 360 }}
-          transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
-          className="absolute -top-20 -right-20 text-primary/10"
-        >
-          <Cog size={300} strokeWidth={0.5} />
-        </motion.div>
-
-        {/* Rotating Gear - Bottom Left */}
-        <motion.div
-          animate={{ rotate: -360 }}
-          transition={{ duration: 25, repeat: Infinity, ease: 'linear' }}
-          className="absolute -bottom-32 -left-32 text-primary/5"
-        >
-          <Cog size={400} strokeWidth={0.5} />
-        </motion.div>
-
-        {/* Gold Accent Lines */}
-        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary to-transparent" />
-        <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
-      </div>
 
       {/* Slides Carousel */}
       {hasSlides && !isLoading ? (
@@ -490,14 +432,14 @@ export const HeroSection = memo(function HeroSection() {
               {/* Arrow Navigation */}
               <button
                 onClick={scrollPrev}
-                className="absolute left-4 top-1/2 -translate-y-1/2 z-20 p-3 bg-steel-800/80 border-2 border-steel-700 text-white hover:border-primary hover:bg-steel-800 transition-all duration-300"
+                className="absolute left-4 top-1/2 -translate-y-1/2 z-20 p-3 bg-white/10 backdrop-blur-sm rounded-full text-white hover:bg-white/20 transition-all duration-300"
                 aria-label="Previous slide"
               >
                 <ChevronLeft size={24} />
               </button>
               <button
                 onClick={scrollNext}
-                className="absolute right-4 top-1/2 -translate-y-1/2 z-20 p-3 bg-steel-800/80 border-2 border-steel-700 text-white hover:border-primary hover:bg-steel-800 transition-all duration-300"
+                className="absolute right-4 top-1/2 -translate-y-1/2 z-20 p-3 bg-white/10 backdrop-blur-sm rounded-full text-white hover:bg-white/20 transition-all duration-300"
                 aria-label="Next slide"
               >
                 <ChevronRight size={24} />
@@ -509,10 +451,10 @@ export const HeroSection = memo(function HeroSection() {
                   <button
                     key={index}
                     onClick={() => scrollTo(index)}
-                    className={`w-3 h-3 border-2 transition-all duration-300 ${
+                    className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
                       index === selectedIndex
-                        ? 'bg-primary border-primary scale-125'
-                        : 'bg-transparent border-metal-500 hover:border-primary'
+                        ? 'bg-primary w-8'
+                        : 'bg-white/30 hover:bg-white/50'
                     }`}
                     aria-label={`Go to slide ${index + 1}`}
                   />
@@ -538,23 +480,18 @@ export const HeroSection = memo(function HeroSection() {
           transition={{ duration: 1.5, repeat: Infinity }}
           className="flex flex-col items-center"
         >
-          <span className="text-xs text-metal-500 mb-2 uppercase tracking-wider">
+          <span className="text-xs text-neutral-500 mb-2">
             {t('hero.scroll') || 'Scroll'}
           </span>
-          <div className="w-6 h-10 border-2 border-metal-600 flex items-start justify-center p-1">
+          <div className="w-6 h-10 rounded-full border-2 border-neutral-600 flex items-start justify-center p-1">
             <motion.div
               animate={{ y: [0, 12, 0] }}
               transition={{ duration: 1.5, repeat: Infinity }}
-              className="w-1.5 h-3 bg-primary"
+              className="w-1.5 h-3 bg-primary rounded-full"
             />
           </div>
         </motion.div>
       </motion.div>
-
-      {/* Bottom Industrial Border */}
-      <div className="absolute bottom-0 left-0 right-0 h-2 bg-steel-800 z-20">
-        <div className="absolute top-0 left-0 h-full w-1/4 bg-primary" />
-      </div>
     </section>
   );
 });

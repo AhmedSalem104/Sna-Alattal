@@ -62,23 +62,10 @@ export const ClientsSection = memo(function ClientsSection() {
       className="py-20 lg:py-28 bg-white relative overflow-hidden"
       dir={isRTL ? 'rtl' : 'ltr'}
     >
-      {/* Industrial Background Pattern */}
+      {/* Modern Subtle Background */}
       <div className="absolute inset-0 z-0">
-        <div
-          className="absolute inset-0 opacity-[0.02]"
-          style={{
-            backgroundImage: `
-              linear-gradient(rgba(26, 26, 46, 0.3) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(26, 26, 46, 0.3) 1px, transparent 1px)
-            `,
-            backgroundSize: '50px 50px',
-          }}
-        />
+        <div className="absolute top-0 left-1/2 w-[800px] h-[400px] bg-primary/5 rounded-full blur-3xl -translate-x-1/2" />
       </div>
-
-      {/* Decorative Elements */}
-      <div className="absolute top-0 left-0 w-1 h-24 bg-primary" />
-      <div className="absolute top-0 right-0 w-1 h-24 bg-primary" />
 
       <div className="container-custom relative z-10">
         {/* Header */}
@@ -89,27 +76,23 @@ export const ClientsSection = memo(function ClientsSection() {
           className="text-center max-w-3xl mx-auto mb-16"
         >
           {/* Section Tag */}
-          <div className="inline-flex items-center gap-2 border-2 border-primary/30 bg-primary/5 px-4 py-2 mb-6">
-            <Users size={16} className="text-primary" />
-            <span className="text-primary text-sm font-bold uppercase tracking-widest">
+          <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full mb-6">
+            <Users size={16} />
+            <span className="text-sm font-semibold">
               {t('clients.title')}
             </span>
           </div>
 
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-steel-900 uppercase tracking-wide mb-4">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-steel-900 tracking-tight mb-4">
             {t('clients.subtitle')}
           </h2>
 
-          {/* Gold Divider */}
-          <div className="flex items-center justify-center gap-4 mb-6">
-            <div className="h-1 w-8 bg-primary/25" />
-            <div className="h-1 w-16 bg-primary/50" />
-            <div className="h-1 w-24 bg-primary" />
-            <div className="h-1 w-16 bg-primary/50" />
-            <div className="h-1 w-8 bg-primary/25" />
+          {/* Modern Divider */}
+          <div className="flex items-center justify-center gap-2 mb-6">
+            <div className="h-1 w-16 bg-gradient-to-r from-transparent via-primary to-transparent rounded-full" />
           </div>
 
-          <p className="text-metal-600">{t('clients.description')}</p>
+          <p className="text-neutral-600 text-lg">{t('clients.description')}</p>
         </motion.div>
 
         {/* Stats Row */}
@@ -119,15 +102,15 @@ export const ClientsSection = memo(function ClientsSection() {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="grid grid-cols-3 gap-4 max-w-2xl mx-auto mb-16"
         >
-          {stats.map((stat, index) => (
+          {stats.map((stat) => (
             <div
               key={stat.labelKey}
-              className="text-center p-4 bg-metal-50 border-2 border-metal-100"
+              className="text-center p-6 bg-neutral-50 rounded-2xl"
             >
-              <div className="text-2xl md:text-3xl font-bold text-primary font-mono">
+              <div className="text-3xl md:text-4xl font-bold text-primary">
                 {stat.value}
               </div>
-              <div className="text-xs text-metal-600 uppercase tracking-wider mt-1">
+              <div className="text-sm text-neutral-600 mt-2">
                 {t(stat.labelKey) || stat.labelKey.split('.').pop()}
               </div>
             </div>
@@ -141,8 +124,8 @@ export const ClientsSection = memo(function ClientsSection() {
           </div>
         ) : clients.length === 0 ? (
           <div className="text-center py-20">
-            <Users size={48} className="mx-auto text-metal-300 mb-4" />
-            <p className="text-metal-500">{t('common.noData')}</p>
+            <Users size={48} className="mx-auto text-neutral-300 mb-4" />
+            <p className="text-neutral-500">{t('common.noData')}</p>
           </div>
         ) : (
           /* Clients Logo Grid */
@@ -155,13 +138,13 @@ export const ClientsSection = memo(function ClientsSection() {
                 transition={{ duration: 0.4, delay: index * 0.05 }}
                 className="group"
               >
-                <div className="aspect-square bg-metal-50 border-2 border-metal-200 p-4 flex items-center justify-center hover:border-primary hover:bg-white transition-all duration-300">
+                <div className="aspect-square bg-white rounded-xl border border-neutral-200 p-4 flex items-center justify-center hover:border-primary/30 hover:shadow-soft-lg transition-all duration-300">
                   <Image
                     src={client.logo}
                     alt={getName(client)}
                     width={80}
                     height={80}
-                    className="object-contain opacity-50 group-hover:opacity-100 transition-opacity grayscale group-hover:grayscale-0"
+                    className="object-contain opacity-60 group-hover:opacity-100 transition-opacity grayscale group-hover:grayscale-0"
                     loading="lazy"
                   />
                 </div>
@@ -175,19 +158,19 @@ export const ClientsSection = memo(function ClientsSection() {
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : {}}
           transition={{ delay: 0.5 }}
-          className="mt-12 text-center"
+          className="mt-16 text-center"
         >
           {/* Trust Badge */}
-          <div className="inline-flex items-center gap-3 bg-steel-900 px-6 py-3 mb-6">
+          <div className="inline-flex items-center gap-3 bg-gradient-to-r from-steel-900 to-steel-800 px-6 py-3 rounded-full mb-8">
             <Award size={20} className="text-primary" />
-            <span className="text-white text-sm font-semibold uppercase tracking-wider">
+            <span className="text-white text-sm font-medium">
               {t('clients.trustText')}
             </span>
           </div>
 
           {/* CTA */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button variant="industrialOutline" size="lg" asChild className="group">
+            <Button variant="outline" size="lg" asChild className="group">
               <Link href="/clients">
                 {t('clients.viewAll') || 'View All Clients'}
                 <ArrowRight

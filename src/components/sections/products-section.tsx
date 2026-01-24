@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { motion, useInView } from 'framer-motion';
-import { ArrowRight, ArrowUpRight, Package, Cog, Loader2 } from 'lucide-react';
+import { ArrowRight, ArrowUpRight, Package, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { useLocale } from '@/hooks/useLocale';
@@ -76,29 +76,14 @@ export const ProductsSection = memo(function ProductsSection() {
   return (
     <section
       ref={ref}
-      className="py-20 lg:py-28 bg-metal-50 relative overflow-hidden"
+      className="py-20 lg:py-28 bg-gradient-to-b from-neutral-50 to-white relative overflow-hidden"
       dir={isRTL ? 'rtl' : 'ltr'}
     >
-      {/* Industrial Background Pattern */}
+      {/* Modern Subtle Background */}
       <div className="absolute inset-0 z-0">
-        <div
-          className="absolute inset-0 opacity-[0.03]"
-          style={{
-            backgroundImage: `
-              linear-gradient(rgba(212, 160, 10, 0.3) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(212, 160, 10, 0.3) 1px, transparent 1px)
-            `,
-            backgroundSize: '50px 50px',
-          }}
-        />
-        {/* Decorative Gear */}
-        <div className="absolute -top-20 -left-20 text-primary/5">
-          <Cog size={200} strokeWidth={0.5} />
-        </div>
+        <div className="absolute top-0 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 left-0 w-80 h-80 bg-copper-500/5 rounded-full blur-3xl" />
       </div>
-
-      {/* Top Industrial Border */}
-      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary via-primary/50 to-primary" />
 
       <div className="container-custom relative z-10">
         {/* Header */}
@@ -110,26 +95,24 @@ export const ProductsSection = memo(function ProductsSection() {
         >
           <div>
             {/* Section Tag */}
-            <div className="inline-flex items-center gap-2 border-2 border-primary/30 bg-primary/5 px-4 py-2 mb-4">
-              <Package size={16} className="text-primary" />
-              <span className="text-primary text-sm font-bold uppercase tracking-widest">
+            <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full mb-4">
+              <Package size={16} />
+              <span className="text-sm font-semibold">
                 {t('products.title')}
               </span>
             </div>
 
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-steel-900 uppercase tracking-wide">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-steel-900 tracking-tight">
               {t('products.subtitle')}
             </h2>
 
-            {/* Gold Divider */}
-            <div className="flex items-center gap-4 mt-4">
-              <div className="h-1 w-16 bg-primary" />
-              <div className="h-1 w-8 bg-primary/50" />
-              <div className="h-1 w-4 bg-primary/25" />
+            {/* Modern Divider */}
+            <div className="flex items-center gap-2 mt-4">
+              <div className="h-1 w-12 bg-gradient-to-r from-primary to-primary/50 rounded-full" />
             </div>
           </div>
 
-          <Button variant="industrial" asChild className="group shrink-0">
+          <Button asChild className="group shrink-0">
             <Link href="/products">
               {t('products.viewAll')}
               <ArrowRight
@@ -161,27 +144,24 @@ export const ProductsSection = memo(function ProductsSection() {
                 transition={{ duration: 0.6, delay: index * 0.1 }}
               >
                 <Link href={`/products/${product.slug}`} className="block h-full">
-                  <div className="group bg-white border-2 border-metal-200 hover:border-primary transition-all duration-300 overflow-hidden h-full relative">
-                    {/* Gold Accent Bar */}
-                    <div className="absolute top-0 left-0 w-1 h-full bg-primary z-10 transform origin-top scale-y-0 group-hover:scale-y-100 transition-transform duration-300" />
-
+                  <div className="group bg-white rounded-2xl border border-neutral-200 hover:border-primary/30 hover:shadow-soft-lg transition-all duration-300 overflow-hidden h-full">
                     {/* Image */}
-                    <div className="relative aspect-square overflow-hidden">
+                    <div className="relative aspect-square overflow-hidden rounded-t-2xl">
                       <Image
                         src={getProductImage(product)}
                         alt={getName(product)}
                         fill
                         sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                        className="object-cover group-hover:scale-110 transition-transform duration-500"
+                        className="object-cover group-hover:scale-105 transition-transform duration-500"
                         priority={index < 2}
                         loading={index < 2 ? undefined : 'lazy'}
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-steel-900/60 to-transparent" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-steel-900/40 via-transparent to-transparent" />
 
                       {/* Featured Badge */}
                       {product.isFeatured && (
                         <Badge
-                          variant="featured"
+                          variant="gold"
                           className="absolute top-4 right-4 z-10"
                         >
                           {t('products.featured') || 'مميز'}
@@ -189,16 +169,16 @@ export const ProductsSection = memo(function ProductsSection() {
                       )}
 
                       {/* Hover Overlay */}
-                      <div className="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                        <div className="w-14 h-14 bg-primary flex items-center justify-center transform scale-0 group-hover:scale-100 transition-transform duration-300">
-                          <ArrowUpRight size={28} className="text-steel-900" />
+                      <div className="absolute inset-0 bg-primary/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                        <div className="w-12 h-12 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center transform scale-0 group-hover:scale-100 transition-transform duration-300 shadow-soft">
+                          <ArrowUpRight size={24} className="text-primary" />
                         </div>
                       </div>
 
                       {/* Category Tag on Image */}
                       {product.category && (
                         <div className="absolute bottom-4 left-4 z-10">
-                          <span className="inline-block px-3 py-1 bg-steel-900/80 text-white text-xs font-bold uppercase tracking-wider">
+                          <span className="inline-block px-3 py-1.5 bg-white/90 backdrop-blur-sm text-steel-800 text-xs font-medium rounded-full">
                             {getCategoryName(product.category)}
                           </span>
                         </div>
@@ -206,17 +186,17 @@ export const ProductsSection = memo(function ProductsSection() {
                     </div>
 
                     {/* Content */}
-                    <div className="p-4 border-t-2 border-metal-100">
-                      <h3 className="text-steel-900 font-bold group-hover:text-primary transition-colors line-clamp-2 uppercase tracking-wide text-sm">
+                    <div className="p-5">
+                      <h3 className="text-steel-900 font-semibold group-hover:text-primary transition-colors line-clamp-2 text-base">
                         {getName(product)}
                       </h3>
 
                       {/* View Details Link */}
-                      <div className="mt-3 flex items-center text-primary text-xs font-bold uppercase tracking-wider opacity-0 group-hover:opacity-100 transition-opacity">
+                      <div className="mt-3 flex items-center text-primary text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity">
                         <span>{t('products.viewDetails') || 'عرض التفاصيل'}</span>
                         <ArrowRight
-                          size={14}
-                          className={`${isRTL ? 'mr-1 rotate-180' : 'ml-1'}`}
+                          size={16}
+                          className={`${isRTL ? 'mr-1 rotate-180' : 'ml-1'} transition-transform group-hover:translate-x-1`}
                         />
                       </div>
                     </div>
@@ -232,19 +212,19 @@ export const ProductsSection = memo(function ProductsSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.5 }}
-          className="mt-12 text-center"
+          className="mt-16 text-center"
         >
-          <p className="text-metal-600 mb-6">
+          <p className="text-neutral-600 mb-8 text-lg">
             {t('products.cta_text') ||
               'اكتشف مجموعتنا الكاملة من ماكينات التعبئة والتغليف'}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button variant="industrialOutline" size="lg" asChild>
+            <Button variant="outline" size="lg" asChild>
               <Link href="/products">
                 {t('products.browseAll') || 'تصفح جميع المنتجات'}
               </Link>
             </Button>
-            <Button variant="industrialDark" size="lg" asChild>
+            <Button size="lg" asChild>
               <Link href="/contact">
                 {t('products.requestQuote') || 'طلب عرض سعر'}
               </Link>
