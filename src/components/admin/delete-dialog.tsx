@@ -13,7 +13,7 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
-import { Trash2, Loader2 } from 'lucide-react';
+import { Trash2, Loader2, AlertTriangle } from 'lucide-react';
 
 interface DeleteDialogProps {
   title?: string;
@@ -52,33 +52,47 @@ export function DeleteDialog({
           <Button
             variant="ghost"
             size="icon"
-            className="text-gray-600 hover:text-red-400"
+            className="text-metal-500 hover:text-red-500 hover:bg-red-50 rounded-none"
           >
             <Trash2 size={18} />
           </Button>
         )}
       </AlertDialogTrigger>
-      <AlertDialogContent className="bg-gray-50 border-gray-200">
-        <AlertDialogHeader>
-          <AlertDialogTitle className="text-gray-900">{title}</AlertDialogTitle>
-          <AlertDialogDescription className="text-gray-600">
+      <AlertDialogContent className="bg-white border-2 border-metal-200 rounded-none max-w-md">
+        {/* Top Gold Border */}
+        <div className="absolute top-0 left-0 right-0 h-1 bg-primary" />
+
+        <AlertDialogHeader className="pt-4">
+          <div className="flex items-center gap-3 mb-2">
+            <div className={`p-2 ${isPermanent ? 'bg-red-100 border border-red-200' : 'bg-primary/10 border border-primary/20'}`}>
+              {isPermanent ? (
+                <AlertTriangle size={20} className="text-red-500" />
+              ) : (
+                <Trash2 size={20} className="text-primary" />
+              )}
+            </div>
+            <AlertDialogTitle className="text-steel-900 font-bold uppercase tracking-wider">
+              {title}
+            </AlertDialogTitle>
+          </div>
+          <AlertDialogDescription className="text-metal-600 border-r-2 border-metal-200 pr-4">
             {isPermanent
               ? 'سيتم حذف هذا العنصر نهائياً ولا يمكن استرجاعه.'
               : description}
           </AlertDialogDescription>
         </AlertDialogHeader>
-        <AlertDialogFooter className="gap-2">
-          <AlertDialogCancel className="bg-white border-gray-200 text-gray-900 hover:bg-gray-100">
+        <AlertDialogFooter className="gap-2 border-t border-metal-200 pt-4">
+          <AlertDialogCancel className="bg-white border-2 border-metal-200 text-steel-900 hover:bg-metal-50 rounded-none">
             إلغاء
           </AlertDialogCancel>
           <AlertDialogAction
             onClick={handleConfirm}
             disabled={isLoading}
-            className={
+            className={`rounded-none ${
               isPermanent
-                ? 'bg-red-500 hover:bg-red-600 text-gray-900'
-                : 'bg-primary hover:bg-primary/90 text-gray-900'
-            }
+                ? 'bg-red-500 hover:bg-red-600 text-white border-2 border-red-500'
+                : 'bg-primary hover:bg-primary/90 text-steel-900 border-2 border-primary'
+            }`}
           >
             {isLoading ? (
               <>

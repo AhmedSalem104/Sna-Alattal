@@ -35,6 +35,7 @@ import {
   PinOff,
   ChevronsDownUp,
   ChevronsUpDown,
+  Cog,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -200,8 +201,8 @@ export function Sidebar({ isCollapsed, onToggle, isPinned, onPinToggle, isHoveri
         animate={{
           width: isExpanded ? 280 : 80,
           boxShadow: isHovering && !isPinned
-            ? '0 25px 50px -12px rgba(0, 0, 0, 0.4), 0 0 30px rgba(249, 191, 15, 0.1)'
-            : '0 10px 15px -3px rgba(0, 0, 0, 0.2)'
+            ? '0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 30px rgba(212, 160, 10, 0.15)'
+            : '0 10px 15px -3px rgba(0, 0, 0, 0.3)'
         }}
         transition={{
           duration: 0.35,
@@ -210,17 +211,34 @@ export function Sidebar({ isCollapsed, onToggle, isPinned, onPinToggle, isHoveri
           boxShadow: { duration: 0.5, ease: 'easeOut' }
         }}
         className={cn(
-          'h-full min-h-screen flex flex-col flex-shrink-0',
-          'bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900',
-          'border-l border-slate-700/50',
-          isHovering && !isPinned && 'ring-1 ring-primary/20'
+          'h-full min-h-screen flex flex-col flex-shrink-0 relative',
+          'bg-steel-900',
+          'border-l-2 border-steel-700',
+          isHovering && !isPinned && 'border-l-primary'
         )}
       >
+        {/* Industrial Grid Pattern */}
+        <div className="absolute inset-0 opacity-[0.03] pointer-events-none">
+          <div
+            className="absolute inset-0"
+            style={{
+              backgroundImage: `
+                linear-gradient(rgba(212, 160, 10, 0.5) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(212, 160, 10, 0.5) 1px, transparent 1px)
+              `,
+              backgroundSize: '20px 20px',
+            }}
+          />
+        </div>
+
+        {/* Top Gold Border */}
+        <div className="absolute top-0 left-0 right-0 h-1 bg-primary" />
+
         {/* Logo Section */}
         <motion.div
-          className="h-16 flex items-center justify-between px-4 border-b border-slate-700/50"
+          className="h-16 flex items-center justify-between px-4 border-b-2 border-steel-700 relative z-10"
           animate={{
-            backgroundColor: isHovering && !isPinned ? 'rgba(249, 191, 15, 0.05)' : 'transparent'
+            backgroundColor: isHovering && !isPinned ? 'rgba(212, 160, 10, 0.05)' : 'transparent'
           }}
           transition={{ duration: 0.3 }}
         >
@@ -236,18 +254,19 @@ export function Sidebar({ isCollapsed, onToggle, isPinned, onPinToggle, isHoveri
               >
                 <Link href="/admin" className="flex items-center gap-3">
                   <div className="relative">
+                    <div className="absolute inset-0 border-2 border-primary" />
                     <Image
                       src="/images/logo.jpg"
                       alt="S.N.A"
                       width={40}
                       height={40}
-                      className="rounded-xl ring-2 ring-primary/30"
+                      className="relative z-10"
                     />
-                    <div className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-emerald-500 rounded-full border-2 border-slate-900" />
+                    <div className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-green-500 border-2 border-steel-900" />
                   </div>
                   <div>
-                    <span className="font-bold text-white text-base">لوحة التحكم</span>
-                    <p className="text-xs text-slate-400">S.N.A Al-Attal</p>
+                    <span className="font-bold text-white text-base uppercase tracking-wider">لوحة التحكم</span>
+                    <p className="text-xs text-primary font-semibold">S.N.A Al-Attal</p>
                   </div>
                 </Link>
               </motion.div>
@@ -261,13 +280,16 @@ export function Sidebar({ isCollapsed, onToggle, isPinned, onPinToggle, isHoveri
                 className="mx-auto"
               >
                 <Link href="/admin">
-                  <Image
-                    src="/images/logo.jpg"
-                    alt="S.N.A"
-                    width={40}
-                    height={40}
-                    className="rounded-xl ring-2 ring-primary/30"
-                  />
+                  <div className="relative">
+                    <div className="absolute inset-0 border-2 border-primary" />
+                    <Image
+                      src="/images/logo.jpg"
+                      alt="S.N.A"
+                      width={40}
+                      height={40}
+                      className="relative z-10"
+                    />
+                  </div>
                 </Link>
               </motion.div>
             )}
@@ -290,16 +312,16 @@ export function Sidebar({ isCollapsed, onToggle, isPinned, onPinToggle, isHoveri
                       size="icon"
                       onClick={onPinToggle}
                       className={cn(
-                        "h-8 w-8 transition-colors",
+                        "h-8 w-8 transition-colors rounded-none border border-transparent",
                         isPinned
-                          ? "text-primary hover:text-primary/80 hover:bg-slate-700/50"
-                          : "text-slate-400 hover:text-white hover:bg-slate-700/50"
+                          ? "text-primary border-primary/50 bg-primary/10"
+                          : "text-metal-400 hover:text-white hover:bg-steel-700 hover:border-steel-600"
                       )}
                     >
                       {isPinned ? <Pin size={16} /> : <PinOff size={16} />}
                     </Button>
                   </TooltipTrigger>
-                  <TooltipContent side="bottom" className="bg-slate-800 border-slate-700 text-white text-xs">
+                  <TooltipContent side="bottom" className="bg-steel-800 border-steel-600 text-white text-xs rounded-none">
                     {isPinned ? 'إلغاء التثبيت' : 'تثبيت القائمة'}
                   </TooltipContent>
                 </Tooltip>
@@ -309,7 +331,7 @@ export function Sidebar({ isCollapsed, onToggle, isPinned, onPinToggle, isHoveri
                   variant="ghost"
                   size="icon"
                   onClick={onToggle}
-                  className="text-slate-400 hover:text-white hover:bg-slate-700/50 h-8 w-8"
+                  className="text-metal-400 hover:text-white hover:bg-steel-700 h-8 w-8 rounded-none border border-transparent hover:border-steel-600"
                 >
                   <ChevronLeft size={16} />
                 </Button>
@@ -326,21 +348,22 @@ export function Sidebar({ isCollapsed, onToggle, isPinned, onPinToggle, isHoveri
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.3, ease: 'easeOut' }}
-              className="px-4 py-3 border-b border-slate-700/50"
+              className="px-4 py-3 border-b-2 border-steel-700 relative z-10"
             >
               <div className="flex items-center gap-2">
                 <div className="relative flex-1">
-                  <Search className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
+                  <Search className="absolute right-3 top-1/2 -translate-y-1/2 text-metal-500" size={16} />
                   <Input
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     placeholder="بحث..."
-                    className="w-full pr-9 bg-slate-800/50 border-slate-600/50 text-white placeholder:text-slate-500 focus:border-primary/50 focus:ring-primary/20 h-9 text-sm"
+                    variant="industrial"
+                    className="w-full pr-9 h-9 text-sm"
                   />
                   {searchQuery && (
                     <button
                       onClick={() => setSearchQuery('')}
-                      className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white transition-colors"
+                      className="absolute left-3 top-1/2 -translate-y-1/2 text-metal-400 hover:text-white transition-colors"
                     >
                       <X size={14} />
                     </button>
@@ -354,12 +377,12 @@ export function Sidebar({ isCollapsed, onToggle, isPinned, onPinToggle, isHoveri
                       variant="ghost"
                       size="icon"
                       onClick={allCollapsed ? expandAll : collapseAll}
-                      className="h-9 w-9 text-slate-400 hover:text-white hover:bg-slate-700/50 flex-shrink-0"
+                      className="h-9 w-9 text-metal-400 hover:text-white hover:bg-steel-700 flex-shrink-0 rounded-none border border-transparent hover:border-steel-600"
                     >
                       {allCollapsed ? <ChevronsUpDown size={16} /> : <ChevronsDownUp size={16} />}
                     </Button>
                   </TooltipTrigger>
-                  <TooltipContent side="bottom" className="bg-slate-800 border-slate-700 text-white text-xs">
+                  <TooltipContent side="bottom" className="bg-steel-800 border-steel-600 text-white text-xs rounded-none">
                     {allCollapsed ? 'فتح الكل' : 'إغلاق الكل'}
                   </TooltipContent>
                 </Tooltip>
@@ -369,7 +392,7 @@ export function Sidebar({ isCollapsed, onToggle, isPinned, onPinToggle, isHoveri
         </AnimatePresence>
 
         {/* Navigation */}
-        <nav className="flex-1 overflow-y-auto py-4 px-3 custom-scrollbar">
+        <nav className="flex-1 overflow-y-auto py-4 px-3 custom-scrollbar relative z-10">
           {/* Categories */}
           {filteredCategories.map((category) => (
             <div key={category.id} className="mb-2">
@@ -380,13 +403,13 @@ export function Sidebar({ isCollapsed, onToggle, isPinned, onPinToggle, isHoveri
                 >
                   <CollapsibleTrigger className="w-full">
                     <motion.div
-                      className="flex items-center justify-between px-3 py-2 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-700/30 transition-all duration-200"
+                      className="flex items-center justify-between px-3 py-2 text-metal-400 hover:text-primary hover:bg-steel-800 transition-all duration-200 border-r-2 border-transparent hover:border-primary"
                       whileHover={{ x: -2 }}
                       transition={{ duration: 0.2 }}
                     >
                       <div className="flex items-center gap-2">
                         <category.icon size={15} />
-                        <span className="text-xs font-semibold uppercase tracking-wider">
+                        <span className="text-xs font-bold uppercase tracking-widest">
                           {category.title}
                         </span>
                       </div>
@@ -415,21 +438,21 @@ export function Sidebar({ isCollapsed, onToggle, isPinned, onPinToggle, isHoveri
                           <Link
                             href={item.href}
                             className={cn(
-                              'flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-300',
+                              'flex items-center gap-3 px-3 py-2.5 transition-all duration-300 border-r-2',
                               isActive(item.href)
-                                ? 'bg-gradient-to-l from-primary/20 to-primary/5 text-primary border-r-2 border-primary'
-                                : 'text-slate-300 hover:text-white hover:bg-slate-700/50'
+                                ? 'bg-primary/10 text-primary border-primary'
+                                : 'text-metal-300 hover:text-white hover:bg-steel-800 border-transparent hover:border-steel-600'
                             )}
                           >
                             <item.icon size={18} className={cn(
                               'transition-colors duration-200',
-                              isActive(item.href) ? 'text-primary' : 'text-slate-400'
+                              isActive(item.href) ? 'text-primary' : 'text-metal-500'
                             )} />
                             <span className="flex-1 text-sm font-medium">{item.title}</span>
 
                             {/* Badge for messages */}
                             {item.href === '/admin/messages' && unreadMessages > 0 && (
-                              <Badge className="bg-red-500 text-white text-xs px-1.5 py-0 min-w-[20px] h-5 flex items-center justify-center rounded-full">
+                              <Badge className="bg-red-500 text-white text-xs px-1.5 py-0 min-w-[20px] h-5 flex items-center justify-center rounded-none">
                                 {unreadMessages}
                               </Badge>
                             )}
@@ -449,19 +472,19 @@ export function Sidebar({ isCollapsed, onToggle, isPinned, onPinToggle, isHoveri
                           <Link
                             href={item.href}
                             className={cn(
-                              'flex items-center justify-center p-3 rounded-xl transition-all duration-300 relative',
+                              'flex items-center justify-center p-3 transition-all duration-300 relative border-r-2',
                               isActive(item.href)
-                                ? 'bg-primary/20 text-primary'
-                                : 'text-slate-400 hover:text-white hover:bg-slate-700/50'
+                                ? 'bg-primary/10 text-primary border-primary'
+                                : 'text-metal-400 hover:text-white hover:bg-steel-800 border-transparent hover:border-steel-600'
                             )}
                           >
                             <item.icon size={20} />
                             {item.href === '/admin/messages' && unreadMessages > 0 && (
-                              <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full" />
+                              <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500" />
                             )}
                           </Link>
                         </TooltipTrigger>
-                        <TooltipContent side="left" className="bg-slate-800 border-slate-700 text-white text-sm">
+                        <TooltipContent side="left" className="bg-steel-800 border-steel-600 text-white text-sm rounded-none">
                           <p>{item.title}</p>
                         </TooltipContent>
                       </Tooltip>
@@ -473,7 +496,7 @@ export function Sidebar({ isCollapsed, onToggle, isPinned, onPinToggle, isHoveri
           ))}
 
           {/* Separator */}
-          <div className="my-4 border-t border-slate-700/50" />
+          <div className="my-4 border-t-2 border-steel-700" />
 
           {/* Bottom Menu */}
           <ul className="space-y-1">
@@ -483,15 +506,15 @@ export function Sidebar({ isCollapsed, onToggle, isPinned, onPinToggle, isHoveri
                   <Link
                     href={item.href}
                     className={cn(
-                      'flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-300',
+                      'flex items-center gap-3 px-3 py-2.5 transition-all duration-300 border-r-2',
                       isActive(item.href)
-                        ? 'bg-gradient-to-l from-primary/20 to-primary/5 text-primary border-r-2 border-primary'
-                        : 'text-slate-300 hover:text-white hover:bg-slate-700/50'
+                        ? 'bg-primary/10 text-primary border-primary'
+                        : 'text-metal-300 hover:text-white hover:bg-steel-800 border-transparent hover:border-steel-600'
                     )}
                   >
                     <item.icon size={18} className={cn(
                       'transition-colors duration-200',
-                      isActive(item.href) ? 'text-primary' : 'text-slate-400'
+                      isActive(item.href) ? 'text-primary' : 'text-metal-500'
                     )} />
                     <span className="text-sm font-medium">{item.title}</span>
                   </Link>
@@ -501,16 +524,16 @@ export function Sidebar({ isCollapsed, onToggle, isPinned, onPinToggle, isHoveri
                       <Link
                         href={item.href}
                         className={cn(
-                          'flex items-center justify-center p-3 rounded-xl transition-all duration-300',
+                          'flex items-center justify-center p-3 transition-all duration-300 border-r-2',
                           isActive(item.href)
-                            ? 'bg-primary/20 text-primary'
-                            : 'text-slate-400 hover:text-white hover:bg-slate-700/50'
+                            ? 'bg-primary/10 text-primary border-primary'
+                            : 'text-metal-400 hover:text-white hover:bg-steel-800 border-transparent hover:border-steel-600'
                         )}
                       >
                         <item.icon size={20} />
                       </Link>
                     </TooltipTrigger>
-                    <TooltipContent side="left" className="bg-slate-800 border-slate-700 text-white text-sm">
+                    <TooltipContent side="left" className="bg-steel-800 border-steel-600 text-white text-sm rounded-none">
                       <p>{item.title}</p>
                     </TooltipContent>
                   </Tooltip>
@@ -521,7 +544,7 @@ export function Sidebar({ isCollapsed, onToggle, isPinned, onPinToggle, isHoveri
         </nav>
 
         {/* User Section */}
-        <div className="p-4 border-t border-slate-700/50">
+        <div className="p-4 border-t-2 border-steel-700 relative z-10">
           <AnimatePresence mode="wait">
             {isExpanded ? (
               <motion.div
@@ -533,16 +556,16 @@ export function Sidebar({ isCollapsed, onToggle, isPinned, onPinToggle, isHoveri
                 className="flex items-center gap-3"
               >
                 <div className="relative">
-                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary/30 to-primary/10 flex items-center justify-center ring-2 ring-primary/20">
+                  <div className="w-10 h-10 bg-steel-800 border-2 border-primary/50 flex items-center justify-center">
                     <UserCircle className="text-primary" size={22} />
                   </div>
-                  <div className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-emerald-500 rounded-full border-2 border-slate-900" />
+                  <div className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-green-500 border-2 border-steel-900" />
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-semibold text-white truncate">
                     {session?.user?.name || 'مدير النظام'}
                   </p>
-                  <p className="text-xs text-slate-400 truncate">
+                  <p className="text-xs text-metal-400 truncate">
                     {session?.user?.email}
                   </p>
                 </div>
@@ -550,7 +573,7 @@ export function Sidebar({ isCollapsed, onToggle, isPinned, onPinToggle, isHoveri
                   variant="ghost"
                   size="icon"
                   onClick={() => signOut({ callbackUrl: '/admin/login' })}
-                  className="text-slate-400 hover:text-red-400 hover:bg-red-400/10 h-9 w-9 transition-all duration-200"
+                  className="text-metal-400 hover:text-red-400 hover:bg-red-400/10 h-9 w-9 transition-all duration-200 rounded-none border border-transparent hover:border-red-400/30"
                 >
                   <LogOut size={18} />
                 </Button>
@@ -569,12 +592,12 @@ export function Sidebar({ isCollapsed, onToggle, isPinned, onPinToggle, isHoveri
                       variant="ghost"
                       size="icon"
                       onClick={() => signOut({ callbackUrl: '/admin/login' })}
-                      className="w-full text-slate-400 hover:text-red-400 hover:bg-red-400/10 transition-all duration-200"
+                      className="w-full text-metal-400 hover:text-red-400 hover:bg-red-400/10 transition-all duration-200 rounded-none"
                     >
                       <LogOut size={20} />
                     </Button>
                   </TooltipTrigger>
-                  <TooltipContent side="left" className="bg-slate-800 border-slate-700 text-white text-sm">
+                  <TooltipContent side="left" className="bg-steel-800 border-steel-600 text-white text-sm rounded-none">
                     <p>تسجيل الخروج</p>
                   </TooltipContent>
                 </Tooltip>
@@ -585,17 +608,22 @@ export function Sidebar({ isCollapsed, onToggle, isPinned, onPinToggle, isHoveri
 
         {/* Collapse Toggle (shown when collapsed) */}
         {isCollapsed && (
-          <div className="p-3 border-t border-slate-700/50">
+          <div className="p-3 border-t-2 border-steel-700 relative z-10">
             <Button
               variant="ghost"
               size="icon"
               onClick={onToggle}
-              className="w-full text-slate-400 hover:text-white hover:bg-slate-700/50"
+              className="w-full text-metal-400 hover:text-white hover:bg-steel-700 rounded-none border border-transparent hover:border-steel-600"
             >
               <ChevronRight size={18} />
             </Button>
           </div>
         )}
+
+        {/* Decorative Gear */}
+        <div className="absolute bottom-20 left-4 opacity-5 pointer-events-none">
+          <Cog size={60} className="text-primary" />
+        </div>
       </motion.aside>
     </TooltipProvider>
   );
@@ -646,7 +674,7 @@ export function MobileSidebar() {
         variant="ghost"
         size="icon"
         onClick={() => setIsOpen(true)}
-        className="lg:hidden text-gray-600 hover:text-primary hover:bg-gray-100"
+        className="lg:hidden text-steel-600 hover:text-primary hover:bg-steel-100 rounded-none"
       >
         <Menu size={24} />
       </Button>
@@ -659,7 +687,7 @@ export function MobileSidebar() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3, ease: 'easeOut' }}
-            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 lg:hidden"
+            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 lg:hidden"
             onClick={() => setIsOpen(false)}
           />
         )}
@@ -673,52 +701,71 @@ export function MobileSidebar() {
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
             transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
-            className="fixed top-0 right-0 z-50 h-screen w-80 bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 border-l border-slate-700/50 lg:hidden flex flex-col"
+            className="fixed top-0 right-0 z-50 h-screen w-80 bg-steel-900 border-l-2 border-primary lg:hidden flex flex-col"
           >
+            {/* Industrial Grid Pattern */}
+            <div className="absolute inset-0 opacity-[0.03] pointer-events-none">
+              <div
+                className="absolute inset-0"
+                style={{
+                  backgroundImage: `
+                    linear-gradient(rgba(212, 160, 10, 0.5) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(212, 160, 10, 0.5) 1px, transparent 1px)
+                  `,
+                  backgroundSize: '20px 20px',
+                }}
+              />
+            </div>
+
+            {/* Top Gold Border */}
+            <div className="absolute top-0 left-0 right-0 h-1 bg-primary" />
+
             {/* Header */}
-            <div className="h-16 flex items-center justify-between px-4 border-b border-slate-700/50">
+            <div className="h-16 flex items-center justify-between px-4 border-b-2 border-steel-700 relative z-10">
               <Link href="/admin" className="flex items-center gap-3" onClick={() => setIsOpen(false)}>
                 <div className="relative">
+                  <div className="absolute inset-0 border-2 border-primary" />
                   <Image
                     src="/images/logo.jpg"
                     alt="S.N.A"
                     width={40}
                     height={40}
-                    className="rounded-xl ring-2 ring-primary/30"
+                    className="relative z-10"
                   />
                 </div>
                 <div>
-                  <span className="font-bold text-white">لوحة التحكم</span>
-                  <p className="text-xs text-slate-400">S.N.A Al-Attal</p>
+                  <span className="font-bold text-white uppercase tracking-wider">لوحة التحكم</span>
+                  <p className="text-xs text-primary font-semibold">S.N.A Al-Attal</p>
                 </div>
               </Link>
               <Button
                 variant="ghost"
                 size="icon"
                 onClick={() => setIsOpen(false)}
-                className="text-slate-400 hover:text-white hover:bg-slate-700/50"
+                className="text-metal-400 hover:text-white hover:bg-steel-700 rounded-none"
               >
                 <X size={20} />
               </Button>
             </div>
 
             {/* Search */}
-            <div className="px-4 py-3 border-b border-slate-700/50">
+            <div className="px-4 py-3 border-b-2 border-steel-700 relative z-10">
               <div className="flex items-center gap-2">
                 <div className="relative flex-1">
-                  <Search className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
+                  <Search className="absolute right-3 top-1/2 -translate-y-1/2 text-metal-500" size={16} />
                   <Input
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     placeholder="بحث..."
-                    className="w-full pr-9 bg-slate-800/50 border-slate-600/50 text-white placeholder:text-slate-500 h-9 text-sm"
+                    variant="industrial"
+                    className="w-full pr-9 h-9 text-sm"
                   />
                 </div>
                 <Button
                   variant="ghost"
                   size="icon"
                   onClick={allCollapsed ? expandAll : collapseAll}
-                  className="h-9 w-9 text-slate-400 hover:text-white hover:bg-slate-700/50 flex-shrink-0"
+                  className="h-9 w-9 text-metal-400 hover:text-white hover:bg-steel-700 flex-shrink-0 rounded-none"
                 >
                   {allCollapsed ? <ChevronsUpDown size={16} /> : <ChevronsDownUp size={16} />}
                 </Button>
@@ -726,7 +773,7 @@ export function MobileSidebar() {
             </div>
 
             {/* Navigation */}
-            <nav className="flex-1 overflow-y-auto py-4 px-3">
+            <nav className="flex-1 overflow-y-auto py-4 px-3 relative z-10">
               {filteredCategories.map((category) => (
                 <div key={category.id} className="mb-2">
                   <Collapsible
@@ -734,10 +781,10 @@ export function MobileSidebar() {
                     onOpenChange={() => !searchQuery && toggleCategory(category.id)}
                   >
                     <CollapsibleTrigger className="w-full">
-                      <div className="flex items-center justify-between px-3 py-2 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-700/30 transition-all duration-200">
+                      <div className="flex items-center justify-between px-3 py-2 text-metal-400 hover:text-primary hover:bg-steel-800 transition-all duration-200 border-r-2 border-transparent hover:border-primary">
                         <div className="flex items-center gap-2">
                           <category.icon size={15} />
-                          <span className="text-xs font-semibold uppercase tracking-wider">
+                          <span className="text-xs font-bold uppercase tracking-widest">
                             {category.title}
                           </span>
                         </div>
@@ -758,14 +805,14 @@ export function MobileSidebar() {
                               href={item.href}
                               onClick={() => setIsOpen(false)}
                               className={cn(
-                                'flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-300',
+                                'flex items-center gap-3 px-3 py-2.5 transition-all duration-300 border-r-2',
                                 isActive(item.href)
-                                  ? 'bg-gradient-to-l from-primary/20 to-primary/5 text-primary border-r-2 border-primary'
-                                  : 'text-slate-300 hover:text-white hover:bg-slate-700/50'
+                                  ? 'bg-primary/10 text-primary border-primary'
+                                  : 'text-metal-300 hover:text-white hover:bg-steel-800 border-transparent hover:border-steel-600'
                               )}
                             >
                               <item.icon size={18} className={cn(
-                                isActive(item.href) ? 'text-primary' : 'text-slate-400'
+                                isActive(item.href) ? 'text-primary' : 'text-metal-500'
                               )} />
                               <span className="text-sm font-medium">{item.title}</span>
                             </Link>
@@ -777,7 +824,7 @@ export function MobileSidebar() {
                 </div>
               ))}
 
-              <div className="my-4 border-t border-slate-700/50" />
+              <div className="my-4 border-t-2 border-steel-700" />
 
               <ul className="space-y-1">
                 {bottomMenuItems.map((item) => (
@@ -786,14 +833,14 @@ export function MobileSidebar() {
                       href={item.href}
                       onClick={() => setIsOpen(false)}
                       className={cn(
-                        'flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-300',
+                        'flex items-center gap-3 px-3 py-2.5 transition-all duration-300 border-r-2',
                         isActive(item.href)
-                          ? 'bg-gradient-to-l from-primary/20 to-primary/5 text-primary border-r-2 border-primary'
-                          : 'text-slate-300 hover:text-white hover:bg-slate-700/50'
+                          ? 'bg-primary/10 text-primary border-primary'
+                          : 'text-metal-300 hover:text-white hover:bg-steel-800 border-transparent hover:border-steel-600'
                       )}
                     >
                       <item.icon size={18} className={cn(
-                        isActive(item.href) ? 'text-primary' : 'text-slate-400'
+                        isActive(item.href) ? 'text-primary' : 'text-metal-500'
                       )} />
                       <span className="text-sm font-medium">{item.title}</span>
                     </Link>
@@ -803,19 +850,19 @@ export function MobileSidebar() {
             </nav>
 
             {/* User Section */}
-            <div className="p-4 border-t border-slate-700/50">
+            <div className="p-4 border-t-2 border-steel-700 relative z-10">
               <div className="flex items-center gap-3">
                 <div className="relative">
-                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary/30 to-primary/10 flex items-center justify-center ring-2 ring-primary/20">
+                  <div className="w-10 h-10 bg-steel-800 border-2 border-primary/50 flex items-center justify-center">
                     <UserCircle className="text-primary" size={22} />
                   </div>
-                  <div className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-emerald-500 rounded-full border-2 border-slate-900" />
+                  <div className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-green-500 border-2 border-steel-900" />
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-semibold text-white truncate">
                     {session?.user?.name || 'مدير النظام'}
                   </p>
-                  <p className="text-xs text-slate-400 truncate">
+                  <p className="text-xs text-metal-400 truncate">
                     {session?.user?.email}
                   </p>
                 </div>
@@ -823,7 +870,7 @@ export function MobileSidebar() {
                   variant="ghost"
                   size="icon"
                   onClick={() => signOut({ callbackUrl: '/admin/login' })}
-                  className="text-slate-400 hover:text-red-400 hover:bg-red-400/10 h-9 w-9"
+                  className="text-metal-400 hover:text-red-400 hover:bg-red-400/10 h-9 w-9 rounded-none"
                 >
                   <LogOut size={18} />
                 </Button>

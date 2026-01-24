@@ -15,7 +15,8 @@ import {
   Users,
   ImageIcon,
   RefreshCw,
-  X
+  X,
+  Cog,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -36,7 +37,6 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-  CommandSeparator,
 } from '@/components/ui/command';
 import { cn } from '@/lib/utils';
 
@@ -139,7 +139,10 @@ export function Header({ isCollapsed }: HeaderProps) {
 
   return (
     <>
-      <header className="sticky top-0 z-30 bg-white/80 backdrop-blur-xl border-b border-gray-100 shadow-sm">
+      <header className="sticky top-0 z-30 bg-white border-b-2 border-metal-200 shadow-sm">
+        {/* Top Gold Accent Line */}
+        <div className="h-1 bg-gradient-to-r from-primary via-primary/80 to-primary" />
+
         <div className="h-16 flex items-center justify-between px-4 sm:px-6">
           {/* Right Side - Mobile Menu & Breadcrumbs */}
           <div className="flex items-center gap-4">
@@ -149,22 +152,22 @@ export function Header({ isCollapsed }: HeaderProps) {
             <nav className="hidden md:flex items-center gap-2 text-sm">
               <Link
                 href="/admin"
-                className="flex items-center gap-1.5 text-gray-500 hover:text-primary transition-colors p-1.5 rounded-lg hover:bg-gray-100"
+                className="flex items-center gap-1.5 text-metal-500 hover:text-primary transition-colors p-1.5 hover:bg-metal-100"
               >
                 <Home size={16} />
                 <span className="hidden lg:inline">الرئيسية</span>
               </Link>
               {breadcrumbs.map((crumb, index) => (
                 <div key={crumb.href} className="flex items-center gap-2">
-                  <ChevronLeft size={14} className="text-gray-400 rtl:rotate-180" />
+                  <ChevronLeft size={14} className="text-metal-400 rtl:rotate-180" />
                   {index === breadcrumbs.length - 1 ? (
-                    <span className="text-gray-900 font-semibold bg-primary/10 px-3 py-1 rounded-full">
+                    <span className="text-steel-900 font-bold uppercase tracking-wider bg-primary/10 px-3 py-1 border-l-2 border-primary">
                       {crumb.label}
                     </span>
                   ) : (
                     <Link
                       href={crumb.href}
-                      className="text-gray-500 hover:text-primary transition-colors"
+                      className="text-metal-500 hover:text-primary transition-colors"
                     >
                       {crumb.label}
                     </Link>
@@ -174,7 +177,7 @@ export function Header({ isCollapsed }: HeaderProps) {
             </nav>
 
             {/* Mobile Title */}
-            <h1 className="md:hidden text-lg font-bold text-gray-900">{getPageTitle()}</h1>
+            <h1 className="md:hidden text-lg font-bold text-steel-900 uppercase tracking-wider">{getPageTitle()}</h1>
           </div>
 
           {/* Left Side - Actions */}
@@ -184,11 +187,11 @@ export function Header({ isCollapsed }: HeaderProps) {
               variant="outline"
               size="sm"
               onClick={() => setCommandOpen(true)}
-              className="hidden sm:flex items-center gap-2 text-gray-500 border-gray-200 hover:border-primary/50 hover:bg-gray-50 w-48 lg:w-64 justify-start"
+              className="hidden sm:flex items-center gap-2 text-metal-500 border-metal-200 hover:border-primary/50 hover:bg-metal-50 w-48 lg:w-64 justify-start rounded-none"
             >
               <Search size={16} />
-              <span className="text-gray-400">بحث سريع...</span>
-              <kbd className="mr-auto hidden lg:inline-flex h-5 items-center gap-1 rounded border bg-gray-100 px-1.5 font-mono text-[10px] text-gray-500">
+              <span className="text-metal-400">بحث سريع...</span>
+              <kbd className="mr-auto hidden lg:inline-flex h-5 items-center gap-1 border border-metal-200 bg-metal-100 px-1.5 font-mono text-[10px] text-metal-500">
                 ⌘K
               </kbd>
             </Button>
@@ -198,7 +201,7 @@ export function Header({ isCollapsed }: HeaderProps) {
               variant="ghost"
               size="icon"
               onClick={() => setCommandOpen(true)}
-              className="sm:hidden text-gray-500 hover:text-primary"
+              className="sm:hidden text-metal-500 hover:text-primary rounded-none"
             >
               <Search size={20} />
             </Button>
@@ -209,7 +212,7 @@ export function Header({ isCollapsed }: HeaderProps) {
               size="icon"
               onClick={handleRefresh}
               disabled={isRefreshing}
-              className="text-gray-500 hover:text-primary hover:bg-gray-100"
+              className="text-metal-500 hover:text-primary hover:bg-metal-100 rounded-none"
             >
               <RefreshCw size={18} className={cn(isRefreshing && 'animate-spin')} />
             </Button>
@@ -218,25 +221,26 @@ export function Header({ isCollapsed }: HeaderProps) {
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button
+                  variant="industrial"
                   size="sm"
-                  className="hidden sm:flex bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 text-slate-900 font-medium shadow-md shadow-primary/20"
+                  className="hidden sm:flex"
                 >
                   <Plus size={16} className="ml-1.5 rtl:ml-0 rtl:mr-1.5" />
                   إضافة جديد
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-52 bg-white border-gray-200 shadow-xl">
-                <DropdownMenuLabel className="text-gray-500 text-xs uppercase tracking-wider">
+              <DropdownMenuContent align="end" className="w-52 bg-white border-2 border-metal-200 shadow-xl rounded-none">
+                <DropdownMenuLabel className="text-metal-500 text-xs uppercase tracking-widest font-bold">
                   إضافة سريعة
                 </DropdownMenuLabel>
-                <DropdownMenuSeparator className="bg-gray-100" />
+                <DropdownMenuSeparator className="bg-metal-200" />
                 {quickActions.map((action) => (
                   <DropdownMenuItem key={action.href} asChild>
                     <Link
                       href={action.href}
-                      className="flex items-center gap-3 text-gray-700 hover:text-primary cursor-pointer py-2.5"
+                      className="flex items-center gap-3 text-steel-700 hover:text-primary cursor-pointer py-2.5 rounded-none"
                     >
-                      <div className="p-1.5 rounded-lg bg-primary/10">
+                      <div className="p-1.5 bg-primary/10 border border-primary/20">
                         <action.icon size={16} className="text-primary" />
                       </div>
                       {action.label}
@@ -250,16 +254,17 @@ export function Header({ isCollapsed }: HeaderProps) {
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button
+                  variant="industrial"
                   size="icon"
-                  className="sm:hidden bg-primary hover:bg-primary/90 text-slate-900"
+                  className="sm:hidden"
                 >
                   <Plus size={20} />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-52 bg-white border-gray-200">
+              <DropdownMenuContent align="end" className="w-52 bg-white border-2 border-metal-200 rounded-none">
                 {quickActions.map((action) => (
                   <DropdownMenuItem key={action.href} asChild>
-                    <Link href={action.href} className="flex items-center gap-3">
+                    <Link href={action.href} className="flex items-center gap-3 rounded-none">
                       <action.icon size={16} className="text-primary" />
                       {action.label}
                     </Link>
@@ -274,59 +279,59 @@ export function Header({ isCollapsed }: HeaderProps) {
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="relative text-gray-500 hover:text-primary hover:bg-gray-100"
+                  className="relative text-metal-500 hover:text-primary hover:bg-metal-100 rounded-none"
                 >
                   <Bell size={20} />
-                  <span className="absolute top-1.5 right-1.5 rtl:right-auto rtl:left-1.5 w-2 h-2 bg-red-500 rounded-full animate-pulse" />
+                  <span className="absolute top-1.5 right-1.5 rtl:right-auto rtl:left-1.5 w-2 h-2 bg-red-500" />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-80 bg-white border-gray-200 shadow-xl">
+              <DropdownMenuContent align="end" className="w-80 bg-white border-2 border-metal-200 shadow-xl rounded-none">
                 <DropdownMenuLabel className="flex items-center justify-between">
-                  <span className="text-gray-700 font-semibold">الإشعارات</span>
-                  <Badge variant="secondary" className="bg-primary/10 text-primary text-xs">
+                  <span className="text-steel-700 font-bold uppercase tracking-wider">الإشعارات</span>
+                  <Badge variant="industrial" className="text-xs">
                     3 جديدة
                   </Badge>
                 </DropdownMenuLabel>
-                <DropdownMenuSeparator className="bg-gray-100" />
+                <DropdownMenuSeparator className="bg-metal-200" />
                 <div className="max-h-80 overflow-y-auto">
                   {/* Notification Items */}
-                  <div className="p-3 hover:bg-gray-50 cursor-pointer border-b border-gray-100">
+                  <div className="p-3 hover:bg-metal-50 cursor-pointer border-b border-metal-100">
                     <div className="flex gap-3">
-                      <div className="p-2 rounded-full bg-blue-100">
+                      <div className="p-2 bg-blue-100 border border-blue-200">
                         <Package size={16} className="text-blue-600" />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <p className="text-sm font-medium text-gray-900">منتج جديد تمت إضافته</p>
-                        <p className="text-xs text-gray-500 mt-0.5">منذ 5 دقائق</p>
+                        <p className="text-sm font-medium text-steel-900">منتج جديد تمت إضافته</p>
+                        <p className="text-xs text-metal-500 mt-0.5">منذ 5 دقائق</p>
                       </div>
                     </div>
                   </div>
-                  <div className="p-3 hover:bg-gray-50 cursor-pointer border-b border-gray-100">
+                  <div className="p-3 hover:bg-metal-50 cursor-pointer border-b border-metal-100">
                     <div className="flex gap-3">
-                      <div className="p-2 rounded-full bg-green-100">
+                      <div className="p-2 bg-green-100 border border-green-200">
                         <Users size={16} className="text-green-600" />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <p className="text-sm font-medium text-gray-900">رسالة جديدة من عميل</p>
-                        <p className="text-xs text-gray-500 mt-0.5">منذ 15 دقيقة</p>
+                        <p className="text-sm font-medium text-steel-900">رسالة جديدة من عميل</p>
+                        <p className="text-xs text-metal-500 mt-0.5">منذ 15 دقيقة</p>
                       </div>
                     </div>
                   </div>
-                  <div className="p-3 hover:bg-gray-50 cursor-pointer">
+                  <div className="p-3 hover:bg-metal-50 cursor-pointer">
                     <div className="flex gap-3">
-                      <div className="p-2 rounded-full bg-purple-100">
+                      <div className="p-2 bg-purple-100 border border-purple-200">
                         <Newspaper size={16} className="text-purple-600" />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <p className="text-sm font-medium text-gray-900">تم نشر خبر جديد</p>
-                        <p className="text-xs text-gray-500 mt-0.5">منذ ساعة</p>
+                        <p className="text-sm font-medium text-steel-900">تم نشر خبر جديد</p>
+                        <p className="text-xs text-metal-500 mt-0.5">منذ ساعة</p>
                       </div>
                     </div>
                   </div>
                 </div>
-                <DropdownMenuSeparator className="bg-gray-100" />
+                <DropdownMenuSeparator className="bg-metal-200" />
                 <div className="p-2">
-                  <Button variant="ghost" size="sm" className="w-full text-primary hover:bg-primary/10">
+                  <Button variant="ghost" size="sm" className="w-full text-primary hover:bg-primary/10 rounded-none">
                     عرض كل الإشعارات
                   </Button>
                 </div>
@@ -338,7 +343,7 @@ export function Header({ isCollapsed }: HeaderProps) {
               <Button
                 variant="outline"
                 size="sm"
-                className="hidden lg:flex items-center gap-2 border-gray-200 text-gray-600 hover:text-primary hover:border-primary/50"
+                className="hidden lg:flex items-center gap-2 border-metal-200 text-metal-600 hover:text-primary hover:border-primary/50 rounded-none"
               >
                 <ExternalLink size={14} />
                 زيارة الموقع
@@ -364,7 +369,7 @@ export function Header({ isCollapsed }: HeaderProps) {
                   }}
                   className="flex items-center gap-3 cursor-pointer"
                 >
-                  <item.icon size={16} className="text-gray-500" />
+                  <item.icon size={16} className="text-metal-500" />
                   <span>{item.label}</span>
                 </CommandItem>
               ))}

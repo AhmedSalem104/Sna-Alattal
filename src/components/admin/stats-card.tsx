@@ -2,7 +2,6 @@
 
 import { cn } from '@/lib/utils';
 import { LucideIcon, TrendingUp, TrendingDown } from 'lucide-react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 interface StatsCardProps {
   title: string;
@@ -25,24 +24,39 @@ export function StatsCard({
   className,
 }: StatsCardProps) {
   return (
-    <Card className={cn('bg-gray-50 border-gray-200', className)}>
-      <CardHeader className="flex flex-row items-center justify-between pb-2">
-        <CardTitle className="text-sm font-medium text-gray-600">
-          {title}
-        </CardTitle>
-        <div className="p-2 bg-primary/10 rounded-lg">
-          <Icon className="h-4 w-4 text-primary" />
+    <div className={cn(
+      'relative bg-white border-2 border-metal-200 overflow-hidden group hover:border-primary transition-colors',
+      className
+    )}>
+      {/* Gold Accent Bar */}
+      <div className="absolute top-0 left-0 w-1 h-full bg-primary" />
+
+      {/* Industrial Corner Accent */}
+      <div className="absolute top-0 right-0 w-8 h-8 overflow-hidden">
+        <div className="absolute top-0 right-0 w-12 h-12 bg-primary/10 transform rotate-45 translate-x-6 -translate-y-6" />
+      </div>
+
+      <div className="p-6">
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="text-sm font-bold text-metal-500 uppercase tracking-wider">
+            {title}
+          </h3>
+          <div className="p-2 bg-primary/10 border border-primary/20">
+            <Icon className="h-5 w-5 text-primary" />
+          </div>
         </div>
-      </CardHeader>
-      <CardContent>
-        <div className="text-3xl font-bold text-gray-900">{value}</div>
+
+        <div className="text-3xl font-bold text-steel-900 font-mono">{value}</div>
+
         {(description || trend) && (
-          <div className="flex items-center gap-2 mt-2">
+          <div className="flex items-center gap-2 mt-3 pt-3 border-t border-metal-100">
             {trend && (
               <span
                 className={cn(
-                  'flex items-center text-xs font-medium',
-                  trend.isPositive ? 'text-green-400' : 'text-red-400'
+                  'flex items-center text-xs font-bold px-2 py-0.5',
+                  trend.isPositive
+                    ? 'text-green-600 bg-green-50 border border-green-200'
+                    : 'text-red-600 bg-red-50 border border-red-200'
                 )}
               >
                 {trend.isPositive ? (
@@ -54,11 +68,11 @@ export function StatsCard({
               </span>
             )}
             {description && (
-              <span className="text-xs text-gray-600">{description}</span>
+              <span className="text-xs text-metal-500">{description}</span>
             )}
           </div>
         )}
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 }

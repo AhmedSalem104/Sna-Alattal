@@ -14,9 +14,9 @@ import {
   ArrowLeft,
   Calendar,
   Clock,
+  Cog,
 } from 'lucide-react';
 import { StatsCard } from '@/components/admin';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 
 interface DashboardStats {
@@ -78,13 +78,31 @@ export default function DashboardPage() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
+        className="relative bg-white border-2 border-metal-200 p-6 overflow-hidden"
       >
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">
-          مرحباً، {session?.user?.name}
-        </h1>
-        <p className="text-gray-600">
-          مرحباً بك في لوحة تحكم S.N.A العطال للصناعات الهندسية
-        </p>
+        {/* Gold Accent Bar */}
+        <div className="absolute top-0 left-0 w-1 h-full bg-primary" />
+
+        {/* Decorative Gear */}
+        <div className="absolute top-4 left-4 opacity-5">
+          <Cog size={80} className="text-primary" />
+        </div>
+
+        <div className="relative z-10">
+          <h1 className="text-3xl font-bold text-steel-900 uppercase tracking-wider mb-2">
+            مرحباً، {session?.user?.name}
+          </h1>
+          <p className="text-metal-600">
+            مرحباً بك في لوحة تحكم <span className="text-primary font-semibold">S.N.A العطال</span> للصناعات الهندسية
+          </p>
+        </div>
+
+        {/* Gold Divider */}
+        <div className="flex items-center gap-4 mt-4">
+          <div className="h-0.5 w-16 bg-primary" />
+          <div className="h-0.5 w-8 bg-primary/50" />
+          <div className="h-0.5 w-4 bg-primary/25" />
+        </div>
       </motion.div>
 
       {/* Stats Cards */}
@@ -131,27 +149,32 @@ export default function DashboardPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
         >
-          <Card className="bg-gray-50 border-gray-200 h-full">
-            <CardHeader>
-              <CardTitle className="text-lg text-gray-900">روابط سريعة</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-2">
-              {quickLinks.map((link) => (
-                <Link key={link.href} href={link.href}>
-                  <Button
-                    variant="ghost"
-                    className="w-full justify-between text-gray-700 hover:text-primary hover:bg-gray-100"
-                  >
-                    <span className="flex items-center gap-3">
-                      <link.icon size={18} className="text-primary" />
-                      {link.label}
-                    </span>
-                    <ArrowLeft size={16} />
-                  </Button>
-                </Link>
-              ))}
-            </CardContent>
-          </Card>
+          <div className="bg-white border-2 border-metal-200 h-full relative">
+            {/* Gold Accent Bar */}
+            <div className="absolute top-0 left-0 w-full h-1 bg-primary" />
+
+            <div className="p-6">
+              <h2 className="text-lg font-bold text-steel-900 uppercase tracking-wider mb-4">روابط سريعة</h2>
+              <div className="space-y-2">
+                {quickLinks.map((link) => (
+                  <Link key={link.href} href={link.href}>
+                    <Button
+                      variant="ghost"
+                      className="w-full justify-between text-steel-700 hover:text-primary hover:bg-primary/5 rounded-none border-r-2 border-transparent hover:border-primary"
+                    >
+                      <span className="flex items-center gap-3">
+                        <div className="p-1.5 bg-primary/10 border border-primary/20">
+                          <link.icon size={16} className="text-primary" />
+                        </div>
+                        {link.label}
+                      </span>
+                      <ArrowLeft size={16} />
+                    </Button>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </div>
         </motion.div>
 
         {/* Recent Activity */}
@@ -161,32 +184,36 @@ export default function DashboardPage() {
           transition={{ duration: 0.5, delay: 0.3 }}
           className="lg:col-span-2"
         >
-          <Card className="bg-gray-50 border-gray-200 h-full">
-            <CardHeader className="flex flex-row items-center justify-between">
-              <CardTitle className="text-lg text-gray-900">النشاط الأخير</CardTitle>
-              <Link href="/admin/activity">
-                <Button variant="ghost" size="sm" className="text-primary">
-                  عرض الكل
-                </Button>
-              </Link>
-            </CardHeader>
-            <CardContent>
+          <div className="bg-white border-2 border-metal-200 h-full relative">
+            {/* Gold Accent Bar */}
+            <div className="absolute top-0 left-0 w-full h-1 bg-primary" />
+
+            <div className="p-6">
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-lg font-bold text-steel-900 uppercase tracking-wider">النشاط الأخير</h2>
+                <Link href="/admin/activity">
+                  <Button variant="ghost" size="sm" className="text-primary hover:bg-primary/10 rounded-none">
+                    عرض الكل
+                  </Button>
+                </Link>
+              </div>
+
               {recentActivities.length > 0 ? (
-                <div className="space-y-4">
+                <div className="space-y-3">
                   {recentActivities.map((activity) => (
                     <div
                       key={activity.id}
-                      className="flex items-center gap-4 p-3 rounded-lg bg-white hover:bg-gray-100 transition-colors"
+                      className="flex items-center gap-4 p-3 bg-metal-50 border border-metal-100 hover:border-primary/30 transition-colors"
                     >
-                      <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center">
+                      <div className="w-10 h-10 bg-primary/10 border border-primary/20 flex items-center justify-center">
                         <Clock className="text-primary" size={18} />
                       </div>
                       <div className="flex-1">
-                        <p className="text-gray-900 text-sm">
-                          <span className="text-primary">{activity.action}</span>{' '}
+                        <p className="text-steel-900 text-sm">
+                          <span className="text-primary font-semibold">{activity.action}</span>{' '}
                           {activity.entity}: {activity.entityName}
                         </p>
-                        <p className="text-gray-600 text-xs flex items-center gap-1 mt-1">
+                        <p className="text-metal-500 text-xs flex items-center gap-1 mt-1">
                           <Calendar size={12} />
                           {new Date(activity.createdAt).toLocaleDateString('ar-EG', {
                             year: 'numeric',
@@ -201,13 +228,13 @@ export default function DashboardPage() {
                   ))}
                 </div>
               ) : (
-                <div className="text-center py-8 text-gray-600">
+                <div className="text-center py-8 text-metal-500">
                   <Clock className="mx-auto mb-2 opacity-50" size={40} />
-                  <p>لا يوجد نشاط حديث</p>
+                  <p className="uppercase tracking-wider text-sm">لا يوجد نشاط حديث</p>
                 </div>
               )}
-            </CardContent>
-          </Card>
+            </div>
+          </div>
         </motion.div>
       </div>
 
@@ -217,22 +244,26 @@ export default function DashboardPage() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.4 }}
       >
-        <Card className="bg-gray-50 border-gray-200">
-          <CardHeader className="flex flex-row items-center justify-between">
-            <CardTitle className="text-lg text-gray-900">آخر الرسائل</CardTitle>
-            <Link href="/admin/messages">
-              <Button variant="ghost" size="sm" className="text-primary">
-                عرض الكل
-              </Button>
-            </Link>
-          </CardHeader>
-          <CardContent>
-            <div className="text-center py-8 text-gray-600">
-              <MessageSquare className="mx-auto mb-2 opacity-50" size={40} />
-              <p>لا توجد رسائل جديدة</p>
+        <div className="bg-white border-2 border-metal-200 relative">
+          {/* Gold Accent Bar */}
+          <div className="absolute top-0 left-0 w-full h-1 bg-primary" />
+
+          <div className="p-6">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-lg font-bold text-steel-900 uppercase tracking-wider">آخر الرسائل</h2>
+              <Link href="/admin/messages">
+                <Button variant="ghost" size="sm" className="text-primary hover:bg-primary/10 rounded-none">
+                  عرض الكل
+                </Button>
+              </Link>
             </div>
-          </CardContent>
-        </Card>
+
+            <div className="text-center py-8 text-metal-500 bg-metal-50 border border-metal-100">
+              <MessageSquare className="mx-auto mb-2 opacity-50" size={40} />
+              <p className="uppercase tracking-wider text-sm">لا توجد رسائل جديدة</p>
+            </div>
+          </div>
+        </div>
       </motion.div>
 
       {/* System Info */}
@@ -242,47 +273,50 @@ export default function DashboardPage() {
         transition={{ duration: 0.5, delay: 0.5 }}
         className="grid grid-cols-1 md:grid-cols-3 gap-6"
       >
-        <Card className="bg-gray-50 border-gray-200">
-          <CardContent className="pt-6">
+        <div className="bg-white border-2 border-metal-200 relative">
+          <div className="absolute top-0 left-0 w-full h-1 bg-green-500" />
+          <div className="p-6">
             <div className="flex items-center gap-4">
-              <div className="w-12 h-12 rounded-full bg-green-500/20 flex items-center justify-center">
-                <div className="w-3 h-3 rounded-full bg-green-500" />
+              <div className="w-12 h-12 bg-green-50 border border-green-200 flex items-center justify-center">
+                <div className="w-3 h-3 bg-green-500 animate-pulse" />
               </div>
               <div>
-                <p className="text-gray-900 font-medium">حالة النظام</p>
-                <p className="text-green-400 text-sm">يعمل بشكل طبيعي</p>
+                <p className="text-steel-900 font-bold uppercase tracking-wider">حالة النظام</p>
+                <p className="text-green-600 text-sm font-semibold">يعمل بشكل طبيعي</p>
               </div>
             </div>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
 
-        <Card className="bg-gray-50 border-gray-200">
-          <CardContent className="pt-6">
+        <div className="bg-white border-2 border-metal-200 relative">
+          <div className="absolute top-0 left-0 w-full h-1 bg-primary" />
+          <div className="p-6">
             <div className="flex items-center gap-4">
-              <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center">
+              <div className="w-12 h-12 bg-primary/10 border border-primary/20 flex items-center justify-center">
                 <Eye className="text-primary" size={20} />
               </div>
               <div>
-                <p className="text-gray-900 font-medium">زيارات اليوم</p>
-                <p className="text-gray-600 text-sm">قريباً</p>
+                <p className="text-steel-900 font-bold uppercase tracking-wider">زيارات اليوم</p>
+                <p className="text-metal-500 text-sm">قريباً</p>
               </div>
             </div>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
 
-        <Card className="bg-gray-50 border-gray-200">
-          <CardContent className="pt-6">
+        <div className="bg-white border-2 border-metal-200 relative">
+          <div className="absolute top-0 left-0 w-full h-1 bg-primary" />
+          <div className="p-6">
             <div className="flex items-center gap-4">
-              <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center">
+              <div className="w-12 h-12 bg-primary/10 border border-primary/20 flex items-center justify-center">
                 <TrendingUp className="text-primary" size={20} />
               </div>
               <div>
-                <p className="text-gray-900 font-medium">أداء الموقع</p>
-                <p className="text-gray-600 text-sm">ممتاز</p>
+                <p className="text-steel-900 font-bold uppercase tracking-wider">أداء الموقع</p>
+                <p className="text-metal-500 text-sm">ممتاز</p>
               </div>
             </div>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
       </motion.div>
     </div>
   );

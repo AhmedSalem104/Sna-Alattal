@@ -10,8 +10,7 @@ import { z } from 'zod';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Loader2, Eye, EyeOff } from 'lucide-react';
+import { Loader2, Eye, EyeOff, Cog, Lock, Mail } from 'lucide-react';
 import { toast } from 'sonner';
 
 const loginSchema = z.object({
@@ -61,75 +60,114 @@ export default function AdminLoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-white p-4">
-      <Card className="w-full max-w-md bg-gray-50 border-gray-200">
-        <CardHeader className="text-center">
-          <div className="mx-auto mb-4">
+    <div className="min-h-screen flex items-center justify-center bg-steel-900 p-4 relative overflow-hidden">
+      {/* Industrial Grid Pattern */}
+      <div className="absolute inset-0 opacity-[0.03]">
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage: `
+              linear-gradient(rgba(212, 160, 10, 0.5) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(212, 160, 10, 0.5) 1px, transparent 1px)
+            `,
+            backgroundSize: '50px 50px',
+          }}
+        />
+      </div>
+
+      {/* Decorative Gears */}
+      <div className="absolute top-20 left-20 opacity-5">
+        <Cog size={200} className="text-primary animate-spin" style={{ animationDuration: '30s' }} />
+      </div>
+      <div className="absolute bottom-20 right-20 opacity-5">
+        <Cog size={150} className="text-primary animate-spin" style={{ animationDuration: '25s', animationDirection: 'reverse' }} />
+      </div>
+
+      {/* Login Card */}
+      <div className="w-full max-w-md bg-white border-2 border-metal-200 shadow-2xl relative z-10">
+        {/* Top Gold Border */}
+        <div className="h-1 bg-primary" />
+
+        {/* Header */}
+        <div className="text-center px-8 pt-8 pb-6 border-b border-metal-200">
+          <div className="mx-auto mb-4 relative inline-block">
+            {/* Corner Accents */}
+            <div className="absolute -top-2 -left-2 w-4 h-4 border-t-2 border-l-2 border-primary" />
+            <div className="absolute -top-2 -right-2 w-4 h-4 border-t-2 border-r-2 border-primary" />
+            <div className="absolute -bottom-2 -left-2 w-4 h-4 border-b-2 border-l-2 border-primary" />
+            <div className="absolute -bottom-2 -right-2 w-4 h-4 border-b-2 border-r-2 border-primary" />
+
             <Image
               src="/images/logo.jpg"
               alt="S.N.A Al-Attal"
               width={100}
               height={100}
-              className="rounded-lg"
+              className="relative z-10"
             />
           </div>
-          <CardTitle className="text-2xl text-gray-900">لوحة التحكم</CardTitle>
-          <CardDescription className="text-gray-600">
+          <h1 className="text-2xl font-bold text-steel-900 uppercase tracking-wider">لوحة التحكم</h1>
+          <p className="text-metal-500 mt-2">
             قم بتسجيل الدخول للوصول إلى لوحة التحكم
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+          </p>
+        </div>
+
+        {/* Form */}
+        <div className="p-8">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
             <div className="space-y-2">
-              <Label htmlFor="email" className="text-gray-900">
+              <Label htmlFor="email" className="text-steel-900 font-bold uppercase tracking-wider text-xs">
                 البريد الإلكتروني
               </Label>
-              <Input
-                id="email"
-                type="email"
-                placeholder="admin@sna-attal.com"
-                className="bg-white border-gray-300 text-gray-900 placeholder:text-gray-600"
-                {...register('email')}
-              />
+              <div className="relative">
+                <Mail className="absolute right-3 top-1/2 -translate-y-1/2 text-metal-400" size={18} />
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="admin@sna-attal.com"
+                  className="pr-10 bg-metal-50 border-2 border-metal-200 text-steel-900 placeholder:text-metal-400 focus:border-primary rounded-none"
+                  {...register('email')}
+                />
+              </div>
               {errors.email && (
-                <p className="text-sm text-red-500">{errors.email.message}</p>
+                <p className="text-sm text-red-500 border-r-2 border-red-500 pr-2">{errors.email.message}</p>
               )}
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="password" className="text-gray-900">
+              <Label htmlFor="password" className="text-steel-900 font-bold uppercase tracking-wider text-xs">
                 كلمة المرور
               </Label>
               <div className="relative">
+                <Lock className="absolute right-3 top-1/2 -translate-y-1/2 text-metal-400" size={18} />
                 <Input
                   id="password"
                   type={showPassword ? 'text' : 'password'}
                   placeholder="••••••••"
-                  className="bg-white border-gray-300 text-gray-900 placeholder:text-gray-600 pr-10"
+                  className="pr-10 pl-10 bg-metal-50 border-2 border-metal-200 text-steel-900 placeholder:text-metal-400 focus:border-primary rounded-none"
                   {...register('password')}
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-600 hover:text-primary"
+                  className="absolute left-3 top-1/2 -translate-y-1/2 text-metal-500 hover:text-primary transition-colors"
                 >
                   {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                 </button>
               </div>
               {errors.password && (
-                <p className="text-sm text-red-500">{errors.password.message}</p>
+                <p className="text-sm text-red-500 border-r-2 border-red-500 pr-2">{errors.password.message}</p>
               )}
             </div>
 
             <Button
               type="submit"
-              variant="gold"
-              className="w-full"
+              variant="industrial"
+              className="w-full h-12 text-base font-bold uppercase tracking-wider"
               disabled={isLoading}
             >
               {isLoading ? (
                 <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  <Loader2 className="mr-2 h-5 w-5 animate-spin" />
                   جاري تسجيل الدخول...
                 </>
               ) : (
@@ -137,8 +175,15 @@ export default function AdminLoginPage() {
               )}
             </Button>
           </form>
-        </CardContent>
-      </Card>
+        </div>
+
+        {/* Footer */}
+        <div className="px-8 pb-6 text-center">
+          <p className="text-xs text-metal-400 uppercase tracking-wider">
+            S.N.A Al-Attal للصناعات الهندسية
+          </p>
+        </div>
+      </div>
     </div>
   );
 }

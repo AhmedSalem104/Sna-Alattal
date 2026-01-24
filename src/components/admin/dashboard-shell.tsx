@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { Sidebar } from './sidebar';
 import { Header } from './header';
-import { Loader2 } from 'lucide-react';
+import { Loader2, Cog } from 'lucide-react';
 
 interface DashboardShellProps {
   children: React.ReactNode;
@@ -104,17 +104,34 @@ export function DashboardShell({ children }: DashboardShellProps) {
   // Show loading state
   if (status === 'loading') {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 flex items-center justify-center">
-        <div className="flex flex-col items-center gap-4 p-8 bg-white rounded-2xl shadow-xl">
+      <div className="min-h-screen bg-metal-100 flex items-center justify-center relative overflow-hidden">
+        {/* Industrial Grid Pattern */}
+        <div className="absolute inset-0 opacity-[0.03]">
+          <div
+            className="absolute inset-0"
+            style={{
+              backgroundImage: `
+                linear-gradient(rgba(26, 26, 46, 0.3) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(26, 26, 46, 0.3) 1px, transparent 1px)
+              `,
+              backgroundSize: '50px 50px',
+            }}
+          />
+        </div>
+
+        <div className="flex flex-col items-center gap-4 p-8 bg-white border-2 border-metal-200 shadow-xl relative z-10">
+          {/* Gold Accent Bar */}
+          <div className="absolute top-0 left-0 w-full h-1 bg-primary" />
+
           <div className="relative">
             <Loader2 className="h-12 w-12 animate-spin text-primary" />
-            <div className="absolute inset-0 h-12 w-12 animate-ping text-primary/20">
-              <Loader2 className="h-12 w-12" />
+            <div className="absolute -top-4 -right-4 opacity-20">
+              <Cog className="h-8 w-8 text-primary animate-spin" style={{ animationDirection: 'reverse', animationDuration: '3s' }} />
             </div>
           </div>
           <div className="text-center">
-            <p className="text-lg font-semibold text-gray-900">جاري التحميل...</p>
-            <p className="text-sm text-gray-500">يرجى الانتظار</p>
+            <p className="text-lg font-bold text-steel-900 uppercase tracking-wider">جاري التحميل...</p>
+            <p className="text-sm text-metal-500">يرجى الانتظار</p>
           </div>
         </div>
       </div>
@@ -127,7 +144,21 @@ export function DashboardShell({ children }: DashboardShellProps) {
   }
 
   return (
-    <div dir="rtl" className="min-h-screen h-screen bg-gradient-to-br from-slate-50 via-white to-slate-50 flex">
+    <div dir="rtl" className="min-h-screen h-screen bg-metal-100 flex relative">
+      {/* Industrial Grid Pattern */}
+      <div className="absolute inset-0 opacity-[0.02] pointer-events-none">
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage: `
+              linear-gradient(rgba(26, 26, 46, 0.3) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(26, 26, 46, 0.3) 1px, transparent 1px)
+            `,
+            backgroundSize: '50px 50px',
+          }}
+        />
+      </div>
+
       {/* Sidebar - Desktop (on the right side for RTL) */}
       <div
         className="hidden lg:block sticky top-0 h-screen"
@@ -144,7 +175,7 @@ export function DashboardShell({ children }: DashboardShellProps) {
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col min-h-screen">
+      <div className="flex-1 flex flex-col min-h-screen relative z-10">
         <Header isCollapsed={isCollapsed} />
         <main className="flex-1 p-4 sm:p-6 lg:p-8 overflow-y-auto">
           <div className="max-w-7xl mx-auto">

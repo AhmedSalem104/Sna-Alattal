@@ -100,30 +100,38 @@ export function ImageUpload({
       <div
         {...getRootProps()}
         className={cn(
-          'border-2 border-dashed rounded-xl p-6 text-center cursor-pointer transition-all',
+          'border-2 border-dashed p-6 text-center cursor-pointer transition-all relative',
           isDragActive
-            ? 'border-primary bg-primary/10'
-            : 'border-gray-300 hover:border-white/40',
+            ? 'border-primary bg-primary/5'
+            : 'border-metal-300 hover:border-primary/50',
           (disabled || isUploading) && 'opacity-50 cursor-not-allowed',
           multiple && images.length >= maxFiles && 'hidden'
         )}
       >
+        {/* Gold Corner Accent */}
+        <div className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-primary" />
+        <div className="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-primary" />
+        <div className="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-primary" />
+        <div className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-primary" />
+
         <input {...getInputProps()} />
         <div className="flex flex-col items-center gap-2">
           {isUploading ? (
             <>
               <Loader2 className="h-10 w-10 animate-spin text-primary" />
-              <p className="text-gray-600">جاري الرفع...</p>
+              <p className="text-metal-600 font-medium">جاري الرفع...</p>
             </>
           ) : (
             <>
-              <Upload className="h-10 w-10 text-gray-600" />
-              <p className="text-gray-600">
+              <div className="p-3 bg-primary/10 border border-primary/20">
+                <Upload className="h-8 w-8 text-primary" />
+              </div>
+              <p className="text-steel-700 font-medium">
                 {isDragActive
                   ? 'أفلت الصور هنا'
                   : 'اسحب الصور هنا أو انقر للاختيار'}
               </p>
-              <p className="text-xs text-gray-600">
+              <p className="text-xs text-metal-500 uppercase tracking-wider">
                 PNG, JPG, GIF, WEBP (حد أقصى {maxSize / 1024 / 1024}MB)
               </p>
             </>
@@ -137,21 +145,24 @@ export function ImageUpload({
           {images.map((image, index) => (
             <div
               key={index}
-              className="relative aspect-video rounded-xl overflow-hidden bg-gray-50 group"
+              className="relative aspect-video overflow-hidden bg-metal-50 group border-2 border-metal-200"
             >
+              {/* Gold Accent */}
+              <div className="absolute top-0 left-0 w-full h-1 bg-primary z-10" />
+
               <Image
                 src={image}
                 alt={`Uploaded ${index + 1}`}
                 fill
                 className="object-cover"
               />
-              <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+              <div className="absolute inset-0 bg-steel-900/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                 <Button
                   type="button"
                   variant="ghost"
                   size="icon"
                   onClick={() => removeImage(index)}
-                  className="text-gray-900 hover:text-red-400"
+                  className="text-white hover:text-red-400 hover:bg-red-400/20 rounded-none border border-transparent hover:border-red-400/50"
                 >
                   <X size={20} />
                 </Button>
@@ -163,10 +174,13 @@ export function ImageUpload({
 
       {/* No Image Placeholder */}
       {images.length === 0 && !isUploading && (
-        <div className="flex items-center justify-center aspect-video rounded-xl bg-gray-50 border border-gray-200">
-          <div className="text-center text-gray-600">
+        <div className="flex items-center justify-center aspect-video bg-metal-50 border-2 border-metal-200 relative">
+          {/* Gold Accent */}
+          <div className="absolute top-0 left-0 w-full h-1 bg-primary/30" />
+
+          <div className="text-center text-metal-500">
             <ImageIcon className="h-12 w-12 mx-auto mb-2 opacity-50" />
-            <p className="text-sm">لم يتم اختيار صورة</p>
+            <p className="text-sm uppercase tracking-wider">لم يتم اختيار صورة</p>
           </div>
         </div>
       )}
