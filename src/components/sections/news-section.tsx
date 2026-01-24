@@ -194,6 +194,7 @@ export const NewsSection = memo(function NewsSection() {
                         fill
                         sizes="112px"
                         className="object-cover group-hover:scale-110 transition-transform duration-500"
+                        loading="lazy"
                       />
                     </div>
                     <div className="flex-1 min-w-0">

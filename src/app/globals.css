@@ -731,4 +731,48 @@
   .overlay-gold {
     @apply absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent;
   }
+
+  /* ========================================
+     RESPONSIVE HEIGHT UTILITIES
+     ======================================== */
+  .h-map-responsive {
+    @apply h-64 sm:h-80 md:h-96 lg:h-[450px] xl:h-[500px] 2xl:h-[600px];
+  }
+
+  .h-hero-responsive {
+    @apply h-[60vh] sm:h-[70vh] md:h-[80vh] lg:h-screen;
+  }
+
+  .h-section-responsive {
+    @apply min-h-[400px] sm:min-h-[500px] md:min-h-[600px] lg:min-h-[700px];
+  }
+
+  /* ========================================
+     RESPONSIVE WIDTH UTILITIES
+     ======================================== */
+  .w-sidebar-responsive {
+    @apply w-64 md:w-72 lg:w-80;
+  }
+
+  /* ========================================
+     RESPONSIVE GRID UTILITIES
+     ======================================== */
+  .grid-auto-fill-sm {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  }
+
+  .grid-auto-fill-md {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  }
+
+  .grid-auto-fill-lg {
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  }
+
+  /* ========================================
+     SCREEN READER ONLY
+     ======================================== */
+  .sr-only-focusable:focus {
+    @apply not-sr-only;
+  }
 }
