@@ -10,6 +10,13 @@ export default function DashboardLayout({
 }) {
   return (
     <SessionProvider>
+      {/* Skip to main content link for keyboard navigation */}
+      <a
+        href="#admin-main-content"
+        className="skip-to-main"
+      >
+        تخطى إلى المحتوى الرئيسي
+      </a>
       <DashboardShell>{children}</DashboardShell>
     </SessionProvider>
   );

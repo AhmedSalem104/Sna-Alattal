@@ -8,9 +8,18 @@ export default function MainLayout({
 }) {
   return (
     <>
+      {/* Skip to main content link for keyboard navigation */}
+      <a
+        href="#main-content"
+        className="skip-to-main"
+      >
+        تخطى إلى المحتوى الرئيسي
+      </a>
       <OnboardingExperience />
       <Navbar />
-      <main>{children}</main>
+      <main id="main-content" tabIndex={-1}>
+        {children}
+      </main>
       <Footer />
     </>
   );
