@@ -167,7 +167,11 @@
     "followUs": "Follow Us",
     "rights": "All Rights Reserved",
     "privacy": "Privacy Policy",
-    "terms": "Terms & Conditions"
+    "terms": "Terms & Conditions",
+    "newsletter": "Newsletter",
+    "email_placeholder": "Enter your email",
+    "subscribe": "Subscribe",
+    "since": "Since 1994"
   },
   "common": {
     "loading": "Loading...",

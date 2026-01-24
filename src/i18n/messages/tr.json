@@ -167,7 +167,11 @@
     "followUs": "Bizi Takip Edin",
     "rights": "Tüm Hakları Saklıdır",
     "privacy": "Gizlilik Politikası",
-    "terms": "Şartlar ve Koşullar"
+    "terms": "Şartlar ve Koşullar",
+    "newsletter": "Bülten",
+    "email_placeholder": "E-posta adresinizi girin",
+    "subscribe": "Abone Ol",
+    "since": "1994'ten beri"
   },
   "common": {
     "loading": "Yükleniyor...",
