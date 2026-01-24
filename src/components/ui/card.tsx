@@ -4,18 +4,18 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '@/lib/utils';
 
 const cardVariants = cva(
-  'bg-card text-card-foreground transition-all duration-300',
+  'bg-white text-steel-900 transition-all duration-300',
   {
     variants: {
       variant: {
-        // Default - Slight rounding with shadow
-        default: 'rounded-sm border shadow-sm hover:shadow-md',
+        // Default - Light with industrial shadow
+        default: 'rounded-none border-2 border-metal-200 shadow-sm hover:shadow-md hover:border-primary/30',
 
         // Industrial - Sharp edges with gold accent bar
         industrial:
-          'rounded-none border border-metal-200 relative before:absolute before:top-0 before:left-0 before:w-1 before:h-full before:bg-primary before:transition-all before:duration-300 hover:border-primary hover:shadow-industrial-md hover:-translate-y-1 hover:before:w-1.5',
+          'rounded-none border-2 border-metal-200 bg-white relative before:absolute before:top-0 before:left-0 before:w-1 before:h-full before:bg-primary before:transition-all before:duration-300 hover:border-primary hover:shadow-industrial-md hover:-translate-y-1 hover:before:w-1.5',
 
-        // Industrial Dark - For dark backgrounds
+        // Industrial Dark - For dark backgrounds (hero sections, etc.)
         industrialDark:
           'rounded-none bg-steel-800 border border-steel-700 text-white relative before:absolute before:top-0 before:left-0 before:w-1 before:h-full before:bg-primary hover:border-primary hover:shadow-gold',
 

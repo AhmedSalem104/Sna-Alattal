@@ -4,25 +4,25 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '@/lib/utils';
 
 const inputVariants = cva(
-  'flex w-full text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 transition-all duration-200',
+  'flex w-full text-sm text-steel-900 ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-metal-400 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 transition-all duration-200',
   {
     variants: {
       variant: {
-        // Default - Slight rounding
+        // Default - Light with industrial styling
         default:
-          'rounded-sm border border-input bg-background focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
+          'rounded-none border-2 border-metal-200 bg-white focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus:border-primary',
 
         // Industrial - Sharp edges with gold focus
         industrial:
           'rounded-none border-2 border-metal-200 bg-white focus:border-primary focus:ring-2 focus:ring-primary/20',
 
-        // Industrial Dark - For dark backgrounds
+        // Industrial Dark - For dark backgrounds (like hero sections)
         industrialDark:
           'rounded-none border-2 border-steel-700 bg-steel-800 text-white placeholder:text-steel-400 focus:border-primary focus:ring-2 focus:ring-primary/20',
 
         // Ghost - Minimal styling
         ghost:
-          'rounded-sm border-0 bg-metal-50 focus:bg-white focus:ring-2 focus:ring-primary/20',
+          'rounded-none border-0 bg-metal-50 focus:bg-white focus:ring-2 focus:ring-primary/20',
 
         // Underline - Bottom border only
         underline:
