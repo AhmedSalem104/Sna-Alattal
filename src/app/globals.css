@@ -4,58 +4,91 @@
 
 @layer base {
   :root {
+    /* Background & Foreground */
     --background: 0 0% 100%;
     --foreground: 222 47% 11%;
+
+    /* Card */
     --card: 0 0% 100%;
     --card-foreground: 222 47% 11%;
+
+    /* Popover */
     --popover: 0 0% 100%;
     --popover-foreground: 222 47% 11%;
-    --primary: 45 95% 52%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 210 40% 96%;
-    --secondary-foreground: 222 47% 11%;
-    --muted: 210 40% 96%;
-    --muted-foreground: 215 16% 47%;
-    --accent: 210 40% 96%;
+
+    /* Primary - Industrial Gold */
+    --primary: 43 90% 44%;
+    --primary-foreground: 0 0% 5%;
+
+    /* Secondary - Steel */
+    --secondary: 225 15% 17%;
+    --secondary-foreground: 0 0% 95%;
+
+    /* Muted */
+    --muted: 220 14% 96%;
+    --muted-foreground: 220 9% 46%;
+
+    /* Accent */
+    --accent: 220 14% 96%;
     --accent-foreground: 222 47% 11%;
+
+    /* Destructive */
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
-    --border: 214 32% 91%;
-    --input: 214 32% 91%;
-    --ring: 45 95% 52%;
-    --radius: 0.5rem;
+
+    /* Border & Input */
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+
+    /* Ring */
+    --ring: 43 90% 44%;
+
+    /* Radius - Industrial = Sharp */
+    --radius: 0.25rem;
+
+    /* Industrial Colors */
+    --industrial-gold: 43 90% 44%;
+    --industrial-steel: 230 24% 14%;
+    --industrial-metal: 225 15% 22%;
+    --industrial-silver: 220 14% 91%;
+
+    /* Status Colors */
+    --status-success: 142 76% 36%;
+    --status-warning: 38 92% 50%;
+    --status-error: 0 84% 60%;
+    --status-info: 217 91% 60%;
   }
 
   .dark {
-    --background: 0 0% 100%;
-    --foreground: 222 47% 11%;
-    --card: 0 0% 100%;
-    --card-foreground: 222 47% 11%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 222 47% 11%;
-    --primary: 45 95% 52%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 210 40% 96%;
-    --secondary-foreground: 222 47% 11%;
-    --muted: 210 40% 96%;
-    --muted-foreground: 215 16% 47%;
-    --accent: 210 40% 96%;
-    --accent-foreground: 222 47% 11%;
+    --background: 230 24% 10%;
+    --foreground: 220 14% 96%;
+    --card: 230 24% 14%;
+    --card-foreground: 220 14% 96%;
+    --popover: 230 24% 14%;
+    --popover-foreground: 220 14% 96%;
+    --primary: 43 90% 44%;
+    --primary-foreground: 0 0% 5%;
+    --secondary: 225 15% 22%;
+    --secondary-foreground: 220 14% 96%;
+    --muted: 225 15% 17%;
+    --muted-foreground: 220 9% 60%;
+    --accent: 225 15% 22%;
+    --accent-foreground: 220 14% 96%;
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
-    --border: 214 32% 91%;
-    --input: 214 32% 91%;
-    --ring: 45 95% 52%;
+    --border: 225 15% 25%;
+    --input: 225 15% 25%;
+    --ring: 43 90% 44%;
   }
 
   /* High Contrast Mode Support - WCAG AAA */
   @media (prefers-contrast: high) {
     :root {
-      --primary: 45 95% 40%; /* Darker gold for better contrast */
-      --primary-foreground: 0 0% 0%; /* Pure black text on gold */
-      --border: 214 32% 70%; /* Stronger borders */
-      --muted-foreground: 215 16% 35%; /* Darker muted text */
-      --ring: 45 95% 40%; /* Darker focus ring */
+      --primary: 43 95% 35%;
+      --primary-foreground: 0 0% 0%;
+      --border: 220 13% 70%;
+      --muted-foreground: 220 9% 35%;
+      --ring: 43 95% 35%;
     }
   }
 
@@ -76,23 +109,24 @@
 
   html {
     position: relative;
+    scroll-behavior: smooth;
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground antialiased;
     position: relative;
     min-height: 100vh;
   }
 
-  /* RTL Support - Enhanced */
+  /* RTL Support - Enhanced for Arabic */
   [dir='rtl'] {
-    font-family: 'Cairo', sans-serif;
-    line-height: 1.8; /* Better for Arabic text */
+    font-family: var(--font-cairo), 'Cairo', 'Segoe UI', sans-serif;
+    line-height: 1.8;
     letter-spacing: 0.01em;
   }
 
   [dir='ltr'] {
-    font-family: 'Inter', sans-serif;
+    font-family: var(--font-inter), 'Inter', 'Segoe UI', sans-serif;
     line-height: 1.6;
   }
 
@@ -108,11 +142,11 @@
     }
   }
 
-  /* Enhanced Focus Visible Styles */
+  /* Enhanced Focus Visible Styles - Industrial Gold Ring */
   *:focus-visible {
     outline: 2px solid hsl(var(--ring));
     outline-offset: 2px;
-    border-radius: 4px;
+    border-radius: 2px;
   }
 
   /* Skip to Main Content Link */
@@ -124,144 +158,438 @@
     color: hsl(0 0% 0%);
     padding: 8px 16px;
     text-decoration: none;
-    border-radius: 0 0 4px 0;
+    border-radius: 0 0 2px 0;
     z-index: 100;
     font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
   }
 
   .skip-to-main:focus {
     top: 0;
   }
 
-  /* Custom Scrollbar */
+  /* Industrial Scrollbar */
   ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
+    width: 10px;
+    height: 10px;
   }
 
   ::-webkit-scrollbar-track {
-    @apply bg-muted;
+    background: hsl(var(--muted));
   }
 
   ::-webkit-scrollbar-thumb {
-    @apply bg-primary/50 rounded-full;
+    background: hsl(var(--primary) / 0.5);
+    border: 2px solid hsl(var(--muted));
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    @apply bg-primary;
+    background: hsl(var(--primary));
   }
 
-  /* Selection */
+  /* Selection - Industrial Gold */
   ::selection {
-    @apply bg-primary/30 text-foreground;
+    background: hsl(var(--primary) / 0.3);
+    color: hsl(var(--foreground));
+  }
+
+  /* Headings - Industrial Style */
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: 700;
+    letter-spacing: -0.02em;
   }
 }
 
 @layer components {
-  /* Container */
+  /* ========================================
+     CONTAINER & LAYOUT
+     ======================================== */
   .container-custom {
-    @apply mx-auto max-w-[1280px] px-4 sm:px-5 md:px-6 lg:px-8 xl:px-10;
+    @apply mx-auto max-w-[1400px] px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12;
   }
 
-  /* Section Padding - Enhanced with MD breakpoint */
+  .container-narrow {
+    @apply mx-auto max-w-[1000px] px-4 sm:px-6 md:px-8;
+  }
+
+  /* Section Padding - Industrial Spacing */
   .section-padding {
-    @apply py-12 sm:py-16 md:py-18 lg:py-20 xl:py-24;
-  }
-
-  .section-padding-sm {
-    @apply py-8 sm:py-12 md:py-14 lg:py-16 xl:py-18;
-  }
-
-  .section-padding-lg {
     @apply py-16 sm:py-20 md:py-24 lg:py-28 xl:py-32;
   }
 
-  /* Admin-specific responsive padding */
+  .section-padding-sm {
+    @apply py-10 sm:py-14 md:py-16 lg:py-20;
+  }
+
+  .section-padding-lg {
+    @apply py-20 sm:py-24 md:py-32 lg:py-40;
+  }
+
+  /* Admin Content Padding */
   .admin-content-padding {
     @apply p-4 sm:p-5 md:p-6 lg:p-8;
   }
 
-  /* Heading Styles - Enhanced with all breakpoints */
+  /* ========================================
+     TYPOGRAPHY - INDUSTRIAL
+     ======================================== */
   .heading-1 {
-    @apply text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight;
+    @apply text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight;
+    @apply uppercase;
   }
 
   .heading-2 {
-    @apply text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-5xl font-bold tracking-tight;
+    @apply text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight;
   }
 
   .heading-3 {
-    @apply text-xl sm:text-2xl md:text-3xl lg:text-3xl font-semibold;
+    @apply text-2xl sm:text-3xl md:text-4xl font-bold;
   }
 
   .heading-4 {
-    @apply text-lg sm:text-xl md:text-2xl font-semibold;
+    @apply text-xl sm:text-2xl md:text-3xl font-semibold;
   }
 
-  /* Body text variants */
+  .heading-5 {
+    @apply text-lg sm:text-xl font-semibold;
+  }
+
+  /* Body Text */
   .text-body-lg {
-    @apply text-base sm:text-lg md:text-xl;
+    @apply text-lg sm:text-xl leading-relaxed;
   }
 
   .text-body {
-    @apply text-sm sm:text-base md:text-base;
+    @apply text-base sm:text-lg leading-relaxed;
   }
 
-  /* Gold Gradient Text */
-  .text-gradient {
-    @apply bg-gradient-to-r from-primary via-primary-300 to-primary bg-clip-text text-transparent;
+  .text-body-sm {
+    @apply text-sm sm:text-base leading-relaxed;
   }
 
-  /* Card Hover Effect */
-  .card-hover {
-    @apply transition-all duration-300 hover:shadow-lg hover:-translate-y-1;
+  /* Industrial Text Styles */
+  .text-gradient-gold {
+    @apply bg-gradient-to-r from-gold-400 via-gold-500 to-gold-600 bg-clip-text text-transparent;
   }
 
-  /* Button Gold */
+  .text-industrial {
+    @apply uppercase tracking-wider font-semibold;
+  }
+
+  .text-mono {
+    @apply font-mono tabular-nums;
+  }
+
+  /* ========================================
+     INDUSTRIAL BUTTONS
+     ======================================== */
+  .btn-industrial {
+    @apply relative inline-flex items-center justify-center;
+    @apply px-8 py-4 font-bold uppercase tracking-wider;
+    @apply bg-gradient-to-r from-primary to-primary-600;
+    @apply text-steel-900 border-0;
+    @apply transition-all duration-300 ease-industrial;
+    @apply shadow-offset hover:shadow-none;
+    @apply hover:translate-x-1 hover:translate-y-1;
+    border-radius: 0;
+  }
+
+  .btn-industrial-outline {
+    @apply relative inline-flex items-center justify-center;
+    @apply px-8 py-4 font-bold uppercase tracking-wider;
+    @apply bg-transparent text-primary;
+    @apply border-2 border-primary;
+    @apply transition-all duration-300 ease-industrial;
+    @apply hover:bg-primary hover:text-steel-900;
+    border-radius: 0;
+  }
+
+  .btn-industrial-dark {
+    @apply relative inline-flex items-center justify-center;
+    @apply px-8 py-4 font-bold uppercase tracking-wider;
+    @apply bg-steel-800 text-white;
+    @apply border-2 border-steel-700;
+    @apply transition-all duration-300 ease-industrial;
+    @apply hover:bg-steel-700 hover:border-primary;
+    border-radius: 0;
+  }
+
+  /* Legacy Button Gold */
   .btn-gold {
-    @apply bg-primary text-primary-foreground hover:bg-primary-600 transition-colors duration-200;
+    @apply bg-primary text-primary-foreground hover:bg-primary-600;
+    @apply transition-colors duration-200 font-semibold;
   }
 
-  /* Glass Effect */
+  /* ========================================
+     INDUSTRIAL CARDS
+     ======================================== */
+  .card-industrial {
+    @apply relative bg-white border border-metal-200;
+    @apply overflow-hidden transition-all duration-300;
+    border-radius: 0;
+  }
+
+  .card-industrial::before {
+    content: '';
+    @apply absolute top-0 left-0 w-1 h-full bg-primary;
+    @apply transition-all duration-300;
+  }
+
+  .card-industrial:hover {
+    @apply border-primary shadow-industrial-md;
+    @apply -translate-y-1;
+  }
+
+  .card-industrial:hover::before {
+    @apply w-1.5;
+  }
+
+  /* Dark Industrial Card */
+  .card-industrial-dark {
+    @apply relative bg-steel-800 border border-steel-700;
+    @apply overflow-hidden transition-all duration-300;
+    border-radius: 0;
+  }
+
+  .card-industrial-dark::before {
+    content: '';
+    @apply absolute top-0 left-0 w-1 h-full bg-primary;
+    @apply transition-all duration-300;
+  }
+
+  .card-industrial-dark:hover {
+    @apply border-primary shadow-gold;
+  }
+
+  /* Standard Card Hover */
+  .card-hover {
+    @apply transition-all duration-300;
+    @apply hover:shadow-industrial-md hover:-translate-y-1;
+  }
+
+  /* ========================================
+     INDUSTRIAL BADGES
+     ======================================== */
+  .badge-industrial {
+    @apply inline-flex items-center px-3 py-1;
+    @apply text-xs font-bold uppercase tracking-wider;
+    @apply border-2;
+    border-radius: 0;
+  }
+
+  .badge-industrial-gold {
+    @apply badge-industrial;
+    @apply bg-primary/10 text-primary border-primary/30;
+  }
+
+  .badge-industrial-success {
+    @apply badge-industrial;
+    @apply bg-industrial-success/10 text-industrial-success border-industrial-success/30;
+  }
+
+  .badge-industrial-warning {
+    @apply badge-industrial;
+    @apply bg-industrial-warning/10 text-industrial-warning border-industrial-warning/30;
+  }
+
+  .badge-industrial-error {
+    @apply badge-industrial;
+    @apply bg-industrial-error/10 text-industrial-error border-industrial-error/30;
+  }
+
+  .badge-industrial-info {
+    @apply badge-industrial;
+    @apply bg-industrial-info/10 text-industrial-info border-industrial-info/30;
+  }
+
+  /* ========================================
+     INDUSTRIAL INPUTS
+     ======================================== */
+  .input-industrial {
+    @apply w-full px-4 py-3;
+    @apply bg-white border-2 border-metal-200;
+    @apply text-steel-900 placeholder:text-metal-400;
+    @apply transition-all duration-200;
+    @apply focus:border-primary focus:ring-2 focus:ring-primary/20;
+    border-radius: 0;
+  }
+
+  .input-industrial-dark {
+    @apply w-full px-4 py-3;
+    @apply bg-steel-800 border-2 border-steel-700;
+    @apply text-white placeholder:text-steel-400;
+    @apply transition-all duration-200;
+    @apply focus:border-primary focus:ring-2 focus:ring-primary/20;
+    border-radius: 0;
+  }
+
+  /* ========================================
+     INDUSTRIAL SECTIONS
+     ======================================== */
+  .section-industrial {
+    @apply relative overflow-hidden;
+    @apply bg-gradient-industrial;
+  }
+
+  .section-industrial::before {
+    content: '';
+    @apply absolute inset-0 bg-industrial-stripes opacity-50;
+  }
+
+  .section-light {
+    @apply bg-metal-50;
+  }
+
+  .section-dark {
+    @apply bg-steel-900 text-white;
+  }
+
+  /* ========================================
+     GLASS EFFECTS
+     ======================================== */
   .glass {
     @apply bg-white/10 backdrop-blur-md border border-white/20;
   }
 
-  /* Dark Glass Effect */
   .glass-dark {
-    @apply bg-dark/80 backdrop-blur-md border border-white/10;
+    @apply bg-steel-900/80 backdrop-blur-md border border-white/10;
   }
 
-  /* Navbar Enhancements */
+  .glass-gold {
+    @apply bg-primary/10 backdrop-blur-md border border-primary/20;
+  }
+
+  /* ========================================
+     NAVBAR & NAVIGATION
+     ======================================== */
   .navbar-link {
     @apply relative overflow-hidden;
   }
 
   .navbar-link::before {
     content: '';
-    @apply absolute inset-0 bg-primary/5 scale-x-0 transition-transform duration-300 origin-left;
+    @apply absolute bottom-0 left-0 right-0 h-0.5 bg-primary;
+    @apply scale-x-0 transition-transform duration-300 origin-left;
   }
 
   [dir='rtl'] .navbar-link::before {
     @apply origin-right;
   }
 
-  .navbar-link:hover::before {
+  .navbar-link:hover::before,
+  .navbar-link.active::before {
     @apply scale-x-100;
   }
 
-  /* Loading Spinner */
+  /* ========================================
+     LOADING STATES
+     ======================================== */
   .spinner {
-    @apply w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin;
+    @apply w-6 h-6 border-2 border-primary border-t-transparent;
+    @apply animate-spin;
+    border-radius: 50%;
   }
 
-  /* Skeleton Loading */
+  .spinner-industrial {
+    @apply w-8 h-8 border-4 border-steel-700 border-t-primary;
+    @apply animate-spin;
+    border-radius: 50%;
+  }
+
   .skeleton {
-    @apply relative overflow-hidden bg-muted;
+    @apply relative overflow-hidden bg-metal-200;
+    border-radius: 2px;
   }
 
   .skeleton::after {
-    @apply absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent animate-shimmer content-[''];
+    content: '';
+    @apply absolute inset-0 -translate-x-full;
+    @apply bg-gradient-to-r from-transparent via-white/40 to-transparent;
+    @apply animate-shimmer;
+  }
+
+  .skeleton-dark {
+    @apply skeleton bg-steel-700;
+  }
+
+  .skeleton-dark::after {
+    @apply bg-gradient-to-r from-transparent via-white/10 to-transparent;
+  }
+
+  /* ========================================
+     INDUSTRIAL DIVIDERS
+     ======================================== */
+  .divider-industrial {
+    @apply relative h-px bg-metal-200;
+  }
+
+  .divider-industrial::before {
+    content: '';
+    @apply absolute left-0 top-0 w-20 h-full bg-primary;
+  }
+
+  .divider-gold {
+    @apply h-1 bg-gradient-to-r from-primary via-primary-400 to-transparent;
+  }
+
+  /* ========================================
+     DATA TABLES - INDUSTRIAL
+     ======================================== */
+  .table-industrial {
+    @apply w-full;
+  }
+
+  .table-industrial thead {
+    @apply bg-steel-800 text-white;
+  }
+
+  .table-industrial thead th {
+    @apply px-4 py-3 text-left font-bold uppercase tracking-wider text-sm;
+    @apply border-b-2 border-primary;
+  }
+
+  [dir='rtl'] .table-industrial thead th {
+    @apply text-right;
+  }
+
+  .table-industrial tbody tr {
+    @apply border-b border-metal-200 transition-colors;
+  }
+
+  .table-industrial tbody tr:nth-child(even) {
+    @apply bg-metal-50;
+  }
+
+  .table-industrial tbody tr:hover {
+    @apply bg-primary/5;
+  }
+
+  .table-industrial tbody td {
+    @apply px-4 py-3;
+  }
+
+  /* ========================================
+     STATS CARDS - INDUSTRIAL
+     ======================================== */
+  .stat-card-industrial {
+    @apply relative p-6 bg-steel-800 border-l-4 border-primary;
+    @apply overflow-hidden;
+    border-radius: 0;
+  }
+
+  .stat-card-industrial::before {
+    content: '';
+    @apply absolute top-0 right-0 w-32 h-32;
+    @apply bg-primary/5 rounded-full -translate-y-1/2 translate-x-1/2;
+  }
+
+  .stat-number {
+    @apply text-4xl sm:text-5xl font-bold font-mono text-primary;
+  }
+
+  .stat-label {
+    @apply text-sm uppercase tracking-wider text-metal-400 mt-2;
   }
 }
 
@@ -276,10 +604,10 @@
     display: none;
   }
 
-  /* Custom Dark Scrollbar for Admin Sidebar */
+  /* Custom Dark Scrollbar for Admin */
   .custom-scrollbar {
     scrollbar-width: thin;
-    scrollbar-color: rgba(148, 163, 184, 0.3) transparent;
+    scrollbar-color: rgba(212, 160, 10, 0.3) transparent;
   }
 
   .custom-scrollbar::-webkit-scrollbar {
@@ -291,15 +619,15 @@
   }
 
   .custom-scrollbar::-webkit-scrollbar-thumb {
-    background-color: rgba(148, 163, 184, 0.3);
-    border-radius: 20px;
+    background-color: rgba(212, 160, 10, 0.3);
+    border-radius: 0;
   }
 
   .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-    background-color: rgba(148, 163, 184, 0.5);
+    background-color: rgba(212, 160, 10, 0.5);
   }
 
-  /* RTL Utilities - Enhanced */
+  /* RTL Utilities */
   .flip-rtl {
     @apply rtl:scale-x-[-1];
   }
@@ -312,7 +640,7 @@
     @apply right-0 rtl:right-auto rtl:left-0;
   }
 
-  /* Logical Margin/Padding Utilities */
+  /* Logical Margin/Padding */
   .ms-auto {
     @apply ml-auto rtl:ml-0 rtl:mr-auto;
   }
@@ -321,7 +649,6 @@
     @apply mr-auto rtl:mr-0 rtl:ml-auto;
   }
 
-  /* Logical Spacing - Common patterns */
   .space-inline-2 {
     @apply mr-2 rtl:mr-0 rtl:ml-2;
   }
@@ -330,7 +657,7 @@
     @apply mr-4 rtl:mr-0 rtl:ml-4;
   }
 
-  /* Text Direction Utilities */
+  /* Text Direction */
   .text-start-dir {
     @apply text-left rtl:text-right;
   }
@@ -348,37 +675,60 @@
     aspect-ratio: 1 / 1;
   }
 
+  .aspect-product {
+    aspect-ratio: 4 / 3;
+  }
+
   /* Text Balance */
   .text-balance {
     text-wrap: balance;
   }
 
-  /* Touch-Friendly Utilities - WCAG 2.1 AA Compliant */
+  /* Touch-Friendly Utilities */
   .touch-button {
     @apply min-h-[44px] min-w-[44px] sm:min-h-[48px] sm:min-w-[48px];
-    @apply flex items-center justify-center;
-    @apply px-4 py-2;
+    @apply flex items-center justify-center px-4 py-2;
   }
 
   .touch-icon-button {
-    @apply h-12 w-12;
-    @apply flex items-center justify-center;
-    @apply rounded-lg transition-colors;
+    @apply h-12 w-12 flex items-center justify-center transition-colors;
   }
 
   .touch-list-item {
-    @apply min-h-[48px];
-    @apply px-4 py-3;
+    @apply min-h-[48px] px-4 py-3;
     @apply flex items-center cursor-pointer transition-colors;
   }
 
   .touch-input {
-    @apply min-h-[48px] px-4 py-3;
-    @apply text-base; /* Prevents iOS zoom on focus */
+    @apply min-h-[48px] px-4 py-3 text-base;
   }
 
-  /* Focus Ring Utilities */
+  /* Focus Ring */
   .focus-ring-primary {
-    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2;
+    @apply focus-visible:outline-none focus-visible:ring-2;
+    @apply focus-visible:ring-primary focus-visible:ring-offset-2;
+  }
+
+  .focus-ring-gold {
+    @apply focus-visible:outline-none focus-visible:ring-2;
+    @apply focus-visible:ring-gold focus-visible:ring-offset-2;
+  }
+
+  /* Industrial Clip Paths */
+  .clip-industrial {
+    clip-path: polygon(0 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%);
+  }
+
+  .clip-industrial-reverse {
+    clip-path: polygon(20px 0, 100% 0, 100% 100%, 0 100%, 0 20px);
+  }
+
+  /* Gradient Overlays */
+  .overlay-dark {
+    @apply absolute inset-0 bg-gradient-to-t from-steel-900/90 via-steel-900/50 to-transparent;
+  }
+
+  .overlay-gold {
+    @apply absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent;
   }
 }
