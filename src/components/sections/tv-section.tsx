@@ -1,49 +1,58 @@
 'use client';
 
-import { useRef, useState, memo } from 'react';
+import { useRef, useState, useEffect, memo } from 'react';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import { motion, useInView } from 'framer-motion';
-import { Play, Tv, X } from 'lucide-react';
+import { Play, Tv, X, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useLocale } from '@/hooks/useLocale';
 
-const tvInterviews = [
-  {
-    id: '1',
-    titleAr: 'لقاء خاص مع المدير العام',
-    titleEn: 'Exclusive Interview with General Manager',
-    channelAr: 'قناة القاهرة والناس',
-    channelEn: 'Al-Kahera Wal Nas Channel',
-    date: '2024-01-15',
-    thumbnail: '/images/tv/interview-1.jpg',
-    videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
-  },
-  {
-    id: '2',
-    titleAr: 'العتال في معرض جلفود',
-    titleEn: 'Al-Attal at Gulfood Exhibition',
-    channelAr: 'قناة العربية',
-    channelEn: 'Al Arabiya Channel',
-    date: '2024-02-20',
-    thumbnail: '/images/tv/interview-2.jpg',
-    videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
-  },
-  {
-    id: '3',
-    titleAr: 'صناعة خطوط الإنتاج في مصر',
-    titleEn: 'Manufacturing Production Lines in Egypt',
-    channelAr: 'قناة CBC',
-    channelEn: 'CBC Channel',
-    date: '2024-03-10',
-    thumbnail: '/images/tv/interview-3.jpg',
-    videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
-  },
-];
+interface TVInterview {
+  id: string;
+  titleAr: string;
+  titleEn: string;
+  titleTr: string;
+  channel: string;
+  videoUrl: string;
+  thumbnailUrl: string;
+  date: string;
+}
 
 export const TVSection = memo(function TVSection() {
   const t = useTranslations();
-  const { isRTL } = useLocale();
+  const { isRTL, locale } = useLocale();
+  const [tvInterviews, setTvInterviews] = useState<TVInterview[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchTvInterviews = async () => {
+      try {
+        const response = await fetch('/api/public/tv-interviews?limit=3');
+        if (response.ok) {
+          const data = await response.json();
+          setTvInterviews(data);
+        }
+      } catch (error) {
+        console.error('Error fetching TV interviews:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchTvInterviews();
+  }, []);
+
+  const getTitle = (interview: TVInterview) => {
+    switch (locale) {
+      case 'ar':
+        return interview.titleAr;
+      case 'tr':
+        return interview.titleTr;
+      default:
+        return interview.titleEn;
+    }
+  };
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
   const [activeVideo, setActiveVideo] = useState<string | null>(null);
@@ -108,54 +117,67 @@ export const TVSection = memo(function TVSection() {
           </motion.div>
 
           {/* Videos Grid */}
-          <div className="grid md:grid-cols-3 gap-6">
-            {tvInterviews.map((interview, index) => (
-              <motion.div
-                key={interview.id}
-                initial={{ opacity: 0, y: 30 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-              >
-                <div
-                  className="group relative bg-metal-50 border-2 border-metal-200 overflow-hidden hover:border-primary transition-all duration-300 cursor-pointer"
-                  onClick={() => setActiveVideo(interview.videoUrl)}
+          {loading ? (
+            <div className="flex justify-center items-center py-20">
+              <Loader2 className="w-8 h-8 animate-spin text-primary" />
+            </div>
+          ) : tvInterviews.length === 0 ? (
+            <div className="text-center py-20">
+              <Tv className="w-16 h-16 mx-auto text-metal-300 mb-4" />
+              <p className="text-metal-500">
+                {t('tv.noInterviews') || 'لا توجد مقابلات تلفزيونية حالياً'}
+              </p>
+            </div>
+          ) : (
+            <div className="grid md:grid-cols-3 gap-6">
+              {tvInterviews.map((interview, index) => (
+                <motion.div
+                  key={interview.id}
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={isInView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.6, delay: index * 0.1 }}
                 >
-                  {/* Gold Accent Bar */}
-                  <div className="absolute top-0 left-0 w-1 h-full bg-primary z-10 transform origin-top scale-y-0 group-hover:scale-y-100 transition-transform duration-300" />
+                  <div
+                    className="group relative bg-metal-50 border-2 border-metal-200 overflow-hidden hover:border-primary transition-all duration-300 cursor-pointer"
+                    onClick={() => setActiveVideo(interview.videoUrl)}
+                  >
+                    {/* Gold Accent Bar */}
+                    <div className="absolute top-0 left-0 w-1 h-full bg-primary z-10 transform origin-top scale-y-0 group-hover:scale-y-100 transition-transform duration-300" />
 
-                  {/* Thumbnail */}
-                  <div className="relative aspect-video overflow-hidden">
-                    <Image
-                      src={interview.thumbnail}
-                      alt={isRTL ? interview.titleAr : interview.titleEn}
-                      fill
-                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                      className="object-cover group-hover:scale-110 transition-transform duration-500"
-                      loading="lazy"
-                    />
-                    <div className="absolute inset-0 bg-steel-900/40 group-hover:bg-steel-900/30 transition-colors" />
+                    {/* Thumbnail */}
+                    <div className="relative aspect-video overflow-hidden">
+                      <Image
+                        src={interview.thumbnailUrl}
+                        alt={getTitle(interview)}
+                        fill
+                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                        className="object-cover group-hover:scale-110 transition-transform duration-500"
+                        loading="lazy"
+                      />
+                      <div className="absolute inset-0 bg-steel-900/40 group-hover:bg-steel-900/30 transition-colors" />
 
-                    {/* Play Button */}
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="w-16 h-16 bg-primary flex items-center justify-center group-hover:scale-110 transition-transform shadow-gold">
-                        <Play size={28} className="text-steel-900 ml-1" fill="currentColor" />
+                      {/* Play Button */}
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <div className="w-16 h-16 bg-primary flex items-center justify-center group-hover:scale-110 transition-transform shadow-gold">
+                          <Play size={28} className="text-steel-900 ml-1" fill="currentColor" />
+                        </div>
                       </div>
                     </div>
-                  </div>
 
-                  {/* Content */}
-                  <div className="p-4 border-t-2 border-metal-100">
-                    <span className="text-xs text-primary font-bold uppercase tracking-wider">
-                      {isRTL ? interview.channelAr : interview.channelEn}
-                    </span>
-                    <h3 className="text-steel-900 font-bold uppercase tracking-wide group-hover:text-primary transition-colors mt-1">
-                      {isRTL ? interview.titleAr : interview.titleEn}
-                    </h3>
+                    {/* Content */}
+                    <div className="p-4 border-t-2 border-metal-100">
+                      <span className="text-xs text-primary font-bold uppercase tracking-wider">
+                        {interview.channel}
+                      </span>
+                      <h3 className="text-steel-900 font-bold uppercase tracking-wide group-hover:text-primary transition-colors mt-1">
+                        {getTitle(interview)}
+                      </h3>
+                    </div>
                   </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
+                </motion.div>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 

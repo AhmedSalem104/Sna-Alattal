@@ -1,60 +1,77 @@
 'use client';
 
-import { useRef, memo } from 'react';
+import { useRef, memo, useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { motion, useInView } from 'framer-motion';
-import { ArrowRight, ArrowUpRight, Package, Cog } from 'lucide-react';
+import { ArrowRight, ArrowUpRight, Package, Cog, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { useLocale } from '@/hooks/useLocale';
 
-// Sample products data (will be fetched from API later)
-const sampleProducts = [
-  {
-    id: '1',
-    name: 'ماكينة تعبئة السوائل الأوتوماتيكية',
-    nameEn: 'Automatic Liquid Filling Machine',
-    category: 'ماكينات التعبئة',
-    categoryEn: 'Filling Machines',
-    image: '/images/products/filling-machine.jpg',
-    isFeatured: true,
-  },
-  {
-    id: '2',
-    name: 'ماكينة غلق الزجاجات',
-    nameEn: 'Bottle Capping Machine',
-    category: 'ماكينات الغلق',
-    categoryEn: 'Capping Machines',
-    image: '/images/products/capping-machine.jpg',
-    isFeatured: true,
-  },
-  {
-    id: '3',
-    name: 'ماكينة لصق الملصقات',
-    nameEn: 'Labeling Machine',
-    category: 'ماكينات اللصق',
-    categoryEn: 'Labeling Machines',
-    image: '/images/products/labeling-machine.jpg',
-    isFeatured: false,
-  },
-  {
-    id: '4',
-    name: 'خط إنتاج متكامل',
-    nameEn: 'Complete Production Line',
-    category: 'خطوط الإنتاج',
-    categoryEn: 'Production Lines',
-    image: '/images/products/production-line.jpg',
-    isFeatured: true,
-  },
-];
+interface Product {
+  id: string;
+  nameAr: string;
+  nameEn: string;
+  nameTr: string;
+  slug: string;
+  images: string[];
+  isFeatured: boolean;
+  category?: {
+    id: string;
+    nameAr: string;
+    nameEn: string;
+    nameTr: string;
+    slug: string;
+  };
+}
 
 export const ProductsSection = memo(function ProductsSection() {
   const t = useTranslations();
-  const { isRTL } = useLocale();
+  const { isRTL, locale } = useLocale();
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
+
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchProducts() {
+      try {
+        const res = await fetch('/api/public/products?limit=4');
+        if (res.ok) {
+          const data = await res.json();
+          setProducts(data);
+        }
+      } catch (error) {
+        console.error('Error fetching products:', error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchProducts();
+  }, []);
+
+  const getName = (product: Product) => {
+    if (locale === 'ar') return product.nameAr;
+    if (locale === 'tr') return product.nameTr;
+    return product.nameEn;
+  };
+
+  const getCategoryName = (category?: Product['category']) => {
+    if (!category) return '';
+    if (locale === 'ar') return category.nameAr;
+    if (locale === 'tr') return category.nameTr;
+    return category.nameEn;
+  };
+
+  const getProductImage = (product: Product) => {
+    if (product.images && product.images.length > 0) {
+      return product.images[0];
+    }
+    return '/images/placeholder-product.jpg';
+  };
 
   return (
     <section
@@ -123,78 +140,92 @@ export const ProductsSection = memo(function ProductsSection() {
           </Button>
         </motion.div>
 
-        {/* Products Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {sampleProducts.map((product, index) => (
-            <motion.div
-              key={product.id}
-              initial={{ opacity: 0, y: 30 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-            >
-              <Link href={`/products/${product.id}`} className="block h-full">
-                <div className="group bg-white border-2 border-metal-200 hover:border-primary transition-all duration-300 overflow-hidden h-full relative">
-                  {/* Gold Accent Bar */}
-                  <div className="absolute top-0 left-0 w-1 h-full bg-primary z-10 transform origin-top scale-y-0 group-hover:scale-y-100 transition-transform duration-300" />
+        {/* Loading State */}
+        {loading ? (
+          <div className="flex items-center justify-center py-20">
+            <Loader2 className="w-8 h-8 animate-spin text-primary" />
+          </div>
+        ) : products.length === 0 ? (
+          <div className="text-center py-20">
+            <Package size={48} className="mx-auto text-metal-300 mb-4" />
+            <p className="text-metal-500">{t('common.noData')}</p>
+          </div>
+        ) : (
+          /* Products Grid */
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {products.map((product, index) => (
+              <motion.div
+                key={product.id}
+                initial={{ opacity: 0, y: 30 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+              >
+                <Link href={`/products/${product.slug}`} className="block h-full">
+                  <div className="group bg-white border-2 border-metal-200 hover:border-primary transition-all duration-300 overflow-hidden h-full relative">
+                    {/* Gold Accent Bar */}
+                    <div className="absolute top-0 left-0 w-1 h-full bg-primary z-10 transform origin-top scale-y-0 group-hover:scale-y-100 transition-transform duration-300" />
 
-                  {/* Image */}
-                  <div className="relative aspect-square overflow-hidden">
-                    <Image
-                      src={product.image}
-                      alt={product.name}
-                      fill
-                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                      className="object-cover group-hover:scale-110 transition-transform duration-500"
-                      priority={index < 2}
-                      loading={index < 2 ? undefined : 'lazy'}
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-steel-900/60 to-transparent" />
+                    {/* Image */}
+                    <div className="relative aspect-square overflow-hidden">
+                      <Image
+                        src={getProductImage(product)}
+                        alt={getName(product)}
+                        fill
+                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                        className="object-cover group-hover:scale-110 transition-transform duration-500"
+                        priority={index < 2}
+                        loading={index < 2 ? undefined : 'lazy'}
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-steel-900/60 to-transparent" />
 
-                    {/* Featured Badge */}
-                    {product.isFeatured && (
-                      <Badge
-                        variant="featured"
-                        className="absolute top-4 right-4 z-10"
-                      >
-                        {t('products.featured') || 'مميز'}
-                      </Badge>
-                    )}
+                      {/* Featured Badge */}
+                      {product.isFeatured && (
+                        <Badge
+                          variant="featured"
+                          className="absolute top-4 right-4 z-10"
+                        >
+                          {t('products.featured') || 'مميز'}
+                        </Badge>
+                      )}
 
-                    {/* Hover Overlay */}
-                    <div className="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                      <div className="w-14 h-14 bg-primary flex items-center justify-center transform scale-0 group-hover:scale-100 transition-transform duration-300">
-                        <ArrowUpRight size={28} className="text-steel-900" />
+                      {/* Hover Overlay */}
+                      <div className="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                        <div className="w-14 h-14 bg-primary flex items-center justify-center transform scale-0 group-hover:scale-100 transition-transform duration-300">
+                          <ArrowUpRight size={28} className="text-steel-900" />
+                        </div>
+                      </div>
+
+                      {/* Category Tag on Image */}
+                      {product.category && (
+                        <div className="absolute bottom-4 left-4 z-10">
+                          <span className="inline-block px-3 py-1 bg-steel-900/80 text-white text-xs font-bold uppercase tracking-wider">
+                            {getCategoryName(product.category)}
+                          </span>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Content */}
+                    <div className="p-4 border-t-2 border-metal-100">
+                      <h3 className="text-steel-900 font-bold group-hover:text-primary transition-colors line-clamp-2 uppercase tracking-wide text-sm">
+                        {getName(product)}
+                      </h3>
+
+                      {/* View Details Link */}
+                      <div className="mt-3 flex items-center text-primary text-xs font-bold uppercase tracking-wider opacity-0 group-hover:opacity-100 transition-opacity">
+                        <span>{t('products.viewDetails') || 'عرض التفاصيل'}</span>
+                        <ArrowRight
+                          size={14}
+                          className={`${isRTL ? 'mr-1 rotate-180' : 'ml-1'}`}
+                        />
                       </div>
                     </div>
-
-                    {/* Category Tag on Image */}
-                    <div className="absolute bottom-4 left-4 z-10">
-                      <span className="inline-block px-3 py-1 bg-steel-900/80 text-white text-xs font-bold uppercase tracking-wider">
-                        {isRTL ? product.category : product.categoryEn}
-                      </span>
-                    </div>
                   </div>
-
-                  {/* Content */}
-                  <div className="p-4 border-t-2 border-metal-100">
-                    <h3 className="text-steel-900 font-bold group-hover:text-primary transition-colors line-clamp-2 uppercase tracking-wide text-sm">
-                      {isRTL ? product.name : product.nameEn}
-                    </h3>
-
-                    {/* View Details Link */}
-                    <div className="mt-3 flex items-center text-primary text-xs font-bold uppercase tracking-wider opacity-0 group-hover:opacity-100 transition-opacity">
-                      <span>{t('products.viewDetails') || 'عرض التفاصيل'}</span>
-                      <ArrowRight
-                        size={14}
-                        className={`${isRTL ? 'mr-1 rotate-180' : 'ml-1'}`}
-                      />
-                    </div>
-                  </div>
-                </div>
-              </Link>
-            </motion.div>
-          ))}
-        </div>
+                </Link>
+              </motion.div>
+            ))}
+          </div>
+        )}
 
         {/* Bottom CTA */}
         <motion.div

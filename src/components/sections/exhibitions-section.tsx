@@ -1,56 +1,54 @@
 'use client';
 
-import { useRef } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { motion, useInView } from 'framer-motion';
-import { Calendar, MapPin, ArrowRight, Globe } from 'lucide-react';
+import { Calendar, MapPin, ArrowRight, Globe, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { useLocale } from '@/hooks/useLocale';
 
-const exhibitions = [
-  {
-    id: '1',
-    nameAr: 'معرض جلفود 2024',
-    nameEn: 'Gulfood 2024',
-    locationAr: 'دبي، الإمارات',
-    locationEn: 'Dubai, UAE',
-    date: '2024-02-19',
-    endDate: '2024-02-23',
-    image: '/images/exhibitions/gulfood.jpg',
-    isUpcoming: true,
-  },
-  {
-    id: '2',
-    nameAr: 'معرض باك إكسبو 2024',
-    nameEn: 'Pack Expo 2024',
-    locationAr: 'شيكاغو، الولايات المتحدة',
-    locationEn: 'Chicago, USA',
-    date: '2024-11-03',
-    endDate: '2024-11-06',
-    image: '/images/exhibitions/packexpo.jpg',
-    isUpcoming: true,
-  },
-  {
-    id: '3',
-    nameAr: 'معرض بروباك آسيا',
-    nameEn: 'ProPak Asia',
-    locationAr: 'بانكوك، تايلاند',
-    locationEn: 'Bangkok, Thailand',
-    date: '2024-06-12',
-    endDate: '2024-06-15',
-    image: '/images/exhibitions/propak.jpg',
-    isUpcoming: false,
-  },
-];
+interface Exhibition {
+  id: string;
+  titleAr: string;
+  titleEn: string;
+  titleTr: string;
+  locationAr: string;
+  locationEn: string;
+  locationTr: string;
+  image: string;
+  startDate: string;
+  endDate: string;
+}
 
 export function ExhibitionsSection() {
   const t = useTranslations();
-  const { isRTL } = useLocale();
+  const { isRTL, locale } = useLocale();
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
+
+  const [exhibitions, setExhibitions] = useState<Exhibition[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchExhibitions = async () => {
+      try {
+        const response = await fetch('/api/public/exhibitions?limit=4');
+        if (response.ok) {
+          const data = await response.json();
+          setExhibitions(data.exhibitions || []);
+        }
+      } catch (error) {
+        console.error('Error fetching exhibitions:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchExhibitions();
+  }, []);
 
   const formatDate = (date: string) => {
     return new Date(date).toLocaleDateString(isRTL ? 'ar-EG' : 'en-US', {
@@ -58,6 +56,32 @@ export function ExhibitionsSection() {
       month: 'long',
       year: 'numeric',
     });
+  };
+
+  const getTitle = (exhibition: Exhibition) => {
+    switch (locale) {
+      case 'ar':
+        return exhibition.titleAr;
+      case 'tr':
+        return exhibition.titleTr;
+      default:
+        return exhibition.titleEn;
+    }
+  };
+
+  const getLocation = (exhibition: Exhibition) => {
+    switch (locale) {
+      case 'ar':
+        return exhibition.locationAr;
+      case 'tr':
+        return exhibition.locationTr;
+      default:
+        return exhibition.locationEn;
+    }
+  };
+
+  const isUpcoming = (exhibition: Exhibition) => {
+    return new Date(exhibition.startDate) > new Date();
   };
 
   return (
@@ -125,68 +149,85 @@ export function ExhibitionsSection() {
           </Button>
         </motion.div>
 
+        {/* Loading State */}
+        {loading && (
+          <div className="flex items-center justify-center py-20">
+            <Loader2 className="w-8 h-8 animate-spin text-primary" />
+          </div>
+        )}
+
+        {/* Empty State */}
+        {!loading && exhibitions.length === 0 && (
+          <div className="text-center py-20">
+            <Globe size={48} className="mx-auto text-steel-600 mb-4" />
+            <p className="text-metal-400 text-lg">{t('exhibitions.noExhibitions')}</p>
+          </div>
+        )}
+
         {/* Exhibitions Grid */}
-        <div className="grid md:grid-cols-3 gap-6">
-          {exhibitions.map((exhibition, index) => (
-            <motion.div
-              key={exhibition.id}
-              initial={{ opacity: 0, y: 30 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-            >
-              <Link href={`/exhibitions/${exhibition.id}`}>
-                <div className="group relative bg-steel-800 border-2 border-steel-700 overflow-hidden hover:border-primary transition-all duration-300 h-full">
-                  {/* Gold Accent Bar */}
-                  <div className="absolute top-0 left-0 w-1 h-full bg-primary z-10" />
+        {!loading && exhibitions.length > 0 && (
+          <div className="grid md:grid-cols-3 gap-6">
+            {exhibitions.map((exhibition, index) => (
+              <motion.div
+                key={exhibition.id}
+                initial={{ opacity: 0, y: 30 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+              >
+                <Link href={`/exhibitions/${exhibition.id}`}>
+                  <div className="group relative bg-steel-800 border-2 border-steel-700 overflow-hidden hover:border-primary transition-all duration-300 h-full">
+                    {/* Gold Accent Bar */}
+                    <div className="absolute top-0 left-0 w-1 h-full bg-primary z-10" />
 
-                  {/* Image */}
-                  <div className="relative aspect-video overflow-hidden">
-                    <Image
-                      src={exhibition.image}
-                      alt={isRTL ? exhibition.nameAr : exhibition.nameEn}
-                      fill
-                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                      className="object-cover group-hover:scale-110 transition-transform duration-500"
-                      loading="lazy"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-steel-900 via-steel-900/50 to-transparent" />
+                    {/* Image */}
+                    <div className="relative aspect-video overflow-hidden">
+                      <Image
+                        src={exhibition.image || '/images/placeholder-exhibition.jpg'}
+                        alt={getTitle(exhibition)}
+                        fill
+                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                        className="object-cover group-hover:scale-110 transition-transform duration-500"
+                        loading="lazy"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-steel-900 via-steel-900/50 to-transparent" />
 
-                    {/* Status Badge */}
-                    {exhibition.isUpcoming && (
-                      <Badge variant="featured" className="absolute top-4 right-4">
-                        {t('exhibitions.upcoming')}
-                      </Badge>
-                    )}
-                  </div>
+                      {/* Status Badge */}
+                      {isUpcoming(exhibition) && (
+                        <Badge variant="featured" className="absolute top-4 right-4">
+                          {t('exhibitions.upcoming')}
+                        </Badge>
+                      )}
+                    </div>
 
-                  {/* Content */}
-                  <div className="p-6">
-                    <h3 className="text-lg font-bold text-white uppercase tracking-wider group-hover:text-primary transition-colors mb-4">
-                      {isRTL ? exhibition.nameAr : exhibition.nameEn}
-                    </h3>
+                    {/* Content */}
+                    <div className="p-6">
+                      <h3 className="text-lg font-bold text-white uppercase tracking-wider group-hover:text-primary transition-colors mb-4">
+                        {getTitle(exhibition)}
+                      </h3>
 
-                    <div className="space-y-3 text-sm">
-                      <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 border border-steel-600 bg-steel-700 flex items-center justify-center">
-                          <MapPin size={14} className="text-primary" />
+                      <div className="space-y-3 text-sm">
+                        <div className="flex items-center gap-3">
+                          <div className="w-8 h-8 border border-steel-600 bg-steel-700 flex items-center justify-center">
+                            <MapPin size={14} className="text-primary" />
+                          </div>
+                          <span className="text-metal-300">
+                            {getLocation(exhibition)}
+                          </span>
                         </div>
-                        <span className="text-metal-300">
-                          {isRTL ? exhibition.locationAr : exhibition.locationEn}
-                        </span>
-                      </div>
-                      <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 border border-steel-600 bg-steel-700 flex items-center justify-center">
-                          <Calendar size={14} className="text-primary" />
+                        <div className="flex items-center gap-3">
+                          <div className="w-8 h-8 border border-steel-600 bg-steel-700 flex items-center justify-center">
+                            <Calendar size={14} className="text-primary" />
+                          </div>
+                          <span className="text-metal-300">{formatDate(exhibition.startDate)}</span>
                         </div>
-                        <span className="text-metal-300">{formatDate(exhibition.date)}</span>
                       </div>
                     </div>
                   </div>
-                </div>
-              </Link>
-            </motion.div>
-          ))}
-        </div>
+                </Link>
+              </motion.div>
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );

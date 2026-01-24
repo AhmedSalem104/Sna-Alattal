@@ -1,25 +1,22 @@
 'use client';
 
-import { useRef, memo } from 'react';
+import { useRef, memo, useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { motion, useInView } from 'framer-motion';
-import { Users, ArrowRight, Award } from 'lucide-react';
+import { Users, ArrowRight, Award, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useLocale } from '@/hooks/useLocale';
 
-// Sample clients data
-const sampleClients = [
-  { id: '1', name: 'Client 1', logo: '/images/clients/client-1.png' },
-  { id: '2', name: 'Client 2', logo: '/images/clients/client-2.png' },
-  { id: '3', name: 'Client 3', logo: '/images/clients/client-3.png' },
-  { id: '4', name: 'Client 4', logo: '/images/clients/client-4.png' },
-  { id: '5', name: 'Client 5', logo: '/images/clients/client-5.png' },
-  { id: '6', name: 'Client 6', logo: '/images/clients/client-6.png' },
-  { id: '7', name: 'Client 7', logo: '/images/clients/client-7.png' },
-  { id: '8', name: 'Client 8', logo: '/images/clients/client-8.png' },
-];
+interface Client {
+  id: string;
+  nameAr: string;
+  nameEn: string;
+  nameTr: string;
+  logo: string;
+  isFeatured: boolean;
+}
 
 const stats = [
   { value: '300+', labelKey: 'clients.stats.clients' },
@@ -29,9 +26,35 @@ const stats = [
 
 export const ClientsSection = memo(function ClientsSection() {
   const t = useTranslations();
-  const { isRTL } = useLocale();
+  const { isRTL, locale } = useLocale();
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
+
+  const [clients, setClients] = useState<Client[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchClients() {
+      try {
+        const res = await fetch('/api/public/clients');
+        if (res.ok) {
+          const data = await res.json();
+          setClients(data);
+        }
+      } catch (error) {
+        console.error('Error fetching clients:', error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchClients();
+  }, []);
+
+  const getName = (client: Client) => {
+    if (locale === 'ar') return client.nameAr;
+    if (locale === 'tr') return client.nameTr;
+    return client.nameEn;
+  };
 
   return (
     <section
@@ -111,29 +134,41 @@ export const ClientsSection = memo(function ClientsSection() {
           ))}
         </motion.div>
 
-        {/* Clients Logo Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-4">
-          {sampleClients.map((client, index) => (
-            <motion.div
-              key={client.id}
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={isInView ? { opacity: 1, scale: 1 } : {}}
-              transition={{ duration: 0.4, delay: index * 0.05 }}
-              className="group"
-            >
-              <div className="aspect-square bg-metal-50 border-2 border-metal-200 p-4 flex items-center justify-center hover:border-primary hover:bg-white transition-all duration-300">
-                <Image
-                  src={client.logo}
-                  alt={client.name}
-                  width={80}
-                  height={80}
-                  className="object-contain opacity-50 group-hover:opacity-100 transition-opacity grayscale group-hover:grayscale-0"
-                  loading="lazy"
-                />
-              </div>
-            </motion.div>
-          ))}
-        </div>
+        {/* Loading State */}
+        {loading ? (
+          <div className="flex items-center justify-center py-20">
+            <Loader2 className="w-8 h-8 animate-spin text-primary" />
+          </div>
+        ) : clients.length === 0 ? (
+          <div className="text-center py-20">
+            <Users size={48} className="mx-auto text-metal-300 mb-4" />
+            <p className="text-metal-500">{t('common.noData')}</p>
+          </div>
+        ) : (
+          /* Clients Logo Grid */
+          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-4">
+            {clients.map((client, index) => (
+              <motion.div
+                key={client.id}
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={isInView ? { opacity: 1, scale: 1 } : {}}
+                transition={{ duration: 0.4, delay: index * 0.05 }}
+                className="group"
+              >
+                <div className="aspect-square bg-metal-50 border-2 border-metal-200 p-4 flex items-center justify-center hover:border-primary hover:bg-white transition-all duration-300">
+                  <Image
+                    src={client.logo}
+                    alt={getName(client)}
+                    width={80}
+                    height={80}
+                    className="object-contain opacity-50 group-hover:opacity-100 transition-opacity grayscale group-hover:grayscale-0"
+                    loading="lazy"
+                  />
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        )}
 
         {/* Trust Indicator & CTA */}
         <motion.div

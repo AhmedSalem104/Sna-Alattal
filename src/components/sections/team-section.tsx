@@ -1,54 +1,64 @@
 'use client';
 
-import { useRef, memo } from 'react';
+import { useRef, memo, useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { motion, useInView } from 'framer-motion';
-import { Linkedin, Mail, ArrowRight, Users } from 'lucide-react';
+import { Linkedin, Mail, ArrowRight, Users, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useLocale } from '@/hooks/useLocale';
 
-const teamMembers = [
-  {
-    id: '1',
-    nameAr: 'محمد العتال',
-    nameEn: 'Mohamed Al-Attal',
-    positionAr: 'المدير العام',
-    positionEn: 'General Manager',
-    image: '/images/team/member-1.jpg',
-  },
-  {
-    id: '2',
-    nameAr: 'أحمد محمود',
-    nameEn: 'Ahmed Mahmoud',
-    positionAr: 'مدير الإنتاج',
-    positionEn: 'Production Manager',
-    image: '/images/team/member-2.jpg',
-  },
-  {
-    id: '3',
-    nameAr: 'خالد إبراهيم',
-    nameEn: 'Khaled Ibrahim',
-    positionAr: 'مدير المبيعات',
-    positionEn: 'Sales Manager',
-    image: '/images/team/member-3.jpg',
-  },
-  {
-    id: '4',
-    nameAr: 'سارة أحمد',
-    nameEn: 'Sara Ahmed',
-    positionAr: 'مديرة التسويق',
-    positionEn: 'Marketing Manager',
-    image: '/images/team/member-4.jpg',
-  },
-];
+interface TeamMember {
+  id: string;
+  nameAr: string;
+  nameEn: string;
+  nameTr: string;
+  positionAr: string;
+  positionEn: string;
+  positionTr: string;
+  image: string;
+  email: string;
+  phone: string;
+}
 
 export const TeamSection = memo(function TeamSection() {
   const t = useTranslations();
-  const { isRTL } = useLocale();
+  const { isRTL, locale } = useLocale();
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const [team, setTeam] = useState<TeamMember[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchTeam = async () => {
+      try {
+        const response = await fetch('/api/public/team?limit=4');
+        if (response.ok) {
+          const data = await response.json();
+          setTeam(data);
+        }
+      } catch (error) {
+        console.error('Error fetching team:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchTeam();
+  }, []);
+
+  const getName = (member: TeamMember) => {
+    if (locale === 'ar') return member.nameAr;
+    if (locale === 'tr') return member.nameTr;
+    return member.nameEn;
+  };
+
+  const getPosition = (member: TeamMember) => {
+    if (locale === 'ar') return member.positionAr;
+    if (locale === 'tr') return member.positionTr;
+    return member.positionEn;
+  };
 
   return (
     <section
@@ -116,62 +126,83 @@ export const TeamSection = memo(function TeamSection() {
           </Button>
         </motion.div>
 
+        {/* Loading State */}
+        {loading && (
+          <div className="flex justify-center items-center py-20">
+            <Loader2 className="w-8 h-8 animate-spin text-primary" />
+          </div>
+        )}
+
+        {/* Empty State */}
+        {!loading && team.length === 0 && (
+          <div className="text-center py-20">
+            <Users className="w-16 h-16 text-metal-300 mx-auto mb-4" />
+            <p className="text-metal-500 text-lg">
+              {t('team.noMembers') || 'No team members found'}
+            </p>
+          </div>
+        )}
+
         {/* Team Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {teamMembers.map((member, index) => (
-            <motion.div
-              key={member.id}
-              initial={{ opacity: 0, y: 30 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              className="group"
-            >
-              <div className="relative bg-white border-2 border-metal-200 overflow-hidden hover:border-primary transition-all duration-300">
-                {/* Gold Accent Bar */}
-                <div className="absolute top-0 left-0 w-full h-1 bg-primary z-10" />
+        {!loading && team.length > 0 && (
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {team.map((member, index) => (
+              <motion.div
+                key={member.id}
+                initial={{ opacity: 0, y: 30 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                className="group"
+              >
+                <div className="relative bg-white border-2 border-metal-200 overflow-hidden hover:border-primary transition-all duration-300">
+                  {/* Gold Accent Bar */}
+                  <div className="absolute top-0 left-0 w-full h-1 bg-primary z-10" />
 
-                {/* Image */}
-                <div className="relative aspect-square overflow-hidden">
-                  <Image
-                    src={member.image}
-                    alt={isRTL ? member.nameAr : member.nameEn}
-                    fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                    className="object-cover group-hover:scale-110 transition-transform duration-500"
-                    loading="lazy"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-steel-900 via-steel-900/30 to-transparent" />
+                  {/* Image */}
+                  <div className="relative aspect-square overflow-hidden">
+                    <Image
+                      src={member.image || '/images/team/placeholder.jpg'}
+                      alt={getName(member)}
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                      className="object-cover group-hover:scale-110 transition-transform duration-500"
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-steel-900 via-steel-900/30 to-transparent" />
 
-                  {/* Social Links */}
-                  <div className="absolute bottom-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                    <a
-                      href="#"
-                      className="w-10 h-10 bg-steel-900/80 backdrop-blur-sm flex items-center justify-center text-white hover:bg-primary hover:text-steel-900 transition-all"
-                    >
-                      <Linkedin size={18} />
-                    </a>
-                    <a
-                      href="#"
-                      className="w-10 h-10 bg-steel-900/80 backdrop-blur-sm flex items-center justify-center text-white hover:bg-primary hover:text-steel-900 transition-all"
-                    >
-                      <Mail size={18} />
-                    </a>
-                  </div>
+                    {/* Social Links */}
+                    <div className="absolute bottom-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <a
+                        href="#"
+                        className="w-10 h-10 bg-steel-900/80 backdrop-blur-sm flex items-center justify-center text-white hover:bg-primary hover:text-steel-900 transition-all"
+                      >
+                        <Linkedin size={18} />
+                      </a>
+                      {member.email && (
+                        <a
+                          href={`mailto:${member.email}`}
+                          className="w-10 h-10 bg-steel-900/80 backdrop-blur-sm flex items-center justify-center text-white hover:bg-primary hover:text-steel-900 transition-all"
+                        >
+                          <Mail size={18} />
+                        </a>
+                      )}
+                    </div>
 
-                  {/* Name Overlay */}
-                  <div className="absolute bottom-0 left-0 right-0 p-4">
-                    <h3 className="text-lg font-bold text-white uppercase tracking-wider group-hover:text-primary transition-colors">
-                      {isRTL ? member.nameAr : member.nameEn}
-                    </h3>
-                    <p className="text-sm text-primary font-semibold uppercase tracking-wider">
-                      {isRTL ? member.positionAr : member.positionEn}
-                    </p>
+                    {/* Name Overlay */}
+                    <div className="absolute bottom-0 left-0 right-0 p-4">
+                      <h3 className="text-lg font-bold text-white uppercase tracking-wider group-hover:text-primary transition-colors">
+                        {getName(member)}
+                      </h3>
+                      <p className="text-sm text-primary font-semibold uppercase tracking-wider">
+                        {getPosition(member)}
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </motion.div>
-          ))}
-        </div>
+              </motion.div>
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );

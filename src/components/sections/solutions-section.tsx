@@ -1,57 +1,72 @@
 'use client';
 
-import { useRef } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { motion, useInView } from 'framer-motion';
-import { ArrowRight, Utensils, Pill, Sparkles, FlaskConical, Lightbulb, Cog } from 'lucide-react';
+import { ArrowRight, Lightbulb, Cog, Loader2, Beaker } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useLocale } from '@/hooks/useLocale';
 
-const solutions = [
-  {
-    id: 'food-beverages',
-    icon: Utensils,
-    titleAr: 'الأغذية والمشروبات',
-    titleEn: 'Food & Beverages',
-    descAr: 'حلول متكاملة لصناعة الأغذية والمشروبات',
-    descEn: 'Complete solutions for food & beverage industry',
-    accentColor: 'bg-orange-500',
-  },
-  {
-    id: 'pharmaceuticals',
-    icon: Pill,
-    titleAr: 'الأدوية',
-    titleEn: 'Pharmaceuticals',
-    descAr: 'حلول متكاملة لصناعة الأدوية',
-    descEn: 'Complete solutions for pharmaceutical industry',
-    accentColor: 'bg-blue-500',
-  },
-  {
-    id: 'cosmetics',
-    icon: Sparkles,
-    titleAr: 'مستحضرات التجميل',
-    titleEn: 'Cosmetics',
-    descAr: 'حلول متكاملة لصناعة مستحضرات التجميل',
-    descEn: 'Complete solutions for cosmetics industry',
-    accentColor: 'bg-pink-500',
-  },
-  {
-    id: 'chemicals',
-    icon: FlaskConical,
-    titleAr: 'الكيماويات',
-    titleEn: 'Chemicals',
-    descAr: 'حلول متكاملة للصناعات الكيماوية',
-    descEn: 'Complete solutions for chemical industry',
-    accentColor: 'bg-green-500',
-  },
-];
+interface Solution {
+  id: string;
+  titleAr: string;
+  titleEn: string;
+  titleTr: string;
+  slug: string;
+  shortDescAr: string;
+  shortDescEn: string;
+  shortDescTr: string;
+  icon: string;
+  image: string | null;
+  isFeatured: boolean;
+}
 
 export function SolutionsSection() {
   const t = useTranslations();
-  const { isRTL } = useLocale();
+  const { locale, isRTL } = useLocale();
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
+
+  const [solutions, setSolutions] = useState<Solution[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchSolutions = async () => {
+      try {
+        const response = await fetch('/api/public/solutions?limit=4');
+        if (response.ok) {
+          const data = await response.json();
+          setSolutions(data.solutions || []);
+        }
+      } catch (error) {
+        console.error('Error fetching solutions:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchSolutions();
+  }, []);
+
+  const getTitle = (solution: Solution) => {
+    if (locale === 'ar') return solution.titleAr;
+    if (locale === 'tr') return solution.titleTr;
+    return solution.titleEn;
+  };
+
+  const getDescription = (solution: Solution) => {
+    if (locale === 'ar') return solution.shortDescAr;
+    if (locale === 'tr') return solution.shortDescTr;
+    return solution.shortDescEn;
+  };
+
+  const accentColors = [
+    'bg-orange-500',
+    'bg-blue-500',
+    'bg-pink-500',
+    'bg-green-500',
+  ];
 
   return (
     <section
@@ -116,52 +131,75 @@ export function SolutionsSection() {
           <p className="text-metal-300 text-lg">{t('solutions.description')}</p>
         </motion.div>
 
+        {/* Loading State */}
+        {loading && (
+          <div className="flex justify-center items-center py-20">
+            <Loader2 className="h-12 w-12 animate-spin text-primary" />
+          </div>
+        )}
+
+        {/* Empty State */}
+        {!loading && solutions.length === 0 && (
+          <div className="text-center py-20">
+            <Beaker className="h-16 w-16 text-metal-500 mx-auto mb-4" />
+            <p className="text-metal-400 text-lg">
+              {locale === 'ar' ? 'لا توجد حلول متاحة حالياً' : locale === 'tr' ? 'Şu anda mevcut çözüm yok' : 'No solutions available at the moment'}
+            </p>
+          </div>
+        )}
+
         {/* Solutions Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {solutions.map((solution, index) => (
-            <motion.div
-              key={solution.id}
-              initial={{ opacity: 0, y: 30 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-            >
-              <Link href={`/solutions/${solution.id}`}>
-                <div className="group relative bg-steel-800 border-2 border-steel-700 p-6 h-full hover:border-primary transition-all duration-300 overflow-hidden">
-                  {/* Accent Color Bar */}
-                  <div className={`absolute top-0 left-0 w-full h-1 ${solution.accentColor}`} />
+        {!loading && solutions.length > 0 && (
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {solutions.map((solution, index) => (
+              <motion.div
+                key={solution.id}
+                initial={{ opacity: 0, y: 30 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+              >
+                <Link href={`/solutions/${solution.slug}`}>
+                  <div className="group relative bg-steel-800 border-2 border-steel-700 p-6 h-full hover:border-primary transition-all duration-300 overflow-hidden">
+                    {/* Accent Color Bar */}
+                    <div className={`absolute top-0 left-0 w-full h-1 ${accentColors[index % accentColors.length]}`} />
 
-                  {/* Gold Bar on Hover */}
-                  <div className="absolute bottom-0 left-0 w-full h-1 bg-primary transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300" />
+                    {/* Gold Bar on Hover */}
+                    <div className="absolute bottom-0 left-0 w-full h-1 bg-primary transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300" />
 
-                  {/* Icon */}
-                  <div className="w-16 h-16 bg-steel-700 border border-steel-600 flex items-center justify-center mb-6 group-hover:bg-primary group-hover:border-primary transition-all duration-300">
-                    <solution.icon
-                      size={32}
-                      className="text-primary group-hover:text-steel-900 transition-colors duration-300"
-                    />
+                    {/* Icon */}
+                    <div className="w-16 h-16 bg-steel-700 border border-steel-600 flex items-center justify-center mb-6 group-hover:bg-primary group-hover:border-primary transition-all duration-300">
+                      {solution.icon ? (
+                        <span className="text-3xl">{solution.icon}</span>
+                      ) : (
+                        <Beaker
+                          size={32}
+                          className="text-primary group-hover:text-steel-900 transition-colors duration-300"
+                        />
+                      )}
+                    </div>
+
+                    {/* Content */}
+                    <h3 className="text-xl font-bold text-white uppercase tracking-wider mb-3 group-hover:text-primary transition-colors">
+                      {getTitle(solution)}
+                    </h3>
+                    <p className="text-metal-400 text-sm mb-6">
+                      {getDescription(solution)}
+                    </p>
+
+                    {/* Link */}
+                    <div className="flex items-center text-primary text-sm font-bold uppercase tracking-wider opacity-0 group-hover:opacity-100 transition-opacity">
+                      <span>{t('solutions.learnMore') || 'Learn More'}</span>
+                      <ArrowRight
+                        className={`${isRTL ? 'mr-2 rotate-180' : 'ml-2'}`}
+                        size={16}
+                      />
+                    </div>
                   </div>
-
-                  {/* Content */}
-                  <h3 className="text-xl font-bold text-white uppercase tracking-wider mb-3 group-hover:text-primary transition-colors">
-                    {isRTL ? solution.titleAr : solution.titleEn}
-                  </h3>
-                  <p className="text-metal-400 text-sm mb-6">
-                    {isRTL ? solution.descAr : solution.descEn}
-                  </p>
-
-                  {/* Link */}
-                  <div className="flex items-center text-primary text-sm font-bold uppercase tracking-wider opacity-0 group-hover:opacity-100 transition-opacity">
-                    <span>{t('solutions.learnMore') || 'Learn More'}</span>
-                    <ArrowRight
-                      className={`${isRTL ? 'mr-2 rotate-180' : 'ml-2'}`}
-                      size={16}
-                    />
-                  </div>
-                </div>
-              </Link>
-            </motion.div>
-          ))}
-        </div>
+                </Link>
+              </motion.div>
+            ))}
+          </div>
+        )}
 
         {/* Bottom CTA */}
         <motion.div

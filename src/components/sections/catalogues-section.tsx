@@ -1,52 +1,79 @@
 'use client';
 
-import { useRef } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import { motion, useInView } from 'framer-motion';
-import { Download, FileText, Eye, BookOpen } from 'lucide-react';
+import { Download, FileText, Eye, BookOpen, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useLocale } from '@/hooks/useLocale';
 
-const catalogues = [
-  {
-    id: '1',
-    nameKey: 'catalogues.items.products.name',
-    descKey: 'catalogues.items.products.description',
-    thumbnail: '/images/catalogues/products-catalog.jpg',
-    fileSize: '15 MB',
-    downloads: 1250,
-    pages: 48,
-  },
-  {
-    id: '2',
-    nameKey: 'catalogues.items.filling.name',
-    descKey: 'catalogues.items.filling.description',
-    thumbnail: '/images/catalogues/filling-catalog.jpg',
-    fileSize: '8 MB',
-    downloads: 890,
-    pages: 32,
-  },
-  {
-    id: '3',
-    nameKey: 'catalogues.items.production.name',
-    descKey: 'catalogues.items.production.description',
-    thumbnail: '/images/catalogues/production-catalog.jpg',
-    fileSize: '12 MB',
-    downloads: 650,
-    pages: 40,
-  },
-];
+interface Catalogue {
+  id: string;
+  titleAr: string;
+  titleEn: string;
+  titleTr: string;
+  descriptionAr: string;
+  descriptionEn: string;
+  descriptionTr: string;
+  fileUrl: string;
+  coverImage: string;
+  fileSize: string;
+}
 
 export function CataloguesSection() {
   const t = useTranslations();
-  const { isRTL } = useLocale();
+  const { isRTL, locale } = useLocale();
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
 
-  const handleDownload = (id: string) => {
-    // Download logic would go here
-    console.log('Downloading catalogue:', id);
+  const [catalogues, setCatalogues] = useState<Catalogue[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchCatalogues = async () => {
+      try {
+        const response = await fetch('/api/public/catalogues');
+        if (response.ok) {
+          const data = await response.json();
+          setCatalogues(data);
+        }
+      } catch (error) {
+        console.error('Error fetching catalogues:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCatalogues();
+  }, []);
+
+  const getTitle = (catalogue: Catalogue) => {
+    switch (locale) {
+      case 'ar':
+        return catalogue.titleAr;
+      case 'tr':
+        return catalogue.titleTr;
+      default:
+        return catalogue.titleEn;
+    }
+  };
+
+  const getDescription = (catalogue: Catalogue) => {
+    switch (locale) {
+      case 'ar':
+        return catalogue.descriptionAr;
+      case 'tr':
+        return catalogue.descriptionTr;
+      default:
+        return catalogue.descriptionEn;
+    }
+  };
+
+  const handleDownload = (catalogue: Catalogue) => {
+    if (catalogue.fileUrl) {
+      window.open(catalogue.fileUrl, '_blank');
+    }
   };
 
   return (
@@ -104,91 +131,106 @@ export function CataloguesSection() {
           <p className="text-metal-300">{t('catalogues.description')}</p>
         </motion.div>
 
+        {/* Loading State */}
+        {loading && (
+          <div className="flex items-center justify-center py-20">
+            <Loader2 className="w-12 h-12 text-primary animate-spin" />
+          </div>
+        )}
+
+        {/* Empty State */}
+        {!loading && catalogues.length === 0 && (
+          <div className="text-center py-20">
+            <BookOpen className="w-16 h-16 text-metal-500 mx-auto mb-4" />
+            <p className="text-metal-400 text-lg">
+              {t('catalogues.noCatalogues') || 'No catalogues available at the moment.'}
+            </p>
+          </div>
+        )}
+
         {/* Catalogues Grid */}
-        <div className="grid md:grid-cols-3 gap-6">
-          {catalogues.map((catalogue, index) => (
-            <motion.div
-              key={catalogue.id}
-              initial={{ opacity: 0, y: 30 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-            >
-              <div className="group relative bg-steel-800 border-2 border-steel-700 overflow-hidden hover:border-primary transition-all duration-300 h-full">
-                {/* Gold Accent Bar */}
-                <div className="absolute top-0 left-0 w-1 h-full bg-primary z-10" />
+        {!loading && catalogues.length > 0 && (
+          <div className="grid md:grid-cols-3 gap-6">
+            {catalogues.map((catalogue, index) => (
+              <motion.div
+                key={catalogue.id}
+                initial={{ opacity: 0, y: 30 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+              >
+                <div className="group relative bg-steel-800 border-2 border-steel-700 overflow-hidden hover:border-primary transition-all duration-300 h-full">
+                  {/* Gold Accent Bar */}
+                  <div className="absolute top-0 left-0 w-1 h-full bg-primary z-10" />
 
-                {/* Thumbnail */}
-                <div className="relative aspect-[4/3] overflow-hidden">
-                  <Image
-                    src={catalogue.thumbnail}
-                    alt={t(catalogue.nameKey)}
-                    fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                    className="object-cover group-hover:scale-110 transition-transform duration-500"
-                    loading="lazy"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-steel-900 via-steel-900/50 to-transparent" />
+                  {/* Thumbnail */}
+                  <div className="relative aspect-[4/3] overflow-hidden">
+                    <Image
+                      src={catalogue.coverImage || '/images/catalogues/default-catalog.jpg'}
+                      alt={getTitle(catalogue)}
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      className="object-cover group-hover:scale-110 transition-transform duration-500"
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-steel-900 via-steel-900/50 to-transparent" />
 
-                  {/* Hover Actions */}
-                  <div className="absolute inset-0 flex items-center justify-center gap-3 opacity-0 group-hover:opacity-100 transition-opacity">
+                    {/* Hover Actions */}
+                    <div className="absolute inset-0 flex items-center justify-center gap-3 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <Button
+                        variant="industrial"
+                        size="icon"
+                        onClick={() => handleDownload(catalogue)}
+                        className="w-12 h-12"
+                      >
+                        <Download size={20} />
+                      </Button>
+                      <Button
+                        variant="industrialOutline"
+                        size="icon"
+                        className="w-12 h-12"
+                        onClick={() => handleDownload(catalogue)}
+                      >
+                        <Eye size={20} />
+                      </Button>
+                    </div>
+
+                    {/* File Info Badge */}
+                    <div className="absolute bottom-4 left-4 flex items-center gap-2">
+                      <span className="px-3 py-1 bg-steel-900/80 text-white text-xs font-bold uppercase tracking-wider">
+                        PDF
+                      </span>
+                      {catalogue.fileSize && (
+                        <span className="px-3 py-1 bg-primary text-steel-900 text-xs font-bold uppercase tracking-wider">
+                          {catalogue.fileSize}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Content */}
+                  <div className="p-6">
+                    <h3 className="text-lg font-bold text-white uppercase tracking-wider mb-2 group-hover:text-primary transition-colors">
+                      {getTitle(catalogue)}
+                    </h3>
+                    <p className="text-sm text-metal-400 mb-4">{getDescription(catalogue)}</p>
+                  </div>
+
+                  {/* Download Button */}
+                  <div className="px-6 pb-6">
                     <Button
                       variant="industrial"
-                      size="icon"
-                      onClick={() => handleDownload(catalogue.id)}
-                      className="w-12 h-12"
+                      className="w-full group/btn"
+                      onClick={() => handleDownload(catalogue)}
                     >
-                      <Download size={20} />
-                    </Button>
-                    <Button
-                      variant="industrialOutline"
-                      size="icon"
-                      className="w-12 h-12"
-                    >
-                      <Eye size={20} />
+                      <Download size={18} className="group-hover/btn:animate-bounce" />
+                      {t('catalogues.downloadButton')}
                     </Button>
                   </div>
-
-                  {/* File Info Badge */}
-                  <div className="absolute bottom-4 left-4 flex items-center gap-2">
-                    <span className="px-3 py-1 bg-steel-900/80 text-white text-xs font-bold uppercase tracking-wider">
-                      PDF
-                    </span>
-                    <span className="px-3 py-1 bg-primary text-steel-900 text-xs font-bold uppercase tracking-wider">
-                      {catalogue.pages} {t('catalogues.pages') || 'Pages'}
-                    </span>
-                  </div>
                 </div>
-
-                {/* Content */}
-                <div className="p-6">
-                  <h3 className="text-lg font-bold text-white uppercase tracking-wider mb-2 group-hover:text-primary transition-colors">
-                    {t(catalogue.nameKey)}
-                  </h3>
-                  <p className="text-sm text-metal-400 mb-4">{t(catalogue.descKey)}</p>
-
-                  <div className="flex items-center justify-between text-sm border-t border-steel-700 pt-4">
-                    <span className="text-metal-500 font-mono">{catalogue.fileSize}</span>
-                    <span className="text-primary font-bold">
-                      {catalogue.downloads.toLocaleString()} {t('catalogues.downloads')}
-                    </span>
-                  </div>
-                </div>
-
-                {/* Download Button */}
-                <div className="px-6 pb-6">
-                  <Button
-                    variant="industrial"
-                    className="w-full group/btn"
-                    onClick={() => handleDownload(catalogue.id)}
-                  >
-                    <Download size={18} className="group-hover/btn:animate-bounce" />
-                    {t('catalogues.downloadButton')}
-                  </Button>
-                </div>
-              </div>
-            </motion.div>
-          ))}
-        </div>
+              </motion.div>
+            ))}
+          </div>
+        )}
 
         {/* Bottom CTA */}
         <motion.div
