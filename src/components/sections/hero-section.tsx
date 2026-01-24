@@ -5,185 +5,276 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { ChevronDown } from 'lucide-react';
+import { ChevronDown, Factory, Cog, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useLocale } from '@/hooks/useLocale';
 
 export const HeroSection = memo(function HeroSection() {
   const t = useTranslations();
+  const { isRTL } = useLocale();
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ['start start', 'end start'],
   });
 
-  const y = useTransform(scrollYProgress, [0, 1], ['0%', '50%']);
+  const y = useTransform(scrollYProgress, [0, 1], ['0%', '30%']);
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
-
-  const titleText = t('hero.title');
-  const titleWords = titleText.split(' ');
 
   // Framer Motion variants
   const titleVariants = {
-    hidden: { opacity: 0, y: 100 },
+    hidden: { opacity: 0, y: 80 },
     visible: (i: number) => ({
       opacity: 1,
       y: 0,
       transition: {
-        delay: 0.5 + (i * 0.05),
-        duration: 1,
-        ease: [0.25, 0.46, 0.45, 0.94] // power4.out equivalent
-      }
-    })
+        delay: 0.3 + i * 0.1,
+        duration: 0.8,
+        ease: [0.25, 0.46, 0.45, 0.94],
+      },
+    }),
   };
 
   const fadeUpVariants = {
-    hidden: { opacity: 0, y: 30 },
+    hidden: { opacity: 0, y: 40 },
     visible: (delay: number) => ({
       opacity: 1,
       y: 0,
       transition: {
         delay,
-        duration: 0.8,
-        ease: 'easeOut'
-      }
-    })
+        duration: 0.6,
+        ease: 'easeOut',
+      },
+    }),
   };
 
   const statVariants = {
-    hidden: { opacity: 0, y: 50 },
+    hidden: { opacity: 0, scale: 0.8 },
     visible: (i: number) => ({
       opacity: 1,
-      y: 0,
+      scale: 1,
       transition: {
-        delay: 1.8 + (i * 0.1),
-        duration: 0.8,
-        ease: 'easeOut'
-      }
-    })
+        delay: 1.5 + i * 0.15,
+        duration: 0.5,
+        ease: 'easeOut',
+      },
+    }),
   };
+
+  const stats = [
+    { value: '30+', label: t('about.experience') },
+    { value: '500+', label: t('about.projects') },
+    { value: '300+', label: t('about.clients') },
+    { value: '15+', label: t('about.countries') },
+  ];
 
   return (
     <section
       ref={containerRef}
-      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-white"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-steel-900"
+      dir={isRTL ? 'rtl' : 'ltr'}
     >
+      {/* Industrial Background Pattern */}
+      <div className="absolute inset-0 z-0">
+        {/* Grid Pattern */}
+        <div
+          className="absolute inset-0 opacity-[0.03]"
+          style={{
+            backgroundImage: `
+              linear-gradient(rgba(212, 160, 10, 0.3) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(212, 160, 10, 0.3) 1px, transparent 1px)
+            `,
+            backgroundSize: '50px 50px',
+          }}
+        />
+
+        {/* Diagonal Lines */}
+        <div
+          className="absolute inset-0 opacity-[0.02]"
+          style={{
+            backgroundImage: `repeating-linear-gradient(
+              45deg,
+              transparent,
+              transparent 35px,
+              rgba(212, 160, 10, 0.1) 35px,
+              rgba(212, 160, 10, 0.1) 70px
+            )`,
+          }}
+        />
+      </div>
+
       {/* Background Image with Parallax */}
       <motion.div style={{ y }} className="absolute inset-0 z-0">
-        <div className="absolute inset-0 bg-gradient-to-b from-white/80 via-white/60 to-white z-10" />
+        <div className="absolute inset-0 bg-gradient-to-b from-steel-900/95 via-steel-900/80 to-steel-900 z-10" />
         <Image
-          src="/images/logo.jpg"
-          alt="Background"
+          src="/images/factory-bg.jpg"
+          alt="Factory Background"
           fill
           sizes="100vw"
-          className="object-cover opacity-20"
+          className="object-cover opacity-40"
           priority
         />
       </motion.div>
 
-      {/* Animated Background Elements */}
-      <div className="absolute inset-0 z-0">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-primary/5 rounded-full blur-3xl animate-pulse delay-1000" />
+      {/* Animated Industrial Elements */}
+      <div className="absolute inset-0 z-0 overflow-hidden">
+        {/* Rotating Gear - Top Right */}
+        <motion.div
+          animate={{ rotate: 360 }}
+          transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
+          className="absolute -top-20 -right-20 text-primary/10"
+        >
+          <Cog size={300} strokeWidth={0.5} />
+        </motion.div>
+
+        {/* Rotating Gear - Bottom Left */}
+        <motion.div
+          animate={{ rotate: -360 }}
+          transition={{ duration: 25, repeat: Infinity, ease: 'linear' }}
+          className="absolute -bottom-32 -left-32 text-primary/5"
+        >
+          <Cog size={400} strokeWidth={0.5} />
+        </motion.div>
+
+        {/* Gold Accent Lines */}
+        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary to-transparent" />
+        <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
       </div>
 
       {/* Content */}
-      <motion.div style={{ opacity }} className="container-custom relative z-10 text-center pt-20">
-        {/* Logo */}
+      <motion.div
+        style={{ opacity }}
+        className="container-custom relative z-10 text-center pt-20 pb-32"
+      >
+        {/* Factory Badge */}
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="inline-flex items-center gap-2 px-4 py-2 mb-8 border-2 border-primary/30 bg-primary/10"
+        >
+          <Factory size={18} className="text-primary" />
+          <span className="text-primary text-sm font-bold uppercase tracking-widest">
+            {t('hero.badge') || 'منذ 1994'}
+          </span>
+        </motion.div>
+
+        {/* Logo with Industrial Frame */}
         <motion.div
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 0.8 }}
-          className="mb-8"
+          className="mb-10 relative inline-block"
         >
-          <Image
-            src="/images/logo.jpg"
-            alt="S.N.A Al-Attal"
-            width={150}
-            height={150}
-            className="mx-auto rounded-xl shadow-2xl shadow-primary/20"
-            priority
-          />
+          <div className="relative">
+            <Image
+              src="/images/logo.jpg"
+              alt="S.N.A Al-Attal"
+              width={140}
+              height={140}
+              className="mx-auto border-4 border-primary shadow-gold"
+              priority
+            />
+            {/* Corner Accents */}
+            <div className="absolute -top-2 -left-2 w-6 h-6 border-t-4 border-l-4 border-primary" />
+            <div className="absolute -top-2 -right-2 w-6 h-6 border-t-4 border-r-4 border-primary" />
+            <div className="absolute -bottom-2 -left-2 w-6 h-6 border-b-4 border-l-4 border-primary" />
+            <div className="absolute -bottom-2 -right-2 w-6 h-6 border-b-4 border-r-4 border-primary" />
+          </div>
         </motion.div>
 
-        {/* Title with staggered animation */}
-        <h1 className="heading-1 text-gray-900 mb-6 overflow-hidden">
-          {titleWords.map((word, wordIndex) => (
-            <motion.span
-              key={wordIndex}
-              custom={wordIndex}
-              variants={titleVariants}
-              initial="hidden"
-              animate="visible"
-              className="inline-block mx-2 text-primary"
-            >
-              {word}
-            </motion.span>
-          ))}
+        {/* Title */}
+        <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 uppercase tracking-wider">
+          <motion.span
+            custom={0}
+            variants={titleVariants}
+            initial="hidden"
+            animate="visible"
+            className="block"
+          >
+            {t('hero.title_line1') || 'S.N.A AL-ATTAL'}
+          </motion.span>
+          <motion.span
+            custom={1}
+            variants={titleVariants}
+            initial="hidden"
+            animate="visible"
+            className="block text-primary mt-2"
+          >
+            {t('hero.title_line2') || 'للصناعات الهندسية'}
+          </motion.span>
         </h1>
 
-        {/* Subtitle */}
-        <motion.p
-          custom={1.2}
+        {/* Subtitle with Industrial Divider */}
+        <motion.div
+          custom={0.8}
           variants={fadeUpVariants}
           initial="hidden"
           animate="visible"
-          className="text-xl md:text-2xl text-primary/80 mb-4 font-medium"
+          className="flex items-center justify-center gap-4 mb-6"
         >
-          {t('hero.subtitle')}
-        </motion.p>
+          <div className="h-px w-12 sm:w-20 bg-gradient-to-r from-transparent to-primary" />
+          <p className="text-lg sm:text-xl md:text-2xl text-primary font-semibold uppercase tracking-wider">
+            {t('hero.subtitle')}
+          </p>
+          <div className="h-px w-12 sm:w-20 bg-gradient-to-l from-transparent to-primary" />
+        </motion.div>
 
         {/* Description */}
         <motion.p
-          custom={1.4}
+          custom={1.0}
           variants={fadeUpVariants}
           initial="hidden"
           animate="visible"
-          className="text-lg text-gray-700 max-w-2xl mx-auto mb-10"
+          className="text-base sm:text-lg text-metal-300 max-w-3xl mx-auto mb-12 leading-relaxed"
         >
           {t('hero.description')}
         </motion.p>
 
         {/* CTA Buttons */}
         <motion.div
-          custom={1.6}
+          custom={1.2}
           variants={fadeUpVariants}
           initial="hidden"
           animate="visible"
-          className="flex flex-col sm:flex-row gap-4 justify-center mb-16"
+          className="flex flex-col sm:flex-row gap-4 justify-center mb-20"
         >
-          <Button variant="gold" size="xl" asChild className="group">
+          <Button variant="industrial" size="xl" asChild className="group">
             <Link href="/products">
               {t('hero.cta')}
-              <ChevronDown className="ml-2 group-hover:translate-y-1 transition-transform" size={20} />
+              <ArrowRight
+                className={`${isRTL ? 'mr-2 rotate-180 group-hover:-translate-x-1' : 'ml-2 group-hover:translate-x-1'} transition-transform`}
+                size={20}
+              />
             </Link>
           </Button>
-          <Button variant="goldOutline" size="xl" asChild>
-            <Link href="/contact">
-              {t('hero.secondary_cta')}
-            </Link>
+          <Button variant="industrialOutline" size="xl" asChild>
+            <Link href="/contact">{t('hero.secondary_cta')}</Link>
           </Button>
         </motion.div>
 
-        {/* Stats */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
-          {[
-            { value: '30+', label: t('about.experience') },
-            { value: '500+', label: t('about.projects') },
-            { value: '300+', label: t('about.clients') },
-            { value: '15+', label: t('about.countries') },
-          ].map((stat, index) => (
+        {/* Stats Grid - Industrial Style */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 max-w-5xl mx-auto">
+          {stats.map((stat, index) => (
             <motion.div
               key={index}
               custom={index}
               variants={statVariants}
               initial="hidden"
               animate="visible"
-              className="text-center"
+              className="relative group"
             >
-              <div className="text-4xl md:text-5xl font-bold text-primary mb-2">
-                {stat.value}
+              <div className="bg-steel-800/80 border-2 border-steel-700 p-4 sm:p-6 transition-all duration-300 hover:border-primary hover:bg-steel-800">
+                {/* Gold Accent Bar */}
+                <div className="absolute top-0 left-0 w-full h-1 bg-primary transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300" />
+
+                <div className="text-3xl sm:text-4xl md:text-5xl font-bold text-primary mb-2 font-mono">
+                  {stat.value}
+                </div>
+                <div className="text-xs sm:text-sm text-metal-400 uppercase tracking-wider">
+                  {stat.label}
+                </div>
               </div>
-              <div className="text-sm text-gray-600">{stat.label}</div>
             </motion.div>
           ))}
         </div>
@@ -199,12 +290,25 @@ export const HeroSection = memo(function HeroSection() {
         <motion.div
           animate={{ y: [0, 10, 0] }}
           transition={{ duration: 1.5, repeat: Infinity }}
-          className="flex flex-col items-center text-gray-600"
+          className="flex flex-col items-center"
         >
-          <span className="text-xs mb-2">Scroll</span>
-          <ChevronDown size={24} className="text-primary" />
+          <span className="text-xs text-metal-500 mb-2 uppercase tracking-wider">
+            {t('hero.scroll') || 'Scroll'}
+          </span>
+          <div className="w-6 h-10 border-2 border-metal-600 flex items-start justify-center p-1">
+            <motion.div
+              animate={{ y: [0, 12, 0] }}
+              transition={{ duration: 1.5, repeat: Infinity }}
+              className="w-1.5 h-3 bg-primary"
+            />
+          </div>
         </motion.div>
       </motion.div>
+
+      {/* Bottom Industrial Border */}
+      <div className="absolute bottom-0 left-0 right-0 h-2 bg-steel-800 z-20">
+        <div className="absolute top-0 left-0 h-full w-1/4 bg-primary" />
+      </div>
     </section>
   );
 });
