@@ -5,47 +5,55 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { motion, useInView } from 'framer-motion';
-import { Calendar, MapPin, ArrowRight } from 'lucide-react';
+import { Calendar, MapPin, ArrowRight, Globe } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { useLocale } from '@/hooks/useLocale';
 
 const exhibitions = [
   {
     id: '1',
-    nameKey: 'exhibitions.items.gulfood.name',
-    locationKey: 'exhibitions.items.gulfood.location',
+    nameAr: 'معرض جلفود 2024',
+    nameEn: 'Gulfood 2024',
+    locationAr: 'دبي، الإمارات',
+    locationEn: 'Dubai, UAE',
     date: '2024-02-19',
     endDate: '2024-02-23',
-    image: '/images/logo.jpg',
+    image: '/images/exhibitions/gulfood.jpg',
     isUpcoming: true,
   },
   {
     id: '2',
-    nameKey: 'exhibitions.items.packExpo.name',
-    locationKey: 'exhibitions.items.packExpo.location',
+    nameAr: 'معرض باك إكسبو 2024',
+    nameEn: 'Pack Expo 2024',
+    locationAr: 'شيكاغو، الولايات المتحدة',
+    locationEn: 'Chicago, USA',
     date: '2024-11-03',
     endDate: '2024-11-06',
-    image: '/images/logo.jpg',
+    image: '/images/exhibitions/packexpo.jpg',
     isUpcoming: true,
   },
   {
     id: '3',
-    nameKey: 'exhibitions.items.propak.name',
-    locationKey: 'exhibitions.items.propak.location',
+    nameAr: 'معرض بروباك آسيا',
+    nameEn: 'ProPak Asia',
+    locationAr: 'بانكوك، تايلاند',
+    locationEn: 'Bangkok, Thailand',
     date: '2024-06-12',
     endDate: '2024-06-15',
-    image: '/images/logo.jpg',
+    image: '/images/exhibitions/propak.jpg',
     isUpcoming: false,
   },
 ];
 
 export function ExhibitionsSection() {
   const t = useTranslations();
+  const { isRTL } = useLocale();
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
 
   const formatDate = (date: string) => {
-    return new Date(date).toLocaleDateString('ar-EG', {
+    return new Date(date).toLocaleDateString(isRTL ? 'ar-EG' : 'en-US', {
       day: 'numeric',
       month: 'long',
       year: 'numeric',
@@ -53,7 +61,28 @@ export function ExhibitionsSection() {
   };
 
   return (
-    <section ref={ref} className="section-padding bg-gray-50 relative overflow-hidden">
+    <section
+      ref={ref}
+      className="py-20 lg:py-28 bg-steel-900 relative overflow-hidden"
+      dir={isRTL ? 'rtl' : 'ltr'}
+    >
+      {/* Industrial Background Pattern */}
+      <div className="absolute inset-0 z-0">
+        <div
+          className="absolute inset-0 opacity-[0.02]"
+          style={{
+            backgroundImage: `
+              linear-gradient(rgba(212, 160, 10, 0.5) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(212, 160, 10, 0.5) 1px, transparent 1px)
+            `,
+            backgroundSize: '50px 50px',
+          }}
+        />
+      </div>
+
+      {/* Top Gold Border */}
+      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary via-primary/80 to-primary" />
+
       <div className="container-custom relative z-10">
         {/* Header */}
         <motion.div
@@ -63,18 +92,35 @@ export function ExhibitionsSection() {
           className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12"
         >
           <div>
-            <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium mb-4">
-              <Calendar size={16} />
-              {t('exhibitions.title')}
+            {/* Section Tag */}
+            <div className="inline-flex items-center gap-2 border-2 border-primary/30 bg-primary/10 px-4 py-2 mb-4">
+              <Globe size={16} className="text-primary" />
+              <span className="text-primary text-sm font-bold uppercase tracking-widest">
+                {t('exhibitions.title')}
+              </span>
             </div>
-            <h2 className="heading-2 text-gray-900">{t('exhibitions.subtitle')}</h2>
-            <p className="text-gray-600 mt-2">{t('exhibitions.description')}</p>
+
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white uppercase tracking-wide">
+              {t('exhibitions.subtitle')}
+            </h2>
+
+            {/* Gold Divider */}
+            <div className="flex items-center gap-4 mt-4">
+              <div className="h-1 w-16 bg-primary" />
+              <div className="h-1 w-8 bg-primary/50" />
+              <div className="h-1 w-4 bg-primary/25" />
+            </div>
+
+            <p className="text-metal-300 mt-4 max-w-xl">{t('exhibitions.description')}</p>
           </div>
 
-          <Button variant="goldOutline" asChild className="group shrink-0">
+          <Button variant="industrial" asChild className="group shrink-0">
             <Link href="/exhibitions">
               {t('exhibitions.viewAll')}
-              <ArrowRight className="mr-2 rtl:rotate-180 group-hover:translate-x-1 transition-transform" size={18} />
+              <ArrowRight
+                className={`${isRTL ? 'mr-2 rotate-180 group-hover:-translate-x-1' : 'ml-2 group-hover:translate-x-1'} transition-transform`}
+                size={18}
+              />
             </Link>
           </Button>
         </motion.div>
@@ -89,22 +135,25 @@ export function ExhibitionsSection() {
               transition={{ duration: 0.6, delay: index * 0.1 }}
             >
               <Link href={`/exhibitions/${exhibition.id}`}>
-                <div className="group relative bg-gray-100 rounded-2xl overflow-hidden border border-gray-200 hover:border-primary/50 transition-all duration-300 h-full">
+                <div className="group relative bg-steel-800 border-2 border-steel-700 overflow-hidden hover:border-primary transition-all duration-300 h-full">
+                  {/* Gold Accent Bar */}
+                  <div className="absolute top-0 left-0 w-1 h-full bg-primary z-10" />
+
                   {/* Image */}
                   <div className="relative aspect-video overflow-hidden">
                     <Image
                       src={exhibition.image}
-                      alt={t(exhibition.nameKey)}
+                      alt={isRTL ? exhibition.nameAr : exhibition.nameEn}
                       fill
                       sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                       className="object-cover group-hover:scale-110 transition-transform duration-500"
                       loading="lazy"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-white to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-steel-900 via-steel-900/50 to-transparent" />
 
                     {/* Status Badge */}
                     {exhibition.isUpcoming && (
-                      <Badge variant="gold" className="absolute top-4 right-4">
+                      <Badge variant="featured" className="absolute top-4 right-4">
                         {t('exhibitions.upcoming')}
                       </Badge>
                     )}
@@ -112,18 +161,24 @@ export function ExhibitionsSection() {
 
                   {/* Content */}
                   <div className="p-6">
-                    <h3 className="text-lg font-semibold text-gray-900 group-hover:text-primary transition-colors mb-3">
-                      {t(exhibition.nameKey)}
+                    <h3 className="text-lg font-bold text-white uppercase tracking-wider group-hover:text-primary transition-colors mb-4">
+                      {isRTL ? exhibition.nameAr : exhibition.nameEn}
                     </h3>
 
-                    <div className="space-y-2 text-sm text-gray-600">
-                      <div className="flex items-center gap-2">
-                        <MapPin size={14} className="text-primary" />
-                        <span>{t(exhibition.locationKey)}</span>
+                    <div className="space-y-3 text-sm">
+                      <div className="flex items-center gap-3">
+                        <div className="w-8 h-8 border border-steel-600 bg-steel-700 flex items-center justify-center">
+                          <MapPin size={14} className="text-primary" />
+                        </div>
+                        <span className="text-metal-300">
+                          {isRTL ? exhibition.locationAr : exhibition.locationEn}
+                        </span>
                       </div>
-                      <div className="flex items-center gap-2">
-                        <Calendar size={14} className="text-primary" />
-                        <span>{formatDate(exhibition.date)}</span>
+                      <div className="flex items-center gap-3">
+                        <div className="w-8 h-8 border border-steel-600 bg-steel-700 flex items-center justify-center">
+                          <Calendar size={14} className="text-primary" />
+                        </div>
+                        <span className="text-metal-300">{formatDate(exhibition.date)}</span>
                       </div>
                     </div>
                   </div>
