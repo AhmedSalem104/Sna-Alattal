@@ -76,13 +76,13 @@ export const ProductsSection = memo(function ProductsSection() {
   return (
     <section
       ref={ref}
-      className="py-20 lg:py-28 bg-gradient-to-b from-neutral-50 to-white relative overflow-hidden"
+      className="py-12 sm:py-16 lg:py-24 bg-gradient-to-b from-neutral-50 to-white relative overflow-hidden"
       dir={isRTL ? 'rtl' : 'ltr'}
     >
       {/* Modern Subtle Background */}
-      <div className="absolute inset-0 z-0">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 left-0 w-80 h-80 bg-copper-500/5 rounded-full blur-3xl" />
+      <div className="absolute inset-0 z-0 overflow-hidden">
+        <div className="absolute top-0 right-0 w-48 sm:w-64 lg:w-96 h-48 sm:h-64 lg:h-96 bg-primary/5 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 left-0 w-40 sm:w-56 lg:w-80 h-40 sm:h-56 lg:h-80 bg-copper-500/5 rounded-full blur-3xl" />
       </div>
 
       <div className="container-custom relative z-10">
@@ -91,7 +91,7 @@ export const ProductsSection = memo(function ProductsSection() {
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12"
+          className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 sm:gap-6 mb-8 sm:mb-12"
         >
           <div>
             {/* Section Tag */}
@@ -102,7 +102,7 @@ export const ProductsSection = memo(function ProductsSection() {
               </span>
             </div>
 
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-steel-900 tracking-tight">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-steel-900 tracking-tight">
               {t('products.subtitle')}
             </h2>
 
@@ -135,7 +135,7 @@ export const ProductsSection = memo(function ProductsSection() {
           </div>
         ) : (
           /* Products Grid */
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 lg:gap-6">
             {products.map((product, index) => (
               <motion.div
                 key={product.id}
@@ -186,13 +186,13 @@ export const ProductsSection = memo(function ProductsSection() {
                     </div>
 
                     {/* Content */}
-                    <div className="p-5">
-                      <h3 className="text-steel-900 font-semibold group-hover:text-primary transition-colors line-clamp-2 text-base">
+                    <div className="p-3 sm:p-4 lg:p-5">
+                      <h3 className="text-steel-900 font-semibold group-hover:text-primary transition-colors line-clamp-2 text-sm sm:text-base">
                         {getName(product)}
                       </h3>
 
                       {/* View Details Link */}
-                      <div className="mt-3 flex items-center text-primary text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity">
+                      <div className="mt-2 sm:mt-3 flex items-center text-primary text-xs sm:text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity">
                         <span>{t('products.viewDetails') || 'عرض التفاصيل'}</span>
                         <ArrowRight
                           size={16}
@@ -212,9 +212,9 @@ export const ProductsSection = memo(function ProductsSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.5 }}
-          className="mt-16 text-center"
+          className="mt-10 sm:mt-12 lg:mt-16 text-center"
         >
-          <p className="text-neutral-600 mb-8 text-lg">
+          <p className="text-neutral-600 mb-6 sm:mb-8 text-base sm:text-lg px-4">
             {t('products.cta_text') ||
               'اكتشف مجموعتنا الكاملة من ماكينات التعبئة والتغليف'}
           </p>

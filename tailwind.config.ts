@@ -10,8 +10,16 @@ const config: Config = {
   theme: {
     container: {
       center: true,
-      padding: '1rem',
+      padding: {
+        DEFAULT: '1rem',
+        sm: '1.5rem',
+        lg: '2rem',
+      },
       screens: {
+        sm: '640px',
+        md: '768px',
+        lg: '1024px',
+        xl: '1280px',
         '2xl': '1400px',
       },
     },
@@ -102,33 +110,33 @@ const config: Config = {
           950: '#0E0E14',
         },
 
-        // Modern Neutral - Warmer grays
+        // Modern Neutral - Improved contrast
         neutral: {
           DEFAULT: '#525264',
           50: '#FAFAFA',
           100: '#F5F5F6',
           200: '#E8E8EC',
-          300: '#D4D4DC',
-          400: '#A3A3B2',
-          500: '#737385',
-          600: '#525264',
-          700: '#3D3D4D',
-          800: '#27273A',
+          300: '#C8C8D4',
+          400: '#8E8E9E',
+          500: '#5E5E70',
+          600: '#454558',
+          700: '#353548',
+          800: '#252538',
           900: '#18181F',
           950: '#0C0C10',
         },
 
-        // Legacy metal (updated to be warmer)
+        // Legacy metal (improved contrast)
         metal: {
           DEFAULT: '#3D3D4D',
           50: '#FAFAFA',
           100: '#F4F4F5',
           200: '#E4E4E7',
-          300: '#D4D4D8',
-          400: '#A1A1AA',
-          500: '#71717A',
-          600: '#52525B',
-          700: '#3F3F46',
+          300: '#C4C4CC',
+          400: '#8C8C96',
+          500: '#5C5C66',
+          600: '#454550',
+          700: '#36363F',
           800: '#27272A',
           900: '#18181B',
         },

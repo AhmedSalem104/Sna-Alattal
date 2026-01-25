@@ -178,7 +178,7 @@ export const HeroSection = memo(function HeroSection() {
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 tracking-tight"
+          className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white mb-4 sm:mb-6 tracking-tight leading-tight"
         >
           {title}
         </motion.h1>
@@ -274,7 +274,7 @@ export const HeroSection = memo(function HeroSection() {
       </motion.div>
 
       {/* Title */}
-      <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 tracking-tight">
+      <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-white mb-4 sm:mb-6 tracking-tight leading-tight">
         <motion.span
           custom={0}
           variants={titleVariants}
@@ -344,7 +344,7 @@ export const HeroSection = memo(function HeroSection() {
       </motion.div>
 
       {/* Stats Grid - Modern Style */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 max-w-5xl mx-auto">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6 max-w-5xl mx-auto px-2 sm:px-0">
         {stats.map((stat, index) => (
           <motion.div
             key={index}
@@ -354,11 +354,11 @@ export const HeroSection = memo(function HeroSection() {
             animate="visible"
             className="relative group"
           >
-            <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-4 sm:p-6 transition-all duration-300 hover:bg-white/10 border border-white/10">
-              <div className="text-3xl sm:text-4xl md:text-5xl font-bold text-primary mb-2">
+            <div className="bg-white/5 backdrop-blur-sm rounded-xl sm:rounded-2xl p-3 sm:p-4 lg:p-6 transition-all duration-300 hover:bg-white/10 border border-white/10">
+              <div className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-primary mb-1 sm:mb-2">
                 {stat.value}
               </div>
-              <div className="text-xs sm:text-sm text-neutral-400">
+              <div className="text-[10px] sm:text-xs lg:text-sm text-neutral-300">
                 {stat.label}
               </div>
             </div>

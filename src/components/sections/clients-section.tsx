@@ -59,12 +59,12 @@ export const ClientsSection = memo(function ClientsSection() {
   return (
     <section
       ref={ref}
-      className="py-20 lg:py-28 bg-white relative overflow-hidden"
+      className="py-12 sm:py-16 lg:py-24 bg-white relative overflow-hidden"
       dir={isRTL ? 'rtl' : 'ltr'}
     >
       {/* Modern Subtle Background */}
-      <div className="absolute inset-0 z-0">
-        <div className="absolute top-0 left-1/2 w-[800px] h-[400px] bg-primary/5 rounded-full blur-3xl -translate-x-1/2" />
+      <div className="absolute inset-0 z-0 overflow-hidden">
+        <div className="absolute top-0 left-1/2 w-[400px] sm:w-[600px] lg:w-[800px] h-[200px] sm:h-[300px] lg:h-[400px] bg-primary/5 rounded-full blur-3xl -translate-x-1/2" />
       </div>
 
       <div className="container-custom relative z-10">
@@ -73,26 +73,26 @@ export const ClientsSection = memo(function ClientsSection() {
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="text-center max-w-3xl mx-auto mb-16"
+          className="text-center max-w-3xl mx-auto mb-10 sm:mb-12 lg:mb-16 px-2"
         >
           {/* Section Tag */}
-          <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full mb-6">
-            <Users size={16} />
-            <span className="text-sm font-semibold">
+          <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-3 sm:px-4 py-1.5 sm:py-2 rounded-full mb-4 sm:mb-6">
+            <Users size={14} className="sm:w-4 sm:h-4" />
+            <span className="text-xs sm:text-sm font-semibold">
               {t('clients.title')}
             </span>
           </div>
 
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-steel-900 tracking-tight mb-4">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-steel-900 tracking-tight mb-3 sm:mb-4">
             {t('clients.subtitle')}
           </h2>
 
           {/* Modern Divider */}
-          <div className="flex items-center justify-center gap-2 mb-6">
-            <div className="h-1 w-16 bg-gradient-to-r from-transparent via-primary to-transparent rounded-full" />
+          <div className="flex items-center justify-center gap-2 mb-4 sm:mb-6">
+            <div className="h-1 w-12 sm:w-16 bg-gradient-to-r from-transparent via-primary to-transparent rounded-full" />
           </div>
 
-          <p className="text-neutral-600 text-lg">{t('clients.description')}</p>
+          <p className="text-neutral-600 text-sm sm:text-base lg:text-lg">{t('clients.description')}</p>
         </motion.div>
 
         {/* Stats Row */}
@@ -100,17 +100,17 @@ export const ClientsSection = memo(function ClientsSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="grid grid-cols-3 gap-4 max-w-2xl mx-auto mb-16"
+          className="grid grid-cols-3 gap-2 sm:gap-4 max-w-2xl mx-auto mb-10 sm:mb-12 lg:mb-16"
         >
           {stats.map((stat) => (
             <div
               key={stat.labelKey}
-              className="text-center p-6 bg-neutral-50 rounded-2xl"
+              className="text-center p-3 sm:p-4 lg:p-6 bg-neutral-50 rounded-xl sm:rounded-2xl"
             >
-              <div className="text-3xl md:text-4xl font-bold text-primary">
+              <div className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-primary">
                 {stat.value}
               </div>
-              <div className="text-sm text-neutral-600 mt-2">
+              <div className="text-[10px] sm:text-xs lg:text-sm text-neutral-600 mt-1 sm:mt-2">
                 {t(stat.labelKey) || stat.labelKey.split('.').pop()}
               </div>
             </div>
@@ -129,7 +129,7 @@ export const ClientsSection = memo(function ClientsSection() {
           </div>
         ) : (
           /* Clients Logo Grid */
-          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-4">
+          <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-2 sm:gap-3 lg:gap-4">
             {clients.map((client, index) => (
               <motion.div
                 key={client.id}
@@ -138,13 +138,13 @@ export const ClientsSection = memo(function ClientsSection() {
                 transition={{ duration: 0.4, delay: index * 0.05 }}
                 className="group"
               >
-                <div className="aspect-square bg-white rounded-xl border border-neutral-200 p-4 flex items-center justify-center hover:border-primary/30 hover:shadow-soft-lg transition-all duration-300">
+                <div className="aspect-square bg-white rounded-lg sm:rounded-xl border border-neutral-200 p-2 sm:p-3 lg:p-4 flex items-center justify-center hover:border-primary/30 hover:shadow-soft-lg transition-all duration-300">
                   <Image
                     src={client.logo}
                     alt={getName(client)}
                     width={80}
                     height={80}
-                    className="object-contain opacity-60 group-hover:opacity-100 transition-opacity grayscale group-hover:grayscale-0"
+                    className="object-contain w-12 h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20 opacity-60 group-hover:opacity-100 transition-opacity grayscale group-hover:grayscale-0"
                     loading="lazy"
                   />
                 </div>
@@ -158,12 +158,12 @@ export const ClientsSection = memo(function ClientsSection() {
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : {}}
           transition={{ delay: 0.5 }}
-          className="mt-16 text-center"
+          className="mt-10 sm:mt-12 lg:mt-16 text-center"
         >
           {/* Trust Badge */}
-          <div className="inline-flex items-center gap-3 bg-gradient-to-r from-steel-900 to-steel-800 px-6 py-3 rounded-full mb-8">
-            <Award size={20} className="text-primary" />
-            <span className="text-white text-sm font-medium">
+          <div className="inline-flex items-center gap-2 sm:gap-3 bg-gradient-to-r from-steel-900 to-steel-800 px-4 sm:px-6 py-2 sm:py-3 rounded-full mb-6 sm:mb-8">
+            <Award size={16} className="sm:w-5 sm:h-5 text-primary" />
+            <span className="text-white text-xs sm:text-sm font-medium">
               {t('clients.trustText')}
             </span>
           </div>
