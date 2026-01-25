@@ -173,10 +173,50 @@
     "subscribe": "Subscribe",
     "since": "Since 1994"
   },
+  "auth": {
+    "login": "Log In",
+    "logout": "Log Out"
+  },
+  "errors": {
+    "networkError": {
+      "title": "Connection Error",
+      "description": "Please check your internet connection and try again."
+    },
+    "timeout": {
+      "title": "Request Timed Out",
+      "description": "The server took too long to respond. Please try again."
+    },
+    "unauthorized": {
+      "title": "Session Expired",
+      "description": "Please log in again to continue."
+    },
+    "forbidden": {
+      "title": "Access Denied",
+      "description": "You do not have permission to access this resource."
+    },
+    "notFound": {
+      "title": "Not Found",
+      "description": "The requested content could not be found."
+    },
+    "validation": {
+      "title": "Invalid Data",
+      "description": "Please check your input and try again."
+    },
+    "serverError": {
+      "title": "Server Error",
+      "description": "Something went wrong on our end. Please try again later."
+    },
+    "unknown": {
+      "title": "Something Went Wrong",
+      "description": "An unexpected error occurred."
+    },
+    "reportId": "Error ID"
+  },
   "common": {
     "loading": "Loading...",
     "error": "An error occurred",
     "retry": "Retry",
+    "backToHome": "Back to Home",
     "noData": "No data available",
     "search": "Search",
     "filter": "Filter",

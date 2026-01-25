@@ -173,10 +173,50 @@
     "subscribe": "Abone Ol",
     "since": "1994'ten beri"
   },
+  "auth": {
+    "login": "Giriş Yap",
+    "logout": "Çıkış Yap"
+  },
+  "errors": {
+    "networkError": {
+      "title": "Bağlantı Hatası",
+      "description": "Lütfen internet bağlantınızı kontrol edin ve tekrar deneyin."
+    },
+    "timeout": {
+      "title": "İstek Zaman Aşımına Uğradı",
+      "description": "Sunucu yanıt vermek için çok uzun sürdü. Lütfen tekrar deneyin."
+    },
+    "unauthorized": {
+      "title": "Oturum Süresi Doldu",
+      "description": "Devam etmek için lütfen tekrar giriş yapın."
+    },
+    "forbidden": {
+      "title": "Erişim Reddedildi",
+      "description": "Bu kaynağa erişim izniniz yok."
+    },
+    "notFound": {
+      "title": "Bulunamadı",
+      "description": "İstenen içerik bulunamadı."
+    },
+    "validation": {
+      "title": "Geçersiz Veri",
+      "description": "Lütfen girdinizi kontrol edin ve tekrar deneyin."
+    },
+    "serverError": {
+      "title": "Sunucu Hatası",
+      "description": "Bizim tarafımızda bir sorun oluştu. Lütfen daha sonra tekrar deneyin."
+    },
+    "unknown": {
+      "title": "Bir Şeyler Yanlış Gitti",
+      "description": "Beklenmeyen bir hata oluştu."
+    },
+    "reportId": "Hata Kimliği"
+  },
   "common": {
     "loading": "Yükleniyor...",
     "error": "Bir hata oluştu",
     "retry": "Tekrar Dene",
+    "backToHome": "Ana Sayfaya Dön",
     "noData": "Veri bulunamadı",
     "search": "Ara",
     "filter": "Filtrele",
