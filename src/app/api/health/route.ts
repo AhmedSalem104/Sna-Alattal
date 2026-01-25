@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { prisma } from '@/lib/db';
+import { db } from '@/lib/db';
 
 /**
  * Health Check Endpoint
@@ -24,7 +24,7 @@ export async function GET() {
   // Check database connection
   try {
     const dbStart = Date.now();
-    await prisma.$queryRaw`SELECT 1`;
+    await db.$queryRaw`SELECT 1`;
     health.checks.database = {
       status: 'healthy',
       latency: Date.now() - dbStart,
