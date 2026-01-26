@@ -16,26 +16,35 @@
     "certificates": "Sertifikalar"
   },
   "hero": {
+    "badge": "1994'ten Beri",
     "title": "S.N.A Al-Attal Mühendislik Sanayi",
+    "title_line1": "S.N.A AL-ATTAL",
+    "title_line2": "Mühendislik Sanayi",
     "subtitle": "Ambalajın Geleceğini Şekillendiriyoruz",
     "description": "30 yılı aşkın deneyimle sıvı dolum üretim hatlarının önde gelen üreticisi",
     "cta": "Ürünlerimizi Keşfedin",
-    "secondary_cta": "Bize Ulaşın"
+    "secondary_cta": "Bize Ulaşın",
+    "scroll": "Kaydır"
   },
   "about": {
     "title": "Hakkımızda",
     "subtitle": "Üç On Yıla Yayılan Bir Başarı Hikayesi",
-    "description": "S.N.A Al-Attal Mühendislik Sanayi, sıvı dolum üretim hatları imalatında Mısır'ın önde gelen şirketidir. 10. Ramazan Şehri'nde kurulmuş ve İstanbul, Türkiye'ye genişlemiştir.",
+    "description": "S.N.A Al-Attal Mühendislik Sanayi, sıvı dolum üretim hatlarında Mısır'ın önde gelen şirketidir. 10. Ramazan Şehri'nde kurulmuş ve İstanbul, Türkiye'ye genişlemiştir.",
     "experience": "Yıllık Deneyim",
     "projects": "Tamamlanan Proje",
     "clients": "Memnun Müşteri",
     "countries": "Ülke",
     "learnMore": "Daha Fazla Bilgi",
+    "contactUs": "Bize Ulaşın",
     "features": {
       "manufacturing": "Yerel Üretim",
       "global": "Küresel Varlık",
       "team": "Uzman Ekip",
       "quality": "Yüksek Kalite"
+    },
+    "highlights": {
+      "quality": "Kalite Garantisi",
+      "machines": "Makine"
     }
   },
   "products": {
@@ -43,7 +52,11 @@
     "subtitle": "Komple Üretim Hattı Çözümleri",
     "viewAll": "Tümünü Görüntüle",
     "viewDetails": "Detayları Görüntüle",
-    "categories": "Kategoriler"
+    "categories": "Kategoriler",
+    "featured": "Öne Çıkan",
+    "browseAll": "Tüm Ürünleri İncele",
+    "requestQuote": "Teklif İste",
+    "cta_text": "Tam üretim hattı yelpazemizi keşfedin"
   },
   "solutions": {
     "title": "Çözümlerimiz",
@@ -54,7 +67,12 @@
     "title": "Müşterilerimiz",
     "subtitle": "Başarıda Ortaklar",
     "description": "Mısır ve bölgedeki büyük şirketlerin güveninden gurur duyuyoruz",
-    "trustText": "300'den fazla büyük şirketin güveninden gurur duyuyoruz"
+    "trustText": "300'den fazla büyük şirketin güveninden gurur duyuyoruz",
+    "stats": {
+      "clients": "Memnun Müşteri",
+      "countries": "Ülke",
+      "satisfaction": "Müşteri Memnuniyeti"
+    }
   },
   "team": {
     "title": "Ekibimiz",
@@ -125,6 +143,12 @@
     "subtitle": "Son Gelişmeler",
     "readMore": "Devamını Oku",
     "viewAll": "Tüm Haberler"
+  },
+  "tv": {
+    "title": "TV Röportajları",
+    "subtitle": "Medya Görünümleri",
+    "description": "Önemli kanallar ve medya platformlarında uzmanlığımızı ve vizyonumuzu paylaşıyoruz",
+    "noInterviews": "Şu anda TV röportajı bulunmamaktadır"
   },
   "contact": {
     "title": "İletişim",

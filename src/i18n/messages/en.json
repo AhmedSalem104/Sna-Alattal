@@ -16,11 +16,15 @@
     "certificates": "Certificates"
   },
   "hero": {
+    "badge": "Since 1994",
     "title": "S.N.A Al-Attal Engineering Industries",
+    "title_line1": "S.N.A AL-ATTAL",
+    "title_line2": "For Engineering Industries",
     "subtitle": "Shaping the Future of Packaging",
     "description": "Leading manufacturer of liquid filling production lines with over 30 years of experience",
     "cta": "Discover Our Products",
-    "secondary_cta": "Contact Us"
+    "secondary_cta": "Contact Us",
+    "scroll": "Scroll"
   },
   "about": {
     "title": "About Us",
@@ -31,11 +35,16 @@
     "clients": "Satisfied Clients",
     "countries": "Countries",
     "learnMore": "Learn More",
+    "contactUs": "Contact Us",
     "features": {
       "manufacturing": "Local Manufacturing",
       "global": "Global Presence",
       "team": "Expert Team",
       "quality": "High Quality"
+    },
+    "highlights": {
+      "quality": "Quality Guarantee",
+      "machines": "Machines"
     }
   },
   "products": {
@@ -43,7 +52,11 @@
     "subtitle": "Complete Production Line Solutions",
     "viewAll": "View All",
     "viewDetails": "View Details",
-    "categories": "Categories"
+    "categories": "Categories",
+    "featured": "Featured",
+    "browseAll": "Browse All Products",
+    "requestQuote": "Request Quote",
+    "cta_text": "Discover our complete range of production lines"
   },
   "solutions": {
     "title": "Our Solutions",
@@ -54,7 +67,12 @@
     "title": "Our Clients",
     "subtitle": "Partners in Success",
     "description": "We are proud of the trust from major companies in Egypt and the region",
-    "trustText": "Proud to be trusted by over 300+ major companies"
+    "trustText": "Proud to be trusted by over 300+ major companies",
+    "stats": {
+      "clients": "Satisfied Clients",
+      "countries": "Countries",
+      "satisfaction": "Customer Satisfaction"
+    }
   },
   "team": {
     "title": "Our Team",
@@ -125,6 +143,12 @@
     "subtitle": "Latest Updates",
     "readMore": "Read More",
     "viewAll": "All News"
+  },
+  "tv": {
+    "title": "TV Interviews",
+    "subtitle": "Media Appearances",
+    "description": "We share our expertise and vision on major channels and media platforms",
+    "noInterviews": "No TV interviews available at the moment"
   },
   "contact": {
     "title": "Contact Us",
