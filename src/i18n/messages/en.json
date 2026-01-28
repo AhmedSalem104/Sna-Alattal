@@ -16,11 +16,15 @@
     "certificates": "Certificates"
   },
   "hero": {
+    "badge": "Since 1994",
     "title": "S.N.A Al-Attal Engineering Industries",
+    "title_line1": "S.N.A Al-Attal",
+    "title_line2": "Engineering Industries",
     "subtitle": "Shaping the Future of Packaging",
     "description": "Leading manufacturer of liquid filling production lines with over 30 years of experience",
     "cta": "Discover Our Products",
-    "secondary_cta": "Contact Us"
+    "secondary_cta": "Contact Us",
+    "scroll": "Discover More"
   },
   "about": {
     "title": "About Us",
@@ -31,11 +35,16 @@
     "clients": "Satisfied Clients",
     "countries": "Countries",
     "learnMore": "Learn More",
+    "contactUs": "Contact Us",
     "features": {
       "manufacturing": "Local Manufacturing",
       "global": "Global Presence",
       "team": "Expert Team",
       "quality": "High Quality"
+    },
+    "highlights": {
+      "quality": "World-Class Quality",
+      "machines": "Advanced Machines"
     }
   },
   "products": {
@@ -43,29 +52,45 @@
     "subtitle": "Complete Production Line Solutions",
     "viewAll": "View All",
     "viewDetails": "View Details",
-    "categories": "Categories"
+    "categories": "Categories",
+    "featured": "Featured",
+    "browseAll": "Browse All",
+    "requestQuote": "Request Quote",
+    "cta_text": "Discover more of our products"
   },
   "solutions": {
     "title": "Our Solutions",
     "subtitle": "Custom Solutions for Every Industry",
-    "description": "We provide comprehensive solutions tailored to various industry needs"
+    "description": "We provide comprehensive solutions tailored to various industry needs",
+    "viewAll": "View All Solutions"
   },
   "clients": {
     "title": "Our Clients",
     "subtitle": "Partners in Success",
     "description": "We are proud of the trust from major companies in Egypt and the region",
-    "trustText": "Proud to be trusted by over 300+ major companies"
+    "trustText": "Proud to be trusted by over 300+ major companies",
+    "viewAll": "View All Clients",
+    "stats": {
+      "clients": "Satisfied Clients",
+      "countries": "Countries",
+      "satisfaction": "Satisfaction Rate"
+    }
   },
   "team": {
     "title": "Our Team",
     "subtitle": "Expertise and Competence",
-    "description": "A team of specialized engineers and technicians"
+    "description": "A team of specialized engineers and technicians",
+    "viewAll": "View Team",
+    "noMembers": "No team members available"
   },
   "certificates": {
     "title": "Certificates",
     "subtitle": "Quality and Accreditation",
     "description": "International quality and accreditation certificates",
     "verified": "Verified and Accredited",
+    "empty": "No certificates available",
+    "quality_assurance": "Quality Assurance",
+    "quality_text": "We adhere to the highest international quality standards",
     "items": {
       "iso9001": {
         "description": "Quality Management System Certificate"
@@ -84,6 +109,7 @@
     "description": "Download our product catalogues to view all specifications and details",
     "downloads": "downloads",
     "downloadButton": "Download Catalogue",
+    "request_custom": "Request Custom Catalogue",
     "items": {
       "products": {
         "name": "Products Catalogue 2024",
@@ -105,6 +131,7 @@
     "description": "We participate in the most important specialized international exhibitions",
     "viewAll": "All Exhibitions",
     "upcoming": "Upcoming",
+    "noExhibitions": "No exhibitions available",
     "items": {
       "gulfood": {
         "name": "Gulfood 2024",
@@ -124,12 +151,16 @@
     "title": "News",
     "subtitle": "Latest Updates",
     "readMore": "Read More",
-    "viewAll": "All News"
+    "viewAll": "All News",
+    "noNews": "No news available"
   },
   "contact": {
     "title": "Contact Us",
     "subtitle": "We are here to help",
+    "quick_response": "Quick Response",
+    "quick_response_text": "Our team is available to answer your inquiries around the clock",
     "form": {
+      "title": "Send Us a Message",
       "name": "Full Name",
       "email": "Email Address",
       "phone": "Phone Number",
@@ -149,11 +180,13 @@
     },
     "info": {
       "egypt": {
+        "country": "Egypt",
         "title": "Egypt - Headquarters",
         "address": "10th of Ramadan City, Industrial Zone",
         "phone": "+20 103 222 1038"
       },
       "turkey": {
+        "country": "Turkey",
         "title": "Turkey",
         "address": "Istanbul, Industrial Zone",
         "phone": "+90 XXX XXX XXXX"
@@ -172,6 +205,12 @@
     "email_placeholder": "Enter your email",
     "subscribe": "Subscribe",
     "since": "Since 1994"
+  },
+  "tv": {
+    "title": "Al-Attal TV",
+    "subtitle": "Interviews & Videos",
+    "description": "Watch the latest interviews and videos about our products and solutions",
+    "noInterviews": "No interviews available"
   },
   "common": {
     "loading": "Loading...",

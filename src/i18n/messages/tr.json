@@ -16,11 +16,15 @@
     "certificates": "Sertifikalar"
   },
   "hero": {
+    "badge": "1994'ten beri",
     "title": "S.N.A Al-Attal Mühendislik Sanayi",
+    "title_line1": "S.N.A Al-Attal",
+    "title_line2": "Mühendislik Sanayi",
     "subtitle": "Ambalajın Geleceğini Şekillendiriyoruz",
     "description": "30 yılı aşkın deneyimle sıvı dolum üretim hatlarının önde gelen üreticisi",
     "cta": "Ürünlerimizi Keşfedin",
-    "secondary_cta": "Bize Ulaşın"
+    "secondary_cta": "Bize Ulaşın",
+    "scroll": "Daha Fazlasını Keşfedin"
   },
   "about": {
     "title": "Hakkımızda",
@@ -31,11 +35,16 @@
     "clients": "Memnun Müşteri",
     "countries": "Ülke",
     "learnMore": "Daha Fazla Bilgi",
+    "contactUs": "Bize Ulaşın",
     "features": {
       "manufacturing": "Yerel Üretim",
       "global": "Küresel Varlık",
       "team": "Uzman Ekip",
       "quality": "Yüksek Kalite"
+    },
+    "highlights": {
+      "quality": "Dünya Sınıfı Kalite",
+      "machines": "Gelişmiş Makineler"
     }
   },
   "products": {
@@ -43,29 +52,45 @@
     "subtitle": "Komple Üretim Hattı Çözümleri",
     "viewAll": "Tümünü Görüntüle",
     "viewDetails": "Detayları Görüntüle",
-    "categories": "Kategoriler"
+    "categories": "Kategoriler",
+    "featured": "Öne Çıkan",
+    "browseAll": "Tümüne Göz At",
+    "requestQuote": "Teklif İste",
+    "cta_text": "Ürünlerimizin tamamını keşfedin"
   },
   "solutions": {
     "title": "Çözümlerimiz",
     "subtitle": "Her Sektör İçin Özel Çözümler",
-    "description": "Çeşitli sektör ihtiyaçlarına uygun kapsamlı çözümler sunuyoruz"
+    "description": "Çeşitli sektör ihtiyaçlarına uygun kapsamlı çözümler sunuyoruz",
+    "viewAll": "Tüm Çözümleri Görüntüle"
   },
   "clients": {
     "title": "Müşterilerimiz",
     "subtitle": "Başarıda Ortaklar",
     "description": "Mısır ve bölgedeki büyük şirketlerin güveninden gurur duyuyoruz",
-    "trustText": "300'den fazla büyük şirketin güveninden gurur duyuyoruz"
+    "trustText": "300'den fazla büyük şirketin güveninden gurur duyuyoruz",
+    "viewAll": "Tüm Müşterileri Görüntüle",
+    "stats": {
+      "clients": "Memnun Müşteri",
+      "countries": "Ülke",
+      "satisfaction": "Memnuniyet Oranı"
+    }
   },
   "team": {
     "title": "Ekibimiz",
     "subtitle": "Uzmanlık ve Yetkinlik",
-    "description": "Uzman mühendisler ve teknisyenlerden oluşan bir ekip"
+    "description": "Uzman mühendisler ve teknisyenlerden oluşan bir ekip",
+    "viewAll": "Ekibi Görüntüle",
+    "noMembers": "Ekip üyesi bulunmuyor"
   },
   "certificates": {
     "title": "Sertifikalar",
     "subtitle": "Kalite ve Akreditasyon",
     "description": "Uluslararası kalite ve akreditasyon sertifikaları",
     "verified": "Doğrulanmış ve Akredite",
+    "empty": "Sertifika bulunmuyor",
+    "quality_assurance": "Kalite Güvencesi",
+    "quality_text": "En yüksek uluslararası kalite standartlarına bağlıyız",
     "items": {
       "iso9001": {
         "description": "Kalite Yönetim Sistemi Sertifikası"
@@ -84,6 +109,7 @@
     "description": "Tüm özellikleri ve detayları görmek için ürün kataloglarımızı indirin",
     "downloads": "indirme",
     "downloadButton": "Katalogu İndir",
+    "request_custom": "Özel Katalog İste",
     "items": {
       "products": {
         "name": "Ürün Katalogu 2024",
@@ -105,6 +131,7 @@
     "description": "En önemli uluslararası uzmanlık fuarlarına katılıyoruz",
     "viewAll": "Tüm Fuarlar",
     "upcoming": "Yaklaşan",
+    "noExhibitions": "Fuar bulunmuyor",
     "items": {
       "gulfood": {
         "name": "Gulfood 2024",
@@ -124,12 +151,16 @@
     "title": "Haberler",
     "subtitle": "Son Gelişmeler",
     "readMore": "Devamını Oku",
-    "viewAll": "Tüm Haberler"
+    "viewAll": "Tüm Haberler",
+    "noNews": "Haber bulunmuyor"
   },
   "contact": {
     "title": "İletişim",
     "subtitle": "Size yardımcı olmak için buradayız",
+    "quick_response": "Hızlı Yanıt",
+    "quick_response_text": "Ekibimiz sorularınıza 7/24 yanıt vermek için hazır",
     "form": {
+      "title": "Bize Mesaj Gönderin",
       "name": "Ad Soyad",
       "email": "E-posta Adresi",
       "phone": "Telefon Numarası",
@@ -149,11 +180,13 @@
     },
     "info": {
       "egypt": {
+        "country": "Mısır",
         "title": "Mısır - Genel Merkez",
         "address": "10. Ramazan Şehri, Sanayi Bölgesi",
         "phone": "+20 103 222 1038"
       },
       "turkey": {
+        "country": "Türkiye",
         "title": "Türkiye",
         "address": "İstanbul, Sanayi Bölgesi",
         "phone": "+90 XXX XXX XXXX"
@@ -172,6 +205,12 @@
     "email_placeholder": "E-posta adresinizi girin",
     "subscribe": "Abone Ol",
     "since": "1994'ten beri"
+  },
+  "tv": {
+    "title": "Al-Attal TV",
+    "subtitle": "Röportajlar ve Videolar",
+    "description": "Ürünlerimiz ve çözümlerimiz hakkında en son röportajları ve videoları izleyin",
+    "noInterviews": "Röportaj bulunmuyor"
   },
   "common": {
     "loading": "Yükleniyor...",
