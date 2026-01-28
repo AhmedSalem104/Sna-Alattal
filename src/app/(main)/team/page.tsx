@@ -115,7 +115,7 @@ export default function TeamPage() {
                     {/* Image */}
                     <div className="relative aspect-square overflow-hidden">
                       <Image
-                        src={member.image || '/images/team/placeholder.jpg'}
+                        src={member.image || '/images/placeholders/team.svg'}
                         alt={getName(member)}
                         fill
                         sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"

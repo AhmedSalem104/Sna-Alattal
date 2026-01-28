@@ -149,7 +149,7 @@ export const NewsSection = memo(function NewsSection() {
                 <div className="group relative h-full bg-white rounded-2xl border border-neutral-200 overflow-hidden hover:border-primary/30 hover:shadow-soft-xl transition-all duration-300">
                   <div className="relative aspect-[16/9] sm:aspect-[16/10] md:aspect-[2/1] overflow-hidden rounded-t-2xl">
                     <Image
-                      src={news[0].image || '/images/news/news-placeholder.jpg'}
+                      src={news[0].image || '/images/placeholders/news.svg'}
                       alt={getTitle(news[0])}
                       fill
                       sizes="(max-width: 1024px) 100vw, 66vw"
@@ -192,7 +192,7 @@ export const NewsSection = memo(function NewsSection() {
                     <div className="group flex gap-4 p-4 bg-white rounded-xl border border-neutral-200 hover:border-primary/30 hover:shadow-soft-lg transition-all duration-300">
                       <div className="relative w-28 h-28 shrink-0 overflow-hidden rounded-lg">
                         <Image
-                          src={article.image || '/images/news/news-placeholder.jpg'}
+                          src={article.image || '/images/placeholders/news.svg'}
                           alt={getTitle(article)}
                           fill
                           sizes="112px"

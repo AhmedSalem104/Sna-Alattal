@@ -182,7 +182,7 @@ export function ExhibitionsSection() {
                     {/* Image */}
                     <div className="relative aspect-video overflow-hidden">
                       <Image
-                        src={exhibition.image || '/images/placeholder-exhibition.jpg'}
+                        src={exhibition.image || '/images/placeholders/exhibition.svg'}
                         alt={getTitle(exhibition)}
                         fill
                         sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"

@@ -15,7 +15,7 @@ const certificates = [
     titleEn: 'Quality Management System',
     description: 'شهادة الأيزو للجودة تؤكد التزامنا بأعلى معايير الجودة العالمية في جميع عملياتنا',
     descriptionEn: 'ISO quality certification confirms our commitment to the highest global quality standards',
-    image: '/images/certificates/iso-9001.jpg',
+    image: '/images/placeholders/certificate.svg',
     issuer: 'TÜV SÜD',
     validUntil: '2026',
     color: 'from-blue-500/20',
@@ -27,7 +27,7 @@ const certificates = [
     titleEn: 'European Conformity',
     description: 'علامة CE تثبت أن منتجاتنا تتوافق مع متطلبات السلامة والصحة والبيئة الأوروبية',
     descriptionEn: 'CE marking proves our products meet European safety, health, and environmental requirements',
-    image: '/images/certificates/ce-marking.jpg',
+    image: '/images/placeholders/certificate.svg',
     issuer: 'European Commission',
     validUntil: '2025',
     color: 'from-yellow-500/20',
@@ -39,7 +39,7 @@ const certificates = [
     titleEn: 'Environmental Management System',
     description: 'التزامنا بالحفاظ على البيئة من خلال تطبيق أفضل الممارسات البيئية',
     descriptionEn: 'Our commitment to environmental preservation through best environmental practices',
-    image: '/images/certificates/iso-14001.jpg',
+    image: '/images/placeholders/certificate.svg',
     issuer: 'TÜV SÜD',
     validUntil: '2026',
     color: 'from-green-500/20',
@@ -51,7 +51,7 @@ const certificates = [
     titleEn: 'Food Safety Management System',
     description: 'معيار دولي لضمان سلامة الأغذية في سلسلة التوريد بأكملها',
     descriptionEn: 'International standard ensuring food safety throughout the supply chain',
-    image: '/images/certificates/iso-22000.jpg',
+    image: '/images/placeholders/certificate.svg',
     issuer: 'SGS',
     validUntil: '2025',
     color: 'from-orange-500/20',
@@ -59,10 +59,10 @@ const certificates = [
 ];
 
 const accreditations = [
-  { name: 'TÜV SÜD', logo: '/images/accreditations/tuv.png' },
-  { name: 'SGS', logo: '/images/accreditations/sgs.png' },
-  { name: 'Bureau Veritas', logo: '/images/accreditations/bureau-veritas.png' },
-  { name: 'Intertek', logo: '/images/accreditations/intertek.png' },
+  { name: 'TÜV SÜD', logo: '/images/placeholders/accreditation.svg' },
+  { name: 'SGS', logo: '/images/placeholders/accreditation.svg' },
+  { name: 'Bureau Veritas', logo: '/images/placeholders/accreditation.svg' },
+  { name: 'Intertek', logo: '/images/placeholders/accreditation.svg' },
 ];
 
 export default function CertificatesPage() {

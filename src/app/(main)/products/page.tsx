@@ -92,7 +92,7 @@ export default function ProductsPage() {
     if (product.images && product.images.length > 0) {
       return product.images[0];
     }
-    return '/images/placeholder-product.jpg';
+    return '/images/placeholders/product.svg';
   };
 
   const getSpecifications = (product: Product): string[] => {

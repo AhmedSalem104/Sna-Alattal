@@ -70,7 +70,7 @@ export const ProductsSection = memo(function ProductsSection() {
     if (product.images && product.images.length > 0) {
       return product.images[0];
     }
-    return '/images/placeholder-product.jpg';
+    return '/images/placeholders/product.svg';
   };
 
   return (

@@ -78,7 +78,7 @@ export default function SolutionsPage() {
   const getShortDesc = (item: Solution) => getLocalizedField(item, 'shortDesc', locale);
 
   const getSolutionImage = (solution: Solution) => {
-    return solution.image || '/images/placeholder-solution.jpg';
+    return solution.image || '/images/placeholders/solution.svg';
   };
 
   const getIconComponent = (iconName?: string): LucideIcon => {

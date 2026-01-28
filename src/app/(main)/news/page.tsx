@@ -60,7 +60,7 @@ export default function NewsPage() {
   const getContent = (item: NewsArticle) => getLocalizedField(item, 'content', locale);
 
   const getArticleImage = (article: NewsArticle) => {
-    return article.image || '/images/placeholder-news.jpg';
+    return article.image || '/images/placeholders/news.svg';
   };
 
   const formatDate = (dateStr: string) => {

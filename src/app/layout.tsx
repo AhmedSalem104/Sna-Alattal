@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     siteName: 'S.N.A Al-Attal Engineering Industries',
     images: [
       {
-        url: '/images/og-image.jpg',
+        url: '/images/logo.jpg',
         width: 1200,
         height: 630,
         alt: 'S.N.A Al-Attal Engineering Industries',
@@ -43,7 +43,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'S.N.A Al-Attal Engineering Industries',
     description: 'Leading manufacturer of liquid filling production lines',
-    images: ['/images/og-image.jpg'],
+    images: ['/images/logo.jpg'],
   },
   robots: {
     index: true,

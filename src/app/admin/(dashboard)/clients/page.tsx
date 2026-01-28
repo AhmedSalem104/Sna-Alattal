@@ -102,7 +102,7 @@ export default function ClientsPage() {
       cell: ({ row }) => (
         <div className="w-16 h-12 rounded-lg overflow-hidden bg-white p-1">
           <Image
-            src={row.original.logo || '/images/placeholder.png'}
+            src={row.original.logo || '/images/placeholders/client.svg'}
             alt={row.original.nameAr}
             width={64}
             height={48}

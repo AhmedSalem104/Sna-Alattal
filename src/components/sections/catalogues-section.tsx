@@ -146,7 +146,7 @@ export function CataloguesSection() {
                   {/* Thumbnail */}
                   <div className="relative aspect-[4/3] overflow-hidden rounded-t-2xl">
                     <Image
-                      src={catalogue.coverImage || '/images/catalogues/default-catalog.jpg'}
+                      src={catalogue.coverImage || '/images/placeholders/catalogue.svg'}
                       alt={getTitle(catalogue)}
                       fill
                       sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"

@@ -387,7 +387,7 @@ export const HeroSection = memo(function HeroSection() {
         <motion.div style={{ y }} className="absolute inset-0 z-0">
           <div className="absolute inset-0 bg-gradient-to-b from-steel-900/95 via-steel-900/80 to-steel-900 z-10" />
           <Image
-            src="/images/factory-bg.jpg"
+            src="/images/placeholders/factory.svg"
             alt="Factory Background"
             fill
             sizes="100vw"

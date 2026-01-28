@@ -59,7 +59,7 @@ export default function ExhibitionsPage() {
     if (exhibition.images && exhibition.images.length > 0) {
       return exhibition.images[0];
     }
-    return '/images/placeholder-exhibition.jpg';
+    return '/images/placeholders/exhibition.svg';
   };
 
   const getStatus = (exhibition: Exhibition): 'upcoming' | 'ongoing' | 'past' => {

@@ -56,7 +56,7 @@ export default function ClientsPage() {
   const getName = (client: Client) => getLocalizedField(client, 'name', locale);
 
   const getClientLogo = (client: Client) => {
-    return client.logo || '/images/placeholder-client.jpg';
+    return client.logo || '/images/placeholders/client.svg';
   };
 
   return (
