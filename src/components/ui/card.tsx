@@ -12,26 +12,26 @@ const cardVariants = cva(
         default: [
           'rounded-xl',
           'border border-neutral-200',
-          'shadow-sm',
-          'hover:shadow-lg hover:shadow-neutral-200/50',
-          'hover:border-amber-400/60',
+          'shadow-soft-sm',
+          'hover:shadow-soft-md hover:shadow-primary-200/30',
+          'hover:border-primary/40',
           'relative',
           'before:absolute before:inset-y-0 before:right-0 before:w-0.5',
           'before:bg-transparent before:transition-all before:duration-300 before:rounded-l-full',
-          'hover:before:bg-amber-500',
+          'hover:before:bg-primary',
         ].join(' '),
 
         // Elevated - Stronger shadow, no border
         elevated: [
           'rounded-xl',
           'border-0',
-          'shadow-lg shadow-neutral-200/60',
-          'hover:shadow-xl hover:shadow-neutral-300/60',
+          'shadow-soft-md',
+          'hover:shadow-soft-lg',
           'hover:-translate-y-0.5',
           'relative',
           'before:absolute before:inset-y-4 before:right-0 before:w-0.5',
           'before:bg-transparent before:transition-all before:duration-300 before:rounded-l-full',
-          'hover:before:bg-amber-500',
+          'hover:before:bg-primary',
         ].join(' '),
 
         // Outline - Border only, transparent bg
@@ -40,8 +40,8 @@ const cardVariants = cva(
           'border-2 border-neutral-200',
           'bg-transparent',
           'shadow-none',
-          'hover:border-amber-500',
-          'hover:bg-amber-50/30',
+          'hover:border-primary',
+          'hover:bg-primary-50/30',
         ].join(' '),
 
         // Ghost - No border, no shadow, subtle hover bg with gold accent
@@ -54,7 +54,7 @@ const cardVariants = cva(
           'relative',
           'before:absolute before:inset-y-2 before:right-0 before:w-0.5',
           'before:bg-transparent before:transition-all before:duration-300 before:rounded-l-full',
-          'hover:before:bg-amber-500/70',
+          'hover:before:bg-primary/70',
         ].join(' '),
 
         // Glass - Backdrop blur effect with gold accent
@@ -63,10 +63,10 @@ const cardVariants = cva(
           'bg-white/60 dark:bg-neutral-900/60',
           'backdrop-blur-xl backdrop-saturate-150',
           'border border-white/40 dark:border-neutral-700/40',
-          'shadow-lg shadow-neutral-200/30',
+          'shadow-soft-md',
           'hover:bg-white/70 dark:hover:bg-neutral-900/70',
-          'hover:border-amber-400/40',
-          'hover:shadow-xl hover:shadow-amber-200/20',
+          'hover:border-primary/40',
+          'hover:shadow-soft-lg hover:shadow-primary-200/20',
         ].join(' '),
       },
     },
@@ -197,10 +197,10 @@ const CardBadge = React.forwardRef<
       'absolute top-3 left-3 px-2.5 py-1 text-xs font-medium rounded-md',
       'backdrop-blur-sm transition-all duration-200',
       variant === 'default' && 'bg-neutral-900/80 text-white',
-      variant === 'gold' && 'bg-amber-500/90 text-white',
-      variant === 'success' && 'bg-emerald-500/90 text-white',
-      variant === 'warning' && 'bg-amber-400/90 text-neutral-900',
-      variant === 'error' && 'bg-red-500/90 text-white',
+      variant === 'gold' && 'bg-primary/90 text-primary-foreground',
+      variant === 'success' && 'bg-success/90 text-white',
+      variant === 'warning' && 'bg-warning/90 text-steel-900',
+      variant === 'error' && 'bg-error/90 text-white',
       className
     )}
     {...props}

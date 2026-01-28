@@ -23,21 +23,21 @@ const config: Config = {
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
 
-        // Modern Industrial Primary - Gold (refined)
+        // Modern Industrial Primary - Warm Gold (refined)
         primary: {
-          DEFAULT: '#D4A00A',
-          50: '#FFFBEB',
-          100: '#FEF3C7',
-          200: '#FDE68A',
-          300: '#FCD34D',
-          400: '#FBBF24',
-          500: '#D4A00A',
-          600: '#B8860B',
-          700: '#92650D',
-          800: '#6B4A0F',
-          900: '#452F0D',
-          950: '#2A1C06',
-          foreground: '#0A0A0A',
+          DEFAULT: '#C9A227',
+          50: '#FEFCE8',
+          100: '#FEF9C3',
+          200: '#FEF08A',
+          300: '#FDE047',
+          400: '#FACC15',
+          500: '#C9A227',
+          600: '#A88B1F',
+          700: '#8B7E2A',
+          800: '#713F12',
+          900: '#422006',
+          950: '#1a0f03',
+          foreground: '#18181B',
         },
 
         // Secondary - Warm accent (Copper/Bronze)
@@ -150,19 +150,19 @@ const config: Config = {
 
         // Gold extended (kept for compatibility)
         gold: {
-          DEFAULT: '#D4A00A',
-          light: '#FCD34D',
-          dark: '#92650D',
-          50: '#FFFBEB',
-          100: '#FEF3C7',
-          200: '#FDE68A',
-          300: '#FCD34D',
-          400: '#FBBF24',
-          500: '#D4A00A',
-          600: '#B8860B',
-          700: '#92650D',
-          800: '#6B4A0F',
-          900: '#452F0D',
+          DEFAULT: '#C9A227',
+          light: '#E8C547',
+          dark: '#8B7E2A',
+          50: '#FEFCE8',
+          100: '#FEF9C3',
+          200: '#FEF08A',
+          300: '#FDE047',
+          400: '#FACC15',
+          500: '#C9A227',
+          600: '#A88B1F',
+          700: '#8B7E2A',
+          800: '#713F12',
+          900: '#422006',
         },
 
         // Status Colors - Improved contrast (WCAG compliant)
