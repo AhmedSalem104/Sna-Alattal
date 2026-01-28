@@ -8,25 +8,25 @@ const inputVariants = cva(
   {
     variants: {
       variant: {
-        // Default - Light with industrial styling
+        // Default - Modern with subtle border
         default:
-          'rounded-none border-2 border-metal-200 bg-white focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus:border-primary',
+          'rounded-modern-sm border border-metal-300 bg-white focus-visible:ring-2 focus-visible:ring-primary/20 focus-visible:ring-offset-2 focus:border-primary',
 
-        // Industrial - Sharp edges with gold focus
+        // Industrial - Modern edges with gold focus
         industrial:
-          'rounded-none border-2 border-metal-200 bg-white focus:border-primary focus:ring-2 focus:ring-primary/20',
+          'rounded-modern-sm border border-metal-300 bg-white focus:border-primary focus:ring-2 focus:ring-primary/10',
 
-        // Industrial Dark - For dark backgrounds (like hero sections)
+        // Industrial Dark - For dark backgrounds
         industrialDark:
-          'rounded-none border-2 border-steel-700 bg-steel-800 text-white placeholder:text-steel-400 focus:border-primary focus:ring-2 focus:ring-primary/20',
+          'rounded-modern-sm border border-steel-600 bg-steel-800 text-white placeholder:text-steel-400 focus:border-primary focus:ring-2 focus:ring-primary/20',
 
         // Ghost - Minimal styling
         ghost:
-          'rounded-none border-0 bg-metal-50 focus:bg-white focus:ring-2 focus:ring-primary/20',
+          'rounded-modern-sm border-0 bg-metal-50 focus:bg-white focus:ring-2 focus:ring-primary/20',
 
         // Underline - Bottom border only
         underline:
-          'rounded-none border-0 border-b-2 border-metal-200 bg-transparent px-0 focus:border-primary',
+          'rounded-none border-0 border-b border-metal-300 bg-transparent px-0 focus:border-primary',
       },
       inputSize: {
         default: 'h-10 px-3 py-2',

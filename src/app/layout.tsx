@@ -78,23 +78,24 @@ export default async function RootLayout({
         <meta name="theme-color" content="#D4AF37" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        {/* Cairo font - unified for all languages */}
         <link
           rel="preload"
           as="style"
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Cairo:wght@200..1000&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&display=swap"
         />
         <link
           rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Cairo:wght@200..1000&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&display=swap"
         />
         <noscript>
           <link
             rel="stylesheet"
-            href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Cairo:wght@200..1000&display=swap"
+            href="https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&display=swap"
           />
         </noscript>
       </head>
-      <body className={`${dir === 'rtl' ? 'font-cairo' : 'font-inter'} antialiased`} suppressHydrationWarning>
+      <body className="font-cairo antialiased" suppressHydrationWarning>
         <NextIntlClientProvider messages={messages} locale={locale}>
           <Providers>
             {children}

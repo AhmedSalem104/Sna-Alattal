@@ -55,12 +55,18 @@ const buttonVariants = cva(
         goldOutline:
           'border-2 border-primary text-primary bg-transparent rounded-lg hover:bg-primary hover:text-primary-foreground hover:shadow-soft-md',
 
-        // Status variants
+        // Status variants - using darker colors for better contrast
         success:
-          'bg-industrial-success text-white rounded-lg shadow-soft hover:bg-industrial-success/90 hover:shadow-soft-md hover:scale-[1.02]',
+          'bg-success text-white rounded-lg shadow-soft hover:bg-success-700 hover:shadow-soft-md hover:scale-[1.02]',
 
         warning:
-          'bg-industrial-warning text-steel-900 rounded-lg shadow-soft hover:bg-industrial-warning/90 hover:shadow-soft-md hover:scale-[1.02]',
+          'bg-warning text-steel-900 rounded-lg shadow-soft hover:bg-warning-700 hover:shadow-soft-md hover:scale-[1.02]',
+
+        error:
+          'bg-error text-white rounded-lg shadow-soft hover:bg-error-700 hover:shadow-soft-md hover:scale-[1.02]',
+
+        info:
+          'bg-info text-white rounded-lg shadow-soft hover:bg-info-700 hover:shadow-soft-md hover:scale-[1.02]',
       },
       size: {
         default: 'h-10 px-4 py-2',

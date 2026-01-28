@@ -165,38 +165,52 @@ const config: Config = {
           900: '#452F0D',
         },
 
-        // Status Colors - Modernized
+        // Status Colors - Improved contrast (WCAG compliant)
         industrial: {
-          success: '#10B981',
-          warning: '#F59E0B',
-          error: '#EF4444',
-          info: '#3B82F6',
+          success: '#059669',
+          warning: '#D97706',
+          error: '#DC2626',
+          info: '#2563EB',
         },
 
-        // Semantic success/error
+        // Semantic success/error - Darker for better contrast
         success: {
-          DEFAULT: '#10B981',
+          DEFAULT: '#059669',
           50: '#ECFDF5',
+          100: '#D1FAE5',
           500: '#10B981',
           600: '#059669',
+          700: '#047857',
         },
         warning: {
-          DEFAULT: '#F59E0B',
+          DEFAULT: '#D97706',
           50: '#FFFBEB',
+          100: '#FEF3C7',
           500: '#F59E0B',
           600: '#D97706',
+          700: '#B45309',
         },
         error: {
-          DEFAULT: '#EF4444',
+          DEFAULT: '#DC2626',
           50: '#FEF2F2',
+          100: '#FEE2E2',
           500: '#EF4444',
           600: '#DC2626',
+          700: '#B91C1C',
+        },
+        info: {
+          DEFAULT: '#2563EB',
+          50: '#EFF6FF',
+          100: '#DBEAFE',
+          500: '#3B82F6',
+          600: '#2563EB',
+          700: '#1D4ED8',
         },
       },
 
       fontFamily: {
-        sans: ['var(--font-inter)', 'system-ui', 'sans-serif'],
-        inter: ['var(--font-inter)', 'Inter', 'sans-serif'],
+        // Cairo unified for all languages (Arabic + English)
+        sans: ['var(--font-cairo)', 'Cairo', 'system-ui', 'sans-serif'],
         cairo: ['var(--font-cairo)', 'Cairo', 'sans-serif'],
         arabic: ['var(--font-cairo)', 'Cairo', 'sans-serif'],
         mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
@@ -206,13 +220,14 @@ const config: Config = {
         lg: 'var(--radius)',
         md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)',
-        // Modern Industrial: Softer edges
+        // Unified Modern Industrial radius scale
         'none': '0px',
         'xs': '4px',
-        'modern': '8px',
-        'modern-lg': '12px',
-        'modern-xl': '16px',
-        'modern-2xl': '20px',
+        'modern-sm': '6px',   // inputs, small elements
+        'modern': '8px',      // buttons, badges
+        'modern-lg': '12px',  // cards, modals
+        'modern-xl': '16px',  // large cards
+        'modern-2xl': '20px', // hero cards, featured
       },
 
       boxShadow: {

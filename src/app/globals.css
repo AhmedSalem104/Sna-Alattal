@@ -43,8 +43,8 @@
     /* Ring */
     --ring: 43 90% 44%;
 
-    /* Radius - Industrial = Sharp */
-    --radius: 0.25rem;
+    /* Radius - Modern Industrial = Slightly rounded */
+    --radius: 0.5rem;
 
     /* Industrial Colors */
     --industrial-gold: 43 90% 44%;
@@ -118,15 +118,18 @@
     min-height: 100vh;
   }
 
-  /* RTL Support - Enhanced for Arabic */
-  [dir='rtl'] {
+  /* Cairo unified for all languages */
+  [dir='rtl'],
+  [dir='ltr'] {
     font-family: var(--font-cairo), 'Cairo', 'Segoe UI', sans-serif;
+  }
+
+  [dir='rtl'] {
     line-height: 1.8;
     letter-spacing: 0.01em;
   }
 
   [dir='ltr'] {
-    font-family: var(--font-inter), 'Inter', 'Segoe UI', sans-serif;
     line-height: 1.6;
   }
 
@@ -142,11 +145,11 @@
     }
   }
 
-  /* Enhanced Focus Visible Styles - Industrial Gold Ring */
+  /* Enhanced Focus Visible Styles - Modern Gold Ring */
   *:focus-visible {
     outline: 2px solid hsl(var(--ring));
     outline-offset: 2px;
-    border-radius: 2px;
+    border-radius: 6px;
   }
 
   /* Skip to Main Content Link */
@@ -289,10 +292,10 @@
     @apply px-8 py-4 font-bold uppercase tracking-wider;
     @apply bg-gradient-to-r from-primary to-primary-600;
     @apply text-steel-900 border-0;
-    @apply transition-all duration-300 ease-industrial;
-    @apply shadow-offset hover:shadow-none;
-    @apply hover:translate-x-1 hover:translate-y-1;
-    border-radius: 0;
+    @apply transition-all duration-300 ease-smooth;
+    @apply shadow-soft hover:shadow-soft-md;
+    @apply hover:-translate-y-0.5;
+    border-radius: 8px;
   }
 
   .btn-industrial-outline {
@@ -300,9 +303,9 @@
     @apply px-8 py-4 font-bold uppercase tracking-wider;
     @apply bg-transparent text-primary;
     @apply border-2 border-primary;
-    @apply transition-all duration-300 ease-industrial;
+    @apply transition-all duration-300 ease-smooth;
     @apply hover:bg-primary hover:text-steel-900;
-    border-radius: 0;
+    border-radius: 8px;
   }
 
   .btn-industrial-dark {
@@ -310,9 +313,9 @@
     @apply px-8 py-4 font-bold uppercase tracking-wider;
     @apply bg-steel-800 text-white;
     @apply border-2 border-steel-700;
-    @apply transition-all duration-300 ease-industrial;
+    @apply transition-all duration-300 ease-smooth;
     @apply hover:bg-steel-700 hover:border-primary;
-    border-radius: 0;
+    border-radius: 8px;
   }
 
   /* Legacy Button Gold */
@@ -327,18 +330,20 @@
   .card-industrial {
     @apply relative bg-white border border-metal-200;
     @apply overflow-hidden transition-all duration-300;
-    border-radius: 0;
+    @apply shadow-soft;
+    border-radius: 12px;
   }
 
   .card-industrial::before {
     content: '';
     @apply absolute top-0 left-0 w-1 h-full bg-primary;
     @apply transition-all duration-300;
+    border-radius: 12px 0 0 12px;
   }
 
   .card-industrial:hover {
-    @apply border-primary shadow-industrial-md;
-    @apply -translate-y-1;
+    @apply border-primary/30 shadow-soft-md;
+    @apply -translate-y-0.5;
   }
 
   .card-industrial:hover::before {
@@ -349,17 +354,19 @@
   .card-industrial-dark {
     @apply relative bg-steel-800 border border-steel-700;
     @apply overflow-hidden transition-all duration-300;
-    border-radius: 0;
+    @apply shadow-soft;
+    border-radius: 12px;
   }
 
   .card-industrial-dark::before {
     content: '';
     @apply absolute top-0 left-0 w-1 h-full bg-primary;
     @apply transition-all duration-300;
+    border-radius: 12px 0 0 12px;
   }
 
   .card-industrial-dark:hover {
-    @apply border-primary shadow-gold;
+    @apply border-primary/30 shadow-gold;
   }
 
   /* Standard Card Hover */
@@ -373,9 +380,9 @@
      ======================================== */
   .badge-industrial {
     @apply inline-flex items-center px-3 py-1;
-    @apply text-xs font-bold uppercase tracking-wider;
-    @apply border-2;
-    border-radius: 0;
+    @apply text-xs font-semibold uppercase tracking-wider;
+    @apply border;
+    border-radius: 9999px;
   }
 
   .badge-industrial-gold {
@@ -408,20 +415,20 @@
      ======================================== */
   .input-industrial {
     @apply w-full px-4 py-3;
-    @apply bg-white border-2 border-metal-200;
+    @apply bg-white border border-metal-300;
     @apply text-steel-900 placeholder:text-metal-400;
     @apply transition-all duration-200;
-    @apply focus:border-primary focus:ring-2 focus:ring-primary/20;
-    border-radius: 0;
+    @apply focus:border-primary focus:ring-2 focus:ring-primary/10;
+    border-radius: 6px;
   }
 
   .input-industrial-dark {
     @apply w-full px-4 py-3;
-    @apply bg-steel-800 border-2 border-steel-700;
+    @apply bg-steel-800 border border-steel-600;
     @apply text-white placeholder:text-steel-400;
     @apply transition-all duration-200;
     @apply focus:border-primary focus:ring-2 focus:ring-primary/20;
-    border-radius: 0;
+    border-radius: 6px;
   }
 
   /* ========================================
@@ -574,8 +581,8 @@
      ======================================== */
   .stat-card-industrial {
     @apply relative p-6 bg-steel-800 border-l-4 border-primary;
-    @apply overflow-hidden;
-    border-radius: 0;
+    @apply overflow-hidden shadow-soft;
+    border-radius: 12px;
   }
 
   .stat-card-industrial::before {
