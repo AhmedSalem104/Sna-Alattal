@@ -553,5 +553,73 @@
       "subtitle": "Proje ihtiyaçlarınızı görüşmek için bugün bizimle iletişime geçin",
       "button": "Bize Ulaşın"
     }
+  },
+  "privacyPage": {
+    "title": "Gizlilik Politikası",
+    "subtitle": "Gizliliğiniz bizim için önemlidir",
+    "lastUpdated": "Son güncelleme: Ocak 2025",
+    "introduction": "S.N.A Al-Attal Mühendislik Endüstrileri olarak gizliliğinizi korumaya kararlıyız. Bu gizlilik politikası, web sitemizi ve hizmetlerimizi kullandığınızda kişisel bilgilerinizi nasıl topladığımızı, kullandığımızı ve koruduğumuzu açıklamaktadır.",
+    "dataCollection": {
+      "title": "Veri Toplama",
+      "content": "İletişim formu doldurduğunuzda, teklif talep ettiğinizde veya bültenimize abone olduğunuzda bize doğrudan sağladığınız bilgileri topluyoruz. Bu bilgiler adınızı, e-posta adresinizi, telefon numaranızı, şirket adınızı ve sağlamayı seçtiğiniz diğer bilgileri içerebilir."
+    },
+    "dataUsage": {
+      "title": "Verilerinizi Nasıl Kullanıyoruz",
+      "content": "Topladığımız bilgileri sorularınıza yanıt vermek, müşteri desteği sağlamak, ürünlerimiz ve hizmetlerimiz hakkında güncellemeler göndermek ve web sitemizi ve hizmetlerimizi geliştirmek için kullanıyoruz. Bilgilerinizi onayınızla pazarlama amaçlı da kullanabiliriz."
+    },
+    "dataSecurity": {
+      "title": "Veri Güvenliği",
+      "content": "Kişisel bilgilerinizi yetkisiz erişim, değişiklik, ifşa veya imhaya karşı korumak için uygun teknik ve organizasyonel önlemleri uyguluyoruz. Ancak, internet üzerinden hiçbir iletim yöntemi %100 güvenli değildir."
+    },
+    "dataSharing": {
+      "title": "Veri Paylaşımı",
+      "content": "Kişisel bilgilerinizi üçüncü taraflara satmıyor, takas etmiyor veya kiralamıyoruz. Bilgilerinizi, gizlilik sözleşmelerine tabi olarak web sitemizi işletmemize ve işimizi yürütmemize yardımcı olan güvenilir hizmet sağlayıcılarla paylaşabiliriz."
+    },
+    "cookies": {
+      "title": "Çerezler",
+      "content": "Web sitemiz, tarama deneyiminizi geliştirmek için çerezler kullanmaktadır. Çerezler, cihazınızda saklanan ve web sitesi trafiğini analiz etmemize ve tercihlerinizi hatırlamamıza yardımcı olan küçük metin dosyalarıdır. Çerez ayarlarını tarayıcınız aracılığıyla kontrol edebilirsiniz."
+    },
+    "contact": {
+      "title": "Bize Ulaşın",
+      "content": "Bu gizlilik politikası veya veri uygulamalarımız hakkında sorularınız varsa, lütfen gizlilik ekibimizle iletişime geçin."
+    },
+    "questions": {
+      "title": "Gizliliğiniz Hakkında Sorularınız mı Var?",
+      "content": "Gizlilik uygulamalarımız hakkında herhangi bir sorunuz veya endişeniz varsa, lütfen bizimle iletişime geçmekten çekinmeyin."
+    }
+  },
+  "termsPage": {
+    "title": "Şartlar ve Koşullar",
+    "subtitle": "Lütfen bu şartları dikkatlice okuyun",
+    "lastUpdated": "Son güncelleme: Ocak 2025",
+    "introduction": "S.N.A Al-Attal Mühendislik Endüstrileri'ne hoş geldiniz. Web sitemize ve hizmetlerimize erişerek ve bunları kullanarak, bu şartlar ve koşullara bağlı olmayı kabul ediyorsunuz. Hizmetlerimizi kullanmadan önce lütfen bunları dikkatlice okuyun.",
+    "acceptance": {
+      "title": "Şartların Kabulü",
+      "content": "Web sitemize ve hizmetlerimize erişerek veya bunları kullanarak, bu şartlar ve koşullara ve geçerli tüm yasa ve yönetmeliklere bağlı olmayı kabul ediyorsunuz. Bu şartlardan herhangi birine katılmıyorsanız, bu siteyi kullanmanız veya erişmeniz yasaktır."
+    },
+    "services": {
+      "title": "Hizmetlerimiz",
+      "content": "S.N.A Al-Attal, sıvı dolum üretim hatları için endüstriyel makine ve ekipman sağlamaktadır. Tüm ürün özellikleri, fiyatlar ve bulunabilirlik önceden bildirilmeksizin değiştirilebilir. Herhangi bir ürün veya hizmeti istediğimiz zaman değiştirme veya durdurma hakkını saklı tutuyoruz."
+    },
+    "intellectualProperty": {
+      "title": "Fikri Mülkiyet",
+      "content": "Bu web sitesindeki metin, grafik, logo, resim ve yazılım dahil tüm içerik S.N.A Al-Attal Mühendislik Endüstrileri'nin mülkiyetindedir ve uluslararası telif hakkı yasalarıyla korunmaktadır. Yazılı iznimiz olmadan çoğaltamaz, dağıtamaz veya türev çalışmalar oluşturamazsınız."
+    },
+    "limitations": {
+      "title": "Sorumluluk Sınırlaması",
+      "content": "S.N.A Al-Attal, hizmetlerimizi kullanmanızdan veya kullanamamanızdan kaynaklanan dolaylı, arızi, özel, sonuçsal veya cezai zararlardan sorumlu olmayacaktır. Toplam sorumluluğumuz, söz konusu belirli ürün veya hizmet için ödediğiniz tutarı aşmayacaktır."
+    },
+    "governingLaw": {
+      "title": "Yürürlükteki Kanun",
+      "content": "Bu şartlar ve koşullar, Mısır Arap Cumhuriyeti yasalarına göre yönetilecek ve yorumlanacaktır. Bu şartlardan kaynaklanan herhangi bir anlaşmazlık, Mısır mahkemelerinin münhasır yargı yetkisine tabi olacaktır."
+    },
+    "changes": {
+      "title": "Şartlardaki Değişiklikler",
+      "content": "Bu şartları istediğimiz zaman değiştirme hakkını saklı tutuyoruz. Değişiklikler web sitesinde yayınlandıktan hemen sonra yürürlüğe girecektir. Herhangi bir değişiklikten sonra hizmetlerimizi kullanmaya devam etmeniz, yeni şartları kabul ettiğinizi gösterir."
+    },
+    "questions": {
+      "title": "Şartlar Hakkında Sorularınız mı Var?",
+      "content": "Bu şartlar ve koşullar hakkında herhangi bir sorunuz varsa, lütfen hukuk ekibimizle iletişime geçin."
+    }
   }
 }
