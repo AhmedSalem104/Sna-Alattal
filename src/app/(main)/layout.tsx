@@ -1,4 +1,5 @@
 import { Navbar, Footer } from '@/components/layout';
+import { ScrollToTop } from '@/components/ui/scroll-to-top';
 
 export default function MainLayout({
   children,
@@ -19,6 +20,9 @@ export default function MainLayout({
         {children}
       </main>
       <Footer />
+
+      {/* Scroll to Top Button */}
+      <ScrollToTop threshold={400} />
     </>
   );
 }
