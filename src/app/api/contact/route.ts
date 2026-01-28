@@ -1,9 +1,28 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/db';
 import nodemailer from 'nodemailer';
+import { checkRateLimit, getClientIP, RATE_LIMITS } from '@/lib/rate-limit';
+
+const EMAIL_TIMEOUT = 10000; // 10 seconds
 
 export async function POST(request: NextRequest) {
   try {
+    // Rate limiting check
+    const clientIP = getClientIP(request.headers);
+    const rateLimitResult = checkRateLimit(`contact:${clientIP}`, RATE_LIMITS.contact);
+    if (!rateLimitResult.success) {
+      return NextResponse.json(
+        { error: 'Too many requests. Please try again later.' },
+        {
+          status: 429,
+          headers: {
+            'X-RateLimit-Remaining': '0',
+            'X-RateLimit-Reset': rateLimitResult.resetTime.toString(),
+          },
+        }
+      );
+    }
+
     const body = await request.json();
 
     // Validate required fields
@@ -26,7 +45,7 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    // Send email notification
+    // Send email notification (non-blocking with timeout)
     if (process.env.SMTP_HOST && process.env.SMTP_USER) {
       try {
         const transporter = nodemailer.createTransport({
@@ -37,8 +56,12 @@ export async function POST(request: NextRequest) {
             user: process.env.SMTP_USER,
             pass: process.env.SMTP_PASS,
           },
+          connectionTimeout: EMAIL_TIMEOUT,
+          greetingTimeout: EMAIL_TIMEOUT,
+          socketTimeout: EMAIL_TIMEOUT,
         });
 
+        // Send with timeout to prevent hanging
         await transporter.sendMail({
           from: process.env.SMTP_FROM || 'noreply@sna-alattal.com',
           to: process.env.ADMIN_EMAIL || 'info@sna-alattal.com',
