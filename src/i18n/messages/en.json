@@ -196,26 +196,6 @@
     "add": "Add",
     "view": "View"
   },
-  "onboarding": {
-    "phase1": {
-      "title": "Welcome",
-      "subtitle": "To the World of Advanced Packaging"
-    },
-    "phase2": {
-      "title": "30+ Years of Experience",
-      "subtitle": "In Production Line Manufacturing"
-    },
-    "phase3": {
-      "title": "Integrated Solutions",
-      "subtitle": "For All Industries"
-    },
-    "phase4": {
-      "title": "Global Presence",
-      "subtitle": "Egypt and Turkey"
-    },
-    "skip": "Skip",
-    "start": "Start Now"
-  },
   "contactPage": {
     "badge": "Contact Us",
     "title": "We're Here to Help",

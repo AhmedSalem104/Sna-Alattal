@@ -196,26 +196,6 @@
     "add": "Ekle",
     "view": "Görüntüle"
   },
-  "onboarding": {
-    "phase1": {
-      "title": "Hoş Geldiniz",
-      "subtitle": "Gelişmiş Ambalaj Dünyasına"
-    },
-    "phase2": {
-      "title": "30+ Yıllık Deneyim",
-      "subtitle": "Üretim Hattı İmalatında"
-    },
-    "phase3": {
-      "title": "Entegre Çözümler",
-      "subtitle": "Tüm Sektörler İçin"
-    },
-    "phase4": {
-      "title": "Küresel Varlık",
-      "subtitle": "Mısır ve Türkiye"
-    },
-    "skip": "Atla",
-    "start": "Şimdi Başla"
-  },
   "contactPage": {
     "badge": "İletişim",
     "title": "Size Yardımcı Olmak İçin Buradayız",

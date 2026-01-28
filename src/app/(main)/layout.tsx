@@ -1,5 +1,4 @@
 import { Navbar, Footer } from '@/components/layout';
-import { OnboardingExperience } from '@/components/onboarding';
 
 export default function MainLayout({
   children,
@@ -15,7 +14,6 @@ export default function MainLayout({
       >
         تخطى إلى المحتوى الرئيسي
       </a>
-      <OnboardingExperience />
       <Navbar />
       <main id="main-content" tabIndex={-1}>
         {children}
