@@ -13,9 +13,11 @@ interface TVInterview {
   titleAr: string;
   titleEn: string;
   titleTr: string;
-  channel: string;
+  channelAr: string;
+  channelEn: string;
+  channelTr: string;
   videoUrl: string;
-  thumbnailUrl: string;
+  thumbnail: string;
   date: string;
 }
 
@@ -28,7 +30,7 @@ export const TVSection = memo(function TVSection() {
   useEffect(() => {
     const fetchTvInterviews = async () => {
       try {
-        const response = await fetch('/api/public/tv-interviews?limit=3');
+        const response = await fetch('/api/public/tv-interviews?limit=6');
         if (response.ok) {
           const data = await response.json();
           setTvInterviews(data);
@@ -51,6 +53,17 @@ export const TVSection = memo(function TVSection() {
         return interview.titleTr;
       default:
         return interview.titleEn;
+    }
+  };
+
+  const getChannel = (interview: TVInterview) => {
+    switch (locale) {
+      case 'ar':
+        return interview.channelAr;
+      case 'tr':
+        return interview.channelTr;
+      default:
+        return interview.channelEn;
     }
   };
   const ref = useRef(null);
@@ -147,7 +160,7 @@ export const TVSection = memo(function TVSection() {
                     {/* Thumbnail */}
                     <div className="relative aspect-video overflow-hidden">
                       <Image
-                        src={interview.thumbnailUrl}
+                        src={interview.thumbnail}
                         alt={getTitle(interview)}
                         fill
                         sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
@@ -167,7 +180,7 @@ export const TVSection = memo(function TVSection() {
                     {/* Content */}
                     <div className="p-4 border-t-2 border-metal-100">
                       <span className="text-xs text-primary font-bold uppercase tracking-wider">
-                        {interview.channel}
+                        {getChannel(interview)}
                       </span>
                       <h3 className="text-steel-900 font-bold uppercase tracking-wide group-hover:text-primary transition-colors mt-1">
                         {getTitle(interview)}

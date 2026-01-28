@@ -559,37 +559,32 @@ async function main() {
   // ═══════════════════════════════════════════
   // TV INTERVIEWS
   // ═══════════════════════════════════════════
-  const tvInterviews = await Promise.all([
-    prisma.tVInterview.upsert({
-      where: { id: 'tv-1' },
-      update: {
-        titleAr: 'العتال للصناعات الهندسية',
-        titleEn: 'Al-Attal Engineering Industries',
-        titleTr: 'Al-Attal Mühendislik Sanayi',
-        channelAr: 'العتال ميديا',
-        channelEn: 'Al-Attal Media',
-        channelTr: 'Al-Attal Medya',
-        videoUrl: 'https://www.youtube.com/embed/IO77jUIjmo0',
-        thumbnail: '/uploads/slides/factory-1.jpg',
-        isActive: true,
-        order: 1,
-      },
-      create: {
-        id: 'tv-1',
-        titleAr: 'العتال للصناعات الهندسية',
-        titleEn: 'Al-Attal Engineering Industries',
-        titleTr: 'Al-Attal Mühendislik Sanayi',
-        channelAr: 'العتال ميديا',
-        channelEn: 'Al-Attal Media',
-        channelTr: 'Al-Attal Medya',
-        videoUrl: 'https://www.youtube.com/embed/IO77jUIjmo0',
-        thumbnail: '/uploads/slides/factory-1.jpg',
-        date: new Date('2024-02-15'),
-        isActive: true,
-        order: 1,
-      },
-    }),
-  ]);
+  const tvData = [
+    // === TV Interviews (الظهور التلفزيوني) ===
+    { id: 'tv-chairman-speech', titleAr: 'كلمة رئيس مجلس الادارة', titleEn: 'Chairman\'s Speech', titleTr: 'Yönetim Kurulu Başkanı Konuşması', channelAr: 'العتال ميديا', channelEn: 'Al-Attal Media', channelTr: 'Al-Attal Medya', videoUrl: 'https://www.youtube.com/embed/tocPgV9Tx0k', thumbnail: 'https://img.youtube.com/vi/tocPgV9Tx0k/hqdefault.jpg', date: new Date('2024-12-01'), isActive: true, order: 1 },
+    { id: 'tv-nahar-interview', titleAr: 'لقاء مع قناة النهار الفضائية', titleEn: 'Interview with Al-Nahar TV', titleTr: 'Al-Nahar TV Röportajı', channelAr: 'قناة النهار', channelEn: 'Al-Nahar TV', channelTr: 'Al-Nahar TV', videoUrl: 'https://www.youtube.com/embed/QhrfnGvOpY0', thumbnail: 'https://img.youtube.com/vi/QhrfnGvOpY0/hqdefault.jpg', date: new Date('2024-11-15'), isActive: true, order: 2 },
+    { id: 'tv-chairman-interview-sna', titleAr: 'مقابلة مع رئيس مجلس الإدارة لشركة العتال SNA', titleEn: 'Interview with SNA Al-Attal Chairman', titleTr: 'SNA Al-Attal Başkanı ile Röportaj', channelAr: 'العتال ميديا', channelEn: 'Al-Attal Media', channelTr: 'Al-Attal Medya', videoUrl: 'https://www.youtube.com/embed/wgd_l_i96FY', thumbnail: 'https://img.youtube.com/vi/wgd_l_i96FY/hqdefault.jpg', date: new Date('2024-11-01'), isActive: true, order: 3 },
+    { id: 'tv-chairman-interview-2', titleAr: 'لقاء مع رئيس مجلس الادارة', titleEn: 'Interview with the Chairman', titleTr: 'Yönetim Kurulu Başkanı ile Röportaj', channelAr: 'العتال ميديا', channelEn: 'Al-Attal Media', channelTr: 'Al-Attal Medya', videoUrl: 'https://www.youtube.com/embed/f4gL711XD0E', thumbnail: 'https://img.youtube.com/vi/f4gL711XD0E/hqdefault.jpg', date: new Date('2024-10-15'), isActive: true, order: 4 },
+    { id: 'tv-marketing-director', titleAr: 'د. محمد الحيالي - مدير التسويق', titleEn: 'Dr. Mohamed Al-Hayali - Marketing Director', titleTr: 'Dr. Mohamed Al-Hayali - Pazarlama Müdürü', channelAr: 'العتال ميديا', channelEn: 'Al-Attal Media', channelTr: 'Al-Attal Medya', videoUrl: 'https://www.youtube.com/embed/5tHeA8Jst2c', thumbnail: 'https://img.youtube.com/vi/5tHeA8Jst2c/hqdefault.jpg', date: new Date('2024-10-01'), isActive: true, order: 5 },
+    // === Company Overview (نبذة عن الشركة) ===
+    { id: 'tv-company-overview', titleAr: 'شركة العتال للصناعات الهندسية', titleEn: 'Al-Attal Engineering Industries', titleTr: 'Al-Attal Mühendislik Sanayi', channelAr: 'العتال ميديا', channelEn: 'Al-Attal Media', channelTr: 'Al-Attal Medya', videoUrl: 'https://www.youtube.com/embed/TL5e5JzxrKk', thumbnail: 'https://img.youtube.com/vi/TL5e5JzxrKk/hqdefault.jpg', date: new Date('2024-09-15'), isActive: true, order: 6 },
+    { id: 'tv-1', titleAr: 'العتال للصناعات الهندسية', titleEn: 'Al-Attal Engineering Industries', titleTr: 'Al-Attal Mühendislik Sanayi', channelAr: 'العتال ميديا', channelEn: 'Al-Attal Media', channelTr: 'Al-Attal Medya', videoUrl: 'https://www.youtube.com/embed/IO77jUIjmo0', thumbnail: 'https://img.youtube.com/vi/IO77jUIjmo0/hqdefault.jpg', date: new Date('2024-09-01'), isActive: true, order: 7 },
+    // === Production Videos (فيديوهات الإنتاج) ===
+    { id: 'tv-machine-manufacturing', titleAr: 'صناعة ماكينات', titleEn: 'Machine Manufacturing', titleTr: 'Makine Üretimi', channelAr: 'العتال ميديا', channelEn: 'Al-Attal Media', channelTr: 'Al-Attal Medya', videoUrl: 'https://www.youtube.com/embed/m9BW7CySw1E', thumbnail: 'https://img.youtube.com/vi/m9BW7CySw1E/hqdefault.jpg', date: new Date('2024-08-15'), isActive: true, order: 8 },
+    { id: 'tv-machine-review', titleAr: 'استعراض للمكن ومواصفاتها', titleEn: 'Machine Review & Specifications', titleTr: 'Makine İncelemesi ve Özellikleri', channelAr: 'العتال ميديا', channelEn: 'Al-Attal Media', channelTr: 'Al-Attal Medya', videoUrl: 'https://www.youtube.com/embed/2mM6FK5itI8', thumbnail: 'https://img.youtube.com/vi/2mM6FK5itI8/hqdefault.jpg', date: new Date('2024-08-01'), isActive: true, order: 9 },
+    { id: 'tv-assembly-team', titleAr: 'فريق تجميع الماكنة', titleEn: 'Machine Assembly Team', titleTr: 'Makine Montaj Ekibi', channelAr: 'العتال ميديا', channelEn: 'Al-Attal Media', channelTr: 'Al-Attal Medya', videoUrl: 'https://www.youtube.com/embed/8xecIUHiDe4', thumbnail: 'https://img.youtube.com/vi/8xecIUHiDe4/hqdefault.jpg', date: new Date('2024-07-15'), isActive: true, order: 10 },
+    { id: 'tv-water-lines', titleAr: 'خطوط انتاج مياه', titleEn: 'Water Production Lines', titleTr: 'Su Üretim Hatları', channelAr: 'العتال ميديا', channelEn: 'Al-Attal Media', channelTr: 'Al-Attal Medya', videoUrl: 'https://www.youtube.com/embed/frW5lCz9ZmY', thumbnail: 'https://img.youtube.com/vi/frW5lCz9ZmY/hqdefault.jpg', date: new Date('2024-07-01'), isActive: true, order: 11 },
+    { id: 'tv-complete-line', titleAr: 'خط انتاج كامل', titleEn: 'Complete Production Line', titleTr: 'Tam Üretim Hattı', channelAr: 'العتال ميديا', channelEn: 'Al-Attal Media', channelTr: 'Al-Attal Medya', videoUrl: 'https://www.youtube.com/embed/QRESUDZ3IdA', thumbnail: 'https://img.youtube.com/vi/QRESUDZ3IdA/hqdefault.jpg', date: new Date('2024-06-15'), isActive: true, order: 12 },
+    // === Educational Videos (فيديوهات تعليمية) ===
+    { id: 'tv-mineral-factory', titleAr: 'كيف تؤسس مصنع للمياه المعدنية', titleEn: 'How to Establish a Mineral Water Factory', titleTr: 'Maden Suyu Fabrikası Nasıl Kurulur', channelAr: 'العتال ميديا', channelEn: 'Al-Attal Media', channelTr: 'Al-Attal Medya', videoUrl: 'https://www.youtube.com/embed/FDo7bz96ujc', thumbnail: 'https://img.youtube.com/vi/FDo7bz96ujc/hqdefault.jpg', date: new Date('2024-06-01'), isActive: true, order: 13 },
+    { id: 'tv-production-capacity', titleAr: 'كيف تزيد من طاقة مصنعك الانتاجية', titleEn: 'How to Increase Your Factory Production Capacity', titleTr: 'Fabrika Üretim Kapasitenizi Nasıl Artırırsınız', channelAr: 'العتال ميديا', channelEn: 'Al-Attal Media', channelTr: 'Al-Attal Medya', videoUrl: 'https://www.youtube.com/embed/l_jK9j5kkzs', thumbnail: 'https://img.youtube.com/vi/l_jK9j5kkzs/hqdefault.jpg', date: new Date('2024-05-15'), isActive: true, order: 14 },
+  ];
+
+  const tvInterviews = await Promise.all(
+    tvData.map(({ id, ...data }) =>
+      prisma.tVInterview.upsert({ where: { id }, update: data, create: { id, ...data } })
+    )
+  );
 
   console.log('✅ TV Interviews created:', tvInterviews.length);
 
