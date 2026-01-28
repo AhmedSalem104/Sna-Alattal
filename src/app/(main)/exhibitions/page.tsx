@@ -1,68 +1,105 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { motion } from 'framer-motion';
-import { Calendar, MapPin, ArrowRight, ExternalLink } from 'lucide-react';
+import { Calendar, MapPin, ArrowRight, ExternalLink, Loader2, CalendarDays } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useLocale } from '@/hooks/useLocale';
+import { getLocalizedField, formatLocalizedDate } from '@/lib/locale-helpers';
 
-const exhibitions = [
-  {
-    id: 1,
-    name: 'Gulfood Manufacturing 2024',
-    location: 'دبي، الإمارات',
-    locationEn: 'Dubai, UAE',
-    date: '5-7 نوفمبر 2024',
-    dateEn: 'Nov 5-7, 2024',
-    image: '/images/exhibitions/gulfood.jpg',
-    status: 'upcoming',
-    booth: 'Hall 3, Stand B45',
-    description: 'أكبر معرض لتكنولوجيا صناعة الأغذية في المنطقة',
-  },
-  {
-    id: 2,
-    name: 'Propak Asia 2024',
-    location: 'بانكوك، تايلاند',
-    locationEn: 'Bangkok, Thailand',
-    date: '12-15 يونيو 2024',
-    dateEn: 'Jun 12-15, 2024',
-    image: '/images/exhibitions/propak.jpg',
-    status: 'past',
-    booth: 'Hall 1, Stand A23',
-    description: 'المعرض الرائد لتكنولوجيا التعبئة والتغليف في آسيا',
-  },
-  {
-    id: 3,
-    name: 'Interpack 2023',
-    location: 'دوسلدورف، ألمانيا',
-    locationEn: 'Dusseldorf, Germany',
-    date: '4-10 مايو 2023',
-    dateEn: 'May 4-10, 2023',
-    image: '/images/exhibitions/interpack.jpg',
-    status: 'past',
-    booth: 'Hall 6, Stand F12',
-    description: 'المعرض العالمي الأكبر للتعبئة والتغليف',
-  },
-  {
-    id: 4,
-    name: 'EGYPT PLAST 2023',
-    location: 'القاهرة، مصر',
-    locationEn: 'Cairo, Egypt',
-    date: '19-22 سبتمبر 2023',
-    dateEn: 'Sep 19-22, 2023',
-    image: '/images/exhibitions/egypt-plast.jpg',
-    status: 'past',
-    booth: 'Hall 2, Stand C15',
-    description: 'المعرض الدولي للبلاستيك والبتروكيماويات',
-  },
-];
+interface Exhibition {
+  id: string;
+  nameAr: string;
+  nameEn: string;
+  nameTr: string;
+  locationAr: string;
+  locationEn: string;
+  locationTr: string;
+  descriptionAr?: string;
+  descriptionEn?: string;
+  descriptionTr?: string;
+  images: string[];
+  startDate: string;
+  endDate: string;
+  booth?: string;
+}
 
 export default function ExhibitionsPage() {
   const t = useTranslations('exhibitionsPage');
+  const { locale, isRTL } = useLocale();
+  const [exhibitions, setExhibitions] = useState<Exhibition[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const upcomingExhibitions = exhibitions.filter((e) => e.status === 'upcoming');
-  const pastExhibitions = exhibitions.filter((e) => e.status === 'past');
+  useEffect(() => {
+    async function fetchExhibitions() {
+      try {
+        const res = await fetch('/api/public/exhibitions');
+        if (res.ok) {
+          const data = await res.json();
+          setExhibitions(data);
+        }
+      } catch (error) {
+        console.error('Error fetching exhibitions:', error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchExhibitions();
+  }, []);
+
+  const getName = (item: Exhibition) => getLocalizedField(item, 'name', locale);
+  const getLocation = (item: Exhibition) => getLocalizedField(item, 'location', locale);
+  const getDescription = (item: Exhibition) => getLocalizedField(item, 'description', locale);
+
+  const getExhibitionImage = (exhibition: Exhibition) => {
+    if (exhibition.images && exhibition.images.length > 0) {
+      return exhibition.images[0];
+    }
+    return '/images/placeholder-exhibition.jpg';
+  };
+
+  const getStatus = (exhibition: Exhibition): 'upcoming' | 'ongoing' | 'past' => {
+    const now = new Date();
+    const startDate = new Date(exhibition.startDate);
+    const endDate = new Date(exhibition.endDate);
+
+    if (now < startDate) return 'upcoming';
+    if (now >= startDate && now <= endDate) return 'ongoing';
+    return 'past';
+  };
+
+  const formatDateRange = (exhibition: Exhibition) => {
+    const start = new Date(exhibition.startDate);
+    const end = new Date(exhibition.endDate);
+    const options: Intl.DateTimeFormatOptions = { month: 'short', day: 'numeric', year: 'numeric' };
+
+    const localeMap: Record<string, string> = {
+      ar: 'ar-EG',
+      en: 'en-US',
+      tr: 'tr-TR',
+    };
+
+    const localeStr = localeMap[locale] || 'en-US';
+    return `${start.toLocaleDateString(localeStr, options)} - ${end.toLocaleDateString(localeStr, options)}`;
+  };
+
+  const upcomingExhibitions = exhibitions.filter((e) => {
+    const status = getStatus(e);
+    return status === 'upcoming' || status === 'ongoing';
+  });
+  const pastExhibitions = exhibitions.filter((e) => getStatus(e) === 'past');
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <Loader2 className="w-8 h-8 animate-spin text-primary" />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-white">
@@ -121,21 +158,23 @@ export default function ExhibitionsPage() {
                     {/* Image */}
                     <div className="relative h-64 lg:h-auto">
                       <Image
-                        src={exhibition.image}
-                        alt={exhibition.name}
+                        src={getExhibitionImage(exhibition)}
+                        alt={getName(exhibition)}
                         fill
                         sizes="(max-width: 1024px) 100vw, 33vw"
                         className="object-cover"
                       />
-                      <div className="absolute top-4 right-4 px-3 py-1 bg-primary text-gray-900 rounded-full text-sm font-medium">
-                        {t('comingSoon')}
+                      <div className={`absolute top-4 ${isRTL ? 'left-4' : 'right-4'} px-3 py-1 bg-primary text-gray-900 rounded-full text-sm font-medium`}>
+                        {getStatus(exhibition) === 'ongoing' ? t('ongoing') : t('comingSoon')}
                       </div>
                     </div>
 
                     {/* Content */}
                     <div className="lg:col-span-2 p-8">
-                      <h3 className="text-2xl font-bold text-gray-900 mb-4">{exhibition.name}</h3>
-                      <p className="text-gray-700 mb-6">{exhibition.description}</p>
+                      <h3 className="text-2xl font-bold text-gray-900 mb-4">{getName(exhibition)}</h3>
+                      {getDescription(exhibition) && (
+                        <p className="text-gray-700 mb-6">{getDescription(exhibition)}</p>
+                      )}
 
                       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
                         <div className="flex items-center gap-3">
@@ -144,7 +183,7 @@ export default function ExhibitionsPage() {
                           </div>
                           <div>
                             <p className="text-gray-600 text-sm">{t('date')}</p>
-                            <p className="text-gray-900">{exhibition.date}</p>
+                            <p className="text-gray-900">{formatDateRange(exhibition)}</p>
                           </div>
                         </div>
                         <div className="flex items-center gap-3">
@@ -153,24 +192,26 @@ export default function ExhibitionsPage() {
                           </div>
                           <div>
                             <p className="text-gray-600 text-sm">{t('location')}</p>
-                            <p className="text-gray-900">{exhibition.location}</p>
+                            <p className="text-gray-900">{getLocation(exhibition)}</p>
                           </div>
                         </div>
-                        <div className="flex items-center gap-3">
-                          <div className="p-2 bg-primary/20 rounded-lg">
-                            <ExternalLink className="text-primary" size={20} />
+                        {exhibition.booth && (
+                          <div className="flex items-center gap-3">
+                            <div className="p-2 bg-primary/20 rounded-lg">
+                              <ExternalLink className="text-primary" size={20} />
+                            </div>
+                            <div>
+                              <p className="text-gray-600 text-sm">{t('booth')}</p>
+                              <p className="text-gray-900">{exhibition.booth}</p>
+                            </div>
                           </div>
-                          <div>
-                            <p className="text-gray-600 text-sm">{t('booth')}</p>
-                            <p className="text-gray-900">{exhibition.booth}</p>
-                          </div>
-                        </div>
+                        )}
                       </div>
 
                       <Link href="/contact">
                         <Button variant="gold" size="lg">
                           {t('scheduleVisit')}
-                          <ArrowRight className="mr-2 rtl:rotate-180" size={18} />
+                          <ArrowRight className={`${isRTL ? 'mr-2 rotate-180' : 'ml-2'}`} size={18} />
                         </Button>
                       </Link>
                     </div>
@@ -195,47 +236,56 @@ export default function ExhibitionsPage() {
             <p className="text-gray-600">{t('pastDesc')}</p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {pastExhibitions.map((exhibition, index) => (
-              <motion.div
-                key={exhibition.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className="group bg-white rounded-2xl overflow-hidden border border-gray-200 hover:border-gray-300 transition-all"
-              >
-                {/* Image */}
-                <div className="relative h-48 overflow-hidden">
-                  <Image
-                    src={exhibition.image}
-                    alt={exhibition.name}
-                    fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                    className="object-cover group-hover:scale-105 transition-transform duration-500 grayscale group-hover:grayscale-0"
-                  />
-                </div>
-
-                {/* Content */}
-                <div className="p-6">
-                  <h3 className="text-xl font-bold text-gray-900 mb-3">{exhibition.name}</h3>
-
-                  <div className="space-y-2 mb-4">
-                    <div className="flex items-center gap-2 text-gray-600 text-sm">
-                      <Calendar size={16} />
-                      <span>{exhibition.date}</span>
-                    </div>
-                    <div className="flex items-center gap-2 text-gray-600 text-sm">
-                      <MapPin size={16} />
-                      <span>{exhibition.location}</span>
-                    </div>
+          {pastExhibitions.length === 0 ? (
+            <div className="text-center py-12">
+              <CalendarDays size={48} className="mx-auto text-gray-300 mb-4" />
+              <p className="text-gray-600">{t('noPastExhibitions') || 'No past exhibitions'}</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {pastExhibitions.map((exhibition, index) => (
+                <motion.div
+                  key={exhibition.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                  className="group bg-white rounded-2xl overflow-hidden border border-gray-200 hover:border-gray-300 transition-all"
+                >
+                  {/* Image */}
+                  <div className="relative h-48 overflow-hidden">
+                    <Image
+                      src={getExhibitionImage(exhibition)}
+                      alt={getName(exhibition)}
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      className="object-cover group-hover:scale-105 transition-transform duration-500 grayscale group-hover:grayscale-0"
+                    />
                   </div>
 
-                  <p className="text-gray-600 text-sm">{exhibition.description}</p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
+                  {/* Content */}
+                  <div className="p-6">
+                    <h3 className="text-xl font-bold text-gray-900 mb-3">{getName(exhibition)}</h3>
+
+                    <div className="space-y-2 mb-4">
+                      <div className="flex items-center gap-2 text-gray-600 text-sm">
+                        <Calendar size={16} />
+                        <span>{formatDateRange(exhibition)}</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-gray-600 text-sm">
+                        <MapPin size={16} />
+                        <span>{getLocation(exhibition)}</span>
+                      </div>
+                    </div>
+
+                    {getDescription(exhibition) && (
+                      <p className="text-gray-600 text-sm line-clamp-2">{getDescription(exhibition)}</p>
+                    )}
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
@@ -256,7 +306,7 @@ export default function ExhibitionsPage() {
             <Link href="/contact">
               <Button variant="gold" size="xl">
                 {t('cta.button')}
-                <ArrowRight className="mr-2 rtl:rotate-180" size={20} />
+                <ArrowRight className={`${isRTL ? 'mr-2 rotate-180' : 'ml-2'}`} size={20} />
               </Button>
             </Link>
           </motion.div>

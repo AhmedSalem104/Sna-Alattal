@@ -1,26 +1,26 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { motion } from 'framer-motion';
-import { ArrowRight, Building2, Globe, Award, Users } from 'lucide-react';
+import { ArrowRight, Building2, Globe, Award, Users, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useLocale } from '@/hooks/useLocale';
+import { getLocalizedField } from '@/lib/locale-helpers';
 
-const clients = [
-  { id: '1', name: 'Client 1', logo: '/images/logo.jpg', industry: 'food' },
-  { id: '2', name: 'Client 2', logo: '/images/logo.jpg', industry: 'beverage' },
-  { id: '3', name: 'Client 3', logo: '/images/logo.jpg', industry: 'pharmaceutical' },
-  { id: '4', name: 'Client 4', logo: '/images/logo.jpg', industry: 'cosmetics' },
-  { id: '5', name: 'Client 5', logo: '/images/logo.jpg', industry: 'chemicals' },
-  { id: '6', name: 'Client 6', logo: '/images/logo.jpg', industry: 'food' },
-  { id: '7', name: 'Client 7', logo: '/images/logo.jpg', industry: 'beverage' },
-  { id: '8', name: 'Client 8', logo: '/images/logo.jpg', industry: 'pharmaceutical' },
-  { id: '9', name: 'Client 9', logo: '/images/logo.jpg', industry: 'cosmetics' },
-  { id: '10', name: 'Client 10', logo: '/images/logo.jpg', industry: 'chemicals' },
-  { id: '11', name: 'Client 11', logo: '/images/logo.jpg', industry: 'food' },
-  { id: '12', name: 'Client 12', logo: '/images/logo.jpg', industry: 'beverage' },
-];
+interface Client {
+  id: string;
+  nameAr: string;
+  nameEn: string;
+  nameTr: string;
+  logo?: string;
+  website?: string;
+  descriptionAr?: string;
+  descriptionEn?: string;
+  descriptionTr?: string;
+}
 
 const stats = [
   { icon: Users, value: '300+', labelKey: 'stats.clients' },
@@ -31,7 +31,33 @@ const stats = [
 
 export default function ClientsPage() {
   const t = useTranslations('clientsPage');
-  const tCommon = useTranslations('clients');
+  const { locale, isRTL } = useLocale();
+  const [clients, setClients] = useState<Client[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchClients() {
+      try {
+        const res = await fetch('/api/public/clients');
+        if (res.ok) {
+          const data = await res.json();
+          setClients(data);
+        }
+      } catch (error) {
+        console.error('Error fetching clients:', error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchClients();
+  }, []);
+
+  const getName = (client: Client) => getLocalizedField(client, 'name', locale);
+
+  const getClientLogo = (client: Client) => {
+    return client.logo || '/images/placeholder-client.jpg';
+  };
 
   return (
     <div className="min-h-screen bg-white">
@@ -105,28 +131,58 @@ export default function ClientsPage() {
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-6">
-            {clients.map((client, index) => (
-              <motion.div
-                key={client.id}
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: index * 0.05 }}
-                className="group"
-              >
-                <div className="aspect-square bg-gray-100 rounded-xl p-6 flex items-center justify-center border border-gray-200 hover:border-primary/50 hover:bg-gray-100 transition-all duration-300">
-                  <Image
-                    src={client.logo}
-                    alt={client.name}
-                    width={100}
-                    height={100}
-                    className="object-contain opacity-60 group-hover:opacity-100 transition-opacity grayscale group-hover:grayscale-0"
-                  />
-                </div>
-              </motion.div>
-            ))}
-          </div>
+          {loading ? (
+            <div className="flex items-center justify-center py-20">
+              <Loader2 className="w-8 h-8 animate-spin text-primary" />
+            </div>
+          ) : clients.length === 0 ? (
+            <div className="text-center py-20">
+              <Building2 size={48} className="mx-auto text-gray-300 mb-4" />
+              <p className="text-gray-600 text-xl">{t('noClients') || 'No clients available'}</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-6">
+              {clients.map((client, index) => (
+                <motion.div
+                  key={client.id}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: index * 0.05 }}
+                  className="group"
+                >
+                  {client.website ? (
+                    <a
+                      href={client.website}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block"
+                    >
+                      <div className="aspect-square bg-gray-100 rounded-xl p-6 flex items-center justify-center border border-gray-200 hover:border-primary/50 hover:bg-gray-50 transition-all duration-300">
+                        <Image
+                          src={getClientLogo(client)}
+                          alt={getName(client)}
+                          width={100}
+                          height={100}
+                          className="object-contain opacity-60 group-hover:opacity-100 transition-opacity grayscale group-hover:grayscale-0"
+                        />
+                      </div>
+                    </a>
+                  ) : (
+                    <div className="aspect-square bg-gray-100 rounded-xl p-6 flex items-center justify-center border border-gray-200 hover:border-primary/50 hover:bg-gray-50 transition-all duration-300">
+                      <Image
+                        src={getClientLogo(client)}
+                        alt={getName(client)}
+                        width={100}
+                        height={100}
+                        className="object-contain opacity-60 group-hover:opacity-100 transition-opacity grayscale group-hover:grayscale-0"
+                      />
+                    </div>
+                  )}
+                </motion.div>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
@@ -209,7 +265,7 @@ export default function ClientsPage() {
             <Link href="/contact">
               <Button variant="gold" size="xl">
                 {t('cta.button')}
-                <ArrowRight className="mr-2 rtl:rotate-180" size={20} />
+                <ArrowRight className={`${isRTL ? 'mr-2 rotate-180' : 'ml-2'}`} size={20} />
               </Button>
             </Link>
           </motion.div>

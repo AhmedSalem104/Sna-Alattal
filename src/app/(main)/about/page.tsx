@@ -1,5 +1,6 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
@@ -12,18 +13,28 @@ import {
   Users,
   Globe,
   Factory,
-  CheckCircle,
-  Calendar
+  Calendar,
+  Loader2
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useLocale } from '@/hooks/useLocale';
+import { getLocalizedField } from '@/lib/locale-helpers';
 
-const timeline = [
-  { year: '1994', event: 'تأسيس شركة S.N.A العطال في مصر', eventEn: 'Founded S.N.A Al-Attal in Egypt' },
-  { year: '2000', event: 'التوسع في خطوط الإنتاج', eventEn: 'Expanded production lines' },
-  { year: '2010', event: 'افتتاح فرع تركيا', eventEn: 'Opened Turkey branch' },
-  { year: '2015', event: 'الحصول على شهادة ISO 9001', eventEn: 'Achieved ISO 9001 certification' },
-  { year: '2020', event: 'تصدير لأكثر من 15 دولة', eventEn: 'Exporting to 15+ countries' },
-  { year: '2024', event: 'مشاريع جديدة في الخليج العربي', eventEn: 'New projects in Gulf region' },
+interface TimelineItem {
+  year: string;
+  eventAr: string;
+  eventEn: string;
+  eventTr: string;
+}
+
+// Fallback timeline data (used if settings not yet populated)
+const defaultTimeline: TimelineItem[] = [
+  { year: '1994', eventAr: 'تأسيس شركة S.N.A العطال في مصر', eventEn: 'Founded S.N.A Al-Attal in Egypt', eventTr: 'Mısır\'da S.N.A Al-Attal kuruldu' },
+  { year: '2000', eventAr: 'التوسع في خطوط الإنتاج', eventEn: 'Expanded production lines', eventTr: 'Üretim hatları genişletildi' },
+  { year: '2010', eventAr: 'افتتاح فرع تركيا', eventEn: 'Opened Turkey branch', eventTr: 'Türkiye şubesi açıldı' },
+  { year: '2015', eventAr: 'الحصول على شهادة ISO 9001', eventEn: 'Achieved ISO 9001 certification', eventTr: 'ISO 9001 sertifikası alındı' },
+  { year: '2020', eventAr: 'تصدير لأكثر من 15 دولة', eventEn: 'Exporting to 15+ countries', eventTr: '15+ ülkeye ihracat' },
+  { year: '2024', eventAr: 'مشاريع جديدة في الخليج العربي', eventEn: 'New projects in Gulf region', eventTr: 'Körfez bölgesinde yeni projeler' },
 ];
 
 const values = [
@@ -51,6 +62,32 @@ const values = [
 
 export default function AboutPage() {
   const t = useTranslations('aboutPage');
+  const { locale, isRTL } = useLocale();
+  const [timeline, setTimeline] = useState<TimelineItem[]>(defaultTimeline);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchTimeline() {
+      try {
+        const res = await fetch('/api/public/settings?group=timeline');
+        if (res.ok) {
+          const data = await res.json();
+          if (data.company_timeline && Array.isArray(data.company_timeline) && data.company_timeline.length > 0) {
+            setTimeline(data.company_timeline);
+          }
+        }
+      } catch (error) {
+        console.error('Error fetching timeline:', error);
+        // Keep using default timeline
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchTimeline();
+  }, []);
+
+  const getEvent = (item: TimelineItem) => getLocalizedField(item, 'event', locale);
 
   return (
     <div className="min-h-screen bg-white">
@@ -233,35 +270,41 @@ export default function AboutPage() {
           </motion.div>
 
           <div className="max-w-4xl mx-auto">
-            <div className="relative">
-              {/* Timeline Line - Left on mobile, center on desktop */}
-              <div className="absolute top-0 bottom-0 left-4 md:left-1/2 w-px bg-primary/30 md:transform md:translate-x-1/2" />
+            {loading ? (
+              <div className="flex items-center justify-center py-12">
+                <Loader2 className="w-8 h-8 animate-spin text-primary" />
+              </div>
+            ) : (
+              <div className="relative">
+                {/* Timeline Line - Left on mobile, center on desktop */}
+                <div className="absolute top-0 bottom-0 left-4 md:left-1/2 w-px bg-primary/30 md:transform md:translate-x-1/2" />
 
-              {timeline.map((item, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, x: index % 2 === 0 ? -20 : 20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
-                  className={`flex items-center gap-4 md:gap-8 mb-8 ${
-                    index % 2 === 0 ? 'md:flex-row-reverse md:text-right' : ''
-                  }`}
-                >
-                  <div className="flex-1 pl-12 md:pl-0">
-                    <div className="bg-white p-4 md:p-6 rounded-xl border border-gray-200 shadow-sm">
-                      <div className="flex items-center gap-2 mb-2">
-                        <Calendar className="text-primary" size={18} />
-                        <span className="text-primary font-bold text-sm md:text-base">{item.year}</span>
+                {timeline.map((item, index) => (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, x: index % 2 === 0 ? -20 : 20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.1 }}
+                    className={`flex items-center gap-4 md:gap-8 mb-8 ${
+                      index % 2 === 0 ? 'md:flex-row-reverse md:text-right' : ''
+                    }`}
+                  >
+                    <div className="flex-1 pl-12 md:pl-0">
+                      <div className="bg-white p-4 md:p-6 rounded-xl border border-gray-200 shadow-sm">
+                        <div className="flex items-center gap-2 mb-2">
+                          <Calendar className="text-primary" size={18} />
+                          <span className="text-primary font-bold text-sm md:text-base">{item.year}</span>
+                        </div>
+                        <p className="text-gray-700 text-sm md:text-base">{getEvent(item)}</p>
                       </div>
-                      <p className="text-gray-700 text-sm md:text-base">{item.event}</p>
                     </div>
-                  </div>
-                  <div className="w-3 h-3 md:w-4 md:h-4 bg-primary rounded-full relative z-10 flex-shrink-0 absolute left-[13px] md:static" />
-                  <div className="flex-1 hidden md:block" />
-                </motion.div>
-              ))}
-            </div>
+                    <div className="w-3 h-3 md:w-4 md:h-4 bg-primary rounded-full relative z-10 flex-shrink-0 absolute left-[13px] md:static" />
+                    <div className="flex-1 hidden md:block" />
+                  </motion.div>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </section>
@@ -283,7 +326,7 @@ export default function AboutPage() {
             <Link href="/contact">
               <Button variant="gold" size="xl">
                 {t('cta.button')}
-                <ArrowRight className="mr-2 rtl:rotate-180" size={20} />
+                <ArrowRight className={`${isRTL ? 'mr-2 rotate-180' : 'ml-2'}`} size={20} />
               </Button>
             </Link>
           </motion.div>

@@ -1,81 +1,99 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { motion } from 'framer-motion';
-import { ArrowRight, Check, Factory, Beaker, Sparkles, FlaskConical } from 'lucide-react';
+import { ArrowRight, Check, Factory, Beaker, Sparkles, FlaskConical, Loader2, Lightbulb, Cog, Zap, type LucideIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useLocale } from '@/hooks/useLocale';
+import { getLocalizedField } from '@/lib/locale-helpers';
 
-const solutions = [
-  {
-    id: 'food-beverage',
-    icon: Factory,
-    titleKey: 'solutions.food.title',
-    descKey: 'solutions.food.desc',
-    fullDescKey: 'solutions.food.fullDesc',
-    image: '/images/solutions/food-beverage.jpg',
-    color: 'from-orange-500/20',
-    features: [
-      'Complete bottling lines',
-      'Aseptic filling systems',
-      'CIP/SIP cleaning',
-      'FDA compliant',
-    ],
-    industries: ['Water', 'Juices', 'Dairy', 'Oils', 'Sauces'],
-  },
-  {
-    id: 'pharmaceutical',
-    icon: FlaskConical,
-    titleKey: 'solutions.pharma.title',
-    descKey: 'solutions.pharma.desc',
-    fullDescKey: 'solutions.pharma.fullDesc',
-    image: '/images/solutions/pharmaceutical.jpg',
-    color: 'from-blue-500/20',
-    features: [
-      'GMP compliant systems',
-      'Sterile filling',
-      'Validation support',
-      'Track & trace',
-    ],
-    industries: ['Syrups', 'Suspensions', 'IV Solutions', 'Vaccines'],
-  },
-  {
-    id: 'cosmetics',
-    icon: Sparkles,
-    titleKey: 'solutions.cosmetics.title',
-    descKey: 'solutions.cosmetics.desc',
-    fullDescKey: 'solutions.cosmetics.fullDesc',
-    image: '/images/solutions/cosmetics.jpg',
-    color: 'from-pink-500/20',
-    features: [
-      'Precision filling',
-      'Multi-product lines',
-      'Decorative packaging',
-      'High viscosity handling',
-    ],
-    industries: ['Creams', 'Lotions', 'Perfumes', 'Shampoos'],
-  },
-  {
-    id: 'chemicals',
-    icon: Beaker,
-    titleKey: 'solutions.chemicals.title',
-    descKey: 'solutions.chemicals.desc',
-    fullDescKey: 'solutions.chemicals.fullDesc',
-    image: '/images/solutions/chemicals.jpg',
-    color: 'from-green-500/20',
-    features: [
-      'Corrosion resistant',
-      'Hazmat handling',
-      'Explosion proof',
-      'Safety interlocks',
-    ],
-    industries: ['Detergents', 'Lubricants', 'Pesticides', 'Paints'],
-  },
+interface Solution {
+  id: string;
+  titleAr: string;
+  titleEn: string;
+  titleTr: string;
+  slug: string;
+  descriptionAr?: string;
+  descriptionEn?: string;
+  descriptionTr?: string;
+  shortDescAr?: string;
+  shortDescEn?: string;
+  shortDescTr?: string;
+  icon?: string;
+  image?: string;
+  features?: string[];
+  industries?: string[];
+}
+
+// Map icon names to Lucide components
+const iconMap: Record<string, LucideIcon> = {
+  factory: Factory,
+  beaker: Beaker,
+  sparkles: Sparkles,
+  flask: FlaskConical,
+  'flask-conical': FlaskConical,
+  lightbulb: Lightbulb,
+  cog: Cog,
+  zap: Zap,
+};
+
+const colorGradients = [
+  'from-orange-500/20',
+  'from-blue-500/20',
+  'from-pink-500/20',
+  'from-green-500/20',
+  'from-purple-500/20',
+  'from-cyan-500/20',
 ];
 
 export default function SolutionsPage() {
   const t = useTranslations('solutionsPage');
+  const { locale, isRTL } = useLocale();
+  const [solutions, setSolutions] = useState<Solution[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchSolutions() {
+      try {
+        const res = await fetch('/api/public/solutions');
+        if (res.ok) {
+          const data = await res.json();
+          setSolutions(data);
+        }
+      } catch (error) {
+        console.error('Error fetching solutions:', error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchSolutions();
+  }, []);
+
+  const getTitle = (item: Solution) => getLocalizedField(item, 'title', locale);
+  const getDescription = (item: Solution) => getLocalizedField(item, 'description', locale);
+  const getShortDesc = (item: Solution) => getLocalizedField(item, 'shortDesc', locale);
+
+  const getSolutionImage = (solution: Solution) => {
+    return solution.image || '/images/placeholder-solution.jpg';
+  };
+
+  const getIconComponent = (iconName?: string): LucideIcon => {
+    if (!iconName) return Factory;
+    const normalizedName = iconName.toLowerCase().replace(/\s+/g, '-');
+    return iconMap[normalizedName] || Factory;
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <Loader2 className="w-8 h-8 animate-spin text-primary" />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-white">
@@ -109,82 +127,98 @@ export default function SolutionsPage() {
       {/* Solutions List */}
       <section className="py-20">
         <div className="container mx-auto px-4">
-          <div className="space-y-20">
-            {solutions.map((solution, index) => (
-              <motion.div
-                key={solution.id}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6 }}
-                className={`grid grid-cols-1 lg:grid-cols-2 gap-12 items-center ${
-                  index % 2 === 1 ? 'lg:flex-row-reverse' : ''
-                }`}
-              >
-                {/* Image */}
-                <div className={`relative ${index % 2 === 1 ? 'lg:order-2' : ''}`}>
-                  <div className={`absolute inset-0 bg-gradient-to-br ${solution.color} to-transparent rounded-3xl blur-3xl opacity-50`} />
-                  <div className="relative h-80 md:h-96 rounded-2xl overflow-hidden">
-                    <Image
-                      src={solution.image}
-                      alt={t(solution.titleKey)}
-                      fill
-                      sizes="(max-width: 1024px) 100vw, 50vw"
-                      className="object-cover"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent" />
-                  </div>
-                </div>
+          {solutions.length === 0 ? (
+            <div className="text-center py-20">
+              <Lightbulb size={48} className="mx-auto text-gray-300 mb-4" />
+              <p className="text-gray-600 text-xl">{t('noSolutions') || 'No solutions available'}</p>
+            </div>
+          ) : (
+            <div className="space-y-20">
+              {solutions.map((solution, index) => {
+                const IconComponent = getIconComponent(solution.icon);
+                const colorGradient = colorGradients[index % colorGradients.length];
 
-                {/* Content */}
-                <div className={index % 2 === 1 ? 'lg:order-1' : ''}>
-                  <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/20 rounded-full mb-4">
-                    <solution.icon className="text-primary" size={20} />
-                    <span className="text-primary font-medium">{t('industrySolution')}</span>
-                  </div>
-
-                  <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-                    {t(solution.titleKey)}
-                  </h2>
-
-                  <p className="text-gray-700 text-lg mb-6">
-                    {t(solution.descKey)}
-                  </p>
-
-                  {/* Features */}
-                  <div className="grid grid-cols-2 gap-3 mb-6">
-                    {solution.features.map((feature, i) => (
-                      <div key={i} className="flex items-center gap-2">
-                        <div className="p-1 bg-primary/20 rounded-full">
-                          <Check className="text-primary" size={14} />
-                        </div>
-                        <span className="text-gray-700 text-sm">{feature}</span>
+                return (
+                  <motion.div
+                    key={solution.id}
+                    initial={{ opacity: 0, y: 40 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6 }}
+                    className={`grid grid-cols-1 lg:grid-cols-2 gap-12 items-center ${
+                      index % 2 === 1 ? 'lg:flex-row-reverse' : ''
+                    }`}
+                  >
+                    {/* Image */}
+                    <div className={`relative ${index % 2 === 1 ? 'lg:order-2' : ''}`}>
+                      <div className={`absolute inset-0 bg-gradient-to-br ${colorGradient} to-transparent rounded-3xl blur-3xl opacity-50`} />
+                      <div className="relative h-80 md:h-96 rounded-2xl overflow-hidden">
+                        <Image
+                          src={getSolutionImage(solution)}
+                          alt={getTitle(solution)}
+                          fill
+                          sizes="(max-width: 1024px) 100vw, 50vw"
+                          className="object-cover"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent" />
                       </div>
-                    ))}
-                  </div>
+                    </div>
 
-                  {/* Industries */}
-                  <div className="flex flex-wrap gap-2 mb-6">
-                    {solution.industries.map((industry, i) => (
-                      <span
-                        key={i}
-                        className="px-3 py-1 bg-gray-100 border border-gray-200 rounded-full text-gray-600 text-sm"
-                      >
-                        {industry}
-                      </span>
-                    ))}
-                  </div>
+                    {/* Content */}
+                    <div className={index % 2 === 1 ? 'lg:order-1' : ''}>
+                      <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/20 rounded-full mb-4">
+                        <IconComponent className="text-primary" size={20} />
+                        <span className="text-primary font-medium">{t('industrySolution')}</span>
+                      </div>
 
-                  <Link href={`/solutions/${solution.id}`}>
-                    <Button variant="gold" size="lg">
-                      {t('learnMore')}
-                      <ArrowRight className="mr-2 rtl:rotate-180" size={18} />
-                    </Button>
-                  </Link>
-                </div>
-              </motion.div>
-            ))}
-          </div>
+                      <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                        {getTitle(solution)}
+                      </h2>
+
+                      <p className="text-gray-700 text-lg mb-6">
+                        {getShortDesc(solution) || getDescription(solution)}
+                      </p>
+
+                      {/* Features */}
+                      {solution.features && solution.features.length > 0 && (
+                        <div className="grid grid-cols-2 gap-3 mb-6">
+                          {solution.features.slice(0, 4).map((feature, i) => (
+                            <div key={i} className="flex items-center gap-2">
+                              <div className="p-1 bg-primary/20 rounded-full">
+                                <Check className="text-primary" size={14} />
+                              </div>
+                              <span className="text-gray-700 text-sm">{feature}</span>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+
+                      {/* Industries */}
+                      {solution.industries && solution.industries.length > 0 && (
+                        <div className="flex flex-wrap gap-2 mb-6">
+                          {solution.industries.map((industry, i) => (
+                            <span
+                              key={i}
+                              className="px-3 py-1 bg-gray-100 border border-gray-200 rounded-full text-gray-600 text-sm"
+                            >
+                              {industry}
+                            </span>
+                          ))}
+                        </div>
+                      )}
+
+                      <Link href={`/solutions/${solution.slug}`}>
+                        <Button variant="gold" size="lg">
+                          {t('learnMore')}
+                          <ArrowRight className={`${isRTL ? 'mr-2 rotate-180' : 'ml-2'}`} size={18} />
+                        </Button>
+                      </Link>
+                    </div>
+                  </motion.div>
+                );
+              })}
+            </div>
+          )}
         </div>
       </section>
 
@@ -247,7 +281,7 @@ export default function SolutionsPage() {
             <Link href="/contact">
               <Button variant="gold" size="xl">
                 {t('cta.button')}
-                <ArrowRight className="mr-2 rtl:rotate-180" size={20} />
+                <ArrowRight className={`${isRTL ? 'mr-2 rotate-180' : 'ml-2'}`} size={20} />
               </Button>
             </Link>
           </motion.div>

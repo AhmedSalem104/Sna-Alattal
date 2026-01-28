@@ -1,102 +1,132 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { motion } from 'framer-motion';
-import { Calendar, Clock, ArrowRight, Search, Tag } from 'lucide-react';
+import { Calendar, Clock, ArrowRight, Search, Loader2, Newspaper } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { useLocale } from '@/hooks/useLocale';
+import { getLocalizedField } from '@/lib/locale-helpers';
 
-const categories = [
-  { id: 'all', label: 'الكل', labelEn: 'All' },
-  { id: 'news', label: 'أخبار', labelEn: 'News' },
-  { id: 'events', label: 'فعاليات', labelEn: 'Events' },
-  { id: 'press', label: 'صحافة', labelEn: 'Press' },
-];
-
-const articles = [
-  {
-    id: 1,
-    slug: 'new-production-line-2024',
-    titleKey: 'articles.1.title',
-    excerptKey: 'articles.1.excerpt',
-    image: '/images/news/article-1.jpg',
-    category: 'news',
-    date: '2024-01-15',
-    readTime: '5 min',
-    featured: true,
-  },
-  {
-    id: 2,
-    slug: 'gulfood-exhibition-2024',
-    titleKey: 'articles.2.title',
-    excerptKey: 'articles.2.excerpt',
-    image: '/images/news/article-2.jpg',
-    category: 'events',
-    date: '2024-02-20',
-    readTime: '3 min',
-    featured: false,
-  },
-  {
-    id: 3,
-    slug: 'iso-certification-renewal',
-    titleKey: 'articles.3.title',
-    excerptKey: 'articles.3.excerpt',
-    image: '/images/news/article-3.jpg',
-    category: 'press',
-    date: '2024-03-10',
-    readTime: '4 min',
-    featured: false,
-  },
-  {
-    id: 4,
-    slug: 'expansion-turkey-operations',
-    titleKey: 'articles.4.title',
-    excerptKey: 'articles.4.excerpt',
-    image: '/images/news/article-4.jpg',
-    category: 'news',
-    date: '2024-04-05',
-    readTime: '6 min',
-    featured: false,
-  },
-  {
-    id: 5,
-    slug: 'partnership-announcement',
-    titleKey: 'articles.5.title',
-    excerptKey: 'articles.5.excerpt',
-    image: '/images/news/article-5.jpg',
-    category: 'press',
-    date: '2024-05-12',
-    readTime: '4 min',
-    featured: false,
-  },
-  {
-    id: 6,
-    slug: 'industry-40-implementation',
-    titleKey: 'articles.6.title',
-    excerptKey: 'articles.6.excerpt',
-    image: '/images/news/article-6.jpg',
-    category: 'news',
-    date: '2024-06-01',
-    readTime: '7 min',
-    featured: false,
-  },
-];
+interface NewsArticle {
+  id: string;
+  titleAr: string;
+  titleEn: string;
+  titleTr: string;
+  slug: string;
+  excerptAr?: string;
+  excerptEn?: string;
+  excerptTr?: string;
+  contentAr?: string;
+  contentEn?: string;
+  contentTr?: string;
+  image?: string;
+  publishedAt: string;
+  isFeatured: boolean;
+  tags?: string[];
+}
 
 export default function NewsPage() {
   const t = useTranslations('newsPage');
+  const { locale, isRTL } = useLocale();
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
+  const [articles, setArticles] = useState<NewsArticle[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchNews() {
+      try {
+        const res = await fetch('/api/public/news');
+        if (res.ok) {
+          const data = await res.json();
+          setArticles(data);
+        }
+      } catch (error) {
+        console.error('Error fetching news:', error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchNews();
+  }, []);
+
+  const getTitle = (item: NewsArticle) => getLocalizedField(item, 'title', locale);
+  const getExcerpt = (item: NewsArticle) => getLocalizedField(item, 'excerpt', locale);
+  const getContent = (item: NewsArticle) => getLocalizedField(item, 'content', locale);
+
+  const getArticleImage = (article: NewsArticle) => {
+    return article.image || '/images/placeholder-news.jpg';
+  };
+
+  const formatDate = (dateStr: string) => {
+    const localeMap: Record<string, string> = {
+      ar: 'ar-EG',
+      en: 'en-US',
+      tr: 'tr-TR',
+    };
+    return new Date(dateStr).toLocaleDateString(localeMap[locale] || 'en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    });
+  };
+
+  const calculateReadTime = (article: NewsArticle): string => {
+    const content = getContent(article) || '';
+    const wordsPerMinute = 200;
+    const wordCount = content.split(/\s+/).length;
+    const minutes = Math.ceil(wordCount / wordsPerMinute);
+    return locale === 'ar' ? `${minutes} دقائق` : locale === 'tr' ? `${minutes} dakika` : `${minutes} min`;
+  };
+
+  // Extract unique categories from tags
+  const categories = useMemo(() => {
+    const tagSet = new Set<string>();
+    articles.forEach((article) => {
+      if (article.tags) {
+        article.tags.forEach((tag) => tagSet.add(tag));
+      }
+    });
+    return [
+      { id: 'all', labelAr: 'الكل', labelEn: 'All', labelTr: 'Tümü' },
+      ...Array.from(tagSet).map((tag) => ({
+        id: tag,
+        labelAr: tag,
+        labelEn: tag,
+        labelTr: tag,
+      })),
+    ];
+  }, [articles]);
+
+  const getCategoryLabel = (category: { labelAr: string; labelEn: string; labelTr: string }) => {
+    if (locale === 'ar') return category.labelAr;
+    if (locale === 'tr') return category.labelTr;
+    return category.labelEn;
+  };
 
   const filteredArticles = articles.filter((article) => {
-    const matchesCategory = selectedCategory === 'all' || article.category === selectedCategory;
-    return matchesCategory;
+    const matchesCategory =
+      selectedCategory === 'all' || (article.tags && article.tags.includes(selectedCategory));
+    const title = getTitle(article).toLowerCase();
+    const matchesSearch = title.includes(searchQuery.toLowerCase());
+    return matchesCategory && matchesSearch;
   });
 
-  const featuredArticle = articles.find((a) => a.featured);
-  const regularArticles = filteredArticles.filter((a) => !a.featured);
+  const featuredArticle = articles.find((a) => a.isFeatured);
+  const regularArticles = filteredArticles.filter((a) => !a.isFeatured);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <Loader2 className="w-8 h-8 animate-spin text-primary" />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-white">
@@ -133,12 +163,12 @@ export default function NewsPage() {
           <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
             {/* Search */}
             <div className="relative w-full md:w-96">
-              <Search className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-600" size={20} />
+              <Search className={`absolute ${isRTL ? 'left-3' : 'right-3'} top-1/2 -translate-y-1/2 text-gray-600`} size={20} />
               <Input
                 placeholder={t('searchPlaceholder')}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pr-10 bg-gray-50 border-gray-200 text-gray-900"
+                className={`${isRTL ? 'pl-10' : 'pr-10'} bg-gray-50 border-gray-200 text-gray-900`}
               />
             </div>
 
@@ -152,7 +182,7 @@ export default function NewsPage() {
                   onClick={() => setSelectedCategory(category.id)}
                   className={selectedCategory !== category.id ? 'border-gray-300 text-gray-700 hover:text-primary' : ''}
                 >
-                  {category.label}
+                  {getCategoryLabel(category)}
                 </Button>
               ))}
             </div>
@@ -175,44 +205,48 @@ export default function NewsPage() {
                     {/* Image */}
                     <div className="relative h-64 lg:h-96">
                       <Image
-                        src={featuredArticle.image}
-                        alt={t(featuredArticle.titleKey)}
+                        src={getArticleImage(featuredArticle)}
+                        alt={getTitle(featuredArticle)}
                         fill
                         sizes="(max-width: 1024px) 100vw, 50vw"
                         className="object-cover group-hover:scale-105 transition-transform duration-500"
                       />
-                      <div className="absolute top-4 right-4 px-3 py-1 bg-primary text-gray-900 rounded-full text-sm font-medium">
+                      <div className={`absolute top-4 ${isRTL ? 'left-4' : 'right-4'} px-3 py-1 bg-primary text-gray-900 rounded-full text-sm font-medium`}>
                         {t('featured')}
                       </div>
                     </div>
 
                     {/* Content */}
                     <div className="p-8 lg:p-12 flex flex-col justify-center">
-                      <div className="flex items-center gap-4 mb-4">
-                        <span className="px-3 py-1 bg-gray-100 rounded-full text-gray-600 text-sm">
-                          {t(`categories.${featuredArticle.category}`)}
-                        </span>
+                      <div className="flex items-center gap-4 mb-4 flex-wrap">
+                        {featuredArticle.tags && featuredArticle.tags[0] && (
+                          <span className="px-3 py-1 bg-gray-100 rounded-full text-gray-600 text-sm">
+                            {featuredArticle.tags[0]}
+                          </span>
+                        )}
                         <span className="flex items-center gap-1 text-gray-600 text-sm">
                           <Calendar size={14} />
-                          {new Date(featuredArticle.date).toLocaleDateString('ar-EG')}
+                          {formatDate(featuredArticle.publishedAt)}
                         </span>
                         <span className="flex items-center gap-1 text-gray-600 text-sm">
                           <Clock size={14} />
-                          {featuredArticle.readTime}
+                          {calculateReadTime(featuredArticle)}
                         </span>
                       </div>
 
                       <h2 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-4 group-hover:text-primary transition-colors">
-                        {t(featuredArticle.titleKey)}
+                        {getTitle(featuredArticle)}
                       </h2>
 
-                      <p className="text-gray-600 mb-6 line-clamp-3">
-                        {t(featuredArticle.excerptKey)}
-                      </p>
+                      {getExcerpt(featuredArticle) && (
+                        <p className="text-gray-600 mb-6 line-clamp-3">
+                          {getExcerpt(featuredArticle)}
+                        </p>
+                      )}
 
                       <div className="flex items-center text-primary font-medium group-hover:gap-2 transition-all">
                         <span>{t('readMore')}</span>
-                        <ArrowRight size={18} className="mr-1 rtl:rotate-180" />
+                        <ArrowRight size={18} className={`${isRTL ? 'mr-1 rotate-180' : 'ml-1'}`} />
                       </div>
                     </div>
                   </div>
@@ -226,68 +260,74 @@ export default function NewsPage() {
       {/* Articles Grid */}
       <section className="py-12">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {regularArticles.map((article, index) => (
-              <motion.div
-                key={article.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-              >
-                <Link href={`/news/${article.slug}`}>
-                  <div className="group bg-gray-50 rounded-2xl overflow-hidden border border-gray-200 hover:border-primary/50 transition-all h-full">
-                    {/* Image */}
-                    <div className="relative h-48 overflow-hidden">
-                      <Image
-                        src={article.image}
-                        alt={t(article.titleKey)}
-                        fill
-                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                        className="object-cover group-hover:scale-105 transition-transform duration-500"
-                      />
-                      <div className="absolute top-4 right-4 px-3 py-1 bg-white/80 backdrop-blur rounded-full text-gray-700 text-xs">
-                        {t(`categories.${article.category}`)}
+          {regularArticles.length === 0 && !featuredArticle ? (
+            <div className="text-center py-20">
+              <Newspaper size={48} className="mx-auto text-gray-300 mb-4" />
+              <p className="text-gray-600 text-xl">{t('noArticles') || 'No articles found'}</p>
+            </div>
+          ) : (
+            <>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {regularArticles.map((article, index) => (
+                  <motion.div
+                    key={article.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                  >
+                    <Link href={`/news/${article.slug}`}>
+                      <div className="group bg-gray-50 rounded-2xl overflow-hidden border border-gray-200 hover:border-primary/50 transition-all h-full">
+                        {/* Image */}
+                        <div className="relative h-48 overflow-hidden">
+                          <Image
+                            src={getArticleImage(article)}
+                            alt={getTitle(article)}
+                            fill
+                            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                            className="object-cover group-hover:scale-105 transition-transform duration-500"
+                          />
+                          {article.tags && article.tags[0] && (
+                            <div className={`absolute top-4 ${isRTL ? 'left-4' : 'right-4'} px-3 py-1 bg-white/80 backdrop-blur rounded-full text-gray-700 text-xs`}>
+                              {article.tags[0]}
+                            </div>
+                          )}
+                        </div>
+
+                        {/* Content */}
+                        <div className="p-6">
+                          <div className="flex items-center gap-4 mb-3">
+                            <span className="flex items-center gap-1 text-gray-600 text-sm">
+                              <Calendar size={14} />
+                              {formatDate(article.publishedAt)}
+                            </span>
+                            <span className="flex items-center gap-1 text-gray-600 text-sm">
+                              <Clock size={14} />
+                              {calculateReadTime(article)}
+                            </span>
+                          </div>
+
+                          <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-primary transition-colors line-clamp-2">
+                            {getTitle(article)}
+                          </h3>
+
+                          {getExcerpt(article) && (
+                            <p className="text-gray-600 mb-4 line-clamp-2">
+                              {getExcerpt(article)}
+                            </p>
+                          )}
+
+                          <div className="flex items-center text-primary font-medium text-sm group-hover:gap-2 transition-all">
+                            <span>{t('readMore')}</span>
+                            <ArrowRight size={16} className={`${isRTL ? 'mr-1 rotate-180' : 'ml-1'}`} />
+                          </div>
+                        </div>
                       </div>
-                    </div>
-
-                    {/* Content */}
-                    <div className="p-6">
-                      <div className="flex items-center gap-4 mb-3">
-                        <span className="flex items-center gap-1 text-gray-600 text-sm">
-                          <Calendar size={14} />
-                          {new Date(article.date).toLocaleDateString('ar-EG')}
-                        </span>
-                        <span className="flex items-center gap-1 text-gray-600 text-sm">
-                          <Clock size={14} />
-                          {article.readTime}
-                        </span>
-                      </div>
-
-                      <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-primary transition-colors line-clamp-2">
-                        {t(article.titleKey)}
-                      </h3>
-
-                      <p className="text-gray-600 mb-4 line-clamp-2">
-                        {t(article.excerptKey)}
-                      </p>
-
-                      <div className="flex items-center text-primary font-medium text-sm group-hover:gap-2 transition-all">
-                        <span>{t('readMore')}</span>
-                        <ArrowRight size={16} className="mr-1 rtl:rotate-180" />
-                      </div>
-                    </div>
-                  </div>
-                </Link>
-              </motion.div>
-            ))}
-          </div>
-
-          {/* Load More */}
-          <div className="text-center mt-12">
-            <Button variant="outline" size="lg" className="border-gray-300 text-gray-700 hover:text-primary">
-              {t('loadMore')}
-            </Button>
-          </div>
+                    </Link>
+                  </motion.div>
+                ))}
+              </div>
+            </>
+          )}
         </div>
       </section>
 

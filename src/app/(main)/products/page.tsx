@@ -1,102 +1,104 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { motion } from 'framer-motion';
-import { Search, Filter, ArrowRight, Star, ChevronDown } from 'lucide-react';
+import { Search, ArrowRight, Star, Loader2, Package } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
+import { useLocale } from '@/hooks/useLocale';
+import { getLocalizedField } from '@/lib/locale-helpers';
 
-const categories = [
-  { id: 'all', nameKey: 'categories.all' },
-  { id: 'filling', nameKey: 'categories.filling' },
-  { id: 'capping', nameKey: 'categories.capping' },
-  { id: 'labeling', nameKey: 'categories.labeling' },
-  { id: 'packaging', nameKey: 'categories.packaging' },
-  { id: 'complete', nameKey: 'categories.complete' },
-];
+interface Category {
+  id: string;
+  nameAr: string;
+  nameEn: string;
+  nameTr: string;
+  slug: string;
+  _count?: { products: number };
+}
 
-const products = [
-  {
-    id: 1,
-    slug: 'automatic-filling-machine',
-    nameKey: 'products.filling1.name',
-    descKey: 'products.filling1.desc',
-    image: '/images/products/filling-machine.jpg',
-    category: 'filling',
-    featured: true,
-    specs: ['2000-6000 BPH', 'Servo Motor', 'Touch Screen'],
-  },
-  {
-    id: 2,
-    slug: 'semi-automatic-filling',
-    nameKey: 'products.filling2.name',
-    descKey: 'products.filling2.desc',
-    image: '/images/products/semi-filling.jpg',
-    category: 'filling',
-    featured: false,
-    specs: ['500-2000 BPH', 'PLC Control', 'Easy Operation'],
-  },
-  {
-    id: 3,
-    slug: 'automatic-capping-machine',
-    nameKey: 'products.capping1.name',
-    descKey: 'products.capping1.desc',
-    image: '/images/products/capping-machine.jpg',
-    category: 'capping',
-    featured: true,
-    specs: ['3000-8000 BPH', 'Multi-head', 'Auto Adjustment'],
-  },
-  {
-    id: 4,
-    slug: 'labeling-machine',
-    nameKey: 'products.labeling1.name',
-    descKey: 'products.labeling1.desc',
-    image: '/images/products/labeling-machine.jpg',
-    category: 'labeling',
-    featured: false,
-    specs: ['4000-10000 BPH', 'Precision Labeling', 'Dual Heads'],
-  },
-  {
-    id: 5,
-    slug: 'shrink-wrapper',
-    nameKey: 'products.packaging1.name',
-    descKey: 'products.packaging1.desc',
-    image: '/images/products/shrink-wrapper.jpg',
-    category: 'packaging',
-    featured: false,
-    specs: ['20-30 packs/min', 'Auto Film Feeding', 'Touch Panel'],
-  },
-  {
-    id: 6,
-    slug: 'complete-production-line',
-    nameKey: 'products.complete1.name',
-    descKey: 'products.complete1.desc',
-    image: '/images/products/complete-line.jpg',
-    category: 'complete',
-    featured: true,
-    specs: ['Fully Automated', 'Customizable', 'High Efficiency'],
-  },
-];
+interface Product {
+  id: string;
+  nameAr: string;
+  nameEn: string;
+  nameTr: string;
+  slug: string;
+  shortDescAr?: string;
+  shortDescEn?: string;
+  shortDescTr?: string;
+  images: string[];
+  categoryId: string;
+  isFeatured: boolean;
+  specifications?: Record<string, string>;
+  category?: {
+    id: string;
+    nameAr: string;
+    nameEn: string;
+    nameTr: string;
+    slug: string;
+  };
+}
 
 export default function ProductsPage() {
   const t = useTranslations('productsPage');
+  const { locale, isRTL } = useLocale();
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
+  const [products, setProducts] = useState<Product[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const [productsRes, categoriesRes] = await Promise.all([
+          fetch('/api/public/products'),
+          fetch('/api/public/categories'),
+        ]);
+
+        if (productsRes.ok) {
+          const productsData = await productsRes.json();
+          setProducts(productsData);
+        }
+
+        if (categoriesRes.ok) {
+          const categoriesData = await categoriesRes.json();
+          setCategories(categoriesData);
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchData();
+  }, []);
+
+  const getName = (item: Product | Category) => getLocalizedField(item, 'name', locale);
+  const getShortDesc = (item: Product) => getLocalizedField(item, 'shortDesc', locale);
 
   const filteredProducts = products.filter((product) => {
-    const matchesCategory = selectedCategory === 'all' || product.category === selectedCategory;
-    const matchesSearch = product.nameKey.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesCategory = selectedCategory === 'all' || product.categoryId === selectedCategory;
+    const productName = getName(product).toLowerCase();
+    const matchesSearch = productName.includes(searchQuery.toLowerCase());
     return matchesCategory && matchesSearch;
   });
+
+  const getProductImage = (product: Product) => {
+    if (product.images && product.images.length > 0) {
+      return product.images[0];
+    }
+    return '/images/placeholder-product.jpg';
+  };
+
+  const getSpecifications = (product: Product): string[] => {
+    if (!product.specifications) return [];
+    return Object.values(product.specifications).slice(0, 3);
+  };
 
   return (
     <div className="min-h-screen bg-white">
@@ -133,17 +135,25 @@ export default function ProductsPage() {
           <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
             {/* Search */}
             <div className="relative w-full md:w-96">
-              <Search className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-600" size={20} />
+              <Search className={`absolute ${isRTL ? 'left-3' : 'right-3'} top-1/2 -translate-y-1/2 text-gray-600`} size={20} />
               <Input
                 placeholder={t('searchPlaceholder')}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pr-10 bg-gray-50 border-gray-200 text-gray-900"
+                className={`${isRTL ? 'pl-10' : 'pr-10'} bg-gray-50 border-gray-200 text-gray-900`}
               />
             </div>
 
             {/* Category Filter */}
             <div className="flex flex-wrap gap-2">
+              <Button
+                variant={selectedCategory === 'all' ? 'gold' : 'outline'}
+                size="sm"
+                onClick={() => setSelectedCategory('all')}
+                className={selectedCategory !== 'all' ? 'border-gray-300 text-gray-700 hover:text-primary' : ''}
+              >
+                {t('categories.all')}
+              </Button>
               {categories.map((category) => (
                 <Button
                   key={category.id}
@@ -152,7 +162,7 @@ export default function ProductsPage() {
                   onClick={() => setSelectedCategory(category.id)}
                   className={selectedCategory !== category.id ? 'border-gray-300 text-gray-700 hover:text-primary' : ''}
                 >
-                  {t(category.nameKey)}
+                  {getName(category)}
                 </Button>
               ))}
             </div>
@@ -163,8 +173,13 @@ export default function ProductsPage() {
       {/* Products Grid */}
       <section className="py-20">
         <div className="container mx-auto px-4">
-          {filteredProducts.length === 0 ? (
+          {loading ? (
+            <div className="flex items-center justify-center py-20">
+              <Loader2 className="w-8 h-8 animate-spin text-primary" />
+            </div>
+          ) : filteredProducts.length === 0 ? (
             <div className="text-center py-20">
+              <Package size={48} className="mx-auto text-gray-300 mb-4" />
               <p className="text-gray-600 text-xl">{t('noProducts')}</p>
             </div>
           ) : (
@@ -179,8 +194,8 @@ export default function ProductsPage() {
                   <Link href={`/products/${product.slug}`}>
                     <div className="group relative bg-gray-50 rounded-2xl overflow-hidden border border-gray-200 hover:border-primary/50 transition-all duration-300">
                       {/* Featured Badge */}
-                      {product.featured && (
-                        <div className="absolute top-4 right-4 z-10 flex items-center gap-1 px-3 py-1 bg-primary text-gray-900 rounded-full text-sm font-medium">
+                      {product.isFeatured && (
+                        <div className={`absolute top-4 ${isRTL ? 'left-4' : 'right-4'} z-10 flex items-center gap-1 px-3 py-1 bg-primary text-gray-900 rounded-full text-sm font-medium`}>
                           <Star size={14} fill="currentColor" />
                           {t('featured')}
                         </div>
@@ -190,8 +205,8 @@ export default function ProductsPage() {
                       <div className="relative h-64 overflow-hidden">
                         <div className="absolute inset-0 bg-gradient-to-t from-white-50 via-transparent to-transparent z-10" />
                         <Image
-                          src={product.image}
-                          alt={t(product.nameKey)}
+                          src={getProductImage(product)}
+                          alt={getName(product)}
                           fill
                           sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                           className="object-cover group-hover:scale-110 transition-transform duration-500"
@@ -200,29 +215,41 @@ export default function ProductsPage() {
 
                       {/* Content */}
                       <div className="p-6">
+                        {/* Category Tag */}
+                        {product.category && (
+                          <span className="inline-block px-2 py-1 bg-primary/10 text-primary text-xs rounded mb-2">
+                            {getLocalizedField(product.category, 'name', locale)}
+                          </span>
+                        )}
+
                         <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-primary transition-colors">
-                          {t(product.nameKey)}
+                          {getName(product)}
                         </h3>
-                        <p className="text-gray-600 mb-4 line-clamp-2">
-                          {t(product.descKey)}
-                        </p>
+
+                        {getShortDesc(product) && (
+                          <p className="text-gray-600 mb-4 line-clamp-2">
+                            {getShortDesc(product)}
+                          </p>
+                        )}
 
                         {/* Specs */}
-                        <div className="flex flex-wrap gap-2 mb-4">
-                          {product.specs.map((spec, i) => (
-                            <span
-                              key={i}
-                              className="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded"
-                            >
-                              {spec}
-                            </span>
-                          ))}
-                        </div>
+                        {getSpecifications(product).length > 0 && (
+                          <div className="flex flex-wrap gap-2 mb-4">
+                            {getSpecifications(product).map((spec, i) => (
+                              <span
+                                key={i}
+                                className="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded"
+                              >
+                                {spec}
+                              </span>
+                            ))}
+                          </div>
+                        )}
 
                         {/* CTA */}
                         <div className="flex items-center text-primary font-medium group-hover:gap-2 transition-all">
                           <span>{t('viewDetails')}</span>
-                          <ArrowRight size={18} className="mr-1 rtl:rotate-180" />
+                          <ArrowRight size={18} className={`${isRTL ? 'mr-1 rotate-180' : 'ml-1'}`} />
                         </div>
                       </div>
                     </div>
@@ -251,7 +278,7 @@ export default function ProductsPage() {
             <Link href="/contact">
               <Button variant="gold" size="xl">
                 {t('cta.button')}
-                <ArrowRight className="mr-2 rtl:rotate-180" size={20} />
+                <ArrowRight className={`${isRTL ? 'mr-2 rotate-180' : 'ml-2'}`} size={20} />
               </Button>
             </Link>
           </motion.div>

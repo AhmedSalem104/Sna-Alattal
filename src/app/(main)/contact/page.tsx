@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback, memo } from 'react';
+import { useState, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import { motion } from 'framer-motion';
 import { useForm } from 'react-hook-form';
@@ -14,7 +14,8 @@ import {
   Send,
   MessageSquare,
   Building2,
-  Globe
+  Globe,
+  Loader2
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -27,6 +28,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { useLocale } from '@/hooks/useLocale';
+import { getLocalizedField } from '@/lib/locale-helpers';
 
 const contactSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters'),
@@ -39,23 +42,41 @@ const contactSchema = z.object({
 
 type ContactFormData = z.infer<typeof contactSchema>;
 
-const offices = [
+interface Office {
+  country: string;
+  nameAr: string;
+  nameEn: string;
+  nameTr: string;
+  addressAr: string;
+  addressEn: string;
+  addressTr: string;
+  phone: string;
+  email: string;
+  hours: string;
+}
+
+// Fallback offices data (used if settings not yet populated)
+const defaultOffices: Office[] = [
   {
     country: 'egypt',
-    name: 'المقر الرئيسي - مصر',
+    nameAr: 'المقر الرئيسي - مصر',
     nameEn: 'Headquarters - Egypt',
-    address: 'المنطقة الصناعية، العاشر من رمضان، الشرقية، مصر',
+    nameTr: 'Genel Merkez - Mısır',
+    addressAr: 'المنطقة الصناعية، العاشر من رمضان، الشرقية، مصر',
     addressEn: 'Industrial Zone, 10th of Ramadan City, Egypt',
+    addressTr: 'Sanayi Bölgesi, 10. Ramazan Şehri, Mısır',
     phone: '+20 123 456 7890',
     email: 'egypt@sna-alattal.com',
     hours: '8:00 AM - 5:00 PM (Sun-Thu)',
   },
   {
     country: 'turkey',
-    name: 'فرع تركيا',
+    nameAr: 'فرع تركيا',
     nameEn: 'Turkey Branch',
-    address: 'إسطنبول، تركيا',
+    nameTr: 'Türkiye Şubesi',
+    addressAr: 'إسطنبول، تركيا',
     addressEn: 'Istanbul, Turkey',
+    addressTr: 'İstanbul, Türkiye',
     phone: '+90 212 345 6789',
     email: 'turkey@sna-alattal.com',
     hours: '9:00 AM - 6:00 PM (Mon-Fri)',
@@ -63,17 +84,21 @@ const offices = [
 ];
 
 const subjects = [
-  { value: 'quote', label: 'طلب عرض سعر', labelEn: 'Request a Quote' },
-  { value: 'support', label: 'دعم فني', labelEn: 'Technical Support' },
-  { value: 'sales', label: 'استفسار مبيعات', labelEn: 'Sales Inquiry' },
-  { value: 'partnership', label: 'شراكة تجارية', labelEn: 'Business Partnership' },
-  { value: 'other', label: 'أخرى', labelEn: 'Other' },
+  { value: 'quote', labelAr: 'طلب عرض سعر', labelEn: 'Request a Quote', labelTr: 'Teklif İste' },
+  { value: 'support', labelAr: 'دعم فني', labelEn: 'Technical Support', labelTr: 'Teknik Destek' },
+  { value: 'sales', labelAr: 'استفسار مبيعات', labelEn: 'Sales Inquiry', labelTr: 'Satış Sorgusu' },
+  { value: 'partnership', labelAr: 'شراكة تجارية', labelEn: 'Business Partnership', labelTr: 'İş Ortaklığı' },
+  { value: 'other', labelAr: 'أخرى', labelEn: 'Other', labelTr: 'Diğer' },
 ];
 
 export default function ContactPage() {
   const t = useTranslations('contactPage');
+  const { locale } = useLocale();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [offices, setOffices] = useState<Office[]>(defaultOffices);
+  const [loadingOffices, setLoadingOffices] = useState(true);
 
   const {
     register,
@@ -85,14 +110,58 @@ export default function ContactPage() {
     resolver: zodResolver(contactSchema),
   });
 
+  useEffect(() => {
+    async function fetchOffices() {
+      try {
+        const res = await fetch('/api/public/settings?group=offices');
+        if (res.ok) {
+          const data = await res.json();
+          if (data.office_locations && Array.isArray(data.office_locations) && data.office_locations.length > 0) {
+            setOffices(data.office_locations);
+          }
+        }
+      } catch (error) {
+        console.error('Error fetching offices:', error);
+        // Keep using default offices
+      } finally {
+        setLoadingOffices(false);
+      }
+    }
+
+    fetchOffices();
+  }, []);
+
+  const getOfficeName = (office: Office) => getLocalizedField(office, 'name', locale);
+  const getOfficeAddress = (office: Office) => getLocalizedField(office, 'address', locale);
+  const getSubjectLabel = (subject: typeof subjects[0]) => getLocalizedField(subject, 'label', locale);
+
   const onSubmit = async (data: ContactFormData) => {
     setIsSubmitting(true);
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-    setIsSubmitting(false);
-    setIsSuccess(true);
-    reset();
-    setTimeout(() => setIsSuccess(false), 5000);
+    setError(null);
+
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+
+      if (!res.ok) {
+        const errorData = await res.json();
+        if (res.status === 429) {
+          throw new Error(t('errors.tooManyRequests') || 'Too many requests. Please try again later.');
+        }
+        throw new Error(errorData.error || t('errors.sendFailed') || 'Failed to send message');
+      }
+
+      setIsSuccess(true);
+      reset();
+      setTimeout(() => setIsSuccess(false), 5000);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : t('errors.sendFailed') || 'Failed to send message');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -141,42 +210,48 @@ export default function ContactPage() {
               </div>
 
               {/* Offices */}
-              {offices.map((office, index) => (
-                <div
-                  key={index}
-                  className="bg-gray-50 p-6 rounded-2xl border border-gray-200"
-                >
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="p-2 bg-primary/20 rounded-lg">
-                      <Building2 className="text-primary" size={20} />
-                    </div>
-                    <h3 className="text-lg font-bold text-gray-900">{office.name}</h3>
-                  </div>
-
-                  <div className="space-y-3">
-                    <div className="flex items-start gap-3">
-                      <MapPin className="text-primary mt-1 flex-shrink-0" size={18} />
-                      <span className="text-gray-600 text-sm">{office.address}</span>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <Phone className="text-primary flex-shrink-0" size={18} />
-                      <a href={`tel:${office.phone}`} className="text-gray-600 text-sm hover:text-primary transition-colors">
-                        {office.phone}
-                      </a>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <Mail className="text-primary flex-shrink-0" size={18} />
-                      <a href={`mailto:${office.email}`} className="text-gray-600 text-sm hover:text-primary transition-colors">
-                        {office.email}
-                      </a>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <Clock className="text-primary flex-shrink-0" size={18} />
-                      <span className="text-gray-600 text-sm">{office.hours}</span>
-                    </div>
-                  </div>
+              {loadingOffices ? (
+                <div className="flex items-center justify-center py-8">
+                  <Loader2 className="w-6 h-6 animate-spin text-primary" />
                 </div>
-              ))}
+              ) : (
+                offices.map((office, index) => (
+                  <div
+                    key={index}
+                    className="bg-gray-50 p-6 rounded-2xl border border-gray-200"
+                  >
+                    <div className="flex items-center gap-3 mb-4">
+                      <div className="p-2 bg-primary/20 rounded-lg">
+                        <Building2 className="text-primary" size={20} />
+                      </div>
+                      <h3 className="text-lg font-bold text-gray-900">{getOfficeName(office)}</h3>
+                    </div>
+
+                    <div className="space-y-3">
+                      <div className="flex items-start gap-3">
+                        <MapPin className="text-primary mt-1 flex-shrink-0" size={18} />
+                        <span className="text-gray-600 text-sm">{getOfficeAddress(office)}</span>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <Phone className="text-primary flex-shrink-0" size={18} />
+                        <a href={`tel:${office.phone}`} className="text-gray-600 text-sm hover:text-primary transition-colors">
+                          {office.phone}
+                        </a>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <Mail className="text-primary flex-shrink-0" size={18} />
+                        <a href={`mailto:${office.email}`} className="text-gray-600 text-sm hover:text-primary transition-colors">
+                          {office.email}
+                        </a>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <Clock className="text-primary flex-shrink-0" size={18} />
+                        <span className="text-gray-600 text-sm">{office.hours}</span>
+                      </div>
+                    </div>
+                  </div>
+                ))
+              )}
 
               {/* Quick Contact */}
               <div className="bg-primary/10 p-6 rounded-2xl border border-primary/30">
@@ -216,6 +291,18 @@ export default function ContactPage() {
                     className="bg-green-100 border border-green-500 text-green-700 p-4 rounded-xl mb-6"
                   >
                     {t('successMessage')}
+                  </motion.div>
+                )}
+
+                {error && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    role="alert"
+                    aria-live="polite"
+                    className="bg-red-100 border border-red-500 text-red-700 p-4 rounded-xl mb-6"
+                  >
+                    {error}
                   </motion.div>
                 )}
 
@@ -296,7 +383,7 @@ export default function ContactPage() {
                       <SelectContent className="bg-white border-gray-200">
                         {subjects.map((subject) => (
                           <SelectItem key={subject.value} value={subject.value}>
-                            {subject.label}
+                            {getSubjectLabel(subject)}
                           </SelectItem>
                         ))}
                       </SelectContent>
