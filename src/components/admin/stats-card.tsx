@@ -25,7 +25,7 @@ export function StatsCard({
 }: StatsCardProps) {
   return (
     <div className={cn(
-      'relative bg-white border-2 border-metal-200 overflow-hidden group hover:border-primary transition-colors',
+      'relative bg-white rounded-modern-lg shadow-soft overflow-hidden group hover:shadow-soft-md transition-all duration-300',
       className
     )}>
       {/* Gold Accent Bar */}
