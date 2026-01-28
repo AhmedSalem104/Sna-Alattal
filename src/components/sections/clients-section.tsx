@@ -138,13 +138,13 @@ export const ClientsSection = memo(function ClientsSection() {
                 transition={{ duration: 0.4, delay: index * 0.05 }}
                 className="group"
               >
-                <div className="aspect-square bg-white rounded-xl border border-neutral-200 p-4 flex items-center justify-center hover:border-primary/30 hover:shadow-soft-lg transition-all duration-300">
+                <div className="aspect-square bg-white rounded-xl border border-neutral-200 p-4 flex items-center justify-center hover:border-primary/30 hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
                   <Image
                     src={client.logo}
                     alt={getName(client)}
                     width={80}
                     height={80}
-                    className="object-contain opacity-60 group-hover:opacity-100 transition-opacity grayscale group-hover:grayscale-0"
+                    className="object-contain transition-transform duration-300 group-hover:scale-110"
                     loading="lazy"
                   />
                 </div>

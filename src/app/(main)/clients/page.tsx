@@ -158,24 +158,26 @@ export default function ClientsPage() {
                       rel="noopener noreferrer"
                       className="block"
                     >
-                      <div className="aspect-square bg-gray-100 rounded-xl p-6 flex items-center justify-center border border-gray-200 hover:border-primary/50 hover:bg-gray-50 transition-all duration-300">
+                      <div className="aspect-square bg-gray-100 rounded-xl p-6 flex items-center justify-center border border-gray-200 hover:border-primary/50 hover:bg-gray-50 hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
                         <Image
                           src={getClientLogo(client)}
                           alt={getName(client)}
                           width={100}
                           height={100}
-                          className="object-contain opacity-60 group-hover:opacity-100 transition-opacity grayscale group-hover:grayscale-0"
+                          className="object-contain transition-transform duration-300 group-hover:scale-110"
+                          loading="lazy"
                         />
                       </div>
                     </a>
                   ) : (
-                    <div className="aspect-square bg-gray-100 rounded-xl p-6 flex items-center justify-center border border-gray-200 hover:border-primary/50 hover:bg-gray-50 transition-all duration-300">
+                    <div className="aspect-square bg-gray-100 rounded-xl p-6 flex items-center justify-center border border-gray-200 hover:border-primary/50 hover:bg-gray-50 hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
                       <Image
                         src={getClientLogo(client)}
                         alt={getName(client)}
                         width={100}
                         height={100}
-                        className="object-contain opacity-60 group-hover:opacity-100 transition-opacity grayscale group-hover:grayscale-0"
+                        className="object-contain transition-transform duration-300 group-hover:scale-110"
+                          loading="lazy"
                       />
                     </div>
                   )}

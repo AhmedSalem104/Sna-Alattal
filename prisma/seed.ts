@@ -557,94 +557,68 @@ async function main() {
   console.log('✅ Exhibitions created:', exhibitions.length);
 
   // ═══════════════════════════════════════════
-  // CERTIFICATES
+  // TV INTERVIEWS
   // ═══════════════════════════════════════════
-  const certificates = await Promise.all([
-    prisma.certificate.upsert({
-      where: { id: 'cert-1' },
-      update: {},
+  const tvInterviews = await Promise.all([
+    prisma.tVInterview.upsert({
+      where: { id: 'tv-1' },
+      update: {
+        titleAr: 'العتال للصناعات الهندسية',
+        titleEn: 'Al-Attal Engineering Industries',
+        titleTr: 'Al-Attal Mühendislik Sanayi',
+        channelAr: 'العتال ميديا',
+        channelEn: 'Al-Attal Media',
+        channelTr: 'Al-Attal Medya',
+        videoUrl: 'https://www.youtube.com/embed/IO77jUIjmo0',
+        thumbnail: '/uploads/slides/factory-1.jpg',
+        isActive: true,
+        order: 1,
+      },
       create: {
-        id: 'cert-1',
-        nameAr: 'شهادة الجودة الأولى',
-        nameEn: 'Quality Certificate 1',
-        nameTr: 'Kalite Sertifikası 1',
-        issuingBodyAr: 'هيئة الاعتماد المصرية',
-        issuingBodyEn: 'Egyptian Accreditation Body',
-        issuingBodyTr: 'Mısır Akreditasyon Kurumu',
-        descriptionAr: 'شهادة اعتماد الجودة في التصنيع',
-        descriptionEn: 'Manufacturing quality accreditation certificate',
-        descriptionTr: 'Üretim kalite akreditasyon sertifikası',
-        image: '/uploads/certificates/cert-1.png',
-        issueDate: new Date('2024-01-15'),
-        expiryDate: new Date('2027-01-14'),
+        id: 'tv-1',
+        titleAr: 'العتال للصناعات الهندسية',
+        titleEn: 'Al-Attal Engineering Industries',
+        titleTr: 'Al-Attal Mühendislik Sanayi',
+        channelAr: 'العتال ميديا',
+        channelEn: 'Al-Attal Media',
+        channelTr: 'Al-Attal Medya',
+        videoUrl: 'https://www.youtube.com/embed/IO77jUIjmo0',
+        thumbnail: '/uploads/slides/factory-1.jpg',
+        date: new Date('2024-02-15'),
         isActive: true,
         order: 1,
       },
     }),
-    prisma.certificate.upsert({
-      where: { id: 'cert-2' },
-      update: {},
-      create: {
-        id: 'cert-2',
-        nameAr: 'شهادة الجودة الثانية',
-        nameEn: 'Quality Certificate 2',
-        nameTr: 'Kalite Sertifikası 2',
-        issuingBodyAr: 'هيئة المطابقة الأوروبية',
-        issuingBodyEn: 'European Conformity Body',
-        issuingBodyTr: 'Avrupa Uygunluk Kurumu',
-        descriptionAr: 'شهادة مطابقة المعايير الأوروبية',
-        descriptionEn: 'European standards conformity certificate',
-        descriptionTr: 'Avrupa standartları uygunluk sertifikası',
-        image: '/uploads/certificates/cert-2.png',
-        issueDate: new Date('2024-03-01'),
-        expiryDate: new Date('2026-03-01'),
-        isActive: true,
-        order: 2,
-      },
-    }),
-    prisma.certificate.upsert({
-      where: { id: 'cert-3' },
-      update: {},
-      create: {
-        id: 'cert-3',
-        nameAr: 'شهادة الجودة الثالثة',
-        nameEn: 'Quality Certificate 3',
-        nameTr: 'Kalite Sertifikası 3',
-        issuingBodyAr: 'مؤسسة الجودة الدولية',
-        issuingBodyEn: 'International Quality Foundation',
-        issuingBodyTr: 'Uluslararası Kalite Vakfı',
-        descriptionAr: 'شهادة معايير الجودة الدولية',
-        descriptionEn: 'International quality standards certificate',
-        descriptionTr: 'Uluslararası kalite standartları sertifikası',
-        image: '/uploads/certificates/cert-3.png',
-        issueDate: new Date('2024-06-01'),
-        expiryDate: new Date('2027-06-01'),
-        isActive: true,
-        order: 3,
-      },
-    }),
-    prisma.certificate.upsert({
-      where: { id: 'cert-4' },
-      update: {},
-      create: {
-        id: 'cert-4',
-        nameAr: 'شهادة الجودة الرابعة',
-        nameEn: 'Quality Certificate 4',
-        nameTr: 'Kalite Sertifikası 4',
-        issuingBodyAr: 'هيئة سلامة الغذاء',
-        issuingBodyEn: 'Food Safety Authority',
-        issuingBodyTr: 'Gıda Güvenliği Otoritesi',
-        descriptionAr: 'شهادة سلامة الغذاء والتصنيع',
-        descriptionEn: 'Food safety and manufacturing certificate',
-        descriptionTr: 'Gıda güvenliği ve üretim sertifikası',
-        image: '/uploads/certificates/cert-4.png',
-        issueDate: new Date('2024-09-01'),
-        expiryDate: new Date('2027-09-01'),
-        isActive: true,
-        order: 4,
-      },
-    }),
   ]);
+
+  console.log('✅ TV Interviews created:', tvInterviews.length);
+
+  // ═══════════════════════════════════════════
+  // CERTIFICATES
+  // ═══════════════════════════════════════════
+  const certificatesData = [
+    { id: 'cert-1', nameAr: 'شهادة الجودة الأولى', nameEn: 'Quality Certificate 1', nameTr: 'Kalite Sertifikası 1', issuingBodyAr: 'هيئة الاعتماد المصرية', issuingBodyEn: 'Egyptian Accreditation Body', issuingBodyTr: 'Mısır Akreditasyon Kurumu', descriptionAr: 'شهادة اعتماد الجودة في التصنيع', descriptionEn: 'Manufacturing quality accreditation certificate', descriptionTr: 'Üretim kalite akreditasyon sertifikası', image: '/uploads/certificates/cert-1.png', issueDate: new Date('2024-01-15'), expiryDate: new Date('2027-01-14'), isActive: true, order: 1 },
+    { id: 'cert-2', nameAr: 'شهادة الجودة الثانية', nameEn: 'Quality Certificate 2', nameTr: 'Kalite Sertifikası 2', issuingBodyAr: 'هيئة المطابقة الأوروبية', issuingBodyEn: 'European Conformity Body', issuingBodyTr: 'Avrupa Uygunluk Kurumu', descriptionAr: 'شهادة مطابقة المعايير الأوروبية', descriptionEn: 'European standards conformity certificate', descriptionTr: 'Avrupa standartları uygunluk sertifikası', image: '/uploads/certificates/cert-2.png', issueDate: new Date('2024-03-01'), expiryDate: new Date('2026-03-01'), isActive: true, order: 2 },
+    { id: 'cert-3', nameAr: 'شهادة الجودة الثالثة', nameEn: 'Quality Certificate 3', nameTr: 'Kalite Sertifikası 3', issuingBodyAr: 'مؤسسة الجودة الدولية', issuingBodyEn: 'International Quality Foundation', issuingBodyTr: 'Uluslararası Kalite Vakfı', descriptionAr: 'شهادة معايير الجودة الدولية', descriptionEn: 'International quality standards certificate', descriptionTr: 'Uluslararası kalite standartları sertifikası', image: '/uploads/certificates/cert-3.png', issueDate: new Date('2024-06-01'), expiryDate: new Date('2027-06-01'), isActive: true, order: 3 },
+    { id: 'cert-4', nameAr: 'شهادة الجودة الرابعة', nameEn: 'Quality Certificate 4', nameTr: 'Kalite Sertifikası 4', issuingBodyAr: 'هيئة سلامة الغذاء', issuingBodyEn: 'Food Safety Authority', issuingBodyTr: 'Gıda Güvenliği Otoritesi', descriptionAr: 'شهادة سلامة الغذاء والتصنيع', descriptionEn: 'Food safety and manufacturing certificate', descriptionTr: 'Gıda güvenliği ve üretim sertifikası', image: '/uploads/certificates/cert-4.png', issueDate: new Date('2024-09-01'), expiryDate: new Date('2027-09-01'), isActive: true, order: 4 },
+    { id: 'cert-5', nameAr: 'شهادة الاعتماد', nameEn: 'Accreditation Certificate', nameTr: 'Akreditasyon Sertifikası', issuingBodyAr: 'هيئة الاعتماد', issuingBodyEn: 'Accreditation Body', issuingBodyTr: 'Akreditasyon Kurumu', descriptionAr: 'شهادة اعتماد رسمية', descriptionEn: 'Official accreditation certificate', descriptionTr: 'Resmi akreditasyon sertifikası', image: '/uploads/certificates/01.png', issueDate: new Date('2024-02-01'), isActive: true, order: 5 },
+    { id: 'cert-6', nameAr: 'شهادة PCMS', nameEn: 'PCMS Certificate', nameTr: 'PCMS Sertifikası', issuingBodyAr: 'PCMS', issuingBodyEn: 'PCMS', issuingBodyTr: 'PCMS', descriptionAr: 'شهادة نظام إدارة الجودة PCMS', descriptionEn: 'PCMS Quality Management System Certificate', descriptionTr: 'PCMS Kalite Yönetim Sistemi Sertifikası', image: '/uploads/certificates/pcms-certificate.png', issueDate: new Date('2024-02-01'), isActive: true, order: 6 },
+    { id: 'cert-7', nameAr: 'شهادة ISO', nameEn: 'ISO Certificate', nameTr: 'ISO Sertifikası', issuingBodyAr: 'المنظمة الدولية للمعايير', issuingBodyEn: 'International Organization for Standardization', issuingBodyTr: 'Uluslararası Standardizasyon Örgütü', descriptionAr: 'شهادة ISO للجودة', descriptionEn: 'ISO Quality Certificate', descriptionTr: 'ISO Kalite Sertifikası', image: '/uploads/certificates/pngegg.png', issueDate: new Date('2024-03-01'), isActive: true, order: 7 },
+    { id: 'cert-8', nameAr: 'شهادة CE', nameEn: 'CE Certificate', nameTr: 'CE Sertifikası', issuingBodyAr: 'الاتحاد الأوروبي', issuingBodyEn: 'European Union', issuingBodyTr: 'Avrupa Birliği', descriptionAr: 'شهادة المطابقة الأوروبية CE', descriptionEn: 'European Conformity CE Certificate', descriptionTr: 'Avrupa Uygunluk CE Sertifikası', image: '/uploads/certificates/pngegg-1.png', issueDate: new Date('2024-04-01'), isActive: true, order: 8 },
+    { id: 'cert-9', nameAr: 'شهادة الجودة الشاملة', nameEn: 'Total Quality Certificate', nameTr: 'Toplam Kalite Sertifikası', issuingBodyAr: 'هيئة الجودة الشاملة', issuingBodyEn: 'Total Quality Authority', issuingBodyTr: 'Toplam Kalite Otoritesi', descriptionAr: 'شهادة الجودة الشاملة في التصنيع', descriptionEn: 'Total quality in manufacturing certificate', descriptionTr: 'Üretimde toplam kalite sertifikası', image: '/uploads/certificates/pngegg-2.png', issueDate: new Date('2024-05-01'), isActive: true, order: 9 },
+    { id: 'cert-10', nameAr: 'شهادة المطابقة', nameEn: 'Conformity Certificate', nameTr: 'Uygunluk Sertifikası', issuingBodyAr: 'هيئة المطابقة', issuingBodyEn: 'Conformity Body', issuingBodyTr: 'Uygunluk Kurumu', descriptionAr: 'شهادة مطابقة المعايير الدولية', descriptionEn: 'International standards conformity certificate', descriptionTr: 'Uluslararası standartlar uygunluk sertifikası', image: '/uploads/certificates/pngegg-3.png', issueDate: new Date('2024-06-01'), isActive: true, order: 10 },
+    { id: 'cert-11', nameAr: 'شهادة التصنيع', nameEn: 'Manufacturing Certificate', nameTr: 'Üretim Sertifikası', issuingBodyAr: 'هيئة التصنيع', issuingBodyEn: 'Manufacturing Authority', issuingBodyTr: 'Üretim Otoritesi', descriptionAr: 'شهادة اعتماد التصنيع', descriptionEn: 'Manufacturing accreditation certificate', descriptionTr: 'Üretim akreditasyon sertifikası', image: '/uploads/certificates/whatsapp-cert-1.jpeg', issueDate: new Date('2024-02-15'), isActive: true, order: 11 },
+    { id: 'cert-12', nameAr: 'شهادة الضمان', nameEn: 'Warranty Certificate', nameTr: 'Garanti Sertifikası', issuingBodyAr: 'هيئة الضمان', issuingBodyEn: 'Warranty Authority', issuingBodyTr: 'Garanti Otoritesi', descriptionAr: 'شهادة ضمان الجودة', descriptionEn: 'Quality warranty certificate', descriptionTr: 'Kalite garanti sertifikası', image: '/uploads/certificates/whatsapp-cert-2.jpeg', issueDate: new Date('2024-02-15'), isActive: true, order: 12 },
+    { id: 'cert-13', nameAr: 'شهادة المعرض', nameEn: 'Exhibition Certificate', nameTr: 'Fuar Sertifikası', issuingBodyAr: 'إدارة المعارض', issuingBodyEn: 'Exhibition Management', issuingBodyTr: 'Fuar Yönetimi', descriptionAr: 'شهادة المشاركة في المعارض الدولية', descriptionEn: 'International exhibition participation certificate', descriptionTr: 'Uluslararası fuar katılım sertifikası', image: '/uploads/certificates/cert-photo-1.jpg', issueDate: new Date('2024-07-01'), isActive: true, order: 13 },
+    { id: 'cert-14', nameAr: 'شهادة التميز', nameEn: 'Excellence Certificate', nameTr: 'Mükemmellik Sertifikası', issuingBodyAr: 'هيئة التميز الصناعي', issuingBodyEn: 'Industrial Excellence Authority', issuingBodyTr: 'Endüstriyel Mükemmellik Otoritesi', descriptionAr: 'شهادة التميز في الصناعة', descriptionEn: 'Industrial excellence certificate', descriptionTr: 'Endüstriyel mükemmellik sertifikası', image: '/uploads/certificates/cert-photo-2.jpg', issueDate: new Date('2024-08-01'), isActive: true, order: 14 },
+    { id: 'cert-15', nameAr: 'شعار الاعتماد', nameEn: 'Accreditation Logo', nameTr: 'Akreditasyon Logosu', issuingBodyAr: 'هيئة الاعتماد', issuingBodyEn: 'Accreditation Authority', issuingBodyTr: 'Akreditasyon Otoritesi', descriptionAr: 'شعار الاعتماد الرسمي', descriptionEn: 'Official accreditation logo', descriptionTr: 'Resmi akreditasyon logosu', image: '/uploads/certificates/logo.png', issueDate: new Date('2024-01-01'), isActive: true, order: 15 },
+  ];
+
+  const certificates = await Promise.all(
+    certificatesData.map(({ id, ...data }) =>
+      prisma.certificate.upsert({ where: { id }, update: data, create: { id, ...data } })
+    )
+  );
 
   console.log('✅ Certificates created:', certificates.length);
 
@@ -817,6 +791,7 @@ async function main() {
   console.log(`   - Clients: ${clients.length}`);
   console.log(`   - News: ${news.length}`);
   console.log(`   - Exhibitions: ${exhibitions.length}`);
+  console.log(`   - TV Interviews: ${tvInterviews.length}`);
   console.log(`   - Certificates: ${certificates.length}`);
   console.log(`   - Slides: ${slides.length}`);
   console.log(`   - Settings: ${settings.length}`);

@@ -15,9 +15,11 @@ interface Certificate {
   descriptionAr: string;
   descriptionEn: string;
   descriptionTr: string;
+  issuingBodyAr: string;
+  issuingBodyEn: string;
+  issuingBodyTr: string;
   image: string;
-  issuedBy: string;
-  issuedDate: string;
+  issueDate: string;
 }
 
 export function CertificatesSection() {
@@ -65,6 +67,17 @@ export function CertificatesSection() {
         return cert.descriptionTr;
       default:
         return cert.descriptionEn;
+    }
+  };
+
+  const getIssuingBody = (cert: Certificate) => {
+    switch (locale) {
+      case 'ar':
+        return cert.issuingBodyAr;
+      case 'tr':
+        return cert.issuingBodyTr;
+      default:
+        return cert.issuingBodyEn;
     }
   };
 
@@ -179,7 +192,7 @@ export function CertificatesSection() {
                     {getName(cert)}
                   </h3>
                   <p className="text-sm text-metal-500 uppercase tracking-wider mb-4">
-                    {cert.issuedBy}
+                    {getIssuingBody(cert)}
                   </p>
                   <p className="text-metal-600 text-sm">{getDescription(cert)}</p>
 

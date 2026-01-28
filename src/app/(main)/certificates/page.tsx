@@ -240,7 +240,7 @@ export default function CertificatesPage() {
                   alt={acc.name}
                   width={80}
                   height={80}
-                  className="object-contain grayscale hover:grayscale-0 transition-all"
+                  className="object-contain transition-transform duration-300 hover:scale-110"
                 />
               </motion.div>
             ))}
