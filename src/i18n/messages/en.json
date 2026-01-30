@@ -503,6 +503,47 @@
       }
     }
   },
+  "productDetail": {
+    "loading": "Loading product...",
+    "errors": {
+      "notFound": "Product Not Found",
+      "notFoundDesc": "Sorry, the product you are looking for could not be found.",
+      "fetchError": "Error Loading Product",
+      "fetchErrorDesc": "An error occurred while loading the product data. Please try again."
+    },
+    "backToProducts": "Back to Products",
+    "breadcrumb": {
+      "home": "Home",
+      "products": "Products"
+    },
+    "features": {
+      "highSpeed": "High Speed",
+      "highSpeedDesc": "Excellent productivity",
+      "quality": "High Quality",
+      "qualityDesc": "International standards",
+      "customizable": "Customizable",
+      "customizableDesc": "According to your needs",
+      "certified": "Internationally Certified",
+      "certifiedDesc": "ISO certificates"
+    },
+    "requestQuote": "Request Quote",
+    "downloadBrochure": "Download Brochure",
+    "tabs": {
+      "specifications": "Specifications",
+      "features": "Features",
+      "applications": "Applications"
+    },
+    "technicalSpecs": "Technical Specifications",
+    "keyFeatures": "Key Features",
+    "suitableFor": "Suitable For",
+    "relatedProducts": "Related Products",
+    "cta": {
+      "title": "Need More Information?",
+      "subtitle": "Our team is ready to help you choose the right product for your needs",
+      "contact": "Contact Us",
+      "call": "Call Us"
+    }
+  },
   "certificatesPage": {
     "badge": "Certificates",
     "title": "Quality & Accreditation Certificates",

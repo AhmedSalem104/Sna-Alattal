@@ -503,6 +503,47 @@
       }
     }
   },
+  "productDetail": {
+    "loading": "Ürün yükleniyor...",
+    "errors": {
+      "notFound": "Ürün Bulunamadı",
+      "notFoundDesc": "Üzgünüz, aradığınız ürün bulunamadı.",
+      "fetchError": "Ürün Yüklenirken Hata",
+      "fetchErrorDesc": "Ürün verileri yüklenirken bir hata oluştu. Lütfen tekrar deneyin."
+    },
+    "backToProducts": "Ürünlere Dön",
+    "breadcrumb": {
+      "home": "Ana Sayfa",
+      "products": "Ürünler"
+    },
+    "features": {
+      "highSpeed": "Yüksek Hız",
+      "highSpeedDesc": "Mükemmel verimlilik",
+      "quality": "Yüksek Kalite",
+      "qualityDesc": "Uluslararası standartlar",
+      "customizable": "Özelleştirilebilir",
+      "customizableDesc": "İhtiyaçlarınıza göre",
+      "certified": "Uluslararası Sertifikalı",
+      "certifiedDesc": "ISO sertifikaları"
+    },
+    "requestQuote": "Teklif İste",
+    "downloadBrochure": "Broşür İndir",
+    "tabs": {
+      "specifications": "Özellikler",
+      "features": "Özellikler",
+      "applications": "Uygulamalar"
+    },
+    "technicalSpecs": "Teknik Özellikler",
+    "keyFeatures": "Temel Özellikler",
+    "suitableFor": "Uygun Kullanım",
+    "relatedProducts": "İlgili Ürünler",
+    "cta": {
+      "title": "Daha Fazla Bilgiye mi İhtiyacınız Var?",
+      "subtitle": "Ekibimiz ihtiyaçlarınız için doğru ürünü seçmenize yardımcı olmaya hazır",
+      "contact": "Bize Ulaşın",
+      "call": "Bizi Arayın"
+    }
+  },
   "certificatesPage": {
     "badge": "Sertifikalar",
     "title": "Kalite ve Akreditasyon Sertifikaları",

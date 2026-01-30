@@ -503,6 +503,47 @@
       }
     }
   },
+  "productDetail": {
+    "loading": "جاري تحميل المنتج...",
+    "errors": {
+      "notFound": "المنتج غير موجود",
+      "notFoundDesc": "عذراً، لم يتم العثور على المنتج الذي تبحث عنه.",
+      "fetchError": "خطأ في تحميل المنتج",
+      "fetchErrorDesc": "حدث خطأ أثناء تحميل بيانات المنتج. يرجى المحاولة مرة أخرى."
+    },
+    "backToProducts": "العودة للمنتجات",
+    "breadcrumb": {
+      "home": "الرئيسية",
+      "products": "المنتجات"
+    },
+    "features": {
+      "highSpeed": "سرعة عالية",
+      "highSpeedDesc": "إنتاجية ممتازة",
+      "quality": "جودة عالية",
+      "qualityDesc": "معايير عالمية",
+      "customizable": "قابل للتخصيص",
+      "customizableDesc": "حسب احتياجاتك",
+      "certified": "معتمد دولياً",
+      "certifiedDesc": "شهادات ISO"
+    },
+    "requestQuote": "طلب عرض سعر",
+    "downloadBrochure": "تحميل الكتالوج",
+    "tabs": {
+      "specifications": "المواصفات",
+      "features": "المميزات",
+      "applications": "التطبيقات"
+    },
+    "technicalSpecs": "المواصفات الفنية",
+    "keyFeatures": "المميزات الرئيسية",
+    "suitableFor": "مناسب لـ",
+    "relatedProducts": "منتجات ذات صلة",
+    "cta": {
+      "title": "هل تحتاج لمعلومات أكثر؟",
+      "subtitle": "فريقنا جاهز لمساعدتك في اختيار المنتج المناسب لاحتياجاتك",
+      "contact": "تواصل معنا",
+      "call": "اتصل بنا"
+    }
+  },
   "certificatesPage": {
     "badge": "الشهادات",
     "title": "شهادات الجودة والاعتماد",

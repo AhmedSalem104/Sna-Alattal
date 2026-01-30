@@ -45,13 +45,25 @@ export async function GET(
         nameEn: true,
         nameTr: true,
         slug: true,
-        image: true,
+        images: true,
       },
     });
 
+    // Transform related products to include image field
+    const transformedRelated = relatedProducts.map(p => ({
+      ...p,
+      image: Array.isArray(p.images) && p.images.length > 0 ? p.images[0] : '/images/placeholders/product.svg',
+    }));
+
+    // Get first image for main product
+    const productImage = Array.isArray(product.images) && product.images.length > 0
+      ? product.images[0]
+      : '/images/placeholders/product.svg';
+
     return NextResponse.json({
       ...product,
-      relatedProducts,
+      image: productImage,
+      relatedProducts: transformedRelated,
     });
   } catch (error) {
     console.error('Error fetching product:', error);
