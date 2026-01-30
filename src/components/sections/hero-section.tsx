@@ -382,23 +382,13 @@ export const HeroSection = memo(function HeroSection() {
         <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-copper-500/10 rounded-full blur-3xl opacity-30" />
       </div>
 
-      {/* Background Image with Parallax - for default hero or loading */}
-      {(!hasSlides || isLoading) && (
-        <motion.div style={{ y }} className="absolute inset-0 z-0">
-          <div className="absolute inset-0 bg-gradient-to-b from-steel-900/95 via-steel-900/80 to-steel-900 z-10" />
-          <Image
-            src="/images/placeholders/factory.svg"
-            alt="Factory Background"
-            fill
-            sizes="100vw"
-            className="object-cover opacity-30"
-            priority
-          />
-        </motion.div>
-      )}
-
-      {/* Slides Carousel */}
-      {hasSlides && !isLoading ? (
+      {/* Slides Carousel - Always render, show loading state inside */}
+      {isLoading ? (
+        /* Loading state - minimal, no fallback hero */
+        <div className="absolute inset-0 z-0 flex items-center justify-center">
+          <div className="w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+        </div>
+      ) : hasSlides ? (
         <>
           <div className="absolute inset-0 z-0" ref={emblaRef}>
             <div className="flex h-full">
