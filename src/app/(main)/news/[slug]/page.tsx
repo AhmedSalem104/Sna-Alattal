@@ -1,51 +1,142 @@
 'use client';
 
-import { use } from 'react';
+import { use, useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { motion } from 'framer-motion';
-import { Calendar, Clock, ChevronLeft, Share2, Facebook, Twitter, Linkedin, ArrowRight } from 'lucide-react';
+import { Calendar, Clock, ChevronLeft, Share2, Facebook, Twitter, Linkedin, ArrowRight, Loader2, AlertCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useLocale } from '@/hooks/useLocale';
 
 interface NewsDetailPageProps {
   params: Promise<{ slug: string }>;
 }
 
-const articleData = {
-  'new-production-line-2024': {
-    titleKey: 'articles.1.title',
-    contentKey: 'articles.1.content',
-    image: '/images/news/article-1.jpg',
-    category: 'news',
-    date: '2024-01-15',
-    readTime: '5 min',
-    author: 'فريق S.N.A العطال',
-    authorImage: '/images/team/member-1.jpg',
-  },
-};
-
-const relatedArticles = [
-  {
-    id: 2,
-    slug: 'gulfood-exhibition-2024',
-    titleKey: 'articles.2.title',
-    image: '/images/news/article-2.jpg',
-    date: '2024-02-20',
-  },
-  {
-    id: 3,
-    slug: 'iso-certification-renewal',
-    titleKey: 'articles.3.title',
-    image: '/images/news/article-3.jpg',
-    date: '2024-03-10',
-  },
-];
+interface NewsArticle {
+  id: string;
+  titleAr: string;
+  titleEn: string;
+  titleTr: string;
+  contentAr: string;
+  contentEn: string;
+  contentTr: string;
+  excerptAr: string;
+  excerptEn: string;
+  excerptTr: string;
+  slug: string;
+  image: string;
+  publishedAt: string;
+  relatedNews: {
+    id: string;
+    titleAr: string;
+    titleEn: string;
+    titleTr: string;
+    slug: string;
+    image: string;
+    publishedAt: string;
+  }[];
+}
 
 export default function NewsDetailPage({ params }: NewsDetailPageProps) {
   const { slug } = use(params);
   const t = useTranslations('newsDetail');
-  const article = articleData[slug as keyof typeof articleData] || articleData['new-production-line-2024'];
+  const { locale } = useLocale();
+  const [article, setArticle] = useState<NewsArticle | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchArticle = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch(`/api/public/news/${slug}`);
+        if (!response.ok) {
+          if (response.status === 404) {
+            setError('notFound');
+          } else {
+            setError('fetchError');
+          }
+          return;
+        }
+        const data = await response.json();
+        setArticle(data);
+      } catch (err) {
+        console.error('Error fetching article:', err);
+        setError('fetchError');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchArticle();
+  }, [slug]);
+
+  const getTitle = (item: { titleAr: string; titleEn: string; titleTr: string }) => {
+    switch (locale) {
+      case 'ar': return item.titleAr;
+      case 'tr': return item.titleTr;
+      default: return item.titleEn;
+    }
+  };
+
+  const getContent = (item: { contentAr: string; contentEn: string; contentTr: string }) => {
+    switch (locale) {
+      case 'ar': return item.contentAr;
+      case 'tr': return item.contentTr;
+      default: return item.contentEn;
+    }
+  };
+
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    const localeMap = { ar: 'ar-EG', tr: 'tr-TR', en: 'en-US' };
+    return date.toLocaleDateString(localeMap[locale as keyof typeof localeMap] || 'en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    });
+  };
+
+  const calculateReadTime = (content: string) => {
+    const wordsPerMinute = 200;
+    const wordCount = content.split(/\s+/).length;
+    const minutes = Math.ceil(wordCount / wordsPerMinute);
+    return `${minutes} ${locale === 'ar' ? 'دقيقة' : locale === 'tr' ? 'dakika' : 'min'}`;
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <div className="text-center">
+          <Loader2 className="w-12 h-12 animate-spin text-primary mx-auto mb-4" />
+          <p className="text-gray-600">{t('loading')}</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error || !article) {
+    return (
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <div className="text-center max-w-md mx-auto px-4">
+          <AlertCircle className="w-16 h-16 text-red-500 mx-auto mb-4" />
+          <h1 className="text-2xl font-bold text-gray-900 mb-2">
+            {error === 'notFound' ? t('errors.notFound') : t('errors.fetchError')}
+          </h1>
+          <p className="text-gray-600 mb-6">
+            {error === 'notFound' ? t('errors.notFoundDesc') : t('errors.fetchErrorDesc')}
+          </p>
+          <Link href="/news">
+            <Button variant="gold">{t('backToNews')}</Button>
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
+  const content = getContent(article);
+  const title = getTitle(article);
 
   return (
     <div className="min-h-screen bg-white">
@@ -61,7 +152,7 @@ export default function NewsDetailPage({ params }: NewsDetailPageProps) {
               {t('breadcrumb.news')}
             </Link>
             <ChevronLeft size={16} className="text-gray-600 rtl:rotate-180" />
-            <span className="text-primary truncate max-w-xs">{t(article.titleKey)}</span>
+            <span className="text-primary truncate max-w-xs">{title}</span>
           </div>
         </div>
       </div>
@@ -69,11 +160,12 @@ export default function NewsDetailPage({ params }: NewsDetailPageProps) {
       {/* Hero Image */}
       <section className="relative h-64 md:h-96 lg:h-[500px]">
         <Image
-          src={article.image}
-          alt={t(article.titleKey)}
+          src={article.image || '/images/placeholder-news.jpg'}
+          alt={title}
           fill
           sizes="100vw"
           className="object-cover"
+          priority
         />
         <div className="absolute inset-0 bg-gradient-to-t from-white via-white/50 to-transparent" />
       </section>
@@ -89,19 +181,15 @@ export default function NewsDetailPage({ params }: NewsDetailPageProps) {
               className="flex flex-wrap items-center gap-4 mb-6"
             >
               <span className="px-3 py-1 bg-primary/20 text-primary rounded-full text-sm">
-                {t(`categories.${article.category}`)}
+                {t('categories.news')}
               </span>
               <span className="flex items-center gap-1 text-gray-600 text-sm">
                 <Calendar size={14} />
-                {new Date(article.date).toLocaleDateString('ar-EG', {
-                  year: 'numeric',
-                  month: 'long',
-                  day: 'numeric',
-                })}
+                {formatDate(article.publishedAt)}
               </span>
               <span className="flex items-center gap-1 text-gray-600 text-sm">
                 <Clock size={14} />
-                {article.readTime}
+                {calculateReadTime(content)}
               </span>
             </motion.div>
 
@@ -112,7 +200,7 @@ export default function NewsDetailPage({ params }: NewsDetailPageProps) {
               transition={{ delay: 0.1 }}
               className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-8"
             >
-              {t(article.titleKey)}
+              {title}
             </motion.h1>
 
             {/* Author */}
@@ -122,17 +210,13 @@ export default function NewsDetailPage({ params }: NewsDetailPageProps) {
               transition={{ delay: 0.2 }}
               className="flex items-center gap-4 mb-8 pb-8 border-b border-gray-200"
             >
-              <div className="relative w-12 h-12 rounded-full overflow-hidden">
-                <Image
-                  src={article.authorImage}
-                  alt={article.author}
-                  fill
-                  sizes="48px"
-                  className="object-cover"
-                />
+              <div className="relative w-12 h-12 rounded-full overflow-hidden bg-primary/20 flex items-center justify-center">
+                <span className="text-primary font-bold text-lg">S</span>
               </div>
               <div>
-                <p className="text-gray-900 font-medium">{article.author}</p>
+                <p className="text-gray-900 font-medium">
+                  {locale === 'ar' ? 'فريق S.N.A العطال' : locale === 'tr' ? 'S.N.A Al-Attal Ekibi' : 'S.N.A Al-Attal Team'}
+                </p>
                 <p className="text-gray-600 text-sm">{t('writtenBy')}</p>
               </div>
             </motion.div>
@@ -142,27 +226,12 @@ export default function NewsDetailPage({ params }: NewsDetailPageProps) {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
-              className="prose prose-lg prose-invert max-w-none"
+              className="prose prose-lg max-w-none"
             >
-              <p className="text-gray-700 leading-relaxed mb-6">
-                {t(article.contentKey)}
-              </p>
-              <p className="text-gray-700 leading-relaxed mb-6">
-                نحن في S.N.A العطال ملتزمون بتقديم أحدث التقنيات في مجال خطوط التعبئة والتغليف.
-                خط الإنتاج الجديد يمثل نقلة نوعية في قدراتنا التصنيعية ويعكس التزامنا بالتطوير المستمر.
-              </p>
-              <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">مميزات خط الإنتاج الجديد</h2>
-              <ul className="space-y-3 text-gray-700">
-                <li>سرعة إنتاج تصل إلى 6000 زجاجة في الساعة</li>
-                <li>دقة تعبئة عالية تصل إلى ±0.5%</li>
-                <li>نظام تحكم ذكي متكامل</li>
-                <li>توافق مع معايير ISO و CE</li>
-                <li>كفاءة طاقة محسنة بنسبة 30%</li>
-              </ul>
-              <p className="text-gray-700 leading-relaxed mt-6 mb-6">
-                هذا التطوير يأتي في إطار خطتنا الاستراتيجية للتوسع وتلبية الطلب المتزايد من عملائنا
-                في منطقة الشرق الأوسط وشمال أفريقيا. نحن فخورون بأن نكون الرائدين في هذا المجال.
-              </p>
+              <div
+                className="text-gray-700 leading-relaxed"
+                dangerouslySetInnerHTML={{ __html: content.replace(/\n/g, '<br />') }}
+              />
             </motion.div>
 
             {/* Share */}
@@ -193,44 +262,46 @@ export default function NewsDetailPage({ params }: NewsDetailPageProps) {
       </section>
 
       {/* Related Articles */}
-      <section className="py-20 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <h2 className="text-2xl font-bold text-gray-900 mb-8">{t('relatedArticles')}</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {relatedArticles.map((related, index) => (
-              <motion.div
-                key={related.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-              >
-                <Link href={`/news/${related.slug}`}>
-                  <div className="group flex gap-4 bg-white rounded-xl p-4 border border-gray-200 hover:border-primary/50 transition-all">
-                    <div className="relative w-32 h-24 rounded-lg overflow-hidden flex-shrink-0">
-                      <Image
-                        src={related.image}
-                        alt={t(related.titleKey)}
-                        fill
-                        sizes="128px"
-                        className="object-cover group-hover:scale-105 transition-transform duration-300"
-                      />
+      {article.relatedNews && article.relatedNews.length > 0 && (
+        <section className="py-20 bg-gray-50">
+          <div className="container mx-auto px-4">
+            <h2 className="text-2xl font-bold text-gray-900 mb-8">{t('relatedArticles')}</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {article.relatedNews.map((related, index) => (
+                <motion.div
+                  key={related.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                >
+                  <Link href={`/news/${related.slug}`}>
+                    <div className="group bg-white rounded-xl overflow-hidden border border-gray-200 hover:border-primary/50 hover:shadow-lg transition-all">
+                      <div className="relative h-48 overflow-hidden">
+                        <Image
+                          src={related.image || '/images/placeholder-news.jpg'}
+                          alt={getTitle(related)}
+                          fill
+                          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                          className="object-cover group-hover:scale-105 transition-transform duration-300"
+                        />
+                      </div>
+                      <div className="p-4">
+                        <span className="text-gray-600 text-sm">
+                          {formatDate(related.publishedAt)}
+                        </span>
+                        <h3 className="text-gray-900 font-medium mt-2 group-hover:text-primary transition-colors line-clamp-2">
+                          {getTitle(related)}
+                        </h3>
+                      </div>
                     </div>
-                    <div className="flex-1">
-                      <span className="text-gray-600 text-sm">
-                        {new Date(related.date).toLocaleDateString('ar-EG')}
-                      </span>
-                      <h3 className="text-gray-900 font-medium mt-1 group-hover:text-primary transition-colors line-clamp-2">
-                        {t(related.titleKey)}
-                      </h3>
-                    </div>
-                  </div>
-                </Link>
-              </motion.div>
-            ))}
+                  </Link>
+                </motion.div>
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* Back to News */}
       <section className="py-12">

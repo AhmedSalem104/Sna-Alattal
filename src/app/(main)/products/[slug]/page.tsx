@@ -1,6 +1,6 @@
 'use client';
 
-import { use, useState } from 'react';
+import { use, useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
@@ -15,59 +15,147 @@ import {
   Zap,
   Shield,
   Settings,
-  Award
+  Award,
+  Loader2,
+  AlertCircle
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { useLocale } from '@/hooks/useLocale';
 
 interface ProductDetailPageProps {
   params: Promise<{ slug: string }>;
 }
 
-const productData = {
-  'automatic-filling-machine': {
-    nameKey: 'products.filling1.name',
-    descKey: 'products.filling1.desc',
-    fullDescKey: 'products.filling1.fullDesc',
-    images: [
-      '/images/products/filling-machine.jpg',
-      '/images/products/filling-machine-2.jpg',
-      '/images/products/filling-machine-3.jpg',
-    ],
-    category: 'filling',
-    specifications: [
-      { label: 'Capacity', value: '2000-6000 BPH' },
-      { label: 'Bottle Size', value: '100ml - 5L' },
-      { label: 'Filling Accuracy', value: '±0.5%' },
-      { label: 'Power', value: '380V/50Hz' },
-      { label: 'Air Pressure', value: '0.6-0.8 MPa' },
-      { label: 'Material', value: 'SS304/SS316' },
-    ],
-    features: [
-      'Servo motor driven for precise filling',
-      'PLC control with touch screen interface',
-      'Anti-drip filling nozzles',
-      'Automatic bottle positioning',
-      'CIP cleaning system',
-      'GMP compliant design',
-    ],
-    applications: ['Water', 'Juice', 'Oil', 'Chemicals', 'Pharmaceuticals'],
-  },
-};
+interface Product {
+  id: string;
+  nameAr: string;
+  nameEn: string;
+  nameTr: string;
+  descriptionAr: string;
+  descriptionEn: string;
+  descriptionTr: string;
+  slug: string;
+  image: string;
+  images: string[] | null;
+  specifications: Record<string, string> | null;
+  features: string[] | null;
+  applications: string[] | null;
+  category: {
+    id: string;
+    nameAr: string;
+    nameEn: string;
+    nameTr: string;
+    slug: string;
+  } | null;
+  relatedProducts: {
+    id: string;
+    nameAr: string;
+    nameEn: string;
+    nameTr: string;
+    slug: string;
+    image: string;
+  }[];
+}
 
 export default function ProductDetailPage({ params }: ProductDetailPageProps) {
   const { slug } = use(params);
   const t = useTranslations('productDetail');
+  const { locale } = useLocale();
   const [activeImage, setActiveImage] = useState(0);
+  const [product, setProduct] = useState<Product | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const product = productData[slug as keyof typeof productData] || productData['automatic-filling-machine'];
+  useEffect(() => {
+    const fetchProduct = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch(`/api/public/products/${slug}`);
+        if (!response.ok) {
+          if (response.status === 404) {
+            setError('notFound');
+          } else {
+            setError('fetchError');
+          }
+          return;
+        }
+        const data = await response.json();
+        setProduct(data);
+      } catch (err) {
+        console.error('Error fetching product:', err);
+        setError('fetchError');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProduct();
+  }, [slug]);
+
+  const getName = (item: { nameAr: string; nameEn: string; nameTr: string }) => {
+    switch (locale) {
+      case 'ar': return item.nameAr;
+      case 'tr': return item.nameTr;
+      default: return item.nameEn;
+    }
+  };
+
+  const getDescription = (item: { descriptionAr: string; descriptionEn: string; descriptionTr: string }) => {
+    switch (locale) {
+      case 'ar': return item.descriptionAr;
+      case 'tr': return item.descriptionTr;
+      default: return item.descriptionEn;
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <div className="text-center">
+          <Loader2 className="w-12 h-12 animate-spin text-primary mx-auto mb-4" />
+          <p className="text-gray-600">{t('loading')}</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error || !product) {
+    return (
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <div className="text-center max-w-md mx-auto px-4">
+          <AlertCircle className="w-16 h-16 text-red-500 mx-auto mb-4" />
+          <h1 className="text-2xl font-bold text-gray-900 mb-2">
+            {error === 'notFound' ? t('errors.notFound') : t('errors.fetchError')}
+          </h1>
+          <p className="text-gray-600 mb-6">
+            {error === 'notFound' ? t('errors.notFoundDesc') : t('errors.fetchErrorDesc')}
+          </p>
+          <Link href="/products">
+            <Button variant="gold">{t('backToProducts')}</Button>
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
+  const allImages = product.images && product.images.length > 0
+    ? product.images
+    : [product.image];
+
+  const specifications = product.specifications
+    ? Object.entries(product.specifications).map(([label, value]) => ({ label, value }))
+    : [];
+
+  const features = product.features || [];
+  const applications = product.applications || [];
 
   const nextImage = () => {
-    setActiveImage((prev) => (prev + 1) % product.images.length);
+    setActiveImage((prev) => (prev + 1) % allImages.length);
   };
 
   const prevImage = () => {
-    setActiveImage((prev) => (prev - 1 + product.images.length) % product.images.length);
+    setActiveImage((prev) => (prev - 1 + allImages.length) % allImages.length);
   };
 
   return (
@@ -84,7 +172,7 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
               {t('breadcrumb.products')}
             </Link>
             <ChevronLeft size={16} className="text-gray-600 rtl:rotate-180" />
-            <span className="text-primary">{t(product.nameKey)}</span>
+            <span className="text-primary">{getName(product)}</span>
           </div>
         </div>
       </div>
@@ -103,42 +191,48 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
                 {/* Main Image */}
                 <div className="relative h-96 md:h-[500px] rounded-2xl overflow-hidden bg-gray-50">
                   <Image
-                    src={product.images[activeImage]}
-                    alt={t(product.nameKey)}
+                    src={allImages[activeImage] || '/images/placeholder-product.jpg'}
+                    alt={getName(product)}
                     fill
                     sizes="(max-width: 1024px) 100vw, 50vw"
                     className="object-cover"
                   />
 
                   {/* Navigation Arrows */}
-                  <button
-                    onClick={prevImage}
-                    className="absolute left-4 top-1/2 -translate-y-1/2 p-2 bg-black/50 rounded-full hover:bg-primary transition-colors"
-                  >
-                    <ChevronRight size={24} className="text-gray-900" />
-                  </button>
-                  <button
-                    onClick={nextImage}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 p-2 bg-black/50 rounded-full hover:bg-primary transition-colors"
-                  >
-                    <ChevronLeft size={24} className="text-gray-900" />
-                  </button>
+                  {allImages.length > 1 && (
+                    <>
+                      <button
+                        onClick={prevImage}
+                        className="absolute left-4 top-1/2 -translate-y-1/2 p-2 bg-black/50 rounded-full hover:bg-primary transition-colors"
+                      >
+                        <ChevronRight size={24} className="text-white" />
+                      </button>
+                      <button
+                        onClick={nextImage}
+                        className="absolute right-4 top-1/2 -translate-y-1/2 p-2 bg-black/50 rounded-full hover:bg-primary transition-colors"
+                      >
+                        <ChevronLeft size={24} className="text-white" />
+                      </button>
+                    </>
+                  )}
                 </div>
 
                 {/* Thumbnails */}
-                <div className="flex gap-4 mt-4">
-                  {product.images.map((img, index) => (
-                    <button
-                      key={index}
-                      onClick={() => setActiveImage(index)}
-                      className={`relative w-24 h-24 rounded-lg overflow-hidden border-2 transition-all ${
-                        activeImage === index ? 'border-primary' : 'border-transparent opacity-60 hover:opacity-100'
-                      }`}
-                    >
-                      <Image src={img} alt="" fill sizes="96px" className="object-cover" />
-                    </button>
-                  ))}
-                </div>
+                {allImages.length > 1 && (
+                  <div className="flex gap-4 mt-4 overflow-x-auto pb-2">
+                    {allImages.map((img, index) => (
+                      <button
+                        key={index}
+                        onClick={() => setActiveImage(index)}
+                        className={`relative w-24 h-24 flex-shrink-0 rounded-lg overflow-hidden border-2 transition-all ${
+                          activeImage === index ? 'border-primary' : 'border-transparent opacity-60 hover:opacity-100'
+                        }`}
+                      >
+                        <Image src={img} alt="" fill sizes="96px" className="object-cover" />
+                      </button>
+                    ))}
+                  </div>
+                )}
               </div>
             </motion.div>
 
@@ -148,16 +242,18 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
             >
-              <span className="inline-block px-3 py-1 bg-primary/20 text-primary rounded-full text-sm mb-4">
-                {t(`categories.${product.category}`)}
-              </span>
+              {product.category && (
+                <span className="inline-block px-3 py-1 bg-primary/20 text-primary rounded-full text-sm mb-4">
+                  {getName(product.category)}
+                </span>
+              )}
 
               <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-                {t(product.nameKey)}
+                {getName(product)}
               </h1>
 
               <p className="text-gray-700 text-lg mb-8">
-                {t(product.descKey)}
+                {getDescription(product)}
               </p>
 
               {/* Key Features Icons */}
@@ -219,81 +315,126 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
       </section>
 
       {/* Product Details Tabs */}
-      <section className="py-12">
-        <div className="container mx-auto px-4">
-          <Tabs defaultValue="specifications" className="w-full">
-            <TabsList className="grid w-full max-w-2xl mx-auto grid-cols-3 bg-gray-50 mb-8">
-              <TabsTrigger value="specifications">{t('tabs.specifications')}</TabsTrigger>
-              <TabsTrigger value="features">{t('tabs.features')}</TabsTrigger>
-              <TabsTrigger value="applications">{t('tabs.applications')}</TabsTrigger>
-            </TabsList>
+      {(specifications.length > 0 || features.length > 0 || applications.length > 0) && (
+        <section className="py-12">
+          <div className="container mx-auto px-4">
+            <Tabs defaultValue={specifications.length > 0 ? "specifications" : features.length > 0 ? "features" : "applications"} className="w-full">
+              <TabsList className="grid w-full max-w-2xl mx-auto grid-cols-3 bg-gray-50 mb-8">
+                {specifications.length > 0 && (
+                  <TabsTrigger value="specifications">{t('tabs.specifications')}</TabsTrigger>
+                )}
+                {features.length > 0 && (
+                  <TabsTrigger value="features">{t('tabs.features')}</TabsTrigger>
+                )}
+                {applications.length > 0 && (
+                  <TabsTrigger value="applications">{t('tabs.applications')}</TabsTrigger>
+                )}
+              </TabsList>
 
-            <TabsContent value="specifications">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="bg-gray-50 rounded-2xl p-8"
-              >
-                <h3 className="text-2xl font-bold text-gray-900 mb-6">{t('technicalSpecs')}</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {product.specifications.map((spec, index) => (
-                    <div
-                      key={index}
-                      className="flex justify-between items-center p-4 bg-white rounded-xl border border-gray-200"
-                    >
-                      <span className="text-gray-600">{spec.label}</span>
-                      <span className="text-gray-900 font-medium">{spec.value}</span>
+              {specifications.length > 0 && (
+                <TabsContent value="specifications">
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="bg-gray-50 rounded-2xl p-8"
+                  >
+                    <h3 className="text-2xl font-bold text-gray-900 mb-6">{t('technicalSpecs')}</h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      {specifications.map((spec, index) => (
+                        <div
+                          key={index}
+                          className="flex justify-between items-center p-4 bg-white rounded-xl border border-gray-200"
+                        >
+                          <span className="text-gray-600">{spec.label}</span>
+                          <span className="text-gray-900 font-medium">{spec.value}</span>
+                        </div>
+                      ))}
                     </div>
-                  ))}
-                </div>
-              </motion.div>
-            </TabsContent>
+                  </motion.div>
+                </TabsContent>
+              )}
 
-            <TabsContent value="features">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="bg-gray-50 rounded-2xl p-8"
-              >
-                <h3 className="text-2xl font-bold text-gray-900 mb-6">{t('keyFeatures')}</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {product.features.map((feature, index) => (
-                    <div
-                      key={index}
-                      className="flex items-center gap-3 p-4 bg-white rounded-xl border border-gray-200"
-                    >
-                      <div className="p-1 bg-primary/20 rounded-full">
-                        <Check className="text-primary" size={16} />
-                      </div>
-                      <span className="text-gray-700">{feature}</span>
+              {features.length > 0 && (
+                <TabsContent value="features">
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="bg-gray-50 rounded-2xl p-8"
+                  >
+                    <h3 className="text-2xl font-bold text-gray-900 mb-6">{t('keyFeatures')}</h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      {features.map((feature, index) => (
+                        <div
+                          key={index}
+                          className="flex items-center gap-3 p-4 bg-white rounded-xl border border-gray-200"
+                        >
+                          <div className="p-1 bg-primary/20 rounded-full">
+                            <Check className="text-primary" size={16} />
+                          </div>
+                          <span className="text-gray-700">{feature}</span>
+                        </div>
+                      ))}
                     </div>
-                  ))}
-                </div>
-              </motion.div>
-            </TabsContent>
+                  </motion.div>
+                </TabsContent>
+              )}
 
-            <TabsContent value="applications">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="bg-gray-50 rounded-2xl p-8"
-              >
-                <h3 className="text-2xl font-bold text-gray-900 mb-6">{t('suitableFor')}</h3>
-                <div className="flex flex-wrap gap-4">
-                  {product.applications.map((app, index) => (
-                    <div
-                      key={index}
-                      className="px-6 py-3 bg-primary/10 border border-primary/30 rounded-full text-primary font-medium"
-                    >
-                      {app}
+              {applications.length > 0 && (
+                <TabsContent value="applications">
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="bg-gray-50 rounded-2xl p-8"
+                  >
+                    <h3 className="text-2xl font-bold text-gray-900 mb-6">{t('suitableFor')}</h3>
+                    <div className="flex flex-wrap gap-4">
+                      {applications.map((app, index) => (
+                        <div
+                          key={index}
+                          className="px-6 py-3 bg-primary/10 border border-primary/30 rounded-full text-primary font-medium"
+                        >
+                          {app}
+                        </div>
+                      ))}
                     </div>
-                  ))}
-                </div>
-              </motion.div>
-            </TabsContent>
-          </Tabs>
-        </div>
-      </section>
+                  </motion.div>
+                </TabsContent>
+              )}
+            </Tabs>
+          </div>
+        </section>
+      )}
+
+      {/* Related Products */}
+      {product.relatedProducts && product.relatedProducts.length > 0 && (
+        <section className="py-12 bg-gray-50">
+          <div className="container mx-auto px-4">
+            <h2 className="text-2xl font-bold text-gray-900 mb-8">{t('relatedProducts')}</h2>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+              {product.relatedProducts.map((related) => (
+                <Link key={related.id} href={`/products/${related.slug}`}>
+                  <div className="bg-white rounded-xl overflow-hidden border border-gray-200 hover:border-primary hover:shadow-lg transition-all group">
+                    <div className="relative h-40">
+                      <Image
+                        src={related.image || '/images/placeholder-product.jpg'}
+                        alt={getName(related)}
+                        fill
+                        sizes="(max-width: 768px) 50vw, 25vw"
+                        className="object-cover group-hover:scale-105 transition-transform"
+                      />
+                    </div>
+                    <div className="p-4">
+                      <h3 className="font-medium text-gray-900 group-hover:text-primary transition-colors line-clamp-2">
+                        {getName(related)}
+                      </h3>
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Contact CTA */}
       <section className="py-20 bg-gradient-to-r from-primary/20 via-white to-primary/20">

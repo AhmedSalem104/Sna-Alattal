@@ -5,7 +5,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { motion } from 'framer-motion';
-import { Calendar, Clock, ArrowRight, Search, Loader2, Newspaper } from 'lucide-react';
+import { Calendar, Clock, ArrowRight, Search, Loader2, Newspaper, Send } from 'lucide-react';
+import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useLocale } from '@/hooks/useLocale';
@@ -36,6 +37,8 @@ export default function NewsPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [articles, setArticles] = useState<NewsArticle[]>([]);
   const [loading, setLoading] = useState(true);
+  const [newsletterEmail, setNewsletterEmail] = useState('');
+  const [newsletterLoading, setNewsletterLoading] = useState(false);
 
   useEffect(() => {
     async function fetchNews() {
@@ -342,14 +345,50 @@ export default function NewsPage() {
           >
             <h2 className="text-3xl font-bold text-gray-900 mb-4">{t('newsletter.title')}</h2>
             <p className="text-gray-700 mb-8">{t('newsletter.subtitle')}</p>
-            <form className="flex flex-col sm:flex-row gap-4">
+            <form
+              className="flex flex-col sm:flex-row gap-4"
+              onSubmit={async (e) => {
+                e.preventDefault();
+                if (!newsletterEmail) return;
+
+                setNewsletterLoading(true);
+                try {
+                  const response = await fetch('/api/public/newsletter', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: newsletterEmail }),
+                  });
+
+                  if (response.ok) {
+                    toast.success(t('newsletter.success') || 'تم الاشتراك بنجاح');
+                    setNewsletterEmail('');
+                  } else {
+                    toast.error(t('newsletter.error') || 'حدث خطأ، حاول مرة أخرى');
+                  }
+                } catch {
+                  toast.error(t('newsletter.error') || 'حدث خطأ، حاول مرة أخرى');
+                } finally {
+                  setNewsletterLoading(false);
+                }
+              }}
+            >
               <Input
                 type="email"
                 placeholder={t('newsletter.placeholder')}
                 className="flex-1 bg-white border-gray-200 text-gray-900"
+                value={newsletterEmail}
+                onChange={(e) => setNewsletterEmail(e.target.value)}
+                required
               />
-              <Button variant="gold" size="lg">
-                {t('newsletter.subscribe')}
+              <Button variant="gold" size="lg" type="submit" disabled={newsletterLoading}>
+                {newsletterLoading ? (
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                ) : (
+                  <>
+                    {t('newsletter.subscribe')}
+                    <Send size={18} className="mr-2" />
+                  </>
+                )}
               </Button>
             </form>
           </motion.div>

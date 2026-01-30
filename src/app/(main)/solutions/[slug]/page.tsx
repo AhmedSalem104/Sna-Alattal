@@ -1,49 +1,135 @@
 'use client';
 
-import { use } from 'react';
+import { use, useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { motion } from 'framer-motion';
-import { ChevronLeft, Phone, Mail, FileText } from 'lucide-react';
+import { ChevronLeft, Phone, Mail, FileText, Loader2, AlertCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useLocale } from '@/hooks/useLocale';
 
 interface SolutionDetailPageProps {
   params: Promise<{ slug: string }>;
 }
 
-const solutionData = {
-  'food-beverage': {
-    titleKey: 'solutions.food.title',
-    descKey: 'solutions.food.fullDesc',
-    heroImage: '/images/solutions/food-beverage-hero.jpg',
-    color: 'from-orange-500/20',
-    sections: [
-      {
-        title: 'Complete Bottling Solutions',
-        description: 'From water to complex beverages, we provide end-to-end bottling solutions designed for the food and beverage industry.',
-        image: '/images/solutions/bottling.jpg',
-      },
-      {
-        title: 'Aseptic Processing',
-        description: 'State-of-the-art aseptic filling systems ensure product safety and extended shelf life without refrigeration.',
-        image: '/images/solutions/aseptic.jpg',
-      },
-    ],
-    products: [
-      { name: 'Water Filling Lines', capacity: '2000-20000 BPH' },
-      { name: 'Juice Processing Lines', capacity: '1000-10000 BPH' },
-      { name: 'Oil Filling Systems', capacity: '500-6000 BPH' },
-      { name: 'Sauce & Paste Fillers', capacity: '1000-8000 BPH' },
-    ],
-    certifications: ['FDA', 'HACCP', 'ISO 22000', 'CE'],
-  },
-};
+interface Solution {
+  id: string;
+  nameAr: string;
+  nameEn: string;
+  nameTr: string;
+  descriptionAr: string;
+  descriptionEn: string;
+  descriptionTr: string;
+  slug: string;
+  icon: string | null;
+  image: string | null;
+  features: string[] | null;
+  products: {
+    product: {
+      id: string;
+      nameAr: string;
+      nameEn: string;
+      nameTr: string;
+      slug: string;
+      image: string;
+      descriptionAr: string;
+      descriptionEn: string;
+      descriptionTr: string;
+    };
+  }[];
+  relatedSolutions: {
+    id: string;
+    nameAr: string;
+    nameEn: string;
+    nameTr: string;
+    slug: string;
+    icon: string | null;
+  }[];
+}
 
 export default function SolutionDetailPage({ params }: SolutionDetailPageProps) {
   const { slug } = use(params);
   const t = useTranslations('solutionDetail');
-  const solution = solutionData[slug as keyof typeof solutionData] || solutionData['food-beverage'];
+  const { locale } = useLocale();
+  const [solution, setSolution] = useState<Solution | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchSolution = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch(`/api/public/solutions/${slug}`);
+        if (!response.ok) {
+          if (response.status === 404) {
+            setError('notFound');
+          } else {
+            setError('fetchError');
+          }
+          return;
+        }
+        const data = await response.json();
+        setSolution(data);
+      } catch (err) {
+        console.error('Error fetching solution:', err);
+        setError('fetchError');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchSolution();
+  }, [slug]);
+
+  const getName = (item: { nameAr: string; nameEn: string; nameTr: string }) => {
+    switch (locale) {
+      case 'ar': return item.nameAr;
+      case 'tr': return item.nameTr;
+      default: return item.nameEn;
+    }
+  };
+
+  const getDescription = (item: { descriptionAr: string; descriptionEn: string; descriptionTr: string }) => {
+    switch (locale) {
+      case 'ar': return item.descriptionAr;
+      case 'tr': return item.descriptionTr;
+      default: return item.descriptionEn;
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <div className="text-center">
+          <Loader2 className="w-12 h-12 animate-spin text-primary mx-auto mb-4" />
+          <p className="text-gray-600">{t('loading')}</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error || !solution) {
+    return (
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <div className="text-center max-w-md mx-auto px-4">
+          <AlertCircle className="w-16 h-16 text-red-500 mx-auto mb-4" />
+          <h1 className="text-2xl font-bold text-gray-900 mb-2">
+            {error === 'notFound' ? t('errors.notFound') : t('errors.fetchError')}
+          </h1>
+          <p className="text-gray-600 mb-6">
+            {error === 'notFound' ? t('errors.notFoundDesc') : t('errors.fetchErrorDesc')}
+          </p>
+          <Link href="/solutions">
+            <Button variant="gold">{t('backToSolutions')}</Button>
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
+  const features = solution.features || [];
+  const products = solution.products || [];
 
   return (
     <div className="min-h-screen bg-white">
@@ -59,23 +145,25 @@ export default function SolutionDetailPage({ params }: SolutionDetailPageProps) 
               {t('breadcrumb.solutions')}
             </Link>
             <ChevronLeft size={16} className="text-gray-600 rtl:rotate-180" />
-            <span className="text-primary">{t(solution.titleKey)}</span>
+            <span className="text-primary">{getName(solution)}</span>
           </div>
         </div>
       </div>
 
       {/* Hero */}
       <section className="relative py-32 overflow-hidden">
-        <div className="absolute inset-0">
-          <Image
-            src={solution.heroImage}
-            alt={t(solution.titleKey)}
-            fill
-            sizes="100vw"
-            className="object-cover opacity-30"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-white via-white/80 to-white" />
-        </div>
+        {solution.image && (
+          <div className="absolute inset-0">
+            <Image
+              src={solution.image}
+              alt={getName(solution)}
+              fill
+              sizes="100vw"
+              className="object-cover opacity-30"
+            />
+            <div className="absolute inset-0 bg-gradient-to-b from-white via-white/80 to-white" />
+          </div>
+        )}
 
         <div className="container mx-auto px-4 relative z-10">
           <motion.div
@@ -84,11 +172,16 @@ export default function SolutionDetailPage({ params }: SolutionDetailPageProps) 
             transition={{ duration: 0.6 }}
             className="max-w-3xl"
           >
+            {solution.icon && (
+              <div className="w-20 h-20 bg-primary/20 rounded-2xl flex items-center justify-center mb-6">
+                <span className="text-4xl">{solution.icon}</span>
+              </div>
+            )}
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
-              {t(solution.titleKey)}
+              {getName(solution)}
             </h1>
             <p className="text-xl text-gray-700 mb-8">
-              {t(solution.descKey)}
+              {getDescription(solution)}
             </p>
             <div className="flex flex-wrap gap-4">
               <Link href="/contact">
@@ -97,111 +190,145 @@ export default function SolutionDetailPage({ params }: SolutionDetailPageProps) 
                   {t('getQuote')}
                 </Button>
               </Link>
-              <Button variant="outline" size="lg" className="border-gray-300 text-gray-900 hover:bg-gray-100">
-                <FileText size={18} className="ml-2" />
-                {t('downloadCatalog')}
-              </Button>
+              <Link href="/catalogues">
+                <Button variant="outline" size="lg" className="border-gray-300 text-gray-900 hover:bg-gray-100">
+                  <FileText size={18} className="ml-2" />
+                  {t('downloadCatalog')}
+                </Button>
+              </Link>
             </div>
           </motion.div>
         </div>
       </section>
 
-      {/* Solutions Sections */}
-      <section className="py-20">
-        <div className="container mx-auto px-4">
-          <div className="space-y-20">
-            {solution.sections.map((section, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6 }}
-                className={`grid grid-cols-1 lg:grid-cols-2 gap-12 items-center`}
-              >
-                <div className={index % 2 === 1 ? 'lg:order-2' : ''}>
-                  <div className="relative h-80 rounded-2xl overflow-hidden">
-                    <Image
-                      src={section.image}
-                      alt={section.title}
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-                </div>
-                <div className={index % 2 === 1 ? 'lg:order-1' : ''}>
-                  <h2 className="text-3xl font-bold text-gray-900 mb-4">{section.title}</h2>
-                  <p className="text-gray-700 text-lg">{section.description}</p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* Features */}
+      {features.length > 0 && (
+        <section className="py-20">
+          <div className="container mx-auto px-4">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-center mb-12"
+            >
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                {t('keyFeatures')}
+              </h2>
+            </motion.div>
 
-      {/* Products Table */}
-      <section className="py-20 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-12"
-          >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              {t('availableProducts')}
-            </h2>
-          </motion.div>
-
-          <div className="max-w-3xl mx-auto">
-            <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden">
-              <div className="grid grid-cols-2 gap-4 p-4 bg-primary/10 border-b border-gray-200">
-                <span className="text-primary font-semibold">{t('productName')}</span>
-                <span className="text-primary font-semibold">{t('capacity')}</span>
-              </div>
-              {solution.products.map((product, index) => (
-                <div
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
+              {features.map((feature, index) => (
+                <motion.div
                   key={index}
-                  className="grid grid-cols-2 gap-4 p-4 border-b border-white/5 last:border-0 hover:bg-gray-100 transition-colors"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                  className="bg-gray-50 rounded-xl p-6 border border-gray-200"
                 >
-                  <span className="text-gray-900">{product.name}</span>
-                  <span className="text-gray-600">{product.capacity}</span>
-                </div>
+                  <div className="w-10 h-10 bg-primary/20 rounded-lg flex items-center justify-center mb-4">
+                    <span className="text-primary font-bold">{index + 1}</span>
+                  </div>
+                  <p className="text-gray-700">{feature}</p>
+                </motion.div>
               ))}
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
-      {/* Certifications */}
-      <section className="py-20">
-        <div className="container mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-12"
-          >
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">{t('certifications')}</h2>
-            <p className="text-gray-600">{t('certificationsDesc')}</p>
-          </motion.div>
+      {/* Related Products */}
+      {products.length > 0 && (
+        <section className="py-20 bg-gray-50">
+          <div className="container mx-auto px-4">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-center mb-12"
+            >
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                {t('relatedProducts')}
+              </h2>
+            </motion.div>
 
-          <div className="flex flex-wrap justify-center gap-8">
-            {solution.certifications.map((cert, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className="w-32 h-32 flex items-center justify-center bg-gray-50 rounded-2xl border border-gray-200"
-              >
-                <span className="text-2xl font-bold text-primary">{cert}</span>
-              </motion.div>
-            ))}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {products.map(({ product }, index) => (
+                <motion.div
+                  key={product.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                >
+                  <Link href={`/products/${product.slug}`}>
+                    <div className="group bg-white rounded-xl overflow-hidden border border-gray-200 hover:border-primary/50 hover:shadow-lg transition-all">
+                      <div className="relative h-48 overflow-hidden">
+                        <Image
+                          src={product.image || '/images/placeholder-product.jpg'}
+                          alt={getName(product)}
+                          fill
+                          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                          className="object-cover group-hover:scale-105 transition-transform duration-300"
+                        />
+                      </div>
+                      <div className="p-4">
+                        <h3 className="text-lg font-semibold text-gray-900 group-hover:text-primary transition-colors">
+                          {getName(product)}
+                        </h3>
+                        <p className="text-gray-600 text-sm mt-2 line-clamp-2">
+                          {getDescription(product)}
+                        </p>
+                      </div>
+                    </div>
+                  </Link>
+                </motion.div>
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
+
+      {/* Related Solutions */}
+      {solution.relatedSolutions && solution.relatedSolutions.length > 0 && (
+        <section className="py-20">
+          <div className="container mx-auto px-4">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-center mb-12"
+            >
+              <h2 className="text-3xl font-bold text-gray-900 mb-4">{t('otherSolutions')}</h2>
+            </motion.div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+              {solution.relatedSolutions.map((related, index) => (
+                <motion.div
+                  key={related.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                >
+                  <Link href={`/solutions/${related.slug}`}>
+                    <div className="group bg-gray-50 rounded-xl p-6 border border-gray-200 hover:border-primary/50 hover:shadow-lg transition-all text-center">
+                      {related.icon && (
+                        <div className="w-16 h-16 bg-primary/20 rounded-xl flex items-center justify-center mx-auto mb-4">
+                          <span className="text-3xl">{related.icon}</span>
+                        </div>
+                      )}
+                      <h3 className="text-lg font-semibold text-gray-900 group-hover:text-primary transition-colors">
+                        {getName(related)}
+                      </h3>
+                    </div>
+                  </Link>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* CTA */}
       <section className="py-20 bg-gradient-to-r from-primary/20 via-white to-primary/20">

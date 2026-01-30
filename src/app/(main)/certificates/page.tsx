@@ -1,62 +1,29 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { motion } from 'framer-motion';
-import { Award, Shield, CheckCircle, Download, ArrowRight } from 'lucide-react';
+import { Award, Shield, CheckCircle, Download, ArrowRight, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useLocale } from '@/hooks/useLocale';
 
-const certificates = [
-  {
-    id: 1,
-    name: 'ISO 9001:2015',
-    title: 'نظام إدارة الجودة',
-    titleEn: 'Quality Management System',
-    description: 'شهادة الأيزو للجودة تؤكد التزامنا بأعلى معايير الجودة العالمية في جميع عملياتنا',
-    descriptionEn: 'ISO quality certification confirms our commitment to the highest global quality standards',
-    image: '/images/placeholders/certificate.svg',
-    issuer: 'TÜV SÜD',
-    validUntil: '2026',
-    color: 'from-blue-500/20',
-  },
-  {
-    id: 2,
-    name: 'CE Marking',
-    title: 'علامة المطابقة الأوروبية',
-    titleEn: 'European Conformity',
-    description: 'علامة CE تثبت أن منتجاتنا تتوافق مع متطلبات السلامة والصحة والبيئة الأوروبية',
-    descriptionEn: 'CE marking proves our products meet European safety, health, and environmental requirements',
-    image: '/images/placeholders/certificate.svg',
-    issuer: 'European Commission',
-    validUntil: '2025',
-    color: 'from-yellow-500/20',
-  },
-  {
-    id: 3,
-    name: 'ISO 14001:2015',
-    title: 'نظام الإدارة البيئية',
-    titleEn: 'Environmental Management System',
-    description: 'التزامنا بالحفاظ على البيئة من خلال تطبيق أفضل الممارسات البيئية',
-    descriptionEn: 'Our commitment to environmental preservation through best environmental practices',
-    image: '/images/placeholders/certificate.svg',
-    issuer: 'TÜV SÜD',
-    validUntil: '2026',
-    color: 'from-green-500/20',
-  },
-  {
-    id: 4,
-    name: 'ISO 22000:2018',
-    title: 'نظام سلامة الغذاء',
-    titleEn: 'Food Safety Management System',
-    description: 'معيار دولي لضمان سلامة الأغذية في سلسلة التوريد بأكملها',
-    descriptionEn: 'International standard ensuring food safety throughout the supply chain',
-    image: '/images/placeholders/certificate.svg',
-    issuer: 'SGS',
-    validUntil: '2025',
-    color: 'from-orange-500/20',
-  },
-];
+interface Certificate {
+  id: string;
+  nameAr: string;
+  nameEn: string;
+  nameTr: string;
+  descriptionAr: string;
+  descriptionEn: string;
+  descriptionTr: string;
+  issuingBodyAr: string;
+  issuingBodyEn: string;
+  issuingBodyTr: string;
+  image: string;
+  issueDate: string;
+  expiryDate: string | null;
+}
 
 const accreditations = [
   { name: 'TÜV SÜD', logo: '/images/placeholders/accreditation.svg' },
@@ -67,6 +34,66 @@ const accreditations = [
 
 export default function CertificatesPage() {
   const t = useTranslations('certificatesPage');
+  const { locale } = useLocale();
+  const [certificates, setCertificates] = useState<Certificate[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchCertificates = async () => {
+      try {
+        const response = await fetch('/api/public/certificates');
+        if (response.ok) {
+          const data = await response.json();
+          setCertificates(data);
+        }
+      } catch (error) {
+        console.error('Error fetching certificates:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCertificates();
+  }, []);
+
+  const getName = (cert: Certificate) => {
+    switch (locale) {
+      case 'ar': return cert.nameAr;
+      case 'tr': return cert.nameTr;
+      default: return cert.nameEn;
+    }
+  };
+
+  const getDescription = (cert: Certificate) => {
+    switch (locale) {
+      case 'ar': return cert.descriptionAr;
+      case 'tr': return cert.descriptionTr;
+      default: return cert.descriptionEn;
+    }
+  };
+
+  const getIssuingBody = (cert: Certificate) => {
+    switch (locale) {
+      case 'ar': return cert.issuingBodyAr;
+      case 'tr': return cert.issuingBodyTr;
+      default: return cert.issuingBodyEn;
+    }
+  };
+
+  const formatDate = (dateString: string | null) => {
+    if (!dateString) return '-';
+    const date = new Date(dateString);
+    return date.getFullYear().toString();
+  };
+
+  const colors = [
+    'from-blue-500/20',
+    'from-yellow-500/20',
+    'from-green-500/20',
+    'from-orange-500/20',
+    'from-purple-500/20',
+    'from-red-500/20',
+  ];
 
   return (
     <div className="min-h-screen bg-white">
@@ -100,61 +127,72 @@ export default function CertificatesPage() {
       {/* Certificates Grid */}
       <section className="py-20">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {certificates.map((cert, index) => (
-              <motion.div
-                key={cert.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className={`group relative bg-gradient-to-br ${cert.color} to-white-50 rounded-2xl overflow-hidden border border-gray-200 hover:border-gray-300 transition-all`}
-              >
-                <div className="p-8">
-                  {/* Header */}
-                  <div className="flex items-start justify-between mb-6">
-                    <div>
-                      <div className="flex items-center gap-2 mb-2">
-                        <Award className="text-primary" size={24} />
-                        <span className="text-xl font-bold text-primary">{cert.name}</span>
+          {loading ? (
+            <div className="flex justify-center items-center py-20">
+              <Loader2 className="w-8 h-8 animate-spin text-primary" />
+            </div>
+          ) : certificates.length === 0 ? (
+            <div className="text-center py-20">
+              <Award className="w-16 h-16 mx-auto text-gray-300 mb-4" />
+              <p className="text-gray-500">{t('noCertificates')}</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {certificates.map((cert, index) => (
+                <motion.div
+                  key={cert.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                  className={`group relative bg-gradient-to-br ${colors[index % colors.length]} to-white-50 rounded-2xl overflow-hidden border border-gray-200 hover:border-gray-300 transition-all`}
+                >
+                  <div className="p-8">
+                    {/* Header */}
+                    <div className="flex items-start justify-between mb-6">
+                      <div>
+                        <div className="flex items-center gap-2 mb-2">
+                          <Award className="text-primary" size={24} />
+                          <span className="text-xl font-bold text-primary">{getName(cert)}</span>
+                        </div>
+                        <h3 className="text-2xl font-bold text-gray-900">{getIssuingBody(cert)}</h3>
                       </div>
-                      <h3 className="text-2xl font-bold text-gray-900">{cert.title}</h3>
+                      <div className="relative w-20 h-20 rounded-xl overflow-hidden bg-gray-100">
+                        <Image
+                          src={cert.image || '/images/placeholders/certificate.svg'}
+                          alt={getName(cert)}
+                          fill
+                          sizes="80px"
+                          className="object-contain p-2"
+                        />
+                      </div>
                     </div>
-                    <div className="relative w-20 h-20 rounded-xl overflow-hidden bg-gray-100">
-                      <Image
-                        src={cert.image}
-                        alt={cert.name}
-                        fill
-                        sizes="80px"
-                        className="object-contain p-2"
-                      />
+
+                    {/* Description */}
+                    <p className="text-gray-700 mb-6">{getDescription(cert)}</p>
+
+                    {/* Details */}
+                    <div className="grid grid-cols-2 gap-4 mb-6">
+                      <div className="bg-gray-100/50 rounded-xl p-4">
+                        <p className="text-gray-600 text-sm">{t('issuedBy')}</p>
+                        <p className="text-gray-900 font-medium">{getIssuingBody(cert)}</p>
+                      </div>
+                      <div className="bg-gray-100/50 rounded-xl p-4">
+                        <p className="text-gray-600 text-sm">{t('validUntil')}</p>
+                        <p className="text-gray-900 font-medium">{formatDate(cert.expiryDate)}</p>
+                      </div>
                     </div>
+
+                    {/* Download */}
+                    <Button variant="outline" className="border-gray-300 text-gray-900 hover:bg-gray-100 w-full">
+                      <Download size={18} className="ml-2" />
+                      {t('downloadCertificate')}
+                    </Button>
                   </div>
-
-                  {/* Description */}
-                  <p className="text-gray-700 mb-6">{cert.description}</p>
-
-                  {/* Details */}
-                  <div className="grid grid-cols-2 gap-4 mb-6">
-                    <div className="bg-gray-100/50 rounded-xl p-4">
-                      <p className="text-gray-600 text-sm">{t('issuedBy')}</p>
-                      <p className="text-gray-900 font-medium">{cert.issuer}</p>
-                    </div>
-                    <div className="bg-gray-100/50 rounded-xl p-4">
-                      <p className="text-gray-600 text-sm">{t('validUntil')}</p>
-                      <p className="text-gray-900 font-medium">{cert.validUntil}</p>
-                    </div>
-                  </div>
-
-                  {/* Download */}
-                  <Button variant="outline" className="border-gray-300 text-gray-900 hover:bg-gray-100 w-full">
-                    <Download size={18} className="ml-2" />
-                    {t('downloadCertificate')}
-                  </Button>
-                </div>
-              </motion.div>
-            ))}
-          </div>
+                </motion.div>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
