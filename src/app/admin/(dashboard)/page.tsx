@@ -34,6 +34,15 @@ interface RecentActivity {
   createdAt: string;
 }
 
+interface RecentMessage {
+  id: string;
+  name: string;
+  email: string;
+  subject: string;
+  isRead: boolean;
+  createdAt: string;
+}
+
 export default function DashboardPage() {
   const { data: session } = useSession();
   const [stats, setStats] = useState<DashboardStats>({
@@ -43,6 +52,7 @@ export default function DashboardPage() {
     downloads: 0,
   });
   const [recentActivities, setRecentActivities] = useState<RecentActivity[]>([]);
+  const [recentMessages, setRecentMessages] = useState<RecentMessage[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -53,6 +63,7 @@ export default function DashboardPage() {
           const data = await response.json();
           setStats(data.stats);
           setRecentActivities(data.recentActivities || []);
+          setRecentMessages(data.recentMessages || []);
         }
       } catch (error) {
         console.error('Failed to fetch dashboard data:', error);
@@ -258,10 +269,51 @@ export default function DashboardPage() {
               </Link>
             </div>
 
-            <div className="text-center py-8 text-metal-500 bg-metal-50 border border-metal-100">
-              <MessageSquare className="mx-auto mb-2 opacity-50" size={40} />
-              <p className="uppercase tracking-wider text-sm">لا توجد رسائل جديدة</p>
-            </div>
+            {recentMessages.length > 0 ? (
+              <div className="space-y-3">
+                {recentMessages.map((message) => (
+                  <Link key={message.id} href={`/admin/messages?id=${message.id}`}>
+                    <div className={`flex items-center gap-4 p-3 border transition-colors cursor-pointer ${
+                      message.isRead
+                        ? 'bg-metal-50 border-metal-100 hover:border-primary/30'
+                        : 'bg-primary/5 border-primary/20 hover:border-primary/50'
+                    }`}>
+                      <div className={`w-10 h-10 border flex items-center justify-center ${
+                        message.isRead
+                          ? 'bg-metal-100 border-metal-200'
+                          : 'bg-primary/10 border-primary/20'
+                      }`}>
+                        <MessageSquare className={message.isRead ? 'text-metal-500' : 'text-primary'} size={18} />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-steel-900 text-sm font-medium truncate">
+                          {message.subject || 'بدون عنوان'}
+                        </p>
+                        <p className="text-metal-500 text-xs truncate">
+                          من: {message.name} - {message.email}
+                        </p>
+                        <p className="text-metal-400 text-xs flex items-center gap-1 mt-1">
+                          <Calendar size={12} />
+                          {new Date(message.createdAt).toLocaleDateString('ar-EG', {
+                            year: 'numeric',
+                            month: 'short',
+                            day: 'numeric',
+                          })}
+                        </p>
+                      </div>
+                      {!message.isRead && (
+                        <div className="w-2 h-2 bg-primary rounded-full" />
+                      )}
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            ) : (
+              <div className="text-center py-8 text-metal-500 bg-metal-50 border border-metal-100">
+                <MessageSquare className="mx-auto mb-2 opacity-50" size={40} />
+                <p className="uppercase tracking-wider text-sm">لا توجد رسائل جديدة</p>
+              </div>
+            )}
           </div>
         </div>
       </motion.div>
