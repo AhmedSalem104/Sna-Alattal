@@ -416,7 +416,8 @@ export const HeroSection = memo(function HeroSection() {
                   >
                     {/* Slide Background - Video or Image */}
                     <div className="absolute inset-0">
-                      <div className="absolute inset-0 bg-gradient-to-b from-steel-900/80 via-steel-900/50 to-steel-900 z-10" />
+                      {/* Less overlay for video slides to keep them clear */}
+                      <div className={`absolute inset-0 z-10 ${isVideo ? 'bg-gradient-to-b from-steel-900/30 via-transparent to-steel-900/50' : 'bg-gradient-to-b from-steel-900/80 via-steel-900/50 to-steel-900'}`} />
                       {isVideo ? (
                         /* YouTube Video Background */
                         <div className="absolute inset-0 overflow-hidden">
