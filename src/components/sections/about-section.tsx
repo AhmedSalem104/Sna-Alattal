@@ -65,7 +65,7 @@ export const AboutSection = memo(function AboutSection() {
             <div className="relative">
               <div className="relative aspect-[4/3] overflow-hidden rounded-2xl shadow-soft-xl">
                 <Image
-                  src="/images/placeholders/factory.svg"
+                  src="/uploads/about-factory.jpg"
                   alt="About S.N.A Al-Attal"
                   fill
                   sizes="(max-width: 768px) 100vw, 50vw"
