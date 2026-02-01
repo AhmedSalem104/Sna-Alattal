@@ -503,6 +503,26 @@
       }
     }
   },
+  "newsDetail": {
+    "loading": "Makale yükleniyor...",
+    "errors": {
+      "notFound": "Makale Bulunamadı",
+      "notFoundDesc": "Üzgünüz, aradığınız makale bulunamadı.",
+      "fetchError": "Makale Yüklenirken Hata",
+      "fetchErrorDesc": "Makale verileri yüklenirken bir hata oluştu. Lütfen tekrar deneyin."
+    },
+    "backToNews": "Haberlere Dön",
+    "breadcrumb": {
+      "home": "Ana Sayfa",
+      "news": "Haberler"
+    },
+    "categories": {
+      "news": "Haberler"
+    },
+    "writtenBy": "Yazan",
+    "share": "Paylaş",
+    "relatedArticles": "İlgili Makaleler"
+  },
   "productDetail": {
     "loading": "Ürün yükleniyor...",
     "errors": {

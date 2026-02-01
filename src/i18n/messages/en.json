@@ -503,6 +503,26 @@
       }
     }
   },
+  "newsDetail": {
+    "loading": "Loading article...",
+    "errors": {
+      "notFound": "Article Not Found",
+      "notFoundDesc": "Sorry, the article you are looking for could not be found.",
+      "fetchError": "Error Loading Article",
+      "fetchErrorDesc": "An error occurred while loading the article data. Please try again."
+    },
+    "backToNews": "Back to News",
+    "breadcrumb": {
+      "home": "Home",
+      "news": "News"
+    },
+    "categories": {
+      "news": "News"
+    },
+    "writtenBy": "Written by",
+    "share": "Share",
+    "relatedArticles": "Related Articles"
+  },
   "productDetail": {
     "loading": "Loading product...",
     "errors": {

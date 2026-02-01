@@ -503,6 +503,26 @@
       }
     }
   },
+  "newsDetail": {
+    "loading": "جاري تحميل المقال...",
+    "errors": {
+      "notFound": "المقال غير موجود",
+      "notFoundDesc": "عذراً، لم يتم العثور على المقال الذي تبحث عنه.",
+      "fetchError": "خطأ في تحميل المقال",
+      "fetchErrorDesc": "حدث خطأ أثناء تحميل بيانات المقال. يرجى المحاولة مرة أخرى."
+    },
+    "backToNews": "العودة للأخبار",
+    "breadcrumb": {
+      "home": "الرئيسية",
+      "news": "الأخبار"
+    },
+    "categories": {
+      "news": "أخبار"
+    },
+    "writtenBy": "بقلم",
+    "share": "مشاركة",
+    "relatedArticles": "مقالات ذات صلة"
+  },
   "productDetail": {
     "loading": "جاري تحميل المنتج...",
     "errors": {
