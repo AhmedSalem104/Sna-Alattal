@@ -425,7 +425,7 @@ export const HeroSection = memo(function HeroSection() {
                             src={`https://www.youtube.com/embed/${videoId}?autoplay=${selectedIndex === index ? 1 : 0}&mute=1&loop=1&playlist=${videoId}&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&enablejsapi=1`}
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                             allowFullScreen
-                            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[177.78vh] h-[100vh] min-w-[100vw] pointer-events-none"
+                            className="absolute top-0 left-0 w-full h-full pointer-events-none scale-150"
                             style={{ border: 'none' }}
                           />
                         </div>
