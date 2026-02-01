@@ -160,7 +160,7 @@ export default function NewsDetailPage({ params }: NewsDetailPageProps) {
       {/* Hero Image */}
       <section className="relative h-64 md:h-96 lg:h-[500px]">
         <Image
-          src={article.image || '/images/placeholder-news.jpg'}
+          src={article.image || '/images/placeholders/news.svg'}
           alt={title}
           fill
           sizes="100vw"
@@ -279,7 +279,7 @@ export default function NewsDetailPage({ params }: NewsDetailPageProps) {
                     <div className="group bg-white rounded-xl overflow-hidden border border-gray-200 hover:border-primary/50 hover:shadow-lg transition-all">
                       <div className="relative h-48 overflow-hidden">
                         <Image
-                          src={related.image || '/images/placeholder-news.jpg'}
+                          src={related.image || '/images/placeholders/news.svg'}
                           alt={getTitle(related)}
                           fill
                           sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"

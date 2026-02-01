@@ -191,7 +191,7 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
                 {/* Main Image */}
                 <div className="relative h-96 md:h-[500px] rounded-2xl overflow-hidden bg-gray-50">
                   <Image
-                    src={allImages[activeImage] || '/images/placeholder-product.jpg'}
+                    src={allImages[activeImage] || '/images/placeholders/product.svg'}
                     alt={getName(product)}
                     fill
                     sizes="(max-width: 1024px) 100vw, 50vw"
@@ -416,7 +416,7 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
                   <div className="bg-white rounded-xl overflow-hidden border border-gray-200 hover:border-primary hover:shadow-lg transition-all group">
                     <div className="relative h-40">
                       <Image
-                        src={related.image || '/images/placeholder-product.jpg'}
+                        src={related.image || '/images/placeholders/product.svg'}
                         alt={getName(related)}
                         fill
                         sizes="(max-width: 768px) 50vw, 25vw"

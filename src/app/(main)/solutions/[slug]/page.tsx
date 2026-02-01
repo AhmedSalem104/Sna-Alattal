@@ -265,7 +265,7 @@ export default function SolutionDetailPage({ params }: SolutionDetailPageProps) 
                     <div className="group bg-white rounded-xl overflow-hidden border border-gray-200 hover:border-primary/50 hover:shadow-lg transition-all">
                       <div className="relative h-48 overflow-hidden">
                         <Image
-                          src={product.image || '/images/placeholder-product.jpg'}
+                          src={product.image || '/images/placeholders/product.svg'}
                           alt={getName(product)}
                           fill
                           sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
