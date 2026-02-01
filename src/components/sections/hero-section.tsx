@@ -75,7 +75,7 @@ export const HeroSection = memo(function HeroSection() {
   // Embla carousel setup with autoplay
   const [emblaRef, emblaApi] = useEmblaCarousel(
     { loop: true, direction: isRTL ? 'rtl' : 'ltr' },
-    [Autoplay({ delay: 6000, stopOnInteraction: false })]
+    [Autoplay({ delay: 60000, stopOnInteraction: false })]
   );
 
   const scrollPrev = useCallback(() => {
