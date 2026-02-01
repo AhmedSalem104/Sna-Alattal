@@ -32,6 +32,19 @@ interface Slide {
   order: number;
 }
 
+// Helper function to extract YouTube video ID
+function getYouTubeVideoId(url: string | null): string | null {
+  if (!url) return null;
+  const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+  const match = url.match(regExp);
+  return match && match[2].length === 11 ? match[2] : null;
+}
+
+// Check if slide is a video slide (has YouTube link)
+function isVideoSlide(slide: Slide): boolean {
+  return getYouTubeVideoId(slide.buttonLink) !== null;
+}
+
 // Helper function to get localized field
 function getLocalizedField(
   slide: Slide,
@@ -165,7 +178,7 @@ export const HeroSection = memo(function HeroSection() {
   const hasSlides = slides.length > 0;
 
   // Render slide content
-  const renderSlideContent = (slide: Slide) => {
+  const renderSlideContent = (slide: Slide, isVideoSlide: boolean = false) => {
     const title = getLocalizedField(slide, 'title', locale);
     const subtitle = getLocalizedField(slide, 'subtitle', locale);
     const description = getLocalizedField(slide, 'description', locale);
@@ -178,7 +191,7 @@ export const HeroSection = memo(function HeroSection() {
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 tracking-tight"
+          className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 tracking-tight drop-shadow-lg"
         >
           {title}
         </motion.h1>
@@ -192,7 +205,7 @@ export const HeroSection = memo(function HeroSection() {
             className="flex items-center justify-center gap-4 mb-6"
           >
             <div className="h-px w-12 sm:w-20 bg-gradient-to-r from-transparent to-primary" />
-            <p className="text-lg sm:text-xl md:text-2xl text-primary font-medium">
+            <p className="text-lg sm:text-xl md:text-2xl text-primary font-medium drop-shadow-md">
               {subtitle}
             </p>
             <div className="h-px w-12 sm:w-20 bg-gradient-to-l from-transparent to-primary" />
@@ -205,14 +218,14 @@ export const HeroSection = memo(function HeroSection() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
-            className="text-base sm:text-lg text-neutral-300 max-w-3xl mx-auto mb-12 leading-relaxed"
+            className="text-base sm:text-lg text-neutral-300 max-w-3xl mx-auto mb-12 leading-relaxed drop-shadow-md"
           >
             {description}
           </motion.p>
         )}
 
-        {/* CTA Button */}
-        {buttonText && slide.buttonLink && (
+        {/* CTA Button - Hide for video slides since video is already playing */}
+        {!isVideoSlide && buttonText && slide.buttonLink && (
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -392,27 +405,46 @@ export const HeroSection = memo(function HeroSection() {
         <>
           <div className="absolute inset-0 z-0" ref={emblaRef}>
             <div className="flex h-full">
-              {slides.map((slide) => (
-                <div
-                  key={slide.id}
-                  className="flex-[0_0_100%] min-w-0 relative"
-                >
-                  {/* Slide Background Image */}
-                  <div className="absolute inset-0">
-                    <div className="absolute inset-0 bg-gradient-to-b from-steel-900/90 via-steel-900/70 to-steel-900 z-10" />
-                    <Image
-                      src={slide.image}
-                      alt={getLocalizedField(slide, 'title', locale)}
-                      fill
-                      sizes="100vw"
-                      className="object-cover"
-                      priority
-                    />
+              {slides.map((slide, index) => {
+                const videoId = getYouTubeVideoId(slide.buttonLink);
+                const isVideo = videoId !== null;
+
+                return (
+                  <div
+                    key={slide.id}
+                    className="flex-[0_0_100%] min-w-0 relative"
+                  >
+                    {/* Slide Background - Video or Image */}
+                    <div className="absolute inset-0">
+                      <div className="absolute inset-0 bg-gradient-to-b from-steel-900/80 via-steel-900/50 to-steel-900 z-10" />
+                      {isVideo ? (
+                        /* YouTube Video Background */
+                        <div className="absolute inset-0 overflow-hidden">
+                          <iframe
+                            src={`https://www.youtube.com/embed/${videoId}?autoplay=${selectedIndex === index ? 1 : 0}&mute=1&loop=1&playlist=${videoId}&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&enablejsapi=1`}
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowFullScreen
+                            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300%] h-[300%] min-w-[100vw] min-h-[100vh] pointer-events-none"
+                            style={{ border: 'none' }}
+                          />
+                        </div>
+                      ) : (
+                        /* Image Background */
+                        <Image
+                          src={slide.image}
+                          alt={getLocalizedField(slide, 'title', locale)}
+                          fill
+                          sizes="100vw"
+                          className="object-cover"
+                          priority
+                        />
+                      )}
+                    </div>
+                    {/* Slide Content */}
+                    {renderSlideContent(slide, isVideo)}
                   </div>
-                  {/* Slide Content */}
-                  {renderSlideContent(slide)}
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
 
