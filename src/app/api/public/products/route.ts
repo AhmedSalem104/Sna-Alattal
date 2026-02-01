@@ -25,7 +25,27 @@ export async function GET(request: NextRequest) {
       ...(limit && { take: limit }),
     });
 
-    return NextResponse.json(products);
+    // Helper to parse images field (could be string or array)
+    const parseImages = (images: unknown): string[] => {
+      if (Array.isArray(images)) return images;
+      if (typeof images === 'string') {
+        try {
+          const parsed = JSON.parse(images);
+          return Array.isArray(parsed) ? parsed : [];
+        } catch {
+          return [];
+        }
+      }
+      return [];
+    };
+
+    // Transform products to ensure images is always an array
+    const transformedProducts = products.map(p => ({
+      ...p,
+      images: parseImages(p.images),
+    }));
+
+    return NextResponse.json(transformedProducts);
   } catch (error) {
     console.error('Error fetching products:', error);
     return NextResponse.json(

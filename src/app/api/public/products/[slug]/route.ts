@@ -49,19 +49,41 @@ export async function GET(
       },
     });
 
+    // Helper to parse images field (could be string or array)
+    const parseImages = (images: unknown): string[] => {
+      if (Array.isArray(images)) return images;
+      if (typeof images === 'string') {
+        try {
+          const parsed = JSON.parse(images);
+          return Array.isArray(parsed) ? parsed : [];
+        } catch {
+          return [];
+        }
+      }
+      return [];
+    };
+
+    // Parse product images
+    const productImages = parseImages(product.images);
+
     // Transform related products to include image field
-    const transformedRelated = relatedProducts.map(p => ({
-      ...p,
-      image: Array.isArray(p.images) && p.images.length > 0 ? p.images[0] : '/images/placeholders/product.svg',
-    }));
+    const transformedRelated = relatedProducts.map(p => {
+      const imgs = parseImages(p.images);
+      return {
+        ...p,
+        images: imgs,
+        image: imgs.length > 0 ? imgs[0] : '/images/placeholders/product.svg',
+      };
+    });
 
     // Get first image for main product
-    const productImage = Array.isArray(product.images) && product.images.length > 0
-      ? product.images[0]
+    const productImage = productImages.length > 0
+      ? productImages[0]
       : '/images/placeholders/product.svg';
 
     return NextResponse.json({
       ...product,
+      images: productImages,
       image: productImage,
       relatedProducts: transformedRelated,
     });
