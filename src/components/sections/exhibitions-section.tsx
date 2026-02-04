@@ -174,8 +174,7 @@ export function ExhibitionsSection() {
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
               >
-                <Link href={`/exhibitions/${exhibition.id}`}>
-                  <div className="group relative bg-steel-800 border-2 border-steel-700 overflow-hidden hover:border-primary transition-all duration-300 h-full">
+                <div className="group relative bg-steel-800 border-2 border-steel-700 overflow-hidden hover:border-primary transition-all duration-300 h-full">
                     {/* Gold Accent Bar */}
                     <div className="absolute top-0 left-0 w-1 h-full bg-primary z-10" />
 
@@ -223,7 +222,6 @@ export function ExhibitionsSection() {
                       </div>
                     </div>
                   </div>
-                </Link>
               </motion.div>
             ))}
           </div>
