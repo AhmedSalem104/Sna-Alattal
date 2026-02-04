@@ -37,7 +37,7 @@ export function SolutionsSection() {
         const response = await fetch('/api/public/solutions?limit=4');
         if (response.ok) {
           const data = await response.json();
-          setSolutions(data.solutions || []);
+          setSolutions(Array.isArray(data) ? data : data.solutions || []);
         }
       } catch (error) {
         console.error('Error fetching solutions:', error);

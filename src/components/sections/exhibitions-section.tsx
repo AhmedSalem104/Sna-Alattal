@@ -38,7 +38,7 @@ export function ExhibitionsSection() {
         const response = await fetch('/api/public/exhibitions?limit=4');
         if (response.ok) {
           const data = await response.json();
-          setExhibitions(data.exhibitions || []);
+          setExhibitions(Array.isArray(data) ? data : data.exhibitions || []);
         }
       } catch (error) {
         console.error('Error fetching exhibitions:', error);

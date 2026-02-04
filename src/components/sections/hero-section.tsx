@@ -116,7 +116,7 @@ export const HeroSection = memo(function HeroSection() {
         const response = await fetch('/api/public/slides');
         if (response.ok) {
           const data = await response.json();
-          setSlides(data);
+          setSlides(data.filter((s: Slide) => !isVideoSlide(s)));
         }
       } catch (error) {
         console.error('Error fetching slides:', error);

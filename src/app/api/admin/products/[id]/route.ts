@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import { db } from '@/lib/db';
+import { parseImages } from '@/lib/parse-images';
+import { deleteImages } from '@/lib/cloudinary';
 
 interface RouteParams {
   params: { id: string };
@@ -34,7 +36,10 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
       );
     }
 
-    return NextResponse.json(product);
+    return NextResponse.json({
+      ...product,
+      images: parseImages(product.images),
+    });
   } catch (error) {
     console.error('Error fetching product:', error);
     return NextResponse.json(
@@ -103,6 +108,18 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
         seoKeywords: body.seoKeywords || [],
       },
     });
+
+    // Cleanup removed images from Cloudinary
+    if (oldProduct) {
+      const oldImages = parseImages(oldProduct.images);
+      const newImages: string[] = body.images || [];
+      const removedImages = oldImages.filter(img => !newImages.includes(img));
+      if (removedImages.length > 0) {
+        deleteImages(removedImages).catch(err =>
+          console.error('Failed to cleanup Cloudinary images:', err)
+        );
+      }
+    }
 
     // Log activity
     await db.activityLog.create({
@@ -174,10 +191,26 @@ export async function DELETE(request: NextRequest, { params }: RouteParams) {
     const permanent = searchParams.get('permanent') === 'true';
 
     if (permanent) {
+      // Get product images before deleting
+      const product = await db.product.findUnique({
+        where: { id: params.id },
+        select: { images: true },
+      });
+
       // Permanent delete
       await db.product.delete({
         where: { id: params.id },
       });
+
+      // Cleanup images from Cloudinary
+      if (product) {
+        const images = parseImages(product.images);
+        if (images.length > 0) {
+          deleteImages(images).catch(err =>
+            console.error('Failed to cleanup Cloudinary images:', err)
+          );
+        }
+      }
 
       await db.activityLog.create({
         data: {

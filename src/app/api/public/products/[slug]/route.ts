@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/db';
+import { parseImages } from '@/lib/parse-images';
 
 // GET - Get single product by slug (public)
 export async function GET(
@@ -48,20 +49,6 @@ export async function GET(
         images: true,
       },
     });
-
-    // Helper to parse images field (could be string or array)
-    const parseImages = (images: unknown): string[] => {
-      if (Array.isArray(images)) return images;
-      if (typeof images === 'string') {
-        try {
-          const parsed = JSON.parse(images);
-          return Array.isArray(parsed) ? parsed : [];
-        } catch {
-          return [];
-        }
-      }
-      return [];
-    };
 
     // Parse product images
     const productImages = parseImages(product.images);

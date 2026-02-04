@@ -75,6 +75,33 @@ export async function uploadPDF(
   };
 }
 
+/**
+ * Extract Cloudinary public_id from a secure_url.
+ * Returns null if the URL is not a Cloudinary URL.
+ */
+export function extractPublicId(url: string): string | null {
+  if (!url || !url.includes('res.cloudinary.com')) return null;
+  try {
+    const match = url.match(/\/upload\/(?:v\d+\/)?(.+?)(?:\.\w+)?$/);
+    return match ? match[1] : null;
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Delete multiple images from Cloudinary. Silently ignores non-Cloudinary URLs.
+ */
+export async function deleteImages(urls: string[]): Promise<void> {
+  const publicIds = urls
+    .map(extractPublicId)
+    .filter((id): id is string => id !== null);
+
+  await Promise.allSettled(
+    publicIds.map(id => cloudinary.uploader.destroy(id))
+  );
+}
+
 export function getImageUrl(publicId: string, options?: {
   width?: number;
   height?: number;

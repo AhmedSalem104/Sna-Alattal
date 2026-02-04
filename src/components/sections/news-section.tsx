@@ -38,7 +38,7 @@ export const NewsSection = memo(function NewsSection() {
         const response = await fetch('/api/public/news?limit=3');
         if (response.ok) {
           const data = await response.json();
-          setNews(data.news || []);
+          setNews(Array.isArray(data) ? data : data.news || []);
         }
       } catch (error) {
         console.error('Error fetching news:', error);

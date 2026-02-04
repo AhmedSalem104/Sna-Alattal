@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import { db } from '@/lib/db';
+import { parseImages } from '@/lib/parse-images';
 
 // GET - List all products
 export async function GET(request: NextRequest) {
@@ -24,7 +25,12 @@ export async function GET(request: NextRequest) {
       orderBy: [{ order: 'asc' }, { createdAt: 'desc' }],
     });
 
-    return NextResponse.json(products);
+    const transformedProducts = products.map(p => ({
+      ...p,
+      images: parseImages(p.images),
+    }));
+
+    return NextResponse.json(transformedProducts);
   } catch (error) {
     console.error('Error fetching products:', error);
     return NextResponse.json(

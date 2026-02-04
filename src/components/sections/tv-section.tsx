@@ -160,7 +160,7 @@ export const TVSection = memo(function TVSection() {
                     {/* Thumbnail */}
                     <div className="relative aspect-video overflow-hidden">
                       <Image
-                        src={interview.thumbnail}
+                        src={interview.thumbnail || '/images/placeholders/news.svg'}
                         alt={getTitle(interview)}
                         fill
                         sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
