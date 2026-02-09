@@ -214,7 +214,18 @@ export function Footer() {
                   href="tel:+201032221038"
                   className="hover:text-primary transition-colors"
                 >
-                  {t('contact.info.egypt.phone')}
+                  01032221038
+                </a>
+              </li>
+              <li className="flex items-center gap-3 text-metal-400 text-sm">
+                <div className="w-8 h-8 border border-steel-700 bg-steel-800 flex items-center justify-center shrink-0">
+                  <Phone size={14} className="text-primary" />
+                </div>
+                <a
+                  href="tel:+201006193661"
+                  className="hover:text-primary transition-colors"
+                >
+                  01006193661
                 </a>
               </li>
               <li className="flex items-center gap-3 text-metal-400 text-sm">
@@ -222,10 +233,10 @@ export function Footer() {
                   <Mail size={14} className="text-primary" />
                 </div>
                 <a
-                  href="mailto:info@sna-attal.com"
+                  href="mailto:snaalattal@gmail.com"
                   className="hover:text-primary transition-colors"
                 >
-                  info@sna-attal.com
+                  snaalattal@gmail.com
                 </a>
               </li>
             </ul>
@@ -256,23 +267,6 @@ export function Footer() {
                 </a>
               </li>
             </ul>
-
-            {/* Newsletter Signup */}
-            <div className="mt-8">
-              <h5 className="text-white font-bold mb-3 text-sm uppercase tracking-wider">
-                {t('footer.newsletter') || 'Newsletter'}
-              </h5>
-              <div className="flex">
-                <input
-                  type="email"
-                  placeholder={t('footer.email_placeholder') || 'Enter your email'}
-                  className="flex-1 px-4 py-2 bg-steel-800 border-2 border-steel-700 text-white placeholder:text-metal-500 text-sm focus:border-primary focus:outline-none"
-                />
-                <button className="px-4 py-2 bg-primary text-steel-900 font-bold text-sm uppercase tracking-wider hover:bg-primary/90 transition-colors">
-                  {t('footer.subscribe') || 'Subscribe'}
-                </button>
-              </div>
-            </div>
           </div>
         </div>
       </div>

@@ -183,8 +183,9 @@
       "egypt": {
         "country": "Mısır",
         "title": "Mısır - Genel Merkez",
-        "address": "10. Ramazan Şehri, Sanayi Bölgesi",
-        "phone": "+20 103 222 1038"
+        "address": "B4, 2., 10. Ramazan, 10. Ramazan Şehri, 44634, EG",
+        "phone": "01032221038",
+        "phone2": "01006193661"
       },
       "turkey": {
         "country": "Türkiye",
@@ -563,6 +564,30 @@
       "subtitle": "Ekibimiz ihtiyaçlarınız için doğru ürünü seçmenize yardımcı olmaya hazır",
       "contact": "Bize Ulaşın",
       "call": "Bizi Arayın"
+    }
+  },
+  "solutionDetail": {
+    "loading": "Çözüm yükleniyor...",
+    "errors": {
+      "notFound": "Çözüm Bulunamadı",
+      "notFoundDesc": "Üzgünüz, aradığınız çözüm bulunamadı.",
+      "fetchError": "Çözüm Yüklenirken Hata",
+      "fetchErrorDesc": "Çözüm verileri yüklenirken bir hata oluştu. Lütfen tekrar deneyin."
+    },
+    "backToSolutions": "Çözümlere Dön",
+    "breadcrumb": {
+      "home": "Ana Sayfa",
+      "solutions": "Çözümler"
+    },
+    "keyFeatures": "Temel Özellikler",
+    "relatedProducts": "İlgili Ürünler",
+    "otherSolutions": "Diğer Çözümler",
+    "getQuote": "Teklif İste",
+    "downloadCatalog": "Katalogu İndir",
+    "cta": {
+      "title": "Özel Bir Çözüme mi İhtiyacınız Var?",
+      "subtitle": "Ekibimiz ihtiyaçlarınız için doğru çözümü tasarlamanıza yardımcı olmaya hazır",
+      "contact": "Bize Ulaşın"
     }
   },
   "certificatesPage": {

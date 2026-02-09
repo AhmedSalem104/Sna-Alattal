@@ -183,8 +183,9 @@
       "egypt": {
         "country": "Egypt",
         "title": "Egypt - Headquarters",
-        "address": "10th of Ramadan City, Industrial Zone",
-        "phone": "+20 103 222 1038"
+        "address": "B4, 2nd, 10th of Ramadan, 10th of Ramadan City, 44634, EG",
+        "phone": "01032221038",
+        "phone2": "01006193661"
       },
       "turkey": {
         "country": "Turkey",
@@ -563,6 +564,30 @@
       "subtitle": "Our team is ready to help you choose the right product for your needs",
       "contact": "Contact Us",
       "call": "Call Us"
+    }
+  },
+  "solutionDetail": {
+    "loading": "Loading solution...",
+    "errors": {
+      "notFound": "Solution Not Found",
+      "notFoundDesc": "Sorry, the solution you are looking for could not be found.",
+      "fetchError": "Error Loading Solution",
+      "fetchErrorDesc": "An error occurred while loading the solution data. Please try again."
+    },
+    "backToSolutions": "Back to Solutions",
+    "breadcrumb": {
+      "home": "Home",
+      "solutions": "Solutions"
+    },
+    "keyFeatures": "Key Features",
+    "relatedProducts": "Related Products",
+    "otherSolutions": "Other Solutions",
+    "getQuote": "Request Quote",
+    "downloadCatalog": "Download Catalogue",
+    "cta": {
+      "title": "Need a Custom Solution?",
+      "subtitle": "Our team is ready to help you design the right solution for your needs",
+      "contact": "Contact Us"
     }
   },
   "certificatesPage": {

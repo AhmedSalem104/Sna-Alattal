@@ -154,52 +154,52 @@ export function CertificatesSection() {
 
         {/* Certificates Grid */}
         {!loading && certificates.length > 0 && (
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {certificates.map((cert, index) => (
               <motion.div
                 key={cert.id}
                 initial={{ opacity: 0, y: 30 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.6, delay: index * 0.15 }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
                 className="group"
               >
-                <div className="relative bg-metal-50 border-2 border-metal-200 p-8 hover:border-primary transition-all duration-300 text-center h-full">
+                <div className="relative bg-metal-50 border-2 border-metal-200 p-4 hover:border-primary transition-all duration-300 text-center h-full">
                   {/* Gold Accent Bar */}
                   <div className="absolute top-0 left-0 w-full h-1 bg-primary" />
 
                   {/* Certificate Image */}
-                  <div className="relative w-32 h-32 mx-auto mb-6">
+                  <div className="relative w-20 h-20 mx-auto mb-3">
                     <div className="absolute inset-0 bg-primary/10 group-hover:bg-primary/20 transition-colors" />
-                    <div className="relative w-full h-full p-4 flex items-center justify-center border-2 border-metal-200 group-hover:border-primary transition-colors">
+                    <div className="relative w-full h-full p-2 flex items-center justify-center border-2 border-metal-200 group-hover:border-primary transition-colors">
                       <Image
                         src={cert.image}
                         alt={getName(cert)}
-                        width={80}
-                        height={80}
+                        width={56}
+                        height={56}
                         className="object-contain"
                         loading="lazy"
                       />
                     </div>
                     {/* Corner Accents */}
-                    <div className="absolute -top-1 -left-1 w-3 h-3 border-t-2 border-l-2 border-primary" />
-                    <div className="absolute -top-1 -right-1 w-3 h-3 border-t-2 border-r-2 border-primary" />
-                    <div className="absolute -bottom-1 -left-1 w-3 h-3 border-b-2 border-l-2 border-primary" />
-                    <div className="absolute -bottom-1 -right-1 w-3 h-3 border-b-2 border-r-2 border-primary" />
+                    <div className="absolute -top-1 -left-1 w-2 h-2 border-t-2 border-l-2 border-primary" />
+                    <div className="absolute -top-1 -right-1 w-2 h-2 border-t-2 border-r-2 border-primary" />
+                    <div className="absolute -bottom-1 -left-1 w-2 h-2 border-b-2 border-l-2 border-primary" />
+                    <div className="absolute -bottom-1 -right-1 w-2 h-2 border-b-2 border-r-2 border-primary" />
                   </div>
 
                   {/* Content */}
-                  <h3 className="text-xl font-bold text-primary uppercase tracking-wider mb-2">
+                  <h3 className="text-sm font-bold text-primary uppercase tracking-wider mb-1">
                     {getName(cert)}
                   </h3>
-                  <p className="text-sm text-metal-500 uppercase tracking-wider mb-4">
+                  <p className="text-xs text-metal-500 uppercase tracking-wider mb-2">
                     {getIssuingBody(cert)}
                   </p>
-                  <p className="text-metal-600 text-sm">{getDescription(cert)}</p>
+                  <p className="text-metal-600 text-xs line-clamp-2">{getDescription(cert)}</p>
 
                   {/* Verified Badge */}
-                  <div className="mt-6 inline-flex items-center gap-2 px-4 py-2 bg-green-50 border border-green-200">
-                    <CheckCircle size={16} className="text-green-600" />
-                    <span className="text-green-700 text-sm font-semibold uppercase tracking-wider">
+                  <div className="mt-3 inline-flex items-center gap-1 px-2 py-1 bg-green-50 border border-green-200">
+                    <CheckCircle size={12} className="text-green-600" />
+                    <span className="text-green-700 text-xs font-semibold uppercase tracking-wider">
                       {t('certificates.verified')}
                     </span>
                   </div>

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/db';
+import { parseImages } from '@/lib/parse-images';
 
 // GET - List active exhibitions (public)
 export async function GET(request: NextRequest) {
@@ -16,7 +17,13 @@ export async function GET(request: NextRequest) {
       ...(limit && { take: limit }),
     });
 
-    return NextResponse.json(exhibitions);
+    // Ensure images is always a proper array
+    const transformedExhibitions = exhibitions.map(e => ({
+      ...e,
+      images: parseImages(e.images),
+    }));
+
+    return NextResponse.json(transformedExhibitions);
   } catch (error) {
     console.error('Error fetching exhibitions:', error);
     return NextResponse.json(

@@ -12,13 +12,13 @@ import { useLocale } from '@/hooks/useLocale';
 
 interface Exhibition {
   id: string;
-  titleAr: string;
-  titleEn: string;
-  titleTr: string;
+  nameAr: string;
+  nameEn: string;
+  nameTr: string;
   locationAr: string;
   locationEn: string;
   locationTr: string;
-  image: string;
+  images: string[] | string;
   startDate: string;
   endDate: string;
 }
@@ -61,11 +61,11 @@ export function ExhibitionsSection() {
   const getTitle = (exhibition: Exhibition) => {
     switch (locale) {
       case 'ar':
-        return exhibition.titleAr;
+        return exhibition.nameAr;
       case 'tr':
-        return exhibition.titleTr;
+        return exhibition.nameTr;
       default:
-        return exhibition.titleEn;
+        return exhibition.nameEn;
     }
   };
 
@@ -78,6 +78,18 @@ export function ExhibitionsSection() {
       default:
         return exhibition.locationEn;
     }
+  };
+
+  const getExhibitionImage = (exhibition: Exhibition) => {
+    const imgs = exhibition.images;
+    if (Array.isArray(imgs) && imgs.length > 0) return imgs[0];
+    if (typeof imgs === 'string') {
+      try {
+        const parsed = JSON.parse(imgs);
+        if (Array.isArray(parsed) && parsed.length > 0) return parsed[0];
+      } catch { /* ignore */ }
+    }
+    return '/images/placeholders/exhibition.svg';
   };
 
   const isUpcoming = (exhibition: Exhibition) => {
@@ -181,7 +193,7 @@ export function ExhibitionsSection() {
                     {/* Image */}
                     <div className="relative aspect-video overflow-hidden">
                       <Image
-                        src={exhibition.image || '/images/placeholders/exhibition.svg'}
+                        src={getExhibitionImage(exhibition)}
                         alt={getTitle(exhibition)}
                         fill
                         sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"

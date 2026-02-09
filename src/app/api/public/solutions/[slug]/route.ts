@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/db';
+import { parseImages } from '@/lib/parse-images';
 
 // GET - Get single solution by slug (public)
 export async function GET(
@@ -25,7 +26,7 @@ export async function GET(
                 nameEn: true,
                 nameTr: true,
                 slug: true,
-                image: true,
+                images: true,
                 descriptionAr: true,
                 descriptionEn: true,
                 descriptionTr: true,
@@ -43,6 +44,27 @@ export async function GET(
       );
     }
 
+    // Transform products to include image field from images array
+    const transformedProducts = solution.products.map(sp => {
+      const imgs = parseImages(sp.product.images);
+      return {
+        ...sp,
+        product: {
+          ...sp.product,
+          image: imgs.length > 0 ? imgs[0] : '/images/placeholders/product.svg',
+        },
+      };
+    });
+
+    // Safely parse features
+    let features = solution.features;
+    if (typeof features === 'string') {
+      try { features = JSON.parse(features); } catch { features = []; }
+    }
+    if (!Array.isArray(features)) {
+      features = [];
+    }
+
     // Get related solutions
     const relatedSolutions = await db.solution.findMany({
       where: {
@@ -54,9 +76,9 @@ export async function GET(
       orderBy: { order: 'asc' },
       select: {
         id: true,
-        nameAr: true,
-        nameEn: true,
-        nameTr: true,
+        titleAr: true,
+        titleEn: true,
+        titleTr: true,
         slug: true,
         icon: true,
       },
@@ -64,6 +86,8 @@ export async function GET(
 
     return NextResponse.json({
       ...solution,
+      features,
+      products: transformedProducts,
       relatedSolutions,
     });
   } catch (error) {

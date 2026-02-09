@@ -64,12 +64,14 @@ export default function HomePage() {
       <ProductsSection />
       <SolutionsSection />
       <ClientsSection />
-      <TeamSection />
+      {/* TeamSection hidden per request - keep code */}
+      {/* <TeamSection /> */}
       <CertificatesSection />
       <ExhibitionsSection />
       <TVSection />
       <NewsSection />
-      <CataloguesSection />
+      {/* CataloguesSection hidden per request - keep code */}
+      {/* <CataloguesSection /> */}
       <ContactSection />
     </>
   );

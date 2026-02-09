@@ -66,6 +66,15 @@ export const TVSection = memo(function TVSection() {
         return interview.channelEn;
     }
   };
+
+  const getThumbnail = (interview: TVInterview) => {
+    if (interview.thumbnail) return interview.thumbnail;
+    // Extract YouTube thumbnail from video URL as fallback
+    const url = interview.videoUrl || '';
+    const ytMatch = url.match(/(?:youtube\.com\/(?:embed\/|watch\?v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
+    if (ytMatch) return `https://img.youtube.com/vi/${ytMatch[1]}/hqdefault.jpg`;
+    return '/images/placeholders/news.svg';
+  };
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
   const [activeVideo, setActiveVideo] = useState<string | null>(null);
@@ -160,7 +169,7 @@ export const TVSection = memo(function TVSection() {
                     {/* Thumbnail */}
                     <div className="relative aspect-video overflow-hidden">
                       <Image
-                        src={interview.thumbnail || '/images/placeholders/news.svg'}
+                        src={getThumbnail(interview)}
                         alt={getTitle(interview)}
                         fill
                         sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"

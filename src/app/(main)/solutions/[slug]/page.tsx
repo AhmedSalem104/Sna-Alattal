@@ -15,9 +15,9 @@ interface SolutionDetailPageProps {
 
 interface Solution {
   id: string;
-  nameAr: string;
-  nameEn: string;
-  nameTr: string;
+  titleAr: string;
+  titleEn: string;
+  titleTr: string;
   descriptionAr: string;
   descriptionEn: string;
   descriptionTr: string;
@@ -40,9 +40,9 @@ interface Solution {
   }[];
   relatedSolutions: {
     id: string;
-    nameAr: string;
-    nameEn: string;
-    nameTr: string;
+    titleAr: string;
+    titleEn: string;
+    titleTr: string;
     slug: string;
     icon: string | null;
   }[];
@@ -81,6 +81,14 @@ export default function SolutionDetailPage({ params }: SolutionDetailPageProps) 
 
     fetchSolution();
   }, [slug]);
+
+  const getTitle = (item: { titleAr: string; titleEn: string; titleTr: string }) => {
+    switch (locale) {
+      case 'ar': return item.titleAr;
+      case 'tr': return item.titleTr;
+      default: return item.titleEn;
+    }
+  };
 
   const getName = (item: { nameAr: string; nameEn: string; nameTr: string }) => {
     switch (locale) {
@@ -145,7 +153,7 @@ export default function SolutionDetailPage({ params }: SolutionDetailPageProps) 
               {t('breadcrumb.solutions')}
             </Link>
             <ChevronLeft size={16} className="text-gray-600 rtl:rotate-180" />
-            <span className="text-primary">{getName(solution)}</span>
+            <span className="text-primary">{getTitle(solution)}</span>
           </div>
         </div>
       </div>
@@ -156,7 +164,7 @@ export default function SolutionDetailPage({ params }: SolutionDetailPageProps) 
           <div className="absolute inset-0">
             <Image
               src={solution.image}
-              alt={getName(solution)}
+              alt={getTitle(solution)}
               fill
               sizes="100vw"
               className="object-cover opacity-30"
@@ -178,7 +186,7 @@ export default function SolutionDetailPage({ params }: SolutionDetailPageProps) 
               </div>
             )}
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
-              {getName(solution)}
+              {getTitle(solution)}
             </h1>
             <p className="text-xl text-gray-700 mb-8">
               {getDescription(solution)}
@@ -319,7 +327,7 @@ export default function SolutionDetailPage({ params }: SolutionDetailPageProps) 
                         </div>
                       )}
                       <h3 className="text-lg font-semibold text-gray-900 group-hover:text-primary transition-colors">
-                        {getName(related)}
+                        {getTitle(related)}
                       </h3>
                     </div>
                   </Link>

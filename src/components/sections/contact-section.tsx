@@ -162,7 +162,18 @@ export function ContactSection() {
                     href="tel:+201032221038"
                     className="text-metal-300 hover:text-primary transition-colors"
                   >
-                    {t('contact.info.egypt.phone')}
+                    01032221038
+                  </a>
+                </div>
+                <div className="flex items-center gap-4">
+                  <div className="w-10 h-10 border border-steel-600 bg-steel-700 flex items-center justify-center shrink-0">
+                    <Phone className="text-primary" size={18} />
+                  </div>
+                  <a
+                    href="tel:+201006193661"
+                    className="text-metal-300 hover:text-primary transition-colors"
+                  >
+                    01006193661
                   </a>
                 </div>
                 <div className="flex items-center gap-4">
@@ -170,10 +181,10 @@ export function ContactSection() {
                     <Mail className="text-primary" size={18} />
                   </div>
                   <a
-                    href="mailto:info@sna-attal.com"
+                    href="mailto:snaalattal@gmail.com"
                     className="text-metal-300 hover:text-primary transition-colors"
                   >
-                    info@sna-attal.com
+                    snaalattal@gmail.com
                   </a>
                 </div>
               </div>
@@ -324,9 +335,9 @@ export function ContactSection() {
 
                 <Button
                   type="submit"
-                  variant="industrial"
+                  variant="outline"
                   size="lg"
-                  className="w-full"
+                  className="w-full border-2 border-primary bg-primary/10 text-primary hover:bg-primary hover:text-steel-900 font-bold uppercase tracking-wider transition-all duration-300"
                   disabled={isSubmitting}
                 >
                   {isSubmitting ? (

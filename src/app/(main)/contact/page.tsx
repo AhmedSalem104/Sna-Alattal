@@ -62,11 +62,11 @@ const defaultOffices: Office[] = [
     nameAr: 'المقر الرئيسي - مصر',
     nameEn: 'Headquarters - Egypt',
     nameTr: 'Genel Merkez - Mısır',
-    addressAr: 'المنطقة الصناعية، العاشر من رمضان، الشرقية، مصر',
-    addressEn: 'Industrial Zone, 10th of Ramadan City, Egypt',
-    addressTr: 'Sanayi Bölgesi, 10. Ramazan Şehri, Mısır',
-    phone: '+20 123 456 7890',
-    email: 'egypt@sna-alattal.com',
+    addressAr: 'ب4، ثان، العاشر من رمضان، مدينة العاشر من رمضان، 44634، EG',
+    addressEn: 'B4, 2nd, 10th of Ramadan, 10th of Ramadan City, 44634, EG',
+    addressTr: 'B4, 2., 10. Ramazan, 10. Ramazan Şehri, 44634, EG',
+    phone: '01032221038',
+    email: 'snaalattal@gmail.com',
     hours: '8:00 AM - 5:00 PM (Sun-Thu)',
   },
   {
@@ -78,7 +78,7 @@ const defaultOffices: Office[] = [
     addressEn: 'Istanbul, Turkey',
     addressTr: 'İstanbul, Türkiye',
     phone: '+90 212 345 6789',
-    email: 'turkey@sna-alattal.com',
+    email: 'snaalattal@gmail.com',
     hours: '9:00 AM - 6:00 PM (Mon-Fri)',
   },
 ];
@@ -261,7 +261,7 @@ export default function ContactPage() {
                 </div>
                 <p className="text-gray-600 text-sm mb-4">{t('quickResponseDesc')}</p>
                 <a
-                  href="https://wa.me/201234567890"
+                  href="https://wa.me/201032221038"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 text-primary hover:underline"
@@ -411,10 +411,10 @@ export default function ContactPage() {
 
                   <Button
                     type="submit"
-                    variant="gold"
+                    variant="outline"
                     size="lg"
                     disabled={isSubmitting}
-                    className="w-full"
+                    className="w-full border-2 border-primary bg-primary/10 text-primary hover:bg-primary hover:text-white font-bold transition-all duration-300"
                   >
                     {isSubmitting ? (
                       <span className="flex items-center gap-2">

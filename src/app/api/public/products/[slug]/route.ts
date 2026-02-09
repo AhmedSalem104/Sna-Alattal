@@ -68,10 +68,29 @@ export async function GET(
       ? productImages[0]
       : '/images/placeholders/product.svg';
 
+    // Safely parse JSON fields
+    let specifications = product.specifications;
+    if (typeof specifications === 'string') {
+      try { specifications = JSON.parse(specifications); } catch { specifications = {}; }
+    }
+    if (!specifications || typeof specifications !== 'object' || Array.isArray(specifications)) {
+      specifications = {};
+    }
+
+    let features = product.features;
+    if (typeof features === 'string') {
+      try { features = JSON.parse(features); } catch { features = []; }
+    }
+    if (!Array.isArray(features)) {
+      features = [];
+    }
+
     return NextResponse.json({
       ...product,
       images: productImages,
       image: productImage,
+      specifications,
+      features,
       relatedProducts: transformedRelated,
     });
   } catch (error) {
