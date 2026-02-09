@@ -26,6 +26,9 @@ jobs:
             echo "📦 Installing dependencies..."
             npm install
 
+            echo "🧹 Cleaning old build..."
+            rm -rf .next
+
             echo "🔨 Building application..."
             npm run build
 
