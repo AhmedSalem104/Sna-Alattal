@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/db';
 import { z } from 'zod';
 
+const FORMSPREE_URL = 'https://formspree.io/f/xvzbgjny';
+
 const contactSchema = z.object({
   name: z.string().min(2, 'Name is required'),
   email: z.string().email('Invalid email address'),
@@ -38,6 +40,25 @@ export async function POST(request: NextRequest) {
         message,
       },
     });
+
+    // Send email notification via Formspree
+    try {
+      await fetch(FORMSPREE_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({
+          name,
+          email,
+          phone: phone || '',
+          company: company || '',
+          subject,
+          message,
+          _subject: `رسالة جديدة من الموقع: ${subject}`,
+        }),
+      });
+    } catch (emailError) {
+      console.error('Failed to send Formspree notification:', emailError);
+    }
 
     return NextResponse.json(
       {
