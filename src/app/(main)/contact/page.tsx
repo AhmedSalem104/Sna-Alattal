@@ -79,7 +79,7 @@ const defaultOffices: Office[] = [
     addressTr: 'İstanbul, Türkiye',
     phone: '+90 212 345 6789',
     email: 'snaalattal@gmail.com',
-    hours: '9:00 AM - 6:00 PM (Mon-Fri)',
+    hours: '9:00 - 18:00 (Mon-Fri)',
   },
 ];
 
