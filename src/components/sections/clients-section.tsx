@@ -63,7 +63,7 @@ export const ClientsSection = memo(function ClientsSection() {
       dir={isRTL ? 'rtl' : 'ltr'}
     >
       {/* Modern Subtle Background */}
-      <div className="absolute inset-0 z-0">
+      <div className="absolute inset-0 z-0 overflow-hidden">
         <div className="absolute top-0 left-1/2 w-[800px] h-[400px] bg-primary/5 rounded-full blur-3xl -translate-x-1/2" />
       </div>
 
@@ -100,7 +100,7 @@ export const ClientsSection = memo(function ClientsSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="grid grid-cols-3 gap-4 max-w-2xl mx-auto mb-16"
+          className="grid md:grid-cols-3 gap-4 max-w-2xl mx-auto mb-16"
         >
           {stats.map((stat) => (
             <div

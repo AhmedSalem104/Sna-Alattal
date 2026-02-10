@@ -1,9 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/db';
-import nodemailer from 'nodemailer';
 import { checkRateLimit, getClientIP, RATE_LIMITS } from '@/lib/rate-limit';
 
-const EMAIL_TIMEOUT = 10000; // 10 seconds
+const FORMSPREE_URL = 'https://formspree.io/f/xvzbgjny';
 
 export async function POST(request: NextRequest) {
   try {
@@ -45,67 +44,24 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    // Send email notification (non-blocking with timeout)
-    if (process.env.SMTP_HOST && process.env.SMTP_USER) {
-      try {
-        const transporter = nodemailer.createTransport({
-          host: process.env.SMTP_HOST,
-          port: parseInt(process.env.SMTP_PORT || '587'),
-          secure: process.env.SMTP_SECURE === 'true',
-          auth: {
-            user: process.env.SMTP_USER,
-            pass: process.env.SMTP_PASS,
-          },
-          connectionTimeout: EMAIL_TIMEOUT,
-          greetingTimeout: EMAIL_TIMEOUT,
-          socketTimeout: EMAIL_TIMEOUT,
-        });
-
-        // Send with timeout to prevent hanging
-        await transporter.sendMail({
-          from: process.env.SMTP_FROM || 'noreply@sna-alattal.com',
-          to: process.env.ADMIN_EMAIL || 'info@sna-alattal.com',
-          subject: `رسالة جديدة من الموقع: ${body.subject}`,
-          html: `
-            <div dir="rtl" style="font-family: Arial, sans-serif;">
-              <h2>رسالة جديدة من موقع S.N.A العطال</h2>
-              <table style="border-collapse: collapse; width: 100%;">
-                <tr>
-                  <td style="padding: 10px; border: 1px solid #ddd;"><strong>الاسم:</strong></td>
-                  <td style="padding: 10px; border: 1px solid #ddd;">${body.name}</td>
-                </tr>
-                <tr>
-                  <td style="padding: 10px; border: 1px solid #ddd;"><strong>البريد الإلكتروني:</strong></td>
-                  <td style="padding: 10px; border: 1px solid #ddd;">${body.email}</td>
-                </tr>
-                ${body.phone ? `
-                <tr>
-                  <td style="padding: 10px; border: 1px solid #ddd;"><strong>الهاتف:</strong></td>
-                  <td style="padding: 10px; border: 1px solid #ddd;">${body.phone}</td>
-                </tr>
-                ` : ''}
-                ${body.company ? `
-                <tr>
-                  <td style="padding: 10px; border: 1px solid #ddd;"><strong>الشركة:</strong></td>
-                  <td style="padding: 10px; border: 1px solid #ddd;">${body.company}</td>
-                </tr>
-                ` : ''}
-                <tr>
-                  <td style="padding: 10px; border: 1px solid #ddd;"><strong>الموضوع:</strong></td>
-                  <td style="padding: 10px; border: 1px solid #ddd;">${body.subject}</td>
-                </tr>
-              </table>
-              <h3>الرسالة:</h3>
-              <div style="background: #f5f5f5; padding: 15px; border-radius: 5px;">
-                ${body.message.replace(/\n/g, '<br>')}
-              </div>
-            </div>
-          `,
-        });
-      } catch (emailError) {
-        console.error('Failed to send email notification:', emailError);
-        // Don't fail the request if email fails
-      }
+    // Send email notification via Formspree
+    try {
+      await fetch(FORMSPREE_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({
+          name: body.name,
+          email: body.email,
+          phone: body.phone || '',
+          company: body.company || '',
+          subject: body.subject,
+          message: body.message,
+          _subject: `رسالة جديدة من الموقع: ${body.subject}`,
+        }),
+      });
+    } catch (emailError) {
+      console.error('Failed to send Formspree notification:', emailError);
+      // Don't fail the request if email fails
     }
 
     return NextResponse.json({ success: true, id: message.id }, { status: 201 });

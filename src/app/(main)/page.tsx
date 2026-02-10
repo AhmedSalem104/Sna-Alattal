@@ -43,11 +43,6 @@ const NewsSection = dynamic(
   { loading: () => <SectionSkeleton />, ssr: true }
 );
 
-const CataloguesSection = dynamic(
-  () => import('@/components/sections').then(mod => ({ default: mod.CataloguesSection })),
-  { loading: () => <SectionSkeleton />, ssr: true }
-);
-
 const ContactSection = dynamic(
   () => import('@/components/sections').then(mod => ({ default: mod.ContactSection })),
   { loading: () => <SectionSkeleton />, ssr: true }
@@ -70,8 +65,6 @@ export default function HomePage() {
       <ExhibitionsSection />
       <TVSection />
       <NewsSection />
-      {/* CataloguesSection hidden per request - keep code */}
-      {/* <CataloguesSection /> */}
       <ContactSection />
     </>
   );

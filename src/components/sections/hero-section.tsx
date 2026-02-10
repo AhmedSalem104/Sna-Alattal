@@ -388,7 +388,7 @@ export const HeroSection = memo(function HeroSection() {
       dir={isRTL ? 'rtl' : 'ltr'}
     >
       {/* Modern Gradient Background */}
-      <div className="absolute inset-0 z-0">
+      <div className="absolute inset-0 z-0 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-steel-950 via-steel-900 to-steel-800" />
         {/* Subtle gradient orbs */}
         <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-primary/10 rounded-full blur-3xl opacity-50" />

@@ -54,12 +54,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'monthly',
       priority: 0.6,
     },
-    {
-      url: `${BASE_URL}/catalogues`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.7,
-    },
   ];
 
   // Dynamic pages - Products

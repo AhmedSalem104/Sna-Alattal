@@ -9,4 +9,3 @@ export { ExhibitionsSection } from './exhibitions-section';
 export { TVSection } from './tv-section';
 export { NewsSection } from './news-section';
 export { ContactSection } from './contact-section';
-export { CataloguesSection } from './catalogues-section';

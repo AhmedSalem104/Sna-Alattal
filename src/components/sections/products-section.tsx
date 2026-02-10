@@ -80,7 +80,7 @@ export const ProductsSection = memo(function ProductsSection() {
       dir={isRTL ? 'rtl' : 'ltr'}
     >
       {/* Modern Subtle Background */}
-      <div className="absolute inset-0 z-0">
+      <div className="absolute inset-0 z-0 overflow-hidden">
         <div className="absolute top-0 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
         <div className="absolute bottom-0 left-0 w-80 h-80 bg-copper-500/5 rounded-full blur-3xl" />
       </div>

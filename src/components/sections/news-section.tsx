@@ -77,7 +77,7 @@ export const NewsSection = memo(function NewsSection() {
       dir={isRTL ? 'rtl' : 'ltr'}
     >
       {/* Modern Subtle Background */}
-      <div className="absolute inset-0 z-0">
+      <div className="absolute inset-0 z-0 overflow-hidden">
         <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-primary/5 rounded-full blur-3xl" />
         <div className="absolute top-0 left-0 w-80 h-80 bg-copper-500/5 rounded-full blur-3xl" />
       </div>

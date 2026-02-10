@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { motion } from 'framer-motion';
-import { ChevronLeft, Phone, Mail, FileText, Loader2, AlertCircle } from 'lucide-react';
+import { ChevronLeft, Phone, Mail, Loader2, AlertCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useLocale } from '@/hooks/useLocale';
 
@@ -196,12 +196,6 @@ export default function SolutionDetailPage({ params }: SolutionDetailPageProps) 
                 <Button variant="gold" size="lg">
                   <Phone size={18} className="ml-2" />
                   {t('getQuote')}
-                </Button>
-              </Link>
-              <Link href="/catalogues">
-                <Button variant="outline" size="lg" className="border-gray-300 text-gray-900 hover:bg-gray-100">
-                  <FileText size={18} className="ml-2" />
-                  {t('downloadCatalog')}
                 </Button>
               </Link>
             </div>
