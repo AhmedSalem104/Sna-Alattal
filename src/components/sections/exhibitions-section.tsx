@@ -99,25 +99,14 @@ export function ExhibitionsSection() {
   return (
     <section
       ref={ref}
-      className="py-20 lg:py-28 bg-steel-900 relative overflow-hidden"
+      className="py-20 lg:py-28 bg-gradient-to-b from-neutral-50 to-white relative overflow-hidden"
       dir={isRTL ? 'rtl' : 'ltr'}
     >
-      {/* Industrial Background Pattern */}
-      <div className="absolute inset-0 z-0">
-        <div
-          className="absolute inset-0 opacity-[0.02]"
-          style={{
-            backgroundImage: `
-              linear-gradient(rgba(212, 160, 10, 0.5) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(212, 160, 10, 0.5) 1px, transparent 1px)
-            `,
-            backgroundSize: '50px 50px',
-          }}
-        />
+      {/* Subtle Background */}
+      <div className="absolute inset-0 z-0 overflow-hidden">
+        <div className="absolute top-0 left-1/2 w-[800px] h-[400px] bg-primary/5 rounded-full blur-3xl -translate-x-1/2 opacity-50" />
+        <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-copper-500/5 rounded-full blur-3xl opacity-30" />
       </div>
-
-      {/* Top Gold Border */}
-      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary via-primary/80 to-primary" />
 
       <div className="container-custom relative z-10">
         {/* Header */}
@@ -129,28 +118,26 @@ export function ExhibitionsSection() {
         >
           <div>
             {/* Section Tag */}
-            <div className="inline-flex items-center gap-2 border-2 border-primary/30 bg-primary/10 px-4 py-2 mb-4">
-              <Globe size={16} className="text-primary" />
-              <span className="text-primary text-sm font-bold uppercase tracking-widest">
+            <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full mb-4">
+              <Globe size={16} />
+              <span className="text-sm font-semibold">
                 {t('exhibitions.title')}
               </span>
             </div>
 
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white uppercase tracking-wide">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-steel-900 tracking-tight">
               {t('exhibitions.subtitle')}
             </h2>
 
-            {/* Gold Divider */}
-            <div className="flex items-center gap-4 mt-4">
-              <div className="h-1 w-16 bg-primary" />
-              <div className="h-1 w-8 bg-primary/50" />
-              <div className="h-1 w-4 bg-primary/25" />
+            {/* Modern Divider */}
+            <div className="flex items-center gap-2 mt-4">
+              <div className="h-1 w-12 bg-gradient-to-r from-primary to-primary/50 rounded-full" />
             </div>
 
-            <p className="text-metal-300 mt-4 max-w-xl">{t('exhibitions.description')}</p>
+            <p className="text-neutral-600 mt-4 max-w-xl">{t('exhibitions.description')}</p>
           </div>
 
-          <Button variant="industrial" asChild className="group shrink-0">
+          <Button asChild className="group shrink-0">
             <Link href="/exhibitions">
               {t('exhibitions.viewAll')}
               <ArrowRight
@@ -171,8 +158,8 @@ export function ExhibitionsSection() {
         {/* Empty State */}
         {!loading && exhibitions.length === 0 && (
           <div className="text-center py-20">
-            <Globe size={48} className="mx-auto text-steel-600 mb-4" />
-            <p className="text-metal-400 text-lg">{t('exhibitions.noExhibitions')}</p>
+            <Globe size={48} className="mx-auto text-neutral-300 mb-4" />
+            <p className="text-neutral-500 text-lg">{t('exhibitions.noExhibitions')}</p>
           </div>
         )}
 
@@ -186,10 +173,7 @@ export function ExhibitionsSection() {
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
               >
-                <div className="group relative bg-steel-800 border-2 border-steel-700 overflow-hidden hover:border-primary transition-all duration-300 h-full">
-                    {/* Gold Accent Bar */}
-                    <div className="absolute top-0 left-0 w-1 h-full bg-primary z-10" />
-
+                <div className="group relative bg-white rounded-2xl border border-gray-200 overflow-hidden hover:border-primary/40 hover:shadow-lg transition-all duration-300 h-full">
                     {/* Image */}
                     <div className="relative aspect-video overflow-hidden">
                       <Image
@@ -197,10 +181,10 @@ export function ExhibitionsSection() {
                         alt={getTitle(exhibition)}
                         fill
                         sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                        className="object-cover group-hover:scale-110 transition-transform duration-500"
+                        className="object-cover group-hover:scale-105 transition-transform duration-500"
                         loading="lazy"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-steel-900 via-steel-900/50 to-transparent" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
                       {/* Status Badge */}
                       {isUpcoming(exhibition) && (
@@ -211,25 +195,25 @@ export function ExhibitionsSection() {
                     </div>
 
                     {/* Content */}
-                    <div className="p-6">
-                      <h3 className="text-lg font-bold text-white uppercase tracking-wider group-hover:text-primary transition-colors mb-4">
+                    <div className="p-5">
+                      <h3 className="text-lg font-semibold text-steel-900 group-hover:text-primary transition-colors mb-4">
                         {getTitle(exhibition)}
                       </h3>
 
                       <div className="space-y-3 text-sm">
                         <div className="flex items-center gap-3">
-                          <div className="w-8 h-8 border border-steel-600 bg-steel-700 flex items-center justify-center">
+                          <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
                             <MapPin size={14} className="text-primary" />
                           </div>
-                          <span className="text-metal-300">
+                          <span className="text-neutral-600">
                             {getLocation(exhibition)}
                           </span>
                         </div>
                         <div className="flex items-center gap-3">
-                          <div className="w-8 h-8 border border-steel-600 bg-steel-700 flex items-center justify-center">
+                          <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
                             <Calendar size={14} className="text-primary" />
                           </div>
-                          <span className="text-metal-300">{formatDate(exhibition.startDate)}</span>
+                          <span className="text-neutral-600">{formatDate(exhibition.startDate)}</span>
                         </div>
                       </div>
                     </div>

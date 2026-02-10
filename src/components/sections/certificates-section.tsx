@@ -87,23 +87,10 @@ export function CertificatesSection() {
       className="py-20 lg:py-28 bg-white relative overflow-hidden"
       dir={isRTL ? 'rtl' : 'ltr'}
     >
-      {/* Industrial Background Pattern */}
-      <div className="absolute inset-0 z-0">
-        <div
-          className="absolute inset-0 opacity-[0.02]"
-          style={{
-            backgroundImage: `
-              linear-gradient(rgba(26, 26, 46, 0.3) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(26, 26, 46, 0.3) 1px, transparent 1px)
-            `,
-            backgroundSize: '50px 50px',
-          }}
-        />
+      {/* Subtle Background */}
+      <div className="absolute inset-0 z-0 overflow-hidden">
+        <div className="absolute bottom-0 left-1/2 w-[800px] h-[400px] bg-primary/5 rounded-full blur-3xl -translate-x-1/2 opacity-50" />
       </div>
-
-      {/* Decorative Elements */}
-      <div className="absolute top-0 left-1/4 w-px h-20 bg-primary" />
-      <div className="absolute top-0 right-1/4 w-px h-20 bg-primary" />
 
       <div className="container-custom relative z-10">
         {/* Header */}
@@ -114,27 +101,23 @@ export function CertificatesSection() {
           className="text-center max-w-3xl mx-auto mb-16"
         >
           {/* Section Tag */}
-          <div className="inline-flex items-center gap-2 border-2 border-primary/30 bg-primary/5 px-4 py-2 mb-6">
-            <Award size={16} className="text-primary" />
-            <span className="text-primary text-sm font-bold uppercase tracking-widest">
+          <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full mb-6">
+            <Award size={16} />
+            <span className="text-sm font-semibold">
               {t('certificates.title')}
             </span>
           </div>
 
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-steel-900 uppercase tracking-wide mb-4">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-steel-900 tracking-tight mb-4">
             {t('certificates.subtitle')}
           </h2>
 
-          {/* Gold Divider */}
-          <div className="flex items-center justify-center gap-4 mb-6">
-            <div className="h-1 w-8 bg-primary/25" />
-            <div className="h-1 w-16 bg-primary/50" />
-            <div className="h-1 w-24 bg-primary" />
-            <div className="h-1 w-16 bg-primary/50" />
-            <div className="h-1 w-8 bg-primary/25" />
+          {/* Modern Divider */}
+          <div className="flex items-center justify-center gap-2 mb-6">
+            <div className="h-1 w-16 bg-gradient-to-r from-transparent via-primary to-transparent rounded-full" />
           </div>
 
-          <p className="text-metal-600">{t('certificates.description')}</p>
+          <p className="text-neutral-600">{t('certificates.description')}</p>
         </motion.div>
 
         {/* Loading State */}
@@ -147,8 +130,8 @@ export function CertificatesSection() {
         {/* Empty State */}
         {!loading && certificates.length === 0 && (
           <div className="text-center py-20">
-            <Award size={48} className="mx-auto text-metal-300 mb-4" />
-            <p className="text-metal-500">{t('certificates.empty') || 'No certificates available'}</p>
+            <Award size={48} className="mx-auto text-neutral-400 mb-4" />
+            <p className="text-neutral-500">{t('certificates.empty') || 'No certificates available'}</p>
           </div>
         )}
 
@@ -163,14 +146,10 @@ export function CertificatesSection() {
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 className="group"
               >
-                <div className="relative bg-metal-50 border-2 border-metal-200 p-4 hover:border-primary transition-all duration-300 text-center h-full">
-                  {/* Gold Accent Bar */}
-                  <div className="absolute top-0 left-0 w-full h-1 bg-primary" />
-
+                <div className="relative bg-white rounded-2xl border border-gray-200 p-4 hover:border-primary/40 hover:shadow-lg transition-all duration-300 text-center h-full">
                   {/* Certificate Image */}
                   <div className="relative w-20 h-20 mx-auto mb-3">
-                    <div className="absolute inset-0 bg-primary/10 group-hover:bg-primary/20 transition-colors" />
-                    <div className="relative w-full h-full p-2 flex items-center justify-center border-2 border-metal-200 group-hover:border-primary transition-colors">
+                    <div className="relative w-full h-full p-2 flex items-center justify-center rounded-xl bg-neutral-50 border border-gray-200 group-hover:border-primary/40 transition-colors">
                       <Image
                         src={cert.image}
                         alt={getName(cert)}
@@ -180,21 +159,16 @@ export function CertificatesSection() {
                         loading="lazy"
                       />
                     </div>
-                    {/* Corner Accents */}
-                    <div className="absolute -top-1 -left-1 w-2 h-2 border-t-2 border-l-2 border-primary" />
-                    <div className="absolute -top-1 -right-1 w-2 h-2 border-t-2 border-r-2 border-primary" />
-                    <div className="absolute -bottom-1 -left-1 w-2 h-2 border-b-2 border-l-2 border-primary" />
-                    <div className="absolute -bottom-1 -right-1 w-2 h-2 border-b-2 border-r-2 border-primary" />
                   </div>
 
                   {/* Content */}
                   <h3 className="text-sm font-bold text-primary uppercase tracking-wider mb-1">
                     {getName(cert)}
                   </h3>
-                  <p className="text-xs text-metal-500 uppercase tracking-wider mb-2">
+                  <p className="text-xs text-neutral-500 uppercase tracking-wider mb-2">
                     {getIssuingBody(cert)}
                   </p>
-                  <p className="text-metal-600 text-xs line-clamp-2">{getDescription(cert)}</p>
+                  <p className="text-neutral-600 text-xs line-clamp-2">{getDescription(cert)}</p>
 
                   {/* Verified Badge */}
                   <div className="mt-3 inline-flex items-center gap-1 px-2 py-1 bg-green-50 border border-green-200">
@@ -214,14 +188,14 @@ export function CertificatesSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.5 }}
-          className="mt-12 bg-steel-900 p-6 flex flex-col md:flex-row items-center justify-center gap-4"
+          className="mt-12 bg-primary/10 rounded-2xl p-6 flex flex-col md:flex-row items-center justify-center gap-4"
         >
           <Shield size={24} className="text-primary" />
-          <p className="text-white text-center md:text-start">
-            <span className="font-bold uppercase tracking-wider">
+          <p className="text-steel-900 text-center md:text-start">
+            <span className="font-bold">
               {t('certificates.quality_assurance') || 'Quality Assurance'}:
             </span>{' '}
-            <span className="text-metal-300">
+            <span className="text-neutral-600">
               {t('certificates.quality_text') ||
                 'جميع منتجاتنا تخضع لأعلى معايير الجودة العالمية'}
             </span>

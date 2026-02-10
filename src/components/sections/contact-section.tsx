@@ -72,25 +72,14 @@ export function ContactSection() {
   return (
     <section
       ref={ref}
-      className="py-20 lg:py-28 bg-steel-900 relative overflow-hidden"
+      className="py-20 lg:py-28 bg-gradient-to-b from-white to-neutral-50 relative overflow-hidden"
       dir={isRTL ? 'rtl' : 'ltr'}
     >
-      {/* Industrial Background Pattern */}
-      <div className="absolute inset-0 z-0">
-        <div
-          className="absolute inset-0 opacity-[0.02]"
-          style={{
-            backgroundImage: `
-              linear-gradient(rgba(212, 160, 10, 0.5) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(212, 160, 10, 0.5) 1px, transparent 1px)
-            `,
-            backgroundSize: '50px 50px',
-          }}
-        />
+      {/* Subtle Background */}
+      <div className="absolute inset-0 z-0 overflow-hidden">
+        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-primary/5 rounded-full blur-3xl opacity-50" />
+        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-copper-500/5 rounded-full blur-3xl opacity-30" />
       </div>
-
-      {/* Top Gold Border */}
-      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary via-primary/80 to-primary" />
 
       <div className="container-custom relative z-10">
         {/* Header */}
@@ -101,24 +90,20 @@ export function ContactSection() {
           className="text-center max-w-3xl mx-auto mb-16"
         >
           {/* Section Tag */}
-          <div className="inline-flex items-center gap-2 border-2 border-primary/30 bg-primary/10 px-4 py-2 mb-6">
-            <MessageSquare size={16} className="text-primary" />
-            <span className="text-primary text-sm font-bold uppercase tracking-widest">
+          <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full mb-6">
+            <MessageSquare size={16} />
+            <span className="text-sm font-semibold">
               {t('contact.title')}
             </span>
           </div>
 
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white uppercase tracking-wide mb-4">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-steel-900 tracking-tight mb-4">
             {t('contact.subtitle')}
           </h2>
 
-          {/* Gold Divider */}
-          <div className="flex items-center justify-center gap-4">
-            <div className="h-1 w-8 bg-primary/25" />
-            <div className="h-1 w-16 bg-primary/50" />
-            <div className="h-1 w-24 bg-primary" />
-            <div className="h-1 w-16 bg-primary/50" />
-            <div className="h-1 w-8 bg-primary/25" />
+          {/* Modern Divider */}
+          <div className="flex items-center justify-center gap-2 mb-6">
+            <div className="h-1 w-16 bg-gradient-to-r from-transparent via-primary to-transparent rounded-full" />
           </div>
         </motion.div>
 
@@ -131,58 +116,55 @@ export function ContactSection() {
             className="space-y-6"
           >
             {/* Egypt Office */}
-            <div className="bg-steel-800 border-2 border-steel-700 p-6 relative group hover:border-primary transition-colors">
-              {/* Gold Accent Bar */}
-              <div className="absolute top-0 left-0 w-1 h-full bg-primary" />
-
+            <div className="bg-white rounded-2xl border border-gray-200 p-6 relative group hover:border-primary/40 hover:shadow-lg transition-all duration-300">
               <div className="flex items-center gap-3 mb-6">
-                <div className="w-12 h-12 bg-primary flex items-center justify-center">
-                  <Building2 size={24} className="text-steel-900" />
+                <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center">
+                  <Building2 size={24} className="text-primary" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold text-white uppercase tracking-wider">
+                  <h3 className="text-xl font-bold text-steel-900">
                     {t('contact.info.egypt.title')}
                   </h3>
-                  <p className="text-metal-400 text-sm">{t('contact.info.egypt.country') || 'Egypt'}</p>
+                  <p className="text-neutral-500 text-sm">{t('contact.info.egypt.country') || 'Egypt'}</p>
                 </div>
               </div>
 
               <div className="space-y-4">
                 <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 border border-steel-600 bg-steel-700 flex items-center justify-center shrink-0">
+                  <div className="w-10 h-10 rounded-lg bg-neutral-100 flex items-center justify-center shrink-0">
                     <MapPin className="text-primary" size={18} />
                   </div>
-                  <p className="text-metal-300 pt-2">{t('contact.info.egypt.address')}</p>
+                  <p className="text-neutral-600 pt-2">{t('contact.info.egypt.address')}</p>
                 </div>
                 <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 border border-steel-600 bg-steel-700 flex items-center justify-center shrink-0">
+                  <div className="w-10 h-10 rounded-lg bg-neutral-100 flex items-center justify-center shrink-0">
                     <Phone className="text-primary" size={18} />
                   </div>
                   <a
                     href="tel:+201032221038"
-                    className="text-metal-300 hover:text-primary transition-colors"
+                    className="text-neutral-600 hover:text-primary transition-colors"
                   >
                     01032221038
                   </a>
                 </div>
                 <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 border border-steel-600 bg-steel-700 flex items-center justify-center shrink-0">
+                  <div className="w-10 h-10 rounded-lg bg-neutral-100 flex items-center justify-center shrink-0">
                     <Phone className="text-primary" size={18} />
                   </div>
                   <a
                     href="tel:+201006193661"
-                    className="text-metal-300 hover:text-primary transition-colors"
+                    className="text-neutral-600 hover:text-primary transition-colors"
                   >
                     01006193661
                   </a>
                 </div>
                 <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 border border-steel-600 bg-steel-700 flex items-center justify-center shrink-0">
+                  <div className="w-10 h-10 rounded-lg bg-neutral-100 flex items-center justify-center shrink-0">
                     <Mail className="text-primary" size={18} />
                   </div>
                   <a
                     href="mailto:snaalattal@gmail.com"
-                    className="text-metal-300 hover:text-primary transition-colors"
+                    className="text-neutral-600 hover:text-primary transition-colors"
                   >
                     snaalattal@gmail.com
                   </a>
@@ -191,44 +173,41 @@ export function ContactSection() {
             </div>
 
             {/* Turkey Office */}
-            <div className="bg-steel-800 border-2 border-steel-700 p-6 relative group hover:border-primary transition-colors">
-              {/* Gold Accent Bar */}
-              <div className="absolute top-0 left-0 w-1 h-full bg-primary" />
-
+            <div className="bg-white rounded-2xl border border-gray-200 p-6 relative group hover:border-primary/40 hover:shadow-lg transition-all duration-300">
               <div className="flex items-center gap-3 mb-6">
-                <div className="w-12 h-12 bg-primary flex items-center justify-center">
-                  <Globe size={24} className="text-steel-900" />
+                <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center">
+                  <Globe size={24} className="text-primary" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold text-white uppercase tracking-wider">
+                  <h3 className="text-xl font-bold text-steel-900">
                     {t('contact.info.turkey.title')}
                   </h3>
-                  <p className="text-metal-400 text-sm">{t('contact.info.turkey.country') || 'Turkey'}</p>
+                  <p className="text-neutral-500 text-sm">{t('contact.info.turkey.country') || 'Turkey'}</p>
                 </div>
               </div>
 
               <div className="space-y-4">
                 <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 border border-steel-600 bg-steel-700 flex items-center justify-center shrink-0">
+                  <div className="w-10 h-10 rounded-lg bg-neutral-100 flex items-center justify-center shrink-0">
                     <MapPin className="text-primary" size={18} />
                   </div>
-                  <p className="text-metal-300 pt-2">{t('contact.info.turkey.address')}</p>
+                  <p className="text-neutral-600 pt-2">{t('contact.info.turkey.address')}</p>
                 </div>
                 <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 border border-steel-600 bg-steel-700 flex items-center justify-center shrink-0">
+                  <div className="w-10 h-10 rounded-lg bg-neutral-100 flex items-center justify-center shrink-0">
                     <Phone className="text-primary" size={18} />
                   </div>
-                  <span className="text-metal-300">{t('contact.info.turkey.phone')}</span>
+                  <span className="text-neutral-600">{t('contact.info.turkey.phone')}</span>
                 </div>
               </div>
             </div>
 
             {/* Quick Contact Info */}
-            <div className="bg-primary p-6">
-              <h4 className="text-steel-900 font-bold uppercase tracking-wider mb-3">
+            <div className="bg-primary/10 rounded-2xl p-6">
+              <h4 className="text-steel-900 font-bold mb-3">
                 {t('contact.quick_response') || 'Quick Response'}
               </h4>
-              <p className="text-steel-800 text-sm">
+              <p className="text-neutral-600 text-sm">
                 {t('contact.quick_response_text') ||
                   'نحن نستجيب لجميع الاستفسارات خلال 24 ساعة عمل'}
               </p>
@@ -241,13 +220,13 @@ export function ContactSection() {
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6 }}
           >
-            <div className="bg-white border-2 border-metal-200 p-6 md:p-8">
+            <div className="bg-white rounded-2xl border border-gray-200 p-6 md:p-8 shadow-sm">
               {/* Form Header */}
               <div className="mb-6">
-                <h3 className="text-xl font-bold text-steel-900 uppercase tracking-wider mb-2">
+                <h3 className="text-xl font-bold text-steel-900 mb-2">
                   {t('contact.form.title') || 'Send us a message'}
                 </h3>
-                <div className="h-1 w-12 bg-primary" />
+                <div className="h-1 w-12 bg-primary rounded-full" />
               </div>
 
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">

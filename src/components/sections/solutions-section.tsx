@@ -1,6 +1,7 @@
 'use client';
 
 import { useRef, useState, useEffect } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { motion, useInView } from 'framer-motion';
@@ -61,23 +62,16 @@ export function SolutionsSection() {
     return solution.shortDescEn;
   };
 
-  const accentColors = [
-    'from-orange-500 to-orange-600',
-    'from-blue-500 to-blue-600',
-    'from-pink-500 to-pink-600',
-    'from-green-500 to-green-600',
-  ];
-
   return (
     <section
       ref={ref}
-      className="py-20 lg:py-28 bg-gradient-to-b from-steel-900 to-steel-950 relative overflow-hidden"
+      className="py-20 lg:py-28 bg-gradient-to-b from-neutral-50 to-white relative overflow-hidden"
       dir={isRTL ? 'rtl' : 'ltr'}
     >
-      {/* Modern Gradient Background */}
-      <div className="absolute inset-0 z-0">
-        <div className="absolute top-0 left-1/2 w-[800px] h-[400px] bg-primary/10 rounded-full blur-3xl -translate-x-1/2 opacity-50" />
-        <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-copper-500/10 rounded-full blur-3xl opacity-30" />
+      {/* Subtle Background */}
+      <div className="absolute inset-0 z-0 overflow-hidden">
+        <div className="absolute top-0 left-1/2 w-[800px] h-[400px] bg-primary/5 rounded-full blur-3xl -translate-x-1/2 opacity-50" />
+        <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-copper-500/5 rounded-full blur-3xl opacity-30" />
       </div>
 
       <div className="container-custom relative z-10">
@@ -88,7 +82,6 @@ export function SolutionsSection() {
           transition={{ duration: 0.6 }}
           className="text-center max-w-3xl mx-auto mb-16"
         >
-          {/* Section Tag */}
           <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full mb-6">
             <Lightbulb size={16} />
             <span className="text-sm font-semibold">
@@ -96,16 +89,15 @@ export function SolutionsSection() {
             </span>
           </div>
 
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white tracking-tight mb-4">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-steel-900 tracking-tight mb-4">
             {t('solutions.subtitle')}
           </h2>
 
-          {/* Modern Divider */}
           <div className="flex items-center justify-center gap-2 mb-6">
             <div className="h-1 w-16 bg-gradient-to-r from-transparent via-primary to-transparent rounded-full" />
           </div>
 
-          <p className="text-neutral-300 text-lg">{t('solutions.description')}</p>
+          <p className="text-neutral-600 text-lg">{t('solutions.description')}</p>
         </motion.div>
 
         {/* Loading State */}
@@ -118,8 +110,8 @@ export function SolutionsSection() {
         {/* Empty State */}
         {!loading && solutions.length === 0 && (
           <div className="text-center py-20">
-            <Beaker className="h-16 w-16 text-neutral-500 mx-auto mb-4" />
-            <p className="text-neutral-400 text-lg">
+            <Beaker className="h-16 w-16 text-neutral-400 mx-auto mb-4" />
+            <p className="text-neutral-500 text-lg">
               {locale === 'ar' ? 'لا توجد حلول متاحة حالياً' : locale === 'tr' ? 'Şu anda mevcut çözüm yok' : 'No solutions available at the moment'}
             </p>
           </div>
@@ -136,37 +128,48 @@ export function SolutionsSection() {
                 transition={{ duration: 0.6, delay: index * 0.1 }}
               >
                 <Link href={`/solutions/${solution.slug}`}>
-                  <div className="group relative bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 p-6 h-full hover:bg-white/10 hover:border-primary/30 transition-all duration-300 overflow-hidden">
-                    {/* Gradient Accent */}
-                    <div className={`absolute top-0 left-0 right-0 h-1 bg-gradient-to-r ${accentColors[index % accentColors.length]} rounded-t-2xl`} />
-
-                    {/* Icon */}
-                    <div className="w-14 h-14 bg-white/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-primary/20 transition-all duration-300">
-                      {solution.icon ? (
-                        <span className="text-3xl">{solution.icon}</span>
-                      ) : (
-                        <Beaker
-                          size={28}
-                          className="text-primary"
+                  <div className="group relative bg-white rounded-2xl border border-gray-200 h-full hover:border-primary/40 hover:shadow-lg transition-all duration-300 overflow-hidden">
+                    {/* Image */}
+                    <div className="relative w-full h-48 bg-gray-100 overflow-hidden">
+                      {solution.image ? (
+                        <Image
+                          src={solution.image}
+                          alt={getTitle(solution)}
+                          fill
+                          className="object-cover group-hover:scale-105 transition-transform duration-500"
+                          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
                         />
+                      ) : (
+                        <div className="flex items-center justify-center h-full bg-gradient-to-br from-primary/10 to-primary/5">
+                          {solution.icon ? (
+                            <span className="text-5xl">{solution.icon}</span>
+                          ) : (
+                            <Beaker size={48} className="text-primary/40" />
+                          )}
+                        </div>
                       )}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                     </div>
 
                     {/* Content */}
-                    <h3 className="text-lg font-semibold text-white mb-3 group-hover:text-primary transition-colors">
-                      {getTitle(solution)}
-                    </h3>
-                    <p className="text-neutral-400 text-sm mb-6 line-clamp-3">
-                      {getDescription(solution)}
-                    </p>
+                    <div className="p-5">
+                      {solution.icon && (
+                        <span className="text-2xl mb-2 block">{solution.icon}</span>
+                      )}
+                      <h3 className="text-lg font-semibold text-steel-900 mb-2 group-hover:text-primary transition-colors">
+                        {getTitle(solution)}
+                      </h3>
+                      <p className="text-neutral-500 text-sm mb-4 line-clamp-2">
+                        {getDescription(solution)}
+                      </p>
 
-                    {/* Link */}
-                    <div className="flex items-center text-primary text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity">
-                      <span>{t('solutions.learnMore') || 'Learn More'}</span>
-                      <ArrowRight
-                        className={`${isRTL ? 'mr-2 rotate-180' : 'ml-2'} transition-transform group-hover:translate-x-1`}
-                        size={16}
-                      />
+                      <div className="flex items-center text-primary text-sm font-medium">
+                        <span>{t('solutions.learnMore') || 'Learn More'}</span>
+                        <ArrowRight
+                          className={`${isRTL ? 'mr-2 rotate-180' : 'ml-2'} transition-transform group-hover:translate-x-1`}
+                          size={16}
+                        />
+                      </div>
                     </div>
                   </div>
                 </Link>
