@@ -11,6 +11,7 @@ const nextConfig = {
   // Performance optimizations
   reactStrictMode: true,
   compress: true,
+  poweredByHeader: false,
 
   // Ignore ESLint errors during build (they're just warnings)
   eslint: {
@@ -51,6 +52,11 @@ const nextConfig = {
   experimental: {
     optimizePackageImports: ['framer-motion', 'lucide-react', '@radix-ui/react-icons'],
   },
+  // Remove console.log in production builds
+  compiler: {
+    removeConsole: process.env.NODE_ENV === 'production' ? { exclude: ['error', 'warn'] } : false,
+  },
+
   async headers() {
     return [
       {

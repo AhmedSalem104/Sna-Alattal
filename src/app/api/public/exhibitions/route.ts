@@ -23,7 +23,9 @@ export async function GET(request: NextRequest) {
       images: parseImages(e.images),
     }));
 
-    return NextResponse.json(transformedExhibitions);
+    return NextResponse.json(transformedExhibitions, {
+      headers: { 'Cache-Control': 'public, s-maxage=300, stale-while-revalidate=600' },
+    });
   } catch (error) {
     console.error('Error fetching exhibitions:', error);
     return NextResponse.json(

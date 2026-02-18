@@ -12,7 +12,9 @@ export async function GET() {
       orderBy: [{ order: 'asc' }, { createdAt: 'desc' }],
     });
 
-    return NextResponse.json(slides);
+    return NextResponse.json(slides, {
+      headers: { 'Cache-Control': 'public, s-maxage=300, stale-while-revalidate=600' },
+    });
   } catch (error) {
     console.error('Error fetching slides:', error);
     return NextResponse.json(

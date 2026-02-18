@@ -27,7 +27,9 @@ export async function GET(request: NextRequest) {
       ...(limit && { take: limit }),
     });
 
-    return NextResponse.json(solutions);
+    return NextResponse.json(solutions, {
+      headers: { 'Cache-Control': 'public, s-maxage=300, stale-while-revalidate=600' },
+    });
   } catch (error) {
     console.error('Error fetching solutions:', error);
     return NextResponse.json(

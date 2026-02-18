@@ -153,8 +153,7 @@ export const ProductsSection = memo(function ProductsSection() {
                         fill
                         sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
                         className="object-cover group-hover:scale-105 transition-transform duration-500"
-                        priority={index < 2}
-                        loading={index < 2 ? undefined : 'lazy'}
+                        loading="lazy"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-steel-900/40 via-transparent to-transparent" />
 

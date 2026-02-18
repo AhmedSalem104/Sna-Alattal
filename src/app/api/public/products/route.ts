@@ -32,7 +32,9 @@ export async function GET(request: NextRequest) {
       images: parseImages(p.images),
     }));
 
-    return NextResponse.json(transformedProducts);
+    return NextResponse.json(transformedProducts, {
+      headers: { 'Cache-Control': 'public, s-maxage=300, stale-while-revalidate=600' },
+    });
   } catch (error) {
     console.error('Error fetching products:', error);
     return NextResponse.json(

@@ -17,7 +17,9 @@ export async function GET() {
       orderBy: [{ order: 'asc' }, { nameAr: 'asc' }],
     });
 
-    return NextResponse.json(categories);
+    return NextResponse.json(categories, {
+      headers: { 'Cache-Control': 'public, s-maxage=300, stale-while-revalidate=600' },
+    });
   } catch (error) {
     console.error('Error fetching categories:', error);
     return NextResponse.json(

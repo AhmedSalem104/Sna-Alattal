@@ -16,7 +16,9 @@ export async function GET(request: NextRequest) {
       ...(limit && { take: limit }),
     });
 
-    return NextResponse.json(tvInterviews);
+    return NextResponse.json(tvInterviews, {
+      headers: { 'Cache-Control': 'public, s-maxage=300, stale-while-revalidate=600' },
+    });
   } catch (error) {
     console.error('Error fetching TV interviews:', error);
     return NextResponse.json(

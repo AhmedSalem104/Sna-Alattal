@@ -130,6 +130,7 @@ export function Footer() {
                   width={60}
                   height={60}
                   className="border-2 border-primary"
+                  loading="lazy"
                 />
                 <div className="absolute -top-1 -right-1 w-3 h-3 bg-primary" />
               </div>

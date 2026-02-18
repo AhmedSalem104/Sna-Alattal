@@ -30,7 +30,9 @@ export async function GET(request: NextRequest) {
       return acc;
     }, {} as Record<string, unknown>);
 
-    return NextResponse.json(settingsObject);
+    return NextResponse.json(settingsObject, {
+      headers: { 'Cache-Control': 'public, s-maxage=300, stale-while-revalidate=600' },
+    });
   } catch (error) {
     console.error('Error fetching public settings:', error);
     return NextResponse.json(

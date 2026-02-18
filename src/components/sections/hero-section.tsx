@@ -56,7 +56,7 @@ function getLocalizedField(
   return (slide[fieldKey] as string) || '';
 }
 
-export const HeroSection = memo(function HeroSection() {
+export function HeroSection() {
   const t = useTranslations();
   const { isRTL, locale } = useLocale();
   const containerRef = useRef<HTMLDivElement>(null);
@@ -69,7 +69,6 @@ export const HeroSection = memo(function HeroSection() {
     offset: ['start start', 'end start'],
   });
 
-  const y = useTransform(scrollYProgress, [0, 1], ['0%', '30%']);
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
 
   // Embla carousel setup with autoplay
@@ -419,15 +418,26 @@ export const HeroSection = memo(function HeroSection() {
                       {/* Less overlay for video slides to keep them clear */}
                       <div className={`absolute inset-0 z-10 ${isVideo ? 'bg-gradient-to-b from-steel-900/30 via-transparent to-steel-900/50' : 'bg-gradient-to-b from-steel-900/80 via-steel-900/50 to-steel-900'}`} />
                       {isVideo ? (
-                        /* YouTube Video Background */
+                        /* YouTube Video Background - only load iframe for active slide */
                         <div className="absolute inset-0 overflow-hidden">
-                          <iframe
-                            src={`https://www.youtube.com/embed/${videoId}?autoplay=${selectedIndex === index ? 1 : 0}&mute=1&loop=1&playlist=${videoId}&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&enablejsapi=1`}
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                            allowFullScreen
-                            className="absolute top-0 left-0 w-full h-full pointer-events-none scale-150"
-                            style={{ border: 'none' }}
-                          />
+                          {selectedIndex === index ? (
+                            <iframe
+                              src={`https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&enablejsapi=1`}
+                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                              allowFullScreen
+                              className="absolute top-0 left-0 w-full h-full pointer-events-none scale-150"
+                              style={{ border: 'none' }}
+                            />
+                          ) : (
+                            <Image
+                              src={`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`}
+                              alt={getLocalizedField(slide, 'title', locale)}
+                              fill
+                              sizes="100vw"
+                              className="object-cover"
+                              loading="lazy"
+                            />
+                          )}
                         </div>
                       ) : (
                         /* Image Background */
@@ -437,7 +447,8 @@ export const HeroSection = memo(function HeroSection() {
                           fill
                           sizes="100vw"
                           className="object-cover"
-                          priority
+                          priority={index === 0}
+                          loading={index === 0 ? undefined : 'lazy'}
                         />
                       )}
                     </div>
@@ -517,4 +528,4 @@ export const HeroSection = memo(function HeroSection() {
       </motion.div>
     </section>
   );
-});
+}

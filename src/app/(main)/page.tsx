@@ -1,50 +1,51 @@
 import dynamic from 'next/dynamic';
-import { HeroSection, AboutSection } from '@/components/sections';
+import { HeroSection } from '@/components/sections/hero-section';
+import { AboutSection } from '@/components/sections/about-section';
 import { SectionSkeleton } from '@/components/skeletons';
 
-// Dynamic imports for below-the-fold sections
+// Dynamic imports - direct file paths for real code splitting
 const ProductsSection = dynamic(
-  () => import('@/components/sections').then(mod => ({ default: mod.ProductsSection })),
+  () => import('@/components/sections/products-section').then(mod => ({ default: mod.ProductsSection })),
   { loading: () => <SectionSkeleton />, ssr: true }
 );
 
 const SolutionsSection = dynamic(
-  () => import('@/components/sections').then(mod => ({ default: mod.SolutionsSection })),
+  () => import('@/components/sections/solutions-section').then(mod => ({ default: mod.SolutionsSection })),
   { loading: () => <SectionSkeleton />, ssr: true }
 );
 
 const ClientsSection = dynamic(
-  () => import('@/components/sections').then(mod => ({ default: mod.ClientsSection })),
+  () => import('@/components/sections/clients-section').then(mod => ({ default: mod.ClientsSection })),
   { loading: () => <SectionSkeleton />, ssr: true }
 );
 
 const TeamSection = dynamic(
-  () => import('@/components/sections').then(mod => ({ default: mod.TeamSection })),
+  () => import('@/components/sections/team-section').then(mod => ({ default: mod.TeamSection })),
   { loading: () => <SectionSkeleton />, ssr: true }
 );
 
 const CertificatesSection = dynamic(
-  () => import('@/components/sections').then(mod => ({ default: mod.CertificatesSection })),
+  () => import('@/components/sections/certificates-section').then(mod => ({ default: mod.CertificatesSection })),
   { loading: () => <SectionSkeleton />, ssr: true }
 );
 
 const ExhibitionsSection = dynamic(
-  () => import('@/components/sections').then(mod => ({ default: mod.ExhibitionsSection })),
+  () => import('@/components/sections/exhibitions-section').then(mod => ({ default: mod.ExhibitionsSection })),
   { loading: () => <SectionSkeleton />, ssr: true }
 );
 
 const TVSection = dynamic(
-  () => import('@/components/sections').then(mod => ({ default: mod.TVSection })),
+  () => import('@/components/sections/tv-section').then(mod => ({ default: mod.TVSection })),
   { loading: () => <SectionSkeleton />, ssr: true }
 );
 
 const NewsSection = dynamic(
-  () => import('@/components/sections').then(mod => ({ default: mod.NewsSection })),
+  () => import('@/components/sections/news-section').then(mod => ({ default: mod.NewsSection })),
   { loading: () => <SectionSkeleton />, ssr: true }
 );
 
 const ContactSection = dynamic(
-  () => import('@/components/sections').then(mod => ({ default: mod.ContactSection })),
+  () => import('@/components/sections/contact-section').then(mod => ({ default: mod.ContactSection })),
   { loading: () => <SectionSkeleton />, ssr: true }
 );
 
