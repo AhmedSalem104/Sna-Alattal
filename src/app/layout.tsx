@@ -83,6 +83,50 @@ export default async function RootLayout({
         <link rel="icon" href="/icon.svg" type="image/svg+xml" />
         <link rel="manifest" href="/manifest.json" />
         <meta name="theme-color" content="#D4AF37" />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'Organization',
+              name: 'S.N.A Al-Attal Engineering Industries',
+              alternateName: 'العتال للصناعات الهندسية',
+              url: process.env.NEXT_PUBLIC_SITE_URL || 'https://sna-alattal.com',
+              logo: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://sna-alattal.com'}/images/logo.jpg`,
+              description: 'Leading manufacturer of liquid filling production lines in Egypt and Turkey since 1994.',
+              foundingDate: '1994',
+              contactPoint: [
+                {
+                  '@type': 'ContactPoint',
+                  telephone: '+20-103-222-1038',
+                  contactType: 'sales',
+                  areaServed: 'EG',
+                  availableLanguage: ['Arabic', 'English'],
+                },
+                {
+                  '@type': 'ContactPoint',
+                  telephone: '+20-100-619-3661',
+                  contactType: 'customer service',
+                  areaServed: 'EG',
+                  availableLanguage: ['Arabic', 'English'],
+                },
+              ],
+              address: [
+                {
+                  '@type': 'PostalAddress',
+                  addressCountry: 'EG',
+                  addressLocality: '10th of Ramadan City',
+                },
+                {
+                  '@type': 'PostalAddress',
+                  addressCountry: 'TR',
+                  addressLocality: 'Istanbul',
+                },
+              ],
+              sameAs: [],
+            }),
+          }}
+        />
       </head>
       <body className="font-cairo antialiased" suppressHydrationWarning>
         <NextIntlClientProvider messages={messages} locale={locale}>

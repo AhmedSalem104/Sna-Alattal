@@ -1,6 +1,7 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import { motion, useInView } from 'framer-motion';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
@@ -116,6 +117,39 @@ export function Footer() {
 
       {/* Top Gold Border */}
       <div className="h-1 bg-gradient-to-r from-primary via-primary/80 to-primary" />
+
+      {/* Newsletter Strip (Krones/KHS-inspired) */}
+      <div className="relative z-10 bg-primary py-5">
+        <div className="container-custom flex flex-col md:flex-row items-center justify-between gap-4">
+          <div className="text-steel-900">
+            <h4 className="font-bold text-base">{t('footer.newsletter_title')}</h4>
+          </div>
+          <form
+            className="flex gap-2 w-full md:w-auto"
+            onSubmit={(e) => {
+              e.preventDefault();
+              const form = e.currentTarget;
+              const email = new FormData(form).get('email') as string;
+              if (email) {
+                fetch('/api/public/newsletter', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email }) })
+                  .then(() => { form.reset(); })
+                  .catch(() => {});
+              }
+            }}
+          >
+            <input
+              type="email"
+              name="email"
+              placeholder={t('footer.newsletter_placeholder')}
+              required
+              className="px-4 py-2.5 bg-white/90 text-steel-900 border-0 w-full md:w-72 focus:ring-2 focus:ring-steel-900/20 outline-none text-sm"
+            />
+            <Button type="submit" variant="industrialDark" size="default">
+              {t('footer.newsletter_button')}
+            </Button>
+          </form>
+        </div>
+      </div>
 
       {/* Main Footer */}
       <div className="container-custom py-16 relative z-10">

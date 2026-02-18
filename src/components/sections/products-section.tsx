@@ -5,10 +5,10 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { motion, useInView } from 'framer-motion';
-import { ArrowRight, ArrowUpRight, Package, Loader2 } from 'lucide-react';
+import { ArrowRight, Package, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { useLocale } from '@/hooks/useLocale';
+import { cn } from '@/lib/utils';
 
 interface Product {
   id: string;
@@ -76,13 +76,21 @@ export const ProductsSection = memo(function ProductsSection() {
   return (
     <section
       ref={ref}
-      className="py-20 lg:py-28 bg-gradient-to-b from-neutral-50 to-white relative overflow-hidden"
+      className="py-20 lg:py-28 bg-white relative overflow-hidden"
       dir={isRTL ? 'rtl' : 'ltr'}
     >
-      {/* Modern Subtle Background */}
-      <div className="absolute inset-0 z-0 overflow-hidden">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 left-0 w-80 h-80 bg-copper-500/5 rounded-full blur-3xl" />
+      {/* Industrial grid background */}
+      <div className="absolute inset-0 z-0">
+        <div
+          className="absolute inset-0 opacity-[0.02]"
+          style={{
+            backgroundImage: `
+              linear-gradient(rgba(26, 26, 46, 0.3) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(26, 26, 46, 0.3) 1px, transparent 1px)
+            `,
+            backgroundSize: '60px 60px',
+          }}
+        />
       </div>
 
       <div className="container-custom relative z-10">
@@ -91,28 +99,29 @@ export const ProductsSection = memo(function ProductsSection() {
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12"
+          className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-14"
         >
           <div>
-            {/* Section Tag */}
-            <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full mb-4">
-              <Package size={16} />
-              <span className="text-sm font-semibold">
+            <div className="inline-flex items-center gap-2 border-2 border-primary/30 bg-primary/5 px-4 py-2 mb-4">
+              <Package size={16} className="text-primary" />
+              <span className="text-primary text-sm font-bold uppercase tracking-widest">
                 {t('products.title')}
               </span>
             </div>
 
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-steel-900 tracking-tight">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-steel-900 uppercase tracking-wide">
               {t('products.subtitle')}
             </h2>
 
-            {/* Modern Divider */}
-            <div className="flex items-center gap-2 mt-4">
-              <div className="h-1 w-12 bg-gradient-to-r from-primary to-primary/50 rounded-full" />
+            {/* Industrial divider */}
+            <div className="flex items-center gap-4 mt-4">
+              <div className="h-1 w-8 bg-primary/25" />
+              <div className="h-1 w-16 bg-primary/50" />
+              <div className="h-1 w-24 bg-primary" />
             </div>
           </div>
 
-          <Button asChild className="group shrink-0">
+          <Button asChild variant="industrial" className="group shrink-0">
             <Link href="/products">
               {t('products.viewAll')}
               <ArrowRight
@@ -141,12 +150,15 @@ export const ProductsSection = memo(function ProductsSection() {
                 key={product.id}
                 initial={{ opacity: 0, y: 30 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
+                transition={{ duration: 0.6, delay: index * 0.12 }}
               >
                 <Link href={`/products/${product.slug}`} className="block h-full">
-                  <div className="group bg-white rounded-2xl border border-neutral-200 hover:border-primary/30 hover:shadow-soft-lg transition-all duration-300 overflow-hidden h-full">
+                  <div className="group relative bg-white border-2 border-metal-200 overflow-hidden hover:border-primary transition-all duration-300 h-full">
+                    {/* Top gold accent line */}
+                    <div className="h-1 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
+
                     {/* Image */}
-                    <div className="relative aspect-square overflow-hidden rounded-t-2xl">
+                    <div className="relative aspect-[4/3] overflow-hidden bg-metal-50">
                       <Image
                         src={getProductImage(product)}
                         alt={getName(product)}
@@ -155,50 +167,48 @@ export const ProductsSection = memo(function ProductsSection() {
                         className="object-cover group-hover:scale-105 transition-transform duration-500"
                         loading="lazy"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-steel-900/40 via-transparent to-transparent" />
+                      <div className="absolute inset-0 bg-steel-900/10 group-hover:bg-steel-900/0 transition-colors duration-300" />
 
-                      {/* Featured Badge */}
+                      {/* Featured indicator */}
                       {product.isFeatured && (
-                        <Badge
-                          variant="gold"
-                          className="absolute top-4 right-4 z-10"
-                        >
-                          {t('products.featured') || 'مميز'}
-                        </Badge>
-                      )}
-
-                      {/* Hover Overlay */}
-                      <div className="absolute inset-0 bg-primary/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                        <div className="w-12 h-12 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center transform scale-0 group-hover:scale-100 transition-transform duration-300 shadow-soft">
-                          <ArrowUpRight size={24} className="text-primary" />
-                        </div>
-                      </div>
-
-                      {/* Category Tag on Image */}
-                      {product.category && (
-                        <div className="absolute bottom-4 left-4 z-10">
-                          <span className="inline-block px-3 py-1.5 bg-white/90 backdrop-blur-sm text-steel-800 text-xs font-medium rounded-full">
-                            {getCategoryName(product.category)}
-                          </span>
-                        </div>
+                        <div className="absolute top-0 right-0 w-0 h-0 border-t-[40px] border-t-primary border-l-[40px] border-l-transparent" />
                       )}
                     </div>
 
                     {/* Content */}
-                    <div className="p-5">
-                      <h3 className="text-steel-900 font-semibold group-hover:text-primary transition-colors line-clamp-2 text-base">
+                    <div className="p-5 border-t-2 border-metal-100">
+                      {/* Category */}
+                      {product.category && (
+                        <span className="text-xs text-primary font-bold uppercase tracking-wider">
+                          {getCategoryName(product.category)}
+                        </span>
+                      )}
+
+                      {/* Product Name */}
+                      <h3 className="text-steel-900 font-bold text-base uppercase tracking-wide mt-1 group-hover:text-primary transition-colors line-clamp-2">
                         {getName(product)}
                       </h3>
 
-                      {/* View Details Link */}
-                      <div className="mt-3 flex items-center text-primary text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity">
-                        <span>{t('products.viewDetails') || 'عرض التفاصيل'}</span>
+                      {/* Arrow link */}
+                      <div className={cn(
+                        "mt-4 flex items-center gap-2 text-sm font-semibold text-metal-400 group-hover:text-primary transition-colors",
+                      )}>
+                        <span>{t('products.viewDetails') || 'التفاصيل'}</span>
                         <ArrowRight
-                          size={16}
-                          className={`${isRTL ? 'mr-1 rotate-180' : 'ml-1'} transition-transform group-hover:translate-x-1`}
+                          size={14}
+                          className={cn(
+                            "transition-transform duration-300",
+                            isRTL ? "rotate-180 group-hover:-translate-x-1" : "group-hover:translate-x-1"
+                          )}
                         />
                       </div>
                     </div>
+
+                    {/* Left gold accent bar on hover */}
+                    <div className={cn(
+                      "absolute top-0 w-1 h-full bg-primary z-10 transform origin-top scale-y-0 group-hover:scale-y-100 transition-transform duration-300",
+                      isRTL ? "right-0" : "left-0"
+                    )} />
                   </div>
                 </Link>
               </motion.div>
@@ -213,7 +223,7 @@ export const ProductsSection = memo(function ProductsSection() {
           transition={{ duration: 0.6, delay: 0.5 }}
           className="mt-16 text-center"
         >
-          <p className="text-neutral-600 mb-8 text-lg">
+          <p className="text-metal-600 mb-8 text-lg">
             {t('products.cta_text') ||
               'اكتشف مجموعتنا الكاملة من ماكينات التعبئة والتغليف'}
           </p>
@@ -223,7 +233,7 @@ export const ProductsSection = memo(function ProductsSection() {
                 {t('products.browseAll') || 'تصفح جميع المنتجات'}
               </Link>
             </Button>
-            <Button size="lg" asChild>
+            <Button variant="industrial" size="lg" asChild>
               <Link href="/contact">
                 {t('products.requestQuote') || 'طلب عرض سعر'}
               </Link>

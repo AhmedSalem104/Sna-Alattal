@@ -24,7 +24,10 @@
     "description": "Leading manufacturer of liquid filling production lines with over 30 years of experience",
     "cta": "Discover Our Products",
     "secondary_cta": "Contact Us",
-    "scroll": "Discover More"
+    "scroll": "Discover More",
+    "tagline": "Shaping the Future of Packaging",
+    "watch_video": "Watch Video",
+    "technical_assistance": "Technical Assistance"
   },
   "about": {
     "title": "About Us",
@@ -206,7 +209,18 @@
     "newsletter": "Newsletter",
     "email_placeholder": "Enter your email",
     "subscribe": "Subscribe",
-    "since": "Since 1994"
+    "since": "Since 1994",
+    "newsletter_title": "Subscribe to our Newsletter",
+    "newsletter_placeholder": "Enter your email",
+    "newsletter_button": "Subscribe",
+    "newsletter_success": "Subscribed successfully!"
+  },
+  "floating_widget": {
+    "title": "How can we help?",
+    "contact_us": "Contact Us",
+    "technical_support": "Technical Support",
+    "request_quote": "Request Quote",
+    "close": "Close"
   },
   "tv": {
     "title": "Al-Attal TV",

@@ -1,15 +1,41 @@
 'use client';
 
-import { useRef, memo, useState, useEffect, useCallback } from 'react';
+import { useRef, useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll, useTransform, useInView } from 'framer-motion';
 import { ChevronDown, Factory, ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useLocale } from '@/hooks/useLocale';
+import { useCountUp, EASE_OUT_EXPO } from '@/hooks/useAnimations';
 import useEmblaCarousel from 'embla-carousel-react';
 import Autoplay from 'embla-carousel-autoplay';
+import { cn } from '@/lib/utils';
+
+// CountUp component for animated stats
+function CountUpStat({ target, suffix = '', label, index, inView }: {
+  target: number; suffix?: string; label: string; index: number; inView: boolean;
+}) {
+  const count = useCountUp(target, 2000, inView, 1200 + index * 200);
+  return (
+    <motion.div
+      initial={{ opacity: 0, scale: 0.8 }}
+      animate={inView ? { opacity: 1, scale: 1 } : {}}
+      transition={{ delay: 1.5 + index * 0.15, duration: 0.5, ease: 'easeOut' }}
+      className="relative group"
+    >
+      <div className="bg-white/5 backdrop-blur-sm p-4 sm:p-6 transition-all duration-300 hover:bg-white/10 border border-white/10 hover:-translate-y-1">
+        <div className="text-3xl sm:text-4xl md:text-5xl font-bold text-primary mb-2 tabular-nums">
+          {count}{suffix}
+        </div>
+        <div className="text-xs sm:text-sm text-neutral-400">
+          {label}
+        </div>
+      </div>
+    </motion.div>
+  );
+}
 
 // Slide interface matching the database schema
 interface Slide {
@@ -153,24 +179,14 @@ export function HeroSection() {
     }),
   };
 
-  const statVariants = {
-    hidden: { opacity: 0, scale: 0.8 },
-    visible: (i: number) => ({
-      opacity: 1,
-      scale: 1,
-      transition: {
-        delay: 1.5 + i * 0.15,
-        duration: 0.5,
-        ease: 'easeOut',
-      },
-    }),
-  };
+  const statsRef = useRef<HTMLDivElement>(null);
+  const statsInView = useInView(statsRef, { once: true, margin: '-100px' });
 
-  const stats = [
-    { value: '30+', label: t('about.experience') },
-    { value: '500+', label: t('about.projects') },
-    { value: '300+', label: t('about.clients') },
-    { value: '15+', label: t('about.countries') },
+  const statsData = [
+    { target: 30, suffix: '+', label: t('about.experience') },
+    { target: 500, suffix: '+', label: t('about.projects') },
+    { target: 300, suffix: '+', label: t('about.clients') },
+    { target: 15, suffix: '+', label: t('about.countries') },
   ];
 
   // Show carousel if slides exist
@@ -185,11 +201,11 @@ export function HeroSection() {
 
     return (
       <div className="container-custom relative z-10 text-center pt-20 pb-32 min-h-screen flex flex-col items-center justify-center">
-        {/* Title */}
+        {/* Title with clip-path reveal (SACMI-inspired) */}
         <motion.h1
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          initial={{ clipPath: 'inset(100% 0 0 0)', opacity: 0 }}
+          animate={{ clipPath: 'inset(0 0 0 0)', opacity: 1 }}
+          transition={{ duration: 0.8, ease: EASE_OUT_EXPO as unknown as number[] }}
           className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 tracking-tight drop-shadow-lg"
         >
           {title}
@@ -256,7 +272,7 @@ export function HeroSection() {
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="inline-flex items-center gap-2 px-5 py-2.5 mb-8 bg-primary/10 backdrop-blur-sm rounded-full"
+        className="inline-flex items-center gap-2 px-5 py-2.5 mb-8 bg-primary/10 backdrop-blur-sm"
       >
         <Factory size={18} className="text-primary" />
         <span className="text-primary text-sm font-semibold">
@@ -277,11 +293,11 @@ export function HeroSection() {
             alt="S.N.A Al-Attal"
             width={140}
             height={140}
-            className="mx-auto rounded-2xl shadow-soft-xl"
+            className="mx-auto shadow-soft-xl"
             priority
           />
           {/* Modern Glow Effect */}
-          <div className="absolute inset-0 rounded-2xl bg-primary/20 blur-xl -z-10" />
+          <div className="absolute inset-0 bg-primary/20 blur-xl -z-10" />
         </div>
       </motion.div>
 
@@ -350,31 +366,25 @@ export function HeroSection() {
             />
           </Link>
         </Button>
-        <Button variant="outline" size="lg" asChild className="border-white/20 text-white hover:bg-white/10">
-          <Link href="/contact">{t('hero.secondary_cta')}</Link>
+        <Button variant="outline" size="lg" asChild className="border-white/20 text-white hover:bg-white/10 hover:border-primary/50 relative overflow-hidden group/btn transition-all duration-500">
+          <Link href="/contact">
+            {t('hero.secondary_cta')}
+            <span className="absolute inset-0 border border-primary/0 group-hover/btn:border-primary/40 transition-all duration-500" />
+          </Link>
         </Button>
       </motion.div>
 
-      {/* Stats Grid - Modern Style */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 max-w-5xl mx-auto">
-        {stats.map((stat, index) => (
-          <motion.div
+      {/* Stats Grid - Animated Counters (SACMI-inspired) */}
+      <div ref={statsRef} className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 max-w-5xl mx-auto">
+        {statsData.map((stat, index) => (
+          <CountUpStat
             key={index}
-            custom={index}
-            variants={statVariants}
-            initial="hidden"
-            animate="visible"
-            className="relative group"
-          >
-            <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-4 sm:p-6 transition-all duration-300 hover:bg-white/10 border border-white/10">
-              <div className="text-3xl sm:text-4xl md:text-5xl font-bold text-primary mb-2">
-                {stat.value}
-              </div>
-              <div className="text-xs sm:text-sm text-neutral-400">
-                {stat.label}
-              </div>
-            </div>
-          </motion.div>
+            target={stat.target}
+            suffix={stat.suffix}
+            label={stat.label}
+            index={index}
+            inView={statsInView}
+          />
         ))}
       </div>
     </motion.div>
@@ -386,12 +396,18 @@ export function HeroSection() {
       className="relative min-h-screen flex items-center justify-center overflow-hidden bg-steel-900"
       dir={isRTL ? 'rtl' : 'ltr'}
     >
-      {/* Modern Gradient Background */}
+      {/* Modern Gradient Background with Parallax Orbs (GEA-inspired) */}
       <div className="absolute inset-0 z-0 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-steel-950 via-steel-900 to-steel-800" />
-        {/* Subtle gradient orbs */}
-        <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-primary/10 rounded-full blur-3xl opacity-50" />
-        <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-copper-500/10 rounded-full blur-3xl opacity-30" />
+        {/* Parallax gradient orbs */}
+        <motion.div
+          style={{ y: useTransform(scrollYProgress, [0, 1], [0, -80]), scale: useTransform(scrollYProgress, [0, 0.5], [1, 1.15]) }}
+          className="absolute top-0 right-0 w-[800px] h-[800px] bg-primary/10 blur-3xl opacity-50"
+        />
+        <motion.div
+          style={{ y: useTransform(scrollYProgress, [0, 1], [0, -50]) }}
+          className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-copper-500/10 blur-3xl opacity-30"
+        />
       </div>
 
       {/* Slides Carousel - Always render, show loading state inside */}
@@ -466,34 +482,61 @@ export function HeroSection() {
               {/* Arrow Navigation */}
               <button
                 onClick={scrollPrev}
-                className="absolute left-4 top-1/2 -translate-y-1/2 z-20 p-3 bg-white/10 backdrop-blur-sm rounded-full text-white hover:bg-white/20 transition-all duration-300"
+                className="absolute left-4 top-1/2 -translate-y-1/2 z-20 p-3 bg-white/10 backdrop-blur-sm text-white hover:bg-white/20 transition-all duration-300"
                 aria-label="Previous slide"
               >
                 <ChevronLeft size={24} />
               </button>
               <button
                 onClick={scrollNext}
-                className="absolute right-4 top-1/2 -translate-y-1/2 z-20 p-3 bg-white/10 backdrop-blur-sm rounded-full text-white hover:bg-white/20 transition-all duration-300"
+                className="absolute right-4 top-1/2 -translate-y-1/2 z-20 p-3 bg-white/10 backdrop-blur-sm text-white hover:bg-white/20 transition-all duration-300"
                 aria-label="Next slide"
               >
                 <ChevronRight size={24} />
               </button>
 
-              {/* Dot Navigation */}
-              <div className="absolute bottom-24 left-1/2 -translate-x-1/2 z-20 flex gap-3">
+              {/* Numbered Indicators (GEA-inspired) */}
+              <div className={cn(
+                "absolute bottom-28 z-20 flex flex-col gap-3",
+                isRTL ? "left-6 md:left-10" : "right-6 md:right-10"
+              )}>
                 {slides.map((_, index) => (
                   <button
                     key={index}
                     onClick={() => scrollTo(index)}
-                    className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
+                    className={cn(
+                      "flex items-center gap-3 text-sm font-mono transition-all duration-500",
                       index === selectedIndex
-                        ? 'bg-primary w-8'
-                        : 'bg-white/30 hover:bg-white/50'
-                    }`}
+                        ? "text-primary"
+                        : "text-white/40 hover:text-white/70"
+                    )}
                     aria-label={`Go to slide ${index + 1}`}
-                  />
+                  >
+                    <span className="w-6 text-end tabular-nums text-xs">
+                      {String(index + 1).padStart(2, '0')}
+                    </span>
+                    <div className={cn(
+                      "h-px transition-all duration-500",
+                      index === selectedIndex ? "w-10 bg-primary" : "w-5 bg-white/30"
+                    )} />
+                  </button>
                 ))}
               </div>
+
+              {/* Persistent Brand Tagline (Krones-inspired) */}
+              <motion.div
+                initial={{ opacity: 0, x: isRTL ? 20 : -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 1.5, duration: 0.8 }}
+                className={cn(
+                  "absolute bottom-28 z-20 hidden lg:block",
+                  isRTL ? "right-6 md:right-10" : "left-6 md:left-10"
+                )}
+              >
+                <p className="text-white/50 text-xs font-medium tracking-[0.2em] uppercase">
+                  {t('hero.tagline')}
+                </p>
+              </motion.div>
             </>
           )}
         </>

@@ -89,7 +89,7 @@ export function CertificatesSection() {
     >
       {/* Subtle Background */}
       <div className="absolute inset-0 z-0 overflow-hidden">
-        <div className="absolute bottom-0 left-1/2 w-[800px] h-[400px] bg-primary/5 rounded-full blur-3xl -translate-x-1/2 opacity-50" />
+        <div className="absolute bottom-0 left-1/2 w-[800px] h-[400px] bg-primary/5 blur-3xl -translate-x-1/2 opacity-50" />
       </div>
 
       <div className="container-custom relative z-10">
@@ -101,7 +101,7 @@ export function CertificatesSection() {
           className="text-center max-w-3xl mx-auto mb-16"
         >
           {/* Section Tag */}
-          <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full mb-6">
+          <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 mb-6">
             <Award size={16} />
             <span className="text-sm font-semibold">
               {t('certificates.title')}
@@ -114,7 +114,7 @@ export function CertificatesSection() {
 
           {/* Modern Divider */}
           <div className="flex items-center justify-center gap-2 mb-6">
-            <div className="h-1 w-16 bg-gradient-to-r from-transparent via-primary to-transparent rounded-full" />
+            <div className="h-1 w-16 bg-gradient-to-r from-transparent via-primary to-transparent" />
           </div>
 
           <p className="text-neutral-600">{t('certificates.description')}</p>
@@ -146,10 +146,10 @@ export function CertificatesSection() {
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 className="group"
               >
-                <div className="relative bg-white rounded-2xl border border-gray-200 p-4 hover:border-primary/40 hover:shadow-lg transition-all duration-300 text-center h-full">
+                <div className="relative bg-white border border-gray-200 p-4 hover:border-primary/40 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 text-center h-full">
                   {/* Certificate Image */}
                   <div className="relative w-20 h-20 mx-auto mb-3">
-                    <div className="relative w-full h-full p-2 flex items-center justify-center rounded-xl bg-neutral-50 border border-gray-200 group-hover:border-primary/40 transition-colors">
+                    <div className="relative w-full h-full p-2 flex items-center justify-center bg-neutral-50 border border-gray-200 group-hover:border-primary/40 group-hover:animate-glow-pulse transition-colors">
                       <Image
                         src={cert.image}
                         alt={getName(cert)}
@@ -188,7 +188,7 @@ export function CertificatesSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.5 }}
-          className="mt-12 bg-primary/10 rounded-2xl p-6 flex flex-col md:flex-row items-center justify-center gap-4"
+          className="mt-12 bg-primary/10 p-6 flex flex-col md:flex-row items-center justify-center gap-4"
         >
           <Shield size={24} className="text-primary" />
           <p className="text-steel-900 text-center md:text-start">

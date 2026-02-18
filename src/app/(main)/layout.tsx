@@ -1,5 +1,6 @@
 import { Navbar, Footer } from '@/components/layout';
 import { ScrollToTop } from '@/components/ui/scroll-to-top';
+import { FloatingContactWidget } from '@/components/ui/floating-contact-widget';
 
 export default function MainLayout({
   children,
@@ -20,6 +21,9 @@ export default function MainLayout({
         {children}
       </main>
       <Footer />
+
+      {/* Floating Contact Widget (KHS-inspired) */}
+      <FloatingContactWidget />
 
       {/* Scroll to Top Button */}
       <ScrollToTop threshold={400} />

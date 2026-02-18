@@ -24,7 +24,10 @@
     "description": "30 yılı aşkın deneyimle sıvı dolum üretim hatlarının önde gelen üreticisi",
     "cta": "Ürünlerimizi Keşfedin",
     "secondary_cta": "Bize Ulaşın",
-    "scroll": "Daha Fazlasını Keşfedin"
+    "scroll": "Daha Fazlasını Keşfedin",
+    "tagline": "Ambalajın Geleceğini Şekillendiriyoruz",
+    "watch_video": "Videoyu İzle",
+    "technical_assistance": "Teknik Destek"
   },
   "about": {
     "title": "Hakkımızda",
@@ -206,7 +209,18 @@
     "newsletter": "Bülten",
     "email_placeholder": "E-posta adresinizi girin",
     "subscribe": "Abone Ol",
-    "since": "1994'ten beri"
+    "since": "1994'ten beri",
+    "newsletter_title": "Bültenimize Abone Olun",
+    "newsletter_placeholder": "E-posta adresinizi girin",
+    "newsletter_button": "Abone Ol",
+    "newsletter_success": "Başarıyla abone oldunuz!"
+  },
+  "floating_widget": {
+    "title": "Size nasıl yardımcı olabiliriz?",
+    "contact_us": "Bize Ulaşın",
+    "technical_support": "Teknik Destek",
+    "request_quote": "Teklif İsteyin",
+    "close": "Kapat"
   },
   "tv": {
     "title": "Al-Attal TV",

@@ -180,8 +180,11 @@ export const TVSection = memo(function TVSection() {
 
                       {/* Play Button */}
                       <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="w-16 h-16 bg-primary flex items-center justify-center group-hover:scale-110 transition-transform shadow-gold">
-                          <Play size={28} className="text-steel-900 ml-1" fill="currentColor" />
+                        <div className="relative">
+                          <div className="absolute inset-0 bg-primary/30 group-hover:animate-ping" />
+                          <div className="relative w-16 h-16 bg-primary flex items-center justify-center group-hover:scale-110 transition-transform shadow-gold">
+                            <Play size={28} className="text-steel-900 ml-1" fill="currentColor" />
+                          </div>
                         </div>
                       </div>
                     </div>

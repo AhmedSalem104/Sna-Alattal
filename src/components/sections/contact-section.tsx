@@ -77,8 +77,8 @@ export function ContactSection() {
     >
       {/* Subtle Background */}
       <div className="absolute inset-0 z-0 overflow-hidden">
-        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-primary/5 rounded-full blur-3xl opacity-50" />
-        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-copper-500/5 rounded-full blur-3xl opacity-30" />
+        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-primary/5 blur-3xl opacity-50" />
+        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-copper-500/5 blur-3xl opacity-30" />
       </div>
 
       <div className="container-custom relative z-10">
@@ -90,7 +90,7 @@ export function ContactSection() {
           className="text-center max-w-3xl mx-auto mb-16"
         >
           {/* Section Tag */}
-          <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full mb-6">
+          <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 mb-6">
             <MessageSquare size={16} />
             <span className="text-sm font-semibold">
               {t('contact.title')}
@@ -103,7 +103,7 @@ export function ContactSection() {
 
           {/* Modern Divider */}
           <div className="flex items-center justify-center gap-2 mb-6">
-            <div className="h-1 w-16 bg-gradient-to-r from-transparent via-primary to-transparent rounded-full" />
+            <div className="h-1 w-16 bg-gradient-to-r from-transparent via-primary to-transparent" />
           </div>
         </motion.div>
 
@@ -116,9 +116,9 @@ export function ContactSection() {
             className="space-y-6"
           >
             {/* Egypt Office */}
-            <div className="bg-white rounded-2xl border border-gray-200 p-6 relative group hover:border-primary/40 hover:shadow-lg transition-all duration-300">
+            <div className="bg-white border border-gray-200 p-6 relative group hover:border-primary/40 hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
               <div className="flex items-center gap-3 mb-6">
-                <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center">
+                <div className="w-12 h-12 bg-primary/10 flex items-center justify-center">
                   <Building2 size={24} className="text-primary" />
                 </div>
                 <div>
@@ -131,13 +131,13 @@ export function ContactSection() {
 
               <div className="space-y-4">
                 <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-lg bg-neutral-100 flex items-center justify-center shrink-0">
+                  <div className="w-10 h-10 bg-neutral-100 flex items-center justify-center shrink-0">
                     <MapPin className="text-primary" size={18} />
                   </div>
                   <p className="text-neutral-600 pt-2">{t('contact.info.egypt.address')}</p>
                 </div>
                 <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 rounded-lg bg-neutral-100 flex items-center justify-center shrink-0">
+                  <div className="w-10 h-10 bg-neutral-100 flex items-center justify-center shrink-0">
                     <Phone className="text-primary" size={18} />
                   </div>
                   <a
@@ -148,7 +148,7 @@ export function ContactSection() {
                   </a>
                 </div>
                 <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 rounded-lg bg-neutral-100 flex items-center justify-center shrink-0">
+                  <div className="w-10 h-10 bg-neutral-100 flex items-center justify-center shrink-0">
                     <Phone className="text-primary" size={18} />
                   </div>
                   <a
@@ -159,7 +159,7 @@ export function ContactSection() {
                   </a>
                 </div>
                 <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 rounded-lg bg-neutral-100 flex items-center justify-center shrink-0">
+                  <div className="w-10 h-10 bg-neutral-100 flex items-center justify-center shrink-0">
                     <Mail className="text-primary" size={18} />
                   </div>
                   <a
@@ -173,9 +173,9 @@ export function ContactSection() {
             </div>
 
             {/* Turkey Office */}
-            <div className="bg-white rounded-2xl border border-gray-200 p-6 relative group hover:border-primary/40 hover:shadow-lg transition-all duration-300">
+            <div className="bg-white border border-gray-200 p-6 relative group hover:border-primary/40 hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
               <div className="flex items-center gap-3 mb-6">
-                <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center">
+                <div className="w-12 h-12 bg-primary/10 flex items-center justify-center">
                   <Globe size={24} className="text-primary" />
                 </div>
                 <div>
@@ -188,13 +188,13 @@ export function ContactSection() {
 
               <div className="space-y-4">
                 <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-lg bg-neutral-100 flex items-center justify-center shrink-0">
+                  <div className="w-10 h-10 bg-neutral-100 flex items-center justify-center shrink-0">
                     <MapPin className="text-primary" size={18} />
                   </div>
                   <p className="text-neutral-600 pt-2">{t('contact.info.turkey.address')}</p>
                 </div>
                 <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 rounded-lg bg-neutral-100 flex items-center justify-center shrink-0">
+                  <div className="w-10 h-10 bg-neutral-100 flex items-center justify-center shrink-0">
                     <Phone className="text-primary" size={18} />
                   </div>
                   <span className="text-neutral-600">{t('contact.info.turkey.phone')}</span>
@@ -203,7 +203,7 @@ export function ContactSection() {
             </div>
 
             {/* Quick Contact Info */}
-            <div className="bg-primary/10 rounded-2xl p-6">
+            <div className="bg-primary/10 p-6">
               <h4 className="text-steel-900 font-bold mb-3">
                 {t('contact.quick_response') || 'Quick Response'}
               </h4>
@@ -220,13 +220,13 @@ export function ContactSection() {
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6 }}
           >
-            <div className="bg-white rounded-2xl border border-gray-200 p-6 md:p-8 shadow-sm">
+            <div className="bg-white border border-gray-200 p-6 md:p-8 shadow-sm">
               {/* Form Header */}
               <div className="mb-6">
                 <h3 className="text-xl font-bold text-steel-900 mb-2">
                   {t('contact.form.title') || 'Send us a message'}
                 </h3>
-                <div className="h-1 w-12 bg-primary rounded-full" />
+                <div className="h-1 w-12 bg-primary" />
               </div>
 
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">

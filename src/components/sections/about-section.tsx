@@ -4,10 +4,11 @@ import { useRef, memo } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
-import { motion, useInView } from 'framer-motion';
+import { motion, useInView, useScroll, useTransform } from 'framer-motion';
 import { ArrowRight, Factory, Globe, Users, Award, Settings, Target } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useLocale } from '@/hooks/useLocale';
+import { useCountUp } from '@/hooks/useAnimations';
 
 const features = [
   { icon: Factory, labelKey: 'about.features.manufacturing' },
@@ -26,6 +27,10 @@ export const AboutSection = memo(function AboutSection() {
   const { isRTL } = useLocale();
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const imageRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress: imageScroll } = useScroll({ target: imageRef, offset: ['start end', 'end start'] });
+  const imageY = useTransform(imageScroll, [0, 1], [30, -30]);
+  const experienceCount = useCountUp(30, 2000, isInView);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -48,8 +53,8 @@ export const AboutSection = memo(function AboutSection() {
     >
       {/* Modern Subtle Background */}
       <div className="absolute inset-0 z-0">
-        <div className="absolute top-1/2 left-0 w-[600px] h-[600px] bg-primary/5 rounded-full blur-3xl -translate-y-1/2" />
-        <div className="absolute bottom-0 right-0 w-96 h-96 bg-copper-500/5 rounded-full blur-3xl" />
+        <div className="absolute top-1/2 left-0 w-[600px] h-[600px] bg-primary/5 blur-3xl -translate-y-1/2" />
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-copper-500/5 blur-3xl" />
       </div>
 
       <div className="container-custom relative z-10">
@@ -62,16 +67,24 @@ export const AboutSection = memo(function AboutSection() {
           {/* Image Side */}
           <motion.div variants={itemVariants} className="relative">
             {/* Main Image */}
-            <div className="relative">
-              <div className="relative aspect-[4/3] overflow-hidden rounded-2xl shadow-soft-xl">
-                <Image
-                  src="/images/about/factory.jpg"
-                  alt="About S.N.A Al-Attal"
-                  fill
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                  className="object-cover"
-                />
+            <div className="relative" ref={imageRef}>
+              <div className="relative aspect-[4/3] overflow-hidden shadow-soft-xl">
+                <motion.div style={{ y: imageY }} className="absolute inset-0">
+                  <Image
+                    src="/images/about/factory.jpg"
+                    alt="About S.N.A Al-Attal"
+                    fill
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    className="object-cover"
+                  />
+                </motion.div>
                 <div className="absolute inset-0 bg-gradient-to-t from-steel-900/30 to-transparent" />
+                <motion.div
+                  initial={{ scaleX: 1 }}
+                  animate={isInView ? { scaleX: 0 } : {}}
+                  transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
+                  className={`absolute inset-0 bg-primary z-20 ${isRTL ? 'origin-left' : 'origin-right'}`}
+                />
               </div>
 
               {/* Floating Stats */}
@@ -82,10 +95,10 @@ export const AboutSection = memo(function AboutSection() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                     transition={{ delay: 0.5 + index * 0.1 }}
-                    className="flex-1 bg-white rounded-xl shadow-soft-lg p-4 border border-neutral-100"
+                    className="flex-1 bg-white shadow-soft-lg p-4 border border-neutral-100 hover:-translate-y-1 transition-transform"
                   >
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
+                      <div className="w-10 h-10 bg-primary/10 flex items-center justify-center">
                         <item.icon size={20} className="text-primary" />
                       </div>
                       <div>
@@ -107,10 +120,10 @@ export const AboutSection = memo(function AboutSection() {
               initial={{ scale: 0 }}
               animate={isInView ? { scale: 1 } : { scale: 0 }}
               transition={{ delay: 0.6, type: 'spring' }}
-              className="absolute -top-4 -right-4 md:-top-6 md:-right-6 bg-gradient-to-br from-primary to-primary-600 rounded-2xl p-4 md:p-6 shadow-soft-xl z-10"
+              className="absolute -top-4 -right-4 md:-top-6 md:-right-6 bg-gradient-to-br from-primary to-primary-600 p-4 md:p-6 shadow-soft-xl z-10"
             >
               <div className="text-3xl md:text-4xl font-bold text-white">
-                30+
+                {experienceCount}+
               </div>
               <div className="text-xs md:text-sm font-medium text-white/90">
                 {t('about.experience')}
@@ -121,7 +134,7 @@ export const AboutSection = memo(function AboutSection() {
           {/* Content Side */}
           <motion.div variants={itemVariants} className="space-y-6 lg:space-y-8">
             {/* Section Tag */}
-            <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full">
+            <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2">
               <Factory size={16} />
               <span className="text-sm font-semibold">
                 {t('about.title')}
@@ -135,7 +148,7 @@ export const AboutSection = memo(function AboutSection() {
 
             {/* Modern Divider */}
             <div className="flex items-center gap-2">
-              <div className="h-1 w-12 bg-gradient-to-r from-primary to-primary/50 rounded-full" />
+              <div className="h-1 w-12 bg-gradient-to-r from-primary to-primary/50" />
             </div>
 
             {/* Description */}
@@ -155,9 +168,9 @@ export const AboutSection = memo(function AboutSection() {
                       : { opacity: 0, x: isRTL ? 20 : -20 }
                   }
                   transition={{ delay: 0.3 + index * 0.1 }}
-                  className="flex items-center gap-3 p-4 bg-neutral-50 rounded-xl hover:bg-primary/5 transition-colors group"
+                  className="flex items-center gap-3 p-4 bg-neutral-50 hover:bg-primary/5 transition-colors group hover:-translate-y-1"
                 >
-                  <div className="w-10 h-10 bg-white rounded-lg shadow-soft flex items-center justify-center group-hover:bg-primary/10 transition-colors">
+                  <div className="w-10 h-10 bg-white shadow-soft flex items-center justify-center group-hover:bg-primary/10 transition-colors">
                     <feature.icon
                       size={20}
                       className="text-primary"

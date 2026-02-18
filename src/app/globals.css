@@ -43,8 +43,8 @@
     /* Ring */
     --ring: 45 68% 47%;
 
-    /* Radius - Modern Industrial = Slightly rounded */
-    --radius: 0.5rem;
+    /* Radius - Industrial = Sharp corners */
+    --radius: 0px;
 
     /* Font - Cairo for all languages */
     --font-cairo: 'Cairo', 'Segoe UI', system-ui, sans-serif;
@@ -139,6 +139,9 @@
 
   /* Reduced Motion Support */
   @media (prefers-reduced-motion: reduce) {
+    :root {
+      --reduce-motion: 1;
+    }
     *,
     *::before,
     *::after {
@@ -149,11 +152,17 @@
     }
   }
 
+  /* Section Separator */
+  .section-separator {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, hsl(var(--primary) / 0.3), transparent);
+  }
+
   /* Enhanced Focus Visible Styles - Modern Gold Ring */
   *:focus-visible {
     outline: 2px solid hsl(var(--ring));
     outline-offset: 2px;
-    border-radius: 6px;
+    border-radius: 0;
   }
 
   /* Skip to Main Content Link */
@@ -299,7 +308,7 @@
     @apply transition-all duration-300 ease-smooth;
     @apply shadow-soft hover:shadow-soft-md;
     @apply hover:-translate-y-0.5;
-    border-radius: 8px;
+    border-radius: 0;
   }
 
   .btn-industrial-outline {
@@ -309,7 +318,7 @@
     @apply border-2 border-primary;
     @apply transition-all duration-300 ease-smooth;
     @apply hover:bg-primary hover:text-steel-900;
-    border-radius: 8px;
+    border-radius: 0;
   }
 
   .btn-industrial-dark {
@@ -319,7 +328,7 @@
     @apply border-2 border-steel-700;
     @apply transition-all duration-300 ease-smooth;
     @apply hover:bg-steel-700 hover:border-primary;
-    border-radius: 8px;
+    border-radius: 0;
   }
 
   /* Legacy Button Gold */
@@ -335,7 +344,7 @@
     @apply relative bg-white border border-metal-200;
     @apply overflow-hidden transition-all duration-300;
     @apply shadow-soft;
-    border-radius: 12px;
+    border-radius: 0;
   }
 
   .card-industrial::before {
@@ -359,7 +368,7 @@
     @apply relative bg-steel-800 border border-steel-700;
     @apply overflow-hidden transition-all duration-300;
     @apply shadow-soft;
-    border-radius: 12px;
+    border-radius: 0;
   }
 
   .card-industrial-dark::before {
@@ -386,7 +395,7 @@
     @apply inline-flex items-center px-3 py-1;
     @apply text-xs font-semibold uppercase tracking-wider;
     @apply border;
-    border-radius: 9999px;
+    border-radius: 0;
   }
 
   .badge-industrial-gold {
@@ -423,7 +432,7 @@
     @apply text-steel-900 placeholder:text-metal-400;
     @apply transition-all duration-200;
     @apply focus:border-primary focus:ring-2 focus:ring-primary/10;
-    border-radius: 6px;
+    border-radius: 0;
   }
 
   .input-industrial-dark {
@@ -432,7 +441,7 @@
     @apply text-white placeholder:text-steel-400;
     @apply transition-all duration-200;
     @apply focus:border-primary focus:ring-2 focus:ring-primary/20;
-    border-radius: 6px;
+    border-radius: 0;
   }
 
   /* ========================================
@@ -510,7 +519,7 @@
 
   .skeleton {
     @apply relative overflow-hidden bg-metal-200;
-    border-radius: 2px;
+    border-radius: 0;
   }
 
   .skeleton::after {
@@ -586,7 +595,7 @@
   .stat-card-industrial {
     @apply relative p-6 bg-steel-800 border-l-4 border-primary;
     @apply overflow-hidden shadow-soft;
-    border-radius: 12px;
+    border-radius: 0;
   }
 
   .stat-card-industrial::before {

@@ -24,7 +24,10 @@
     "description": "الشركة الرائدة في تصنيع خطوط إنتاج التعبئة السائلة بخبرة تمتد لأكثر من 30 عامًا",
     "cta": "اكتشف منتجاتنا",
     "secondary_cta": "تواصل معنا",
-    "scroll": "اكتشف المزيد"
+    "scroll": "اكتشف المزيد",
+    "tagline": "نصنع مستقبل التعبئة والتغليف",
+    "watch_video": "شاهد الفيديو",
+    "technical_assistance": "الدعم الفني"
   },
   "about": {
     "title": "من نحن",
@@ -206,7 +209,18 @@
     "newsletter": "النشرة الإخبارية",
     "email_placeholder": "أدخل بريدك الإلكتروني",
     "subscribe": "اشترك",
-    "since": "منذ 1994"
+    "since": "منذ 1994",
+    "newsletter_title": "اشترك في نشرتنا الإخبارية",
+    "newsletter_placeholder": "أدخل بريدك الإلكتروني",
+    "newsletter_button": "اشترك",
+    "newsletter_success": "تم الاشتراك بنجاح!"
+  },
+  "floating_widget": {
+    "title": "كيف يمكننا مساعدتك؟",
+    "contact_us": "تواصل معنا",
+    "technical_support": "دعم فني",
+    "request_quote": "طلب عرض سعر",
+    "close": "إغلاق"
   },
   "tv": {
     "title": "قناة العتال",

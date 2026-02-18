@@ -8,6 +8,7 @@ import { motion, useInView } from 'framer-motion';
 import { Users, ArrowRight, Award, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useLocale } from '@/hooks/useLocale';
+import { useCountUp } from '@/hooks/useAnimations';
 
 interface Client {
   id: string;
@@ -18,11 +19,23 @@ interface Client {
   isFeatured: boolean;
 }
 
-const stats = [
-  { value: '300+', labelKey: 'clients.stats.clients' },
-  { value: '15+', labelKey: 'clients.stats.countries' },
-  { value: '98%', labelKey: 'clients.stats.satisfaction' },
+const statsData = [
+  { target: 300, suffix: '+', labelKey: 'clients.stats.clients' },
+  { target: 15, suffix: '+', labelKey: 'clients.stats.countries' },
+  { target: 98, suffix: '%', labelKey: 'clients.stats.satisfaction' },
 ];
+
+function AnimatedStat({ target, suffix, label, inView }: { target: number; suffix: string; label: string; inView: boolean }) {
+  const count = useCountUp(target, 2000, inView);
+  return (
+    <div className="text-center p-6 bg-neutral-50">
+      <div className="text-4xl md:text-5xl font-bold text-primary tabular-nums">
+        {count}{suffix}
+      </div>
+      <div className="text-sm text-neutral-600 mt-2">{label}</div>
+    </div>
+  );
+}
 
 export const ClientsSection = memo(function ClientsSection() {
   const t = useTranslations();
@@ -64,7 +77,7 @@ export const ClientsSection = memo(function ClientsSection() {
     >
       {/* Modern Subtle Background */}
       <div className="absolute inset-0 z-0 overflow-hidden">
-        <div className="absolute top-0 left-1/2 w-[800px] h-[400px] bg-primary/5 rounded-full blur-3xl -translate-x-1/2" />
+        <div className="absolute top-0 left-1/2 w-[800px] h-[400px] bg-primary/5 blur-3xl -translate-x-1/2" />
       </div>
 
       <div className="container-custom relative z-10">
@@ -76,7 +89,7 @@ export const ClientsSection = memo(function ClientsSection() {
           className="text-center max-w-3xl mx-auto mb-16"
         >
           {/* Section Tag */}
-          <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full mb-6">
+          <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 mb-6">
             <Users size={16} />
             <span className="text-sm font-semibold">
               {t('clients.title')}
@@ -89,7 +102,7 @@ export const ClientsSection = memo(function ClientsSection() {
 
           {/* Modern Divider */}
           <div className="flex items-center justify-center gap-2 mb-6">
-            <div className="h-1 w-16 bg-gradient-to-r from-transparent via-primary to-transparent rounded-full" />
+            <div className="h-1 w-16 bg-gradient-to-r from-transparent via-primary to-transparent" />
           </div>
 
           <p className="text-neutral-600 text-lg">{t('clients.description')}</p>
@@ -102,18 +115,14 @@ export const ClientsSection = memo(function ClientsSection() {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="grid md:grid-cols-3 gap-4 max-w-2xl mx-auto mb-16"
         >
-          {stats.map((stat) => (
-            <div
+          {statsData.map((stat) => (
+            <AnimatedStat
               key={stat.labelKey}
-              className="text-center p-6 bg-neutral-50 rounded-2xl"
-            >
-              <div className="text-3xl md:text-4xl font-bold text-primary">
-                {stat.value}
-              </div>
-              <div className="text-sm text-neutral-600 mt-2">
-                {t(stat.labelKey) || stat.labelKey.split('.').pop()}
-              </div>
-            </div>
+              target={stat.target}
+              suffix={stat.suffix}
+              label={t(stat.labelKey) || stat.labelKey.split('.').pop() || ''}
+              inView={isInView}
+            />
           ))}
         </motion.div>
 
@@ -128,29 +137,57 @@ export const ClientsSection = memo(function ClientsSection() {
             <p className="text-neutral-500">{t('common.noData')}</p>
           </div>
         ) : (
-          /* Clients Logo Grid */
-          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-4">
-            {clients.map((client, index) => (
-              <motion.div
-                key={client.id}
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={isInView ? { opacity: 1, scale: 1 } : {}}
-                transition={{ duration: 0.4, delay: index * 0.05 }}
-                className="group"
-              >
-                <div className="aspect-square bg-white rounded-xl border border-neutral-200 p-4 flex items-center justify-center hover:border-primary/30 hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
-                  <Image
-                    src={client.logo}
-                    alt={getName(client)}
-                    width={80}
-                    height={80}
-                    className="object-contain transition-transform duration-300 group-hover:scale-110"
-                    loading="lazy"
-                  />
+          /* Clients Logo Marquee (Newamstar-inspired) */
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={isInView ? { opacity: 1 } : {}}
+            transition={{ duration: 0.8 }}
+            className="relative overflow-hidden"
+          >
+            {/* Fade edges */}
+            <div className="absolute left-0 top-0 bottom-0 w-16 md:w-24 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none" />
+            <div className="absolute right-0 top-0 bottom-0 w-16 md:w-24 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none" />
+
+            {/* Row 1 - scrolls left */}
+            <div className="flex animate-marquee hover:[animation-play-state:paused] mb-4">
+              {[...clients, ...clients].map((client, index) => (
+                <div key={`r1-${client.id}-${index}`} className="flex-shrink-0 mx-3">
+                  <div className="w-20 h-20 md:w-24 md:h-24 bg-white border border-neutral-200 p-3 md:p-4 flex items-center justify-center
+                    grayscale hover:grayscale-0 opacity-60 hover:opacity-100 hover:border-primary/30 hover:shadow-lg hover:-translate-y-1 transition-all duration-500">
+                    <Image
+                      src={client.logo}
+                      alt={getName(client)}
+                      width={72}
+                      height={72}
+                      className="object-contain"
+                      loading="lazy"
+                    />
+                  </div>
                 </div>
-              </motion.div>
-            ))}
-          </div>
+              ))}
+            </div>
+
+            {/* Row 2 - scrolls right (reverse) */}
+            {clients.length > 10 && (
+              <div className="flex animate-marquee-reverse hover:[animation-play-state:paused]">
+                {[...clients.slice().reverse(), ...clients.slice().reverse()].map((client, index) => (
+                  <div key={`r2-${client.id}-${index}`} className="flex-shrink-0 mx-3">
+                    <div className="w-20 h-20 md:w-24 md:h-24 bg-white border border-neutral-200 p-3 md:p-4 flex items-center justify-center
+                      grayscale hover:grayscale-0 opacity-60 hover:opacity-100 hover:border-primary/30 hover:shadow-lg hover:-translate-y-1 transition-all duration-500">
+                      <Image
+                        src={client.logo}
+                        alt={getName(client)}
+                        width={72}
+                        height={72}
+                        className="object-contain"
+                        loading="lazy"
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </motion.div>
         )}
 
         {/* Trust Indicator & CTA */}
@@ -161,7 +198,7 @@ export const ClientsSection = memo(function ClientsSection() {
           className="mt-16 text-center"
         >
           {/* Trust Badge */}
-          <div className="inline-flex items-center gap-3 bg-gradient-to-r from-steel-900 to-steel-800 px-6 py-3 rounded-full mb-8">
+          <div className="inline-flex items-center gap-3 bg-gradient-to-r from-steel-900 to-steel-800 px-6 py-3 mb-8">
             <Award size={20} className="text-primary" />
             <span className="text-white text-sm font-medium">
               {t('clients.trustText')}

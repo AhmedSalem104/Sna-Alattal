@@ -78,8 +78,8 @@ export const NewsSection = memo(function NewsSection() {
     >
       {/* Modern Subtle Background */}
       <div className="absolute inset-0 z-0 overflow-hidden">
-        <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-primary/5 rounded-full blur-3xl" />
-        <div className="absolute top-0 left-0 w-80 h-80 bg-copper-500/5 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-primary/5 blur-3xl" />
+        <div className="absolute top-0 left-0 w-80 h-80 bg-copper-500/5 blur-3xl" />
       </div>
 
       <div className="container-custom relative z-10">
@@ -92,7 +92,7 @@ export const NewsSection = memo(function NewsSection() {
         >
           <div>
             {/* Section Tag */}
-            <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full mb-4">
+            <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 mb-4">
               <Newspaper size={16} />
               <span className="text-sm font-semibold">
                 {t('news.title')}
@@ -105,7 +105,7 @@ export const NewsSection = memo(function NewsSection() {
 
             {/* Modern Divider */}
             <div className="flex items-center gap-2 mt-4">
-              <div className="h-1 w-12 bg-gradient-to-r from-primary to-primary/50 rounded-full" />
+              <div className="h-1 w-12 bg-gradient-to-r from-primary to-primary/50" />
             </div>
           </div>
 
@@ -146,35 +146,37 @@ export const NewsSection = memo(function NewsSection() {
               className="lg:col-span-2"
             >
               <Link href={`/news/${news[0].slug}`}>
-                <div className="group relative h-full bg-white rounded-2xl border border-neutral-200 overflow-hidden hover:border-primary/30 hover:shadow-soft-xl transition-all duration-300">
-                  <div className="relative aspect-[16/9] sm:aspect-[16/10] md:aspect-[2/1] overflow-hidden rounded-t-2xl">
-                    <Image
-                      src={news[0].image || '/images/placeholders/news.svg'}
-                      alt={getTitle(news[0])}
-                      fill
-                      sizes="(max-width: 1024px) 100vw, 66vw"
-                      className="object-cover group-hover:scale-105 transition-transform duration-500"
-                      loading="lazy"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-steel-900/70 via-steel-900/30 to-transparent" />
+                <div className="group relative h-full bg-white border border-neutral-200 overflow-hidden hover:border-primary/30 hover:shadow-soft-xl hover:-translate-y-1 transition-all duration-300">
+                  <motion.div whileHover={{ scale: 1.05 }} transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}>
+                    <div className="relative aspect-[16/9] sm:aspect-[16/10] md:aspect-[2/1] overflow-hidden">
+                      <Image
+                        src={news[0].image || '/images/placeholders/news.svg'}
+                        alt={getTitle(news[0])}
+                        fill
+                        sizes="(max-width: 1024px) 100vw, 66vw"
+                        className="object-cover group-hover:scale-[1.03] transition-transform duration-500"
+                        loading="lazy"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-steel-900/70 via-steel-900/30 to-transparent" />
 
-                    {/* Content Overlay */}
-                    <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8">
-                      <Badge variant="gold" className="mb-4">
-                        {t('news.title')}
-                      </Badge>
-                      <h3 className="text-xl md:text-2xl font-bold text-white group-hover:text-primary transition-colors mb-3">
-                        {getTitle(news[0])}
-                      </h3>
-                      <p className="text-neutral-200 mb-4 line-clamp-2">
-                        {getExcerpt(news[0])}
-                      </p>
-                      <div className="flex items-center gap-2 text-sm text-neutral-300">
-                        <Calendar size={14} />
-                        <span>{formatDate(news[0].publishedAt)}</span>
+                      {/* Content Overlay */}
+                      <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8">
+                        <Badge variant="gold" className="mb-4">
+                          {t('news.title')}
+                        </Badge>
+                        <h3 className="text-xl md:text-2xl font-bold text-white group-hover:text-primary transition-colors mb-3">
+                          {getTitle(news[0])}
+                        </h3>
+                        <p className="text-neutral-200 mb-4 line-clamp-2">
+                          {getExcerpt(news[0])}
+                        </p>
+                        <div className="flex items-center gap-2 text-sm text-neutral-300">
+                          <Calendar size={14} />
+                          <span>{formatDate(news[0].publishedAt)}</span>
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  </motion.div>
                 </div>
               </Link>
             </motion.div>
@@ -189,14 +191,14 @@ export const NewsSection = memo(function NewsSection() {
                   transition={{ duration: 0.6, delay: (index + 1) * 0.1 }}
                 >
                   <Link href={`/news/${article.slug}`}>
-                    <div className="group flex gap-4 p-4 bg-white rounded-xl border border-neutral-200 hover:border-primary/30 hover:shadow-soft-lg transition-all duration-300">
-                      <div className="relative w-28 h-28 shrink-0 overflow-hidden rounded-lg">
+                    <div className="group flex gap-4 p-4 bg-white border border-neutral-200 hover:border-primary/30 hover:shadow-soft-lg hover:-translate-y-1 transition-all duration-300">
+                      <div className="relative w-28 h-28 shrink-0 overflow-hidden">
                         <Image
                           src={article.image || '/images/placeholders/news.svg'}
                           alt={getTitle(article)}
                           fill
                           sizes="112px"
-                          className="object-cover group-hover:scale-105 transition-transform duration-500"
+                          className="object-cover group-hover:scale-[1.03] transition-transform duration-500"
                           loading="lazy"
                         />
                       </div>

@@ -104,8 +104,8 @@ export function ExhibitionsSection() {
     >
       {/* Subtle Background */}
       <div className="absolute inset-0 z-0 overflow-hidden">
-        <div className="absolute top-0 left-1/2 w-[800px] h-[400px] bg-primary/5 rounded-full blur-3xl -translate-x-1/2 opacity-50" />
-        <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-copper-500/5 rounded-full blur-3xl opacity-30" />
+        <div className="absolute top-0 left-1/2 w-[800px] h-[400px] bg-primary/5 blur-3xl -translate-x-1/2 opacity-50" />
+        <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-copper-500/5 blur-3xl opacity-30" />
       </div>
 
       <div className="container-custom relative z-10">
@@ -118,7 +118,7 @@ export function ExhibitionsSection() {
         >
           <div>
             {/* Section Tag */}
-            <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full mb-4">
+            <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 mb-4">
               <Globe size={16} />
               <span className="text-sm font-semibold">
                 {t('exhibitions.title')}
@@ -131,7 +131,7 @@ export function ExhibitionsSection() {
 
             {/* Modern Divider */}
             <div className="flex items-center gap-2 mt-4">
-              <div className="h-1 w-12 bg-gradient-to-r from-primary to-primary/50 rounded-full" />
+              <div className="h-1 w-12 bg-gradient-to-r from-primary to-primary/50" />
             </div>
 
             <p className="text-neutral-600 mt-4 max-w-xl">{t('exhibitions.description')}</p>
@@ -173,7 +173,7 @@ export function ExhibitionsSection() {
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
               >
-                <div className="group relative bg-white rounded-2xl border border-gray-200 overflow-hidden hover:border-primary/40 hover:shadow-lg transition-all duration-300 h-full">
+                <div className="group relative bg-white border border-gray-200 overflow-hidden hover:border-primary/40 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 h-full">
                     {/* Image */}
                     <div className="relative aspect-video overflow-hidden">
                       <Image
@@ -181,7 +181,7 @@ export function ExhibitionsSection() {
                         alt={getTitle(exhibition)}
                         fill
                         sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                        className="object-cover group-hover:scale-105 transition-transform duration-500"
+                        className="object-cover group-hover:scale-[1.03] transition-transform duration-500"
                         loading="lazy"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -202,7 +202,7 @@ export function ExhibitionsSection() {
 
                       <div className="space-y-3 text-sm">
                         <div className="flex items-center gap-3">
-                          <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
+                          <div className="w-8 h-8 bg-primary/10 flex items-center justify-center">
                             <MapPin size={14} className="text-primary" />
                           </div>
                           <span className="text-neutral-600">
@@ -210,7 +210,7 @@ export function ExhibitionsSection() {
                           </span>
                         </div>
                         <div className="flex items-center gap-3">
-                          <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
+                          <div className="w-8 h-8 bg-primary/10 flex items-center justify-center">
                             <Calendar size={14} className="text-primary" />
                           </div>
                           <span className="text-neutral-600">{formatDate(exhibition.startDate)}</span>

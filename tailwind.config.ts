@@ -217,17 +217,22 @@ const config: Config = {
       },
 
       borderRadius: {
-        lg: 'var(--radius)',
-        md: 'calc(var(--radius) - 2px)',
-        sm: 'calc(var(--radius) - 4px)',
-        // Unified Modern Industrial radius scale
+        // Industrial: sharp corners everywhere
         'none': '0px',
-        'xs': '4px',
-        'modern-sm': '6px',   // inputs, small elements
-        'modern': '8px',      // buttons, badges
-        'modern-lg': '12px',  // cards, modals
-        'modern-xl': '16px',  // large cards
-        'modern-2xl': '20px', // hero cards, featured
+        'xs': '0px',
+        'sm': '0px',
+        'DEFAULT': '0px',
+        'md': '0px',
+        'lg': '0px',
+        'xl': '0px',
+        '2xl': '0px',
+        '3xl': '0px',
+        'modern-sm': '0px',
+        'modern': '0px',
+        'modern-lg': '0px',
+        'modern-xl': '0px',
+        'modern-2xl': '0px',
+        'full': '0px', // industrial: sharp corners
       },
 
       boxShadow: {
@@ -322,6 +327,22 @@ const config: Config = {
           '0%': { transform: 'rotate(0deg)' },
           '100%': { transform: 'rotate(360deg)' },
         },
+        'marquee': {
+          '0%': { transform: 'translateX(0%)' },
+          '100%': { transform: 'translateX(-50%)' },
+        },
+        'marquee-reverse': {
+          '0%': { transform: 'translateX(-50%)' },
+          '100%': { transform: 'translateX(0%)' },
+        },
+        'reveal-up': {
+          '0%': { clipPath: 'inset(100% 0 0 0)' },
+          '100%': { clipPath: 'inset(0 0 0 0)' },
+        },
+        'slide-in-bottom': {
+          '0%': { transform: 'translateY(100px)', opacity: '0' },
+          '100%': { transform: 'translateY(0)', opacity: '1' },
+        },
       },
 
       animation: {
@@ -339,6 +360,10 @@ const config: Config = {
         'float': 'float 3s ease-in-out infinite',
         'glow-pulse': 'glow-pulse 2s ease-in-out infinite',
         'spin-slow': 'spin-slow 20s linear infinite',
+        'marquee': 'marquee 30s linear infinite',
+        'marquee-reverse': 'marquee-reverse 30s linear infinite',
+        'reveal-up': 'reveal-up 0.8s cubic-bezier(0.16, 1, 0.3, 1)',
+        'slide-in-bottom': 'slide-in-bottom 0.5s ease-out',
       },
 
       spacing: {
