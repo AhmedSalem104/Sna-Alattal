@@ -9,6 +9,7 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
 
     steps:
       - name: Deploy to VPS
@@ -17,6 +18,7 @@ jobs:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_SSH_KEY }}
+          command_timeout: 10m
           script: |
             cd /home/deploy/apps/sna-alattal
 
@@ -26,10 +28,25 @@ jobs:
             echo "📦 Installing dependencies..."
             npm ci --prefer-offline
 
+            echo "🔧 Generating Prisma client..."
+            npx prisma generate
+
+            echo "🗄️ Syncing database schema..."
+            npx prisma db push --skip-generate
+
             echo "🔨 Building application..."
             npm run build
 
+            echo "📁 Ensuring logs directory exists..."
+            mkdir -p logs
+
             echo "🔄 Restarting PM2..."
-            pm2 restart sna-alattal --update-env
+            pm2 restart sna-alattal --update-env || pm2 start ecosystem.config.js
+
+            echo "⏳ Waiting for app to start..."
+            sleep 8
+
+            echo "🏥 Health check..."
+            curl -sf http://localhost:3000/api/health && echo " ✅ App is healthy!" || (echo " ❌ Health check failed! Checking logs..." && pm2 logs sna-alattal --lines 20 --nostream)
 
             echo "✅ Deployment completed!"

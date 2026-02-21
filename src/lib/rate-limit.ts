@@ -33,6 +33,9 @@ export const RATE_LIMITS = {
   upload: { maxRequests: 10, windowMs: 60 * 1000 },      // 10 uploads per minute
   contact: { maxRequests: 5, windowMs: 60 * 1000 },      // 5 contact messages per minute
   api: { maxRequests: 60, windowMs: 60 * 1000 },         // 60 API requests per minute
+  public: { maxRequests: 100, windowMs: 60 * 1000 },     // 100 public API requests per minute
+  auth: { maxRequests: 5, windowMs: 60 * 1000 },         // 5 login attempts per minute
+  newsletter: { maxRequests: 3, windowMs: 60 * 1000 },   // 3 newsletter signups per minute
 } as const;
 
 interface RateLimitResult {

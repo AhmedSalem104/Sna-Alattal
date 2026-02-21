@@ -27,6 +27,12 @@ yarn-error.log*
 .env
 .env*.local
 
+# Dangerous / unnecessary files
+nul
+seed-output.txt
+DOCUMENTATION.md
+PROJECT-DELIVERY.md
+
 # Vercel
 .vercel
 

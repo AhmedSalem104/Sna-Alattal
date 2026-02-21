@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { checkRateLimit, getClientIP, RATE_LIMITS } from '@/lib/rate-limit';
 import { db } from '@/lib/db';
 
 // Only expose specific public groups
@@ -6,6 +7,15 @@ const PUBLIC_GROUPS = ['timeline', 'offices', 'statistics', 'contact', 'general'
 
 export async function GET(request: NextRequest) {
   try {
+    const ip = getClientIP(request.headers);
+    const rateLimitResult = checkRateLimit(`public:${ip}`, RATE_LIMITS.public);
+    if (!rateLimitResult.success) {
+      return NextResponse.json(
+        { error: 'Too many requests. Please try again later.' },
+        { status: 429, headers: { 'Retry-After': String(Math.ceil((rateLimitResult.resetTime - Date.now()) / 1000)) } }
+      );
+    }
+
     const searchParams = request.nextUrl.searchParams;
     const group = searchParams.get('group');
 

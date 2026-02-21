@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { checkRateLimit, getClientIP, RATE_LIMITS } from '@/lib/rate-limit';
 import { db } from '@/lib/db';
 import { z } from 'zod';
 
@@ -10,6 +11,15 @@ const subscribeSchema = z.object({
 // POST - Subscribe to newsletter
 export async function POST(request: NextRequest) {
   try {
+    const ip = getClientIP(request.headers);
+    const rateLimitResult = checkRateLimit(`newsletter:${ip}`, RATE_LIMITS.newsletter);
+    if (!rateLimitResult.success) {
+      return NextResponse.json(
+        { error: 'Too many requests. Please try again later.' },
+        { status: 429, headers: { 'Retry-After': String(Math.ceil((rateLimitResult.resetTime - Date.now()) / 1000)) } }
+      );
+    }
+
     const body = await request.json();
 
     // Validate input
@@ -75,6 +85,15 @@ export async function POST(request: NextRequest) {
 // DELETE - Unsubscribe from newsletter
 export async function DELETE(request: NextRequest) {
   try {
+    const ip = getClientIP(request.headers);
+    const rateLimitResult = checkRateLimit(`newsletter:${ip}`, RATE_LIMITS.newsletter);
+    if (!rateLimitResult.success) {
+      return NextResponse.json(
+        { error: 'Too many requests. Please try again later.' },
+        { status: 429, headers: { 'Retry-After': String(Math.ceil((rateLimitResult.resetTime - Date.now()) / 1000)) } }
+      );
+    }
+
     const { searchParams } = new URL(request.url);
     const email = searchParams.get('email');
 
