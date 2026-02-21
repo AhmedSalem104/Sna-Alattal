@@ -8,8 +8,8 @@ module.exports = {
 
       // Prevent crash loop - wait for port release
       kill_timeout: 5000,           // Wait 5 seconds before force kill
-      wait_ready: true,             // Wait for ready signal
-      listen_timeout: 15000,        // Wait 15 seconds for port binding
+      wait_ready: false,            // Don't wait for ready signal (Next.js doesn't send it)
+      listen_timeout: 30000,        // Wait 30 seconds for port binding
 
       // Restart limits to prevent infinite loop
       max_restarts: 15,             // Max 15 restarts

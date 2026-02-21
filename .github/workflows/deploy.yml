@@ -40,11 +40,17 @@ jobs:
             echo "📁 Ensuring logs directory exists..."
             mkdir -p logs
 
-            echo "🔄 Restarting PM2..."
-            pm2 restart sna-alattal --update-env || pm2 start ecosystem.config.js
+            echo "🔄 Stopping old PM2 process..."
+            pm2 delete sna-alattal 2>/dev/null || true
+
+            echo "🚀 Starting app with PM2..."
+            pm2 start ecosystem.config.js
+
+            echo "💾 Saving PM2 process list..."
+            pm2 save
 
             echo "⏳ Waiting for app to start..."
-            sleep 8
+            sleep 10
 
             echo "🏥 Health check..."
             curl -sf http://localhost:3000/api/health && echo " ✅ App is healthy!" || (echo " ❌ Health check failed! Checking logs..." && pm2 logs sna-alattal --lines 20 --nostream)
