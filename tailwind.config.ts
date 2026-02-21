@@ -212,6 +212,7 @@ const config: Config = {
         // Cairo unified for all languages (Arabic + English)
         sans: ['var(--font-cairo)', 'Cairo', 'system-ui', 'sans-serif'],
         cairo: ['var(--font-cairo)', 'Cairo', 'sans-serif'],
+
         arabic: ['var(--font-cairo)', 'Cairo', 'sans-serif'],
         mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
       },
@@ -232,7 +233,7 @@ const config: Config = {
         'modern-lg': '0px',
         'modern-xl': '0px',
         'modern-2xl': '0px',
-        'full': '0px', // industrial: sharp corners
+        'full': '9999px', // circles preserved for spinners, badges, avatars
       },
 
       boxShadow: {
@@ -343,6 +344,11 @@ const config: Config = {
           '0%': { transform: 'translateY(100px)', opacity: '0' },
           '100%': { transform: 'translateY(0)', opacity: '1' },
         },
+        'ken-burns': {
+          '0%': { transform: 'scale(1) translate(0, 0)' },
+          '50%': { transform: 'scale(1.1) translate(-1%, -1%)' },
+          '100%': { transform: 'scale(1) translate(0, 0)' },
+        },
       },
 
       animation: {
@@ -364,6 +370,7 @@ const config: Config = {
         'marquee-reverse': 'marquee-reverse 30s linear infinite',
         'reveal-up': 'reveal-up 0.8s cubic-bezier(0.16, 1, 0.3, 1)',
         'slide-in-bottom': 'slide-in-bottom 0.5s ease-out',
+        'ken-burns': 'ken-burns 20s ease-in-out infinite',
       },
 
       spacing: {
@@ -380,7 +387,7 @@ const config: Config = {
         'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
         // Premium gold gradient
         'gradient-gold': 'linear-gradient(135deg, #D4A00A 0%, #F4D03F 50%, #D4A00A 100%)',
-        'gradient-gold-subtle': 'linear-gradient(135deg, rgba(212,160,10,0.1) 0%, rgba(212,160,10,0.05) 100%)',
+        'gradient-gold-subtle': 'linear-gradient(135deg, rgba(201,162,39,0.12) 0%, rgba(201,162,39,0.06) 100%)',
         // Dark gradients
         'gradient-dark': 'linear-gradient(180deg, #1C1C28 0%, #0E0E14 100%)',
         'gradient-dark-radial': 'radial-gradient(ellipse at center, #26263A 0%, #1C1C28 70%)',

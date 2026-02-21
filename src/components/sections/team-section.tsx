@@ -5,8 +5,9 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { motion, useInView } from 'framer-motion';
-import { Linkedin, Mail, ArrowRight, Users, Loader2 } from 'lucide-react';
+import { Linkedin, Mail, ArrowRight, Users } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { IndustrialSpinner } from '@/components/ui/industrial-spinner';
 import { useLocale } from '@/hooks/useLocale';
 
 interface TeamMember {
@@ -129,7 +130,7 @@ export const TeamSection = memo(function TeamSection() {
         {/* Loading State */}
         {loading && (
           <div className="flex justify-center items-center py-20">
-            <Loader2 className="w-8 h-8 animate-spin text-primary" />
+            <IndustrialSpinner size="md" />
           </div>
         )}
 
@@ -154,9 +155,9 @@ export const TeamSection = memo(function TeamSection() {
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 className="group"
               >
-                <div className="relative bg-white border-2 border-metal-200 overflow-hidden hover:border-primary transition-all duration-300">
-                  {/* Gold Accent Bar */}
-                  <div className="absolute top-0 left-0 w-full h-1 bg-primary z-10" />
+                <div className="relative overflow-hidden hover:shadow-elevation-3 transition-all duration-500">
+                  {/* Gold Accent Bar - hover reveal */}
+                  <div className="absolute top-0 left-0 w-full h-1 bg-primary z-10 scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
 
                   {/* Image */}
                   <div className="relative aspect-square overflow-hidden">

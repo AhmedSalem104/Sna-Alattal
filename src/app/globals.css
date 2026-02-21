@@ -154,8 +154,8 @@
 
   /* Section Separator */
   .section-separator {
-    height: 1px;
-    background: linear-gradient(90deg, transparent, hsl(var(--primary) / 0.3), transparent);
+    height: 2px;
+    background: linear-gradient(90deg, transparent, hsl(var(--primary) / 0.5), transparent);
   }
 
   /* Enhanced Focus Visible Styles - Modern Gold Ring */
@@ -349,9 +349,9 @@
 
   .card-industrial::before {
     content: '';
-    @apply absolute top-0 left-0 w-1 h-full bg-primary;
+    @apply absolute top-0 left-0 w-1.5 h-full bg-primary;
     @apply transition-all duration-300;
-    border-radius: 12px 0 0 12px;
+    border-radius: 0;
   }
 
   .card-industrial:hover {
@@ -360,7 +360,7 @@
   }
 
   .card-industrial:hover::before {
-    @apply w-1.5;
+    @apply w-2;
   }
 
   /* Dark Industrial Card */
@@ -373,9 +373,9 @@
 
   .card-industrial-dark::before {
     content: '';
-    @apply absolute top-0 left-0 w-1 h-full bg-primary;
+    @apply absolute top-0 left-0 w-1.5 h-full bg-primary;
     @apply transition-all duration-300;
-    border-radius: 12px 0 0 12px;
+    border-radius: 0;
   }
 
   .card-industrial-dark:hover {
@@ -550,7 +550,21 @@
   }
 
   .divider-gold {
-    @apply h-1 bg-gradient-to-r from-primary via-primary-400 to-transparent;
+    @apply h-1.5 bg-gradient-to-r from-primary via-primary-400 to-transparent;
+  }
+
+  /* Gold Underline Heading */
+  .heading-gold-underline {
+    @apply relative pb-4;
+  }
+
+  .heading-gold-underline::after {
+    content: '';
+    @apply absolute bottom-0 left-0 h-1 w-16 bg-primary;
+  }
+
+  [dir='rtl'] .heading-gold-underline::after {
+    @apply left-auto right-0;
   }
 
   /* ========================================

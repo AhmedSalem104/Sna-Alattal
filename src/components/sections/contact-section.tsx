@@ -13,6 +13,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { toast } from 'sonner';
 import { useLocale } from '@/hooks/useLocale';
+import { IndustrialGear } from '@/components/decorative';
 
 export function ContactSection() {
   const t = useTranslations();
@@ -72,7 +73,7 @@ export function ContactSection() {
   return (
     <section
       ref={ref}
-      className="py-20 lg:py-28 bg-gradient-to-b from-white to-neutral-50 relative overflow-hidden"
+      className="py-20 lg:py-28 bg-gradient-to-b from-white/[0.93] to-neutral-50/95 relative overflow-hidden"
       dir={isRTL ? 'rtl' : 'ltr'}
     >
       {/* Subtle Background */}
@@ -80,6 +81,8 @@ export function ContactSection() {
         <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-primary/5 blur-3xl opacity-50" />
         <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-copper-500/5 blur-3xl opacity-30" />
       </div>
+
+      <IndustrialGear size={350} teeth={12} className="absolute -bottom-12 -right-12 text-primary opacity-[0.20] hidden md:block" strokeWidth={2} />
 
       <div className="container-custom relative z-10">
         {/* Header */}
@@ -116,7 +119,7 @@ export function ContactSection() {
             className="space-y-6"
           >
             {/* Egypt Office */}
-            <div className="bg-white border border-gray-200 p-6 relative group hover:border-primary/40 hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+            <div className="bg-white border border-neutral-200 p-6 relative group hover:border-primary/40 hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-12 h-12 bg-primary/10 flex items-center justify-center">
                   <Building2 size={24} className="text-primary" />
@@ -173,7 +176,7 @@ export function ContactSection() {
             </div>
 
             {/* Turkey Office */}
-            <div className="bg-white border border-gray-200 p-6 relative group hover:border-primary/40 hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+            <div className="bg-white border border-neutral-200 p-6 relative group hover:border-primary/40 hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-12 h-12 bg-primary/10 flex items-center justify-center">
                   <Globe size={24} className="text-primary" />
@@ -220,7 +223,7 @@ export function ContactSection() {
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6 }}
           >
-            <div className="bg-white border border-gray-200 p-6 md:p-8 shadow-sm">
+            <div className="bg-white border border-neutral-200 p-6 md:p-8 shadow-sm">
               {/* Form Header */}
               <div className="mb-6">
                 <h3 className="text-xl font-bold text-steel-900 mb-2">

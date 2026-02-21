@@ -6,8 +6,8 @@ export default function NotFound() {
     <div className="min-h-screen bg-white flex items-center justify-center">
       <div className="text-center">
         <h1 className="text-6xl font-bold text-primary mb-4">404</h1>
-        <h2 className="text-2xl text-gray-900 mb-4">الصفحة غير موجودة</h2>
-        <p className="text-gray-600 mb-8">
+        <h2 className="text-2xl text-neutral-900 mb-4">الصفحة غير موجودة</h2>
+        <p className="text-neutral-600 mb-8">
           عذراً، الصفحة التي تبحث عنها غير موجودة.
         </p>
         <Button variant="gold" asChild>

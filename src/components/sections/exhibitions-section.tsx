@@ -1,14 +1,15 @@
 'use client';
 
 import { useRef, useState, useEffect } from 'react';
-import Image from 'next/image';
+import { ImageWithSkeleton } from '@/components/ui/image-with-skeleton';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { motion, useInView } from 'framer-motion';
-import { Calendar, MapPin, ArrowRight, Globe, Loader2 } from 'lucide-react';
+import { Calendar, MapPin, ArrowRight, Globe } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
+import { IndustrialSpinner } from '@/components/ui/industrial-spinner';
 import { useLocale } from '@/hooks/useLocale';
+import { IndustrialGear } from '@/components/decorative';
 
 interface Exhibition {
   id: string;
@@ -99,13 +100,14 @@ export function ExhibitionsSection() {
   return (
     <section
       ref={ref}
-      className="py-20 lg:py-28 bg-gradient-to-b from-neutral-50 to-white relative overflow-hidden"
+      className="py-20 lg:py-28 bg-gradient-to-b from-neutral-50/95 to-white/[0.93] relative overflow-hidden"
       dir={isRTL ? 'rtl' : 'ltr'}
     >
       {/* Subtle Background */}
       <div className="absolute inset-0 z-0 overflow-hidden">
         <div className="absolute top-0 left-1/2 w-[800px] h-[400px] bg-primary/5 blur-3xl -translate-x-1/2 opacity-50" />
         <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-copper-500/5 blur-3xl opacity-30" />
+        <IndustrialGear size={350} teeth={20} className="absolute -top-16 -right-16 text-primary opacity-[0.15] hidden md:block" reverse strokeWidth={1.5} />
       </div>
 
       <div className="container-custom relative z-10">
@@ -151,7 +153,7 @@ export function ExhibitionsSection() {
         {/* Loading State */}
         {loading && (
           <div className="flex items-center justify-center py-20">
-            <Loader2 className="w-8 h-8 animate-spin text-primary" />
+            <IndustrialSpinner size="md" />
           </div>
         )}
 
@@ -165,7 +167,7 @@ export function ExhibitionsSection() {
 
         {/* Exhibitions Grid */}
         {!loading && exhibitions.length > 0 && (
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {exhibitions.map((exhibition, index) => (
               <motion.div
                 key={exhibition.id}
@@ -173,49 +175,50 @@ export function ExhibitionsSection() {
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
               >
-                <div className="group relative bg-white border border-gray-200 overflow-hidden hover:border-primary/40 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 h-full">
-                    {/* Image */}
-                    <div className="relative aspect-video overflow-hidden">
-                      <Image
-                        src={getExhibitionImage(exhibition)}
-                        alt={getTitle(exhibition)}
-                        fill
-                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                        className="object-cover group-hover:scale-[1.03] transition-transform duration-500"
-                        loading="lazy"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="group relative overflow-hidden h-full aspect-[4/3] bg-steel-900 hover:shadow-elevation-3 transition-all duration-500">
+                    {/* Full-bleed image */}
+                    <ImageWithSkeleton
+                      src={getExhibitionImage(exhibition)}
+                      alt={getTitle(exhibition)}
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      className="object-cover group-hover:scale-[1.06] transition-transform duration-700 ease-out"
+                      wrapperClassName="absolute inset-0"
+                      loading="lazy"
+                    />
 
-                      {/* Status Badge */}
-                      {isUpcoming(exhibition) && (
-                        <Badge variant="featured" className="absolute top-4 right-4">
+                    {/* Cinematic gradient overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-steel-950 via-steel-900/50 to-transparent group-hover:via-steel-900/40 transition-colors duration-300" />
+
+                    {/* Gold top line on hover */}
+                    <div className="absolute top-0 left-0 right-0 h-1 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left z-10" />
+
+                    {/* Status Badge - glass morphism */}
+                    {isUpcoming(exhibition) && (
+                      <div className="absolute top-4 right-4 z-10">
+                        <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-primary/90 text-steel-900 text-xs font-bold uppercase tracking-wider">
                           {t('exhibitions.upcoming')}
-                        </Badge>
-                      )}
+                        </span>
+                      </div>
+                    )}
+
+                    {/* Floating info badges */}
+                    <div className="absolute top-4 left-4 z-10 flex flex-col gap-2">
+                      <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white/10 backdrop-blur-sm border border-white/20 text-white text-xs font-semibold">
+                        <MapPin size={12} />
+                        {getLocation(exhibition)}
+                      </span>
+                      <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white/10 backdrop-blur-sm border border-white/20 text-white text-xs font-semibold">
+                        <Calendar size={12} />
+                        {formatDate(exhibition.startDate)}
+                      </span>
                     </div>
 
-                    {/* Content */}
-                    <div className="p-5">
-                      <h3 className="text-lg font-semibold text-steel-900 group-hover:text-primary transition-colors mb-4">
+                    {/* Bottom content overlay */}
+                    <div className="absolute bottom-0 left-0 right-0 p-5 z-10">
+                      <h3 className="text-white font-bold text-base uppercase tracking-wide group-hover:text-primary transition-colors duration-300 line-clamp-2">
                         {getTitle(exhibition)}
                       </h3>
-
-                      <div className="space-y-3 text-sm">
-                        <div className="flex items-center gap-3">
-                          <div className="w-8 h-8 bg-primary/10 flex items-center justify-center">
-                            <MapPin size={14} className="text-primary" />
-                          </div>
-                          <span className="text-neutral-600">
-                            {getLocation(exhibition)}
-                          </span>
-                        </div>
-                        <div className="flex items-center gap-3">
-                          <div className="w-8 h-8 bg-primary/10 flex items-center justify-center">
-                            <Calendar size={14} className="text-primary" />
-                          </div>
-                          <span className="text-neutral-600">{formatDate(exhibition.startDate)}</span>
-                        </div>
-                      </div>
                     </div>
                   </div>
               </motion.div>

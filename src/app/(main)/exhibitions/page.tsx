@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button';
 import { useLocale } from '@/hooks/useLocale';
 import { getLocalizedField, formatLocalizedDate } from '@/lib/locale-helpers';
 
+
 interface Exhibition {
   id: string;
   nameAr: string;
@@ -95,14 +96,16 @@ export default function ExhibitionsPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
-        <Loader2 className="w-8 h-8 animate-spin text-primary" />
-      </div>
+      <>
+        <div className="min-h-screen flex items-center justify-center">
+          <Loader2 className="w-8 h-8 animate-spin text-primary" />
+        </div>
+      </>
     );
   }
 
   return (
-    <div className="min-h-screen bg-white">
+    <>
       {/* Hero Section */}
       <section className="relative py-32 bg-gradient-to-b from-primary/20 via-white to-white overflow-hidden">
         <div className="absolute inset-0">
@@ -120,10 +123,10 @@ export default function ExhibitionsPage() {
             <span className="inline-block px-4 py-1 bg-primary/20 text-primary rounded-full text-sm mb-4">
               {t('badge')}
             </span>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-neutral-900 mb-6">
               {t('title')}
             </h1>
-            <p className="text-xl text-gray-700">
+            <p className="text-xl text-neutral-700">
               {t('subtitle')}
             </p>
           </motion.div>
@@ -140,8 +143,8 @@ export default function ExhibitionsPage() {
               viewport={{ once: true }}
               className="mb-12"
             >
-              <h2 className="text-3xl font-bold text-gray-900 mb-2">{t('upcoming')}</h2>
-              <p className="text-gray-600">{t('upcomingDesc')}</p>
+              <h2 className="text-3xl font-bold text-neutral-900 mb-2">{t('upcoming')}</h2>
+              <p className="text-neutral-600">{t('upcomingDesc')}</p>
             </motion.div>
 
             <div className="space-y-8">
@@ -152,7 +155,7 @@ export default function ExhibitionsPage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 }}
-                  className="group relative bg-gradient-to-r from-primary/10 to-transparent rounded-2xl overflow-hidden border border-primary/30"
+                  className="group relative overflow-hidden shadow-soft hover:shadow-elevation-3 transition-all duration-500"
                 >
                   <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                     {/* Image */}
@@ -164,16 +167,16 @@ export default function ExhibitionsPage() {
                         sizes="(max-width: 1024px) 100vw, 33vw"
                         className="object-cover"
                       />
-                      <div className={`absolute top-4 ${isRTL ? 'left-4' : 'right-4'} px-3 py-1 bg-primary text-gray-900 rounded-full text-sm font-medium`}>
+                      <div className={`absolute top-4 ${isRTL ? 'left-4' : 'right-4'} px-3 py-1 bg-primary text-neutral-900 rounded-full text-sm font-medium`}>
                         {getStatus(exhibition) === 'ongoing' ? t('ongoing') : t('comingSoon')}
                       </div>
                     </div>
 
                     {/* Content */}
                     <div className="lg:col-span-2 p-8">
-                      <h3 className="text-2xl font-bold text-gray-900 mb-4">{getName(exhibition)}</h3>
+                      <h3 className="text-2xl font-bold text-neutral-900 mb-4">{getName(exhibition)}</h3>
                       {getDescription(exhibition) && (
-                        <p className="text-gray-700 mb-6">{getDescription(exhibition)}</p>
+                        <p className="text-neutral-700 mb-6">{getDescription(exhibition)}</p>
                       )}
 
                       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
@@ -182,8 +185,8 @@ export default function ExhibitionsPage() {
                             <Calendar className="text-primary" size={20} />
                           </div>
                           <div>
-                            <p className="text-gray-600 text-sm">{t('date')}</p>
-                            <p className="text-gray-900">{formatDateRange(exhibition)}</p>
+                            <p className="text-neutral-600 text-sm">{t('date')}</p>
+                            <p className="text-neutral-900">{formatDateRange(exhibition)}</p>
                           </div>
                         </div>
                         <div className="flex items-center gap-3">
@@ -191,8 +194,8 @@ export default function ExhibitionsPage() {
                             <MapPin className="text-primary" size={20} />
                           </div>
                           <div>
-                            <p className="text-gray-600 text-sm">{t('location')}</p>
-                            <p className="text-gray-900">{getLocation(exhibition)}</p>
+                            <p className="text-neutral-600 text-sm">{t('location')}</p>
+                            <p className="text-neutral-900">{getLocation(exhibition)}</p>
                           </div>
                         </div>
                         {exhibition.booth && (
@@ -201,8 +204,8 @@ export default function ExhibitionsPage() {
                               <ExternalLink className="text-primary" size={20} />
                             </div>
                             <div>
-                              <p className="text-gray-600 text-sm">{t('booth')}</p>
-                              <p className="text-gray-900">{exhibition.booth}</p>
+                              <p className="text-neutral-600 text-sm">{t('booth')}</p>
+                              <p className="text-neutral-900">{exhibition.booth}</p>
                             </div>
                           </div>
                         )}
@@ -224,7 +227,7 @@ export default function ExhibitionsPage() {
       )}
 
       {/* Past Exhibitions */}
-      <section className="py-20 bg-gray-50">
+      <section className="py-20 bg-neutral-50">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -232,14 +235,14 @@ export default function ExhibitionsPage() {
             viewport={{ once: true }}
             className="mb-12"
           >
-            <h2 className="text-3xl font-bold text-gray-900 mb-2">{t('past')}</h2>
-            <p className="text-gray-600">{t('pastDesc')}</p>
+            <h2 className="text-3xl font-bold text-neutral-900 mb-2">{t('past')}</h2>
+            <p className="text-neutral-600">{t('pastDesc')}</p>
           </motion.div>
 
           {pastExhibitions.length === 0 ? (
             <div className="text-center py-12">
-              <CalendarDays size={48} className="mx-auto text-gray-300 mb-4" />
-              <p className="text-gray-600">{t('noPastExhibitions') || 'No past exhibitions'}</p>
+              <CalendarDays size={48} className="mx-auto text-neutral-300 mb-4" />
+              <p className="text-neutral-600">{t('noPastExhibitions') || 'No past exhibitions'}</p>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -250,7 +253,7 @@ export default function ExhibitionsPage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 }}
-                  className="group bg-white rounded-2xl overflow-hidden border border-gray-200 hover:border-gray-300 transition-all"
+                  className="group overflow-hidden hover:shadow-elevation-3 transition-all duration-500"
                 >
                   {/* Image */}
                   <div className="relative h-48 overflow-hidden">
@@ -265,21 +268,21 @@ export default function ExhibitionsPage() {
 
                   {/* Content */}
                   <div className="p-6">
-                    <h3 className="text-xl font-bold text-gray-900 mb-3">{getName(exhibition)}</h3>
+                    <h3 className="text-xl font-bold text-neutral-900 mb-3">{getName(exhibition)}</h3>
 
                     <div className="space-y-2 mb-4">
-                      <div className="flex items-center gap-2 text-gray-600 text-sm">
+                      <div className="flex items-center gap-2 text-neutral-600 text-sm">
                         <Calendar size={16} />
                         <span>{formatDateRange(exhibition)}</span>
                       </div>
-                      <div className="flex items-center gap-2 text-gray-600 text-sm">
+                      <div className="flex items-center gap-2 text-neutral-600 text-sm">
                         <MapPin size={16} />
                         <span>{getLocation(exhibition)}</span>
                       </div>
                     </div>
 
                     {getDescription(exhibition) && (
-                      <p className="text-gray-600 text-sm line-clamp-2">{getDescription(exhibition)}</p>
+                      <p className="text-neutral-600 text-sm line-clamp-2">{getDescription(exhibition)}</p>
                     )}
                   </div>
                 </motion.div>
@@ -297,10 +300,10 @@ export default function ExhibitionsPage() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-neutral-900 mb-4">
               {t('cta.title')}
             </h2>
-            <p className="text-gray-700 mb-8 max-w-2xl mx-auto">
+            <p className="text-neutral-700 mb-8 max-w-2xl mx-auto">
               {t('cta.subtitle')}
             </p>
             <Link href="/contact">
@@ -312,6 +315,6 @@ export default function ExhibitionsPage() {
           </motion.div>
         </div>
       </section>
-    </div>
+    </>
   );
 }

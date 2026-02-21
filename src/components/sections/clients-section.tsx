@@ -4,9 +4,10 @@ import { useRef, memo, useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
-import { motion, useInView } from 'framer-motion';
-import { Users, ArrowRight, Award, Loader2 } from 'lucide-react';
+import { motion, useInView, type Variants } from 'framer-motion';
+import { Users, ArrowRight, Award } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { IndustrialSpinner } from '@/components/ui/industrial-spinner';
 import { useLocale } from '@/hooks/useLocale';
 import { useCountUp } from '@/hooks/useAnimations';
 
@@ -25,15 +26,21 @@ const statsData = [
   { target: 98, suffix: '%', labelKey: 'clients.stats.satisfaction' },
 ];
 
-function AnimatedStat({ target, suffix, label, inView }: { target: number; suffix: string; label: string; inView: boolean }) {
+function AnimatedStat({ target, suffix, label, inView, index }: { target: number; suffix: string; label: string; inView: boolean; index: number }) {
   const count = useCountUp(target, 2000, inView);
   return (
-    <div className="text-center p-6 bg-neutral-50">
+    <motion.div
+      initial={{ opacity: 0, y: 30, rotate: -3 }}
+      animate={inView ? { opacity: 1, y: 0, rotate: 0 } : {}}
+      transition={{ delay: 0.3 + index * 0.12, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+      whileHover={{ scale: 1.05, transition: { type: 'spring', stiffness: 400, damping: 17 } }}
+      className="text-center p-6 bg-neutral-50"
+    >
       <div className="text-4xl md:text-5xl font-bold text-primary tabular-nums">
         {count}{suffix}
       </div>
       <div className="text-sm text-neutral-600 mt-2">{label}</div>
-    </div>
+    </motion.div>
   );
 }
 
@@ -72,7 +79,7 @@ export const ClientsSection = memo(function ClientsSection() {
   return (
     <section
       ref={ref}
-      className="py-20 lg:py-28 bg-white relative overflow-hidden"
+      className="py-20 lg:py-28 bg-white/[0.93] relative overflow-hidden"
       dir={isRTL ? 'rtl' : 'ltr'}
     >
       {/* Modern Subtle Background */}
@@ -115,13 +122,14 @@ export const ClientsSection = memo(function ClientsSection() {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="grid md:grid-cols-3 gap-4 max-w-2xl mx-auto mb-16"
         >
-          {statsData.map((stat) => (
+          {statsData.map((stat, index) => (
             <AnimatedStat
               key={stat.labelKey}
               target={stat.target}
               suffix={stat.suffix}
               label={t(stat.labelKey) || stat.labelKey.split('.').pop() || ''}
               inView={isInView}
+              index={index}
             />
           ))}
         </motion.div>
@@ -129,19 +137,19 @@ export const ClientsSection = memo(function ClientsSection() {
         {/* Loading State */}
         {loading ? (
           <div className="flex items-center justify-center py-20">
-            <Loader2 className="w-8 h-8 animate-spin text-primary" />
+            <IndustrialSpinner size="md" />
           </div>
         ) : clients.length === 0 ? (
           <div className="text-center py-20">
             <Users size={48} className="mx-auto text-neutral-300 mb-4" />
-            <p className="text-neutral-500">{t('common.noData')}</p>
+            <p className="text-neutral-600">{t('common.noData')}</p>
           </div>
         ) : (
           /* Clients Logo Marquee (Newamstar-inspired) */
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={isInView ? { opacity: 1 } : {}}
-            transition={{ duration: 0.8 }}
+            initial={{ opacity: 0, y: 40 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             className="relative overflow-hidden"
           >
             {/* Fade edges */}
@@ -152,8 +160,8 @@ export const ClientsSection = memo(function ClientsSection() {
             <div className="flex animate-marquee hover:[animation-play-state:paused] mb-4">
               {[...clients, ...clients].map((client, index) => (
                 <div key={`r1-${client.id}-${index}`} className="flex-shrink-0 mx-3">
-                  <div className="w-20 h-20 md:w-24 md:h-24 bg-white border border-neutral-200 p-3 md:p-4 flex items-center justify-center
-                    grayscale hover:grayscale-0 opacity-60 hover:opacity-100 hover:border-primary/30 hover:shadow-lg hover:-translate-y-1 transition-all duration-500">
+                  <div className="w-20 h-20 md:w-24 md:h-24 bg-white p-3 md:p-4 flex items-center justify-center
+                    hover:shadow-gold-sm hover:-translate-y-1 hover:scale-105 transition-all duration-500">
                     <Image
                       src={client.logo}
                       alt={getName(client)}
@@ -172,8 +180,8 @@ export const ClientsSection = memo(function ClientsSection() {
               <div className="flex animate-marquee-reverse hover:[animation-play-state:paused]">
                 {[...clients.slice().reverse(), ...clients.slice().reverse()].map((client, index) => (
                   <div key={`r2-${client.id}-${index}`} className="flex-shrink-0 mx-3">
-                    <div className="w-20 h-20 md:w-24 md:h-24 bg-white border border-neutral-200 p-3 md:p-4 flex items-center justify-center
-                      grayscale hover:grayscale-0 opacity-60 hover:opacity-100 hover:border-primary/30 hover:shadow-lg hover:-translate-y-1 transition-all duration-500">
+                    <div className="w-20 h-20 md:w-24 md:h-24 bg-white p-3 md:p-4 flex items-center justify-center
+                      grayscale hover:grayscale-0 opacity-60 hover:opacity-100 hover:shadow-gold-sm hover:-translate-y-1 transition-all duration-500">
                       <Image
                         src={client.logo}
                         alt={getName(client)}
@@ -192,9 +200,9 @@ export const ClientsSection = memo(function ClientsSection() {
 
         {/* Trust Indicator & CTA */}
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : {}}
-          transition={{ delay: 0.5 }}
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ delay: 0.5, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
           className="mt-16 text-center"
         >
           {/* Trust Badge */}

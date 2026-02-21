@@ -1,14 +1,17 @@
 'use client';
 
 import { useRef, memo, useState, useEffect } from 'react';
-import Image from 'next/image';
+import { ImageWithSkeleton } from '@/components/ui/image-with-skeleton';
+import { TiltCard } from '@/components/ui/tilt-card';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
-import { motion, useInView } from 'framer-motion';
-import { ArrowRight, Package, Loader2 } from 'lucide-react';
+import { motion, useInView, type Variants } from 'framer-motion';
+import { ArrowRight, Package } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { IndustrialSpinner } from '@/components/ui/industrial-spinner';
 import { useLocale } from '@/hooks/useLocale';
 import { cn } from '@/lib/utils';
+import { IndustrialGear } from '@/components/decorative';
 
 interface Product {
   id: string;
@@ -73,10 +76,28 @@ export const ProductsSection = memo(function ProductsSection() {
     return '/images/placeholders/product.svg';
   };
 
+  const gridContainerVariants: Variants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.15, delayChildren: 0.1 },
+    },
+  };
+
+  const cardVariants: Variants = {
+    hidden: { opacity: 0, y: 60, scale: 0.88 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] },
+    },
+  };
+
   return (
     <section
       ref={ref}
-      className="py-20 lg:py-28 bg-white relative overflow-hidden"
+      className="py-20 lg:py-28 bg-white/[0.93] relative overflow-hidden"
       dir={isRTL ? 'rtl' : 'ltr'}
     >
       {/* Industrial grid background */}
@@ -92,6 +113,8 @@ export const ProductsSection = memo(function ProductsSection() {
           }}
         />
       </div>
+
+      <IndustrialGear size={450} teeth={18} className="absolute -bottom-20 -right-20 text-primary opacity-[0.20] hidden md:block" strokeWidth={2} />
 
       <div className="container-custom relative z-10">
         {/* Header */}
@@ -135,7 +158,7 @@ export const ProductsSection = memo(function ProductsSection() {
         {/* Loading State */}
         {loading ? (
           <div className="flex items-center justify-center py-20">
-            <Loader2 className="w-8 h-8 animate-spin text-primary" />
+            <IndustrialSpinner size="md" />
           </div>
         ) : products.length === 0 ? (
           <div className="text-center py-20">
@@ -144,54 +167,55 @@ export const ProductsSection = memo(function ProductsSection() {
           </div>
         ) : (
           /* Products Grid */
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {products.map((product, index) => (
+          <motion.div
+            className="grid md:grid-cols-2 lg:grid-cols-4 gap-6"
+            variants={gridContainerVariants}
+            initial="hidden"
+            animate={isInView ? 'visible' : 'hidden'}
+          >
+            {products.map((product) => (
               <motion.div
                 key={product.id}
-                initial={{ opacity: 0, y: 30 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.6, delay: index * 0.12 }}
+                variants={cardVariants}
               >
+                <TiltCard className="h-full">
                 <Link href={`/products/${product.slug}`} className="block h-full">
-                  <div className="group relative bg-white border-2 border-metal-200 overflow-hidden hover:border-primary transition-all duration-300 h-full">
-                    {/* Top gold accent line */}
-                    <div className="h-1 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
-
+                  <div className="group relative overflow-hidden h-full hover:shadow-elevation-3 transition-all duration-500">
                     {/* Image */}
-                    <div className="relative aspect-[4/3] overflow-hidden bg-metal-50">
-                      <Image
+                    <div className="relative aspect-[4/3] overflow-hidden">
+                      <ImageWithSkeleton
                         src={getProductImage(product)}
                         alt={getName(product)}
                         fill
                         sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                        className="object-cover group-hover:scale-105 transition-transform duration-500"
+                        className="object-cover group-hover:scale-[1.05] transition-transform duration-700 ease-out"
+                        wrapperClassName="absolute inset-0"
                         loading="lazy"
                       />
-                      <div className="absolute inset-0 bg-steel-900/10 group-hover:bg-steel-900/0 transition-colors duration-300" />
 
                       {/* Featured indicator */}
                       {product.isFeatured && (
-                        <div className="absolute top-0 right-0 w-0 h-0 border-t-[40px] border-t-primary border-l-[40px] border-l-transparent" />
+                        <div className="absolute top-0 right-0 w-0 h-0 border-t-[40px] border-t-primary border-l-[40px] border-l-transparent z-10" />
                       )}
                     </div>
 
                     {/* Content */}
-                    <div className="p-5 border-t-2 border-metal-100">
-                      {/* Category */}
+                    <div className="p-5 pt-4">
                       {product.category && (
                         <span className="text-xs text-primary font-bold uppercase tracking-wider">
                           {getCategoryName(product.category)}
                         </span>
                       )}
 
-                      {/* Product Name */}
                       <h3 className="text-steel-900 font-bold text-base uppercase tracking-wide mt-1 group-hover:text-primary transition-colors line-clamp-2">
                         {getName(product)}
                       </h3>
 
-                      {/* Arrow link */}
+                      {/* Gold underline - reveals on hover */}
+                      <div className={cn("h-0.5 w-0 group-hover:w-12 bg-primary transition-all duration-500 mt-2", isRTL ? "mr-0" : "ml-0")} />
+
                       <div className={cn(
-                        "mt-4 flex items-center gap-2 text-sm font-semibold text-metal-400 group-hover:text-primary transition-colors",
+                        "mt-3 flex items-center gap-2 text-sm font-semibold text-metal-400 group-hover:text-primary transition-colors",
                       )}>
                         <span>{t('products.viewDetails') || 'التفاصيل'}</span>
                         <ArrowRight
@@ -204,16 +228,17 @@ export const ProductsSection = memo(function ProductsSection() {
                       </div>
                     </div>
 
-                    {/* Left gold accent bar on hover */}
+                    {/* Side gold accent bar on hover */}
                     <div className={cn(
-                      "absolute top-0 w-1 h-full bg-primary z-10 transform origin-top scale-y-0 group-hover:scale-y-100 transition-transform duration-300",
+                      "absolute top-0 w-1 h-full bg-primary z-10 origin-top scale-y-0 group-hover:scale-y-100 transition-transform duration-500",
                       isRTL ? "right-0" : "left-0"
                     )} />
                   </div>
                 </Link>
+                </TiltCard>
               </motion.div>
             ))}
-          </div>
+          </motion.div>
         )}
 
         {/* Bottom CTA */}

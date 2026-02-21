@@ -21,7 +21,7 @@ export function TableSkeleton({ rows = 5, columns = 4 }: TableSkeletonProps) {
       {/* Table skeleton */}
       <div className="border rounded-lg overflow-hidden">
         {/* Table header */}
-        <div className="bg-gray-50 border-b p-4">
+        <div className="bg-neutral-50 border-b p-4">
           <div className="flex items-center gap-4">
             {Array.from({ length: columns }).map((_, i) => (
               <Skeleton key={`header-${i}`} className="h-4 flex-1" />

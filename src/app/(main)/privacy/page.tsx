@@ -61,13 +61,13 @@ export default function PrivacyPage() {
             <div className="w-20 h-20 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-6">
               <Shield className="text-primary" size={40} />
             </div>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-neutral-900 mb-6">
               {t('title')}
             </h1>
-            <p className="text-xl text-gray-700">
+            <p className="text-xl text-neutral-700">
               {t('subtitle')}
             </p>
-            <p className="text-sm text-gray-500 mt-4">
+            <p className="text-sm text-neutral-500 mt-4">
               {t('lastUpdated')}
             </p>
           </motion.div>
@@ -84,7 +84,7 @@ export default function PrivacyPage() {
             viewport={{ once: true }}
             className="mb-12"
           >
-            <p className="text-gray-700 leading-relaxed text-lg">
+            <p className="text-neutral-700 leading-relaxed text-lg">
               {t('introduction')}
             </p>
           </motion.div>
@@ -98,17 +98,17 @@ export default function PrivacyPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
-                className="bg-gray-50 rounded-2xl p-8 border border-gray-200"
+                className="bg-neutral-50 rounded-2xl p-8 border border-neutral-200"
               >
                 <div className="flex items-start gap-4">
                   <div className="w-12 h-12 bg-primary/20 rounded-xl flex items-center justify-center shrink-0">
                     <section.icon className="text-primary" size={24} />
                   </div>
                   <div>
-                    <h2 className="text-xl font-bold text-gray-900 mb-3">
+                    <h2 className="text-xl font-bold text-neutral-900 mb-3">
                       {t(section.titleKey)}
                     </h2>
-                    <p className="text-gray-700 leading-relaxed">
+                    <p className="text-neutral-700 leading-relaxed">
                       {t(section.contentKey)}
                     </p>
                   </div>
@@ -124,10 +124,10 @@ export default function PrivacyPage() {
             viewport={{ once: true }}
             className="mt-16 text-center bg-primary/10 rounded-2xl p-8"
           >
-            <h3 className="text-xl font-bold text-gray-900 mb-3">
+            <h3 className="text-xl font-bold text-neutral-900 mb-3">
               {t('questions.title')}
             </h3>
-            <p className="text-gray-700 mb-4">
+            <p className="text-neutral-700 mb-4">
               {t('questions.content')}
             </p>
             <a

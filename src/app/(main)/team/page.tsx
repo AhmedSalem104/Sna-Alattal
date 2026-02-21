@@ -75,10 +75,10 @@ export default function TeamPage() {
             <span className="inline-block px-4 py-1 bg-primary/20 text-primary rounded-full text-sm mb-4">
               {t('team.title')}
             </span>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-neutral-900 mb-6">
               {t('team.subtitle')}
             </h1>
-            <p className="text-xl text-gray-700">
+            <p className="text-xl text-neutral-700">
               {t('team.description')}
             </p>
           </motion.div>
@@ -94,8 +94,8 @@ export default function TeamPage() {
             </div>
           ) : team.length === 0 ? (
             <div className="text-center py-20">
-              <Users size={48} className="mx-auto text-gray-300 mb-4" />
-              <p className="text-gray-600 text-xl">{t('team.noMembers')}</p>
+              <Users size={48} className="mx-auto text-neutral-300 mb-4" />
+              <p className="text-neutral-600 text-xl">{t('team.noMembers')}</p>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
@@ -108,9 +108,9 @@ export default function TeamPage() {
                   transition={{ duration: 0.4, delay: index * 0.05 }}
                   className="group"
                 >
-                  <div className="relative bg-white border-2 border-gray-200 overflow-hidden hover:border-primary transition-all duration-300 rounded-lg">
-                    {/* Gold Accent Bar */}
-                    <div className="absolute top-0 left-0 w-full h-1 bg-primary z-10" />
+                  <div className="relative overflow-hidden hover:shadow-elevation-3 transition-all duration-500">
+                    {/* Gold Accent Bar - hover reveal */}
+                    <div className="absolute top-0 left-0 w-full h-1 bg-primary z-10 scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
 
                     {/* Image */}
                     <div className="relative aspect-square overflow-hidden">
@@ -122,20 +122,20 @@ export default function TeamPage() {
                         className="object-cover group-hover:scale-110 transition-transform duration-500"
                         loading="lazy"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/30 to-transparent" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-neutral-900 via-neutral-900/30 to-transparent" />
 
                       {/* Social Links */}
                       <div className="absolute bottom-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                         <a
                           href="#"
-                          className="w-10 h-10 bg-gray-900/80 backdrop-blur-sm flex items-center justify-center text-white hover:bg-primary hover:text-gray-900 transition-all rounded"
+                          className="w-10 h-10 bg-neutral-900/80 backdrop-blur-sm flex items-center justify-center text-white hover:bg-primary hover:text-neutral-900 transition-all rounded"
                         >
                           <Linkedin size={18} />
                         </a>
                         {member.email && (
                           <a
                             href={`mailto:${member.email}`}
-                            className="w-10 h-10 bg-gray-900/80 backdrop-blur-sm flex items-center justify-center text-white hover:bg-primary hover:text-gray-900 transition-all rounded"
+                            className="w-10 h-10 bg-neutral-900/80 backdrop-blur-sm flex items-center justify-center text-white hover:bg-primary hover:text-neutral-900 transition-all rounded"
                           >
                             <Mail size={18} />
                           </a>

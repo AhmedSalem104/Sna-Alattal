@@ -215,6 +215,14 @@
     "newsletter_button": "Abone Ol",
     "newsletter_success": "Başarıyla abone oldunuz!"
   },
+  "parallax": {
+    "products_title": "Tam Üretim Hattı Çözümleri",
+    "products_subtitle": "Yerel Üretim, Küresel Standartlar",
+    "clients_title": "Dünya Çapında Başarı Ortakları",
+    "clients_subtitle": "15 ülkede 300'den fazla müşteri",
+    "global_title": "Büyük Fuarlarda Küresel Varlık",
+    "global_subtitle": "Dünya Sahnesinde Mısır Sanayisini Temsil Etmek"
+  },
   "floating_widget": {
     "title": "Size nasıl yardımcı olabiliriz?",
     "contact_us": "Bize Ulaşın",
@@ -722,5 +730,14 @@
       "title": "Şartlar Hakkında Sorularınız mı Var?",
       "content": "Bu şartlar ve koşullar hakkında herhangi bir sorunuz varsa, lütfen hukuk ekibimizle iletişime geçin."
     }
+  },
+  "productionLine": {
+    "tag": "Üretim Hattı",
+    "title": "Tam Üretim Hattı",
+    "description": "Tam entegre üretim hattımızı keşfedin - dolumdan kapatmaya, etiketlemeden paketlemeye. Yakınlaştırmak ve gezinmek için fareyi kullanın",
+    "hint": "Yakınlaştırmak için kaydırın, taşımak için sürükleyin",
+    "zoomKeys": "Yakınlaştır",
+    "panKeys": "Taşı",
+    "scrollZoom": "Yakınlaştırmak için kaydırın"
   }
 }

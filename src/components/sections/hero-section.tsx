@@ -12,6 +12,13 @@ import { useCountUp, EASE_OUT_EXPO } from '@/hooks/useAnimations';
 import useEmblaCarousel from 'embla-carousel-react';
 import Autoplay from 'embla-carousel-autoplay';
 import { cn } from '@/lib/utils';
+import { IndustrialGear } from '@/components/decorative';
+
+// Check if a URL points to a direct video file
+function isDirectVideoUrl(url: string | null): boolean {
+  if (!url) return false;
+  return /\.(mp4|webm|mov)(\?.*)?$/i.test(url);
+}
 
 // CountUp component for animated stats
 function CountUpStat({ target, suffix = '', label, index, inView }: {
@@ -141,7 +148,7 @@ export function HeroSection() {
         const response = await fetch('/api/public/slides');
         if (response.ok) {
           const data = await response.json();
-          setSlides(data.filter((s: Slide) => !isVideoSlide(s)));
+          setSlides(data.filter((s: Slide) => !isVideoSlide(s) || isDirectVideoUrl(s.buttonLink)));
         }
       } catch (error) {
         console.error('Error fetching slides:', error);
@@ -199,16 +206,38 @@ export function HeroSection() {
     const description = getLocalizedField(slide, 'description', locale);
     const buttonText = getLocalizedField(slide, 'buttonText', locale);
 
+    const titleWords = title.split(' ').filter(Boolean);
+
     return (
       <div className="container-custom relative z-10 text-center pt-20 pb-32 min-h-screen flex flex-col items-center justify-center">
-        {/* Title with clip-path reveal (SACMI-inspired) */}
+        {/* Title with word-by-word reveal */}
         <motion.h1
-          initial={{ clipPath: 'inset(100% 0 0 0)', opacity: 0 }}
-          animate={{ clipPath: 'inset(0 0 0 0)', opacity: 1 }}
-          transition={{ duration: 0.8, ease: EASE_OUT_EXPO as unknown as number[] }}
-          className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 tracking-tight drop-shadow-lg"
+          initial="hidden"
+          animate="visible"
+          variants={{
+            hidden: {},
+            visible: { transition: { staggerChildren: 0.08, delayChildren: 0.1 } },
+          }}
+          className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 tracking-tight drop-shadow-lg flex flex-wrap justify-center gap-x-[0.3em]"
         >
-          {title}
+          {titleWords.map((word, i) => (
+            <motion.span
+              key={i}
+              variants={{
+                hidden: { opacity: 0, y: 40, rotateX: -40, filter: 'blur(8px)' },
+                visible: {
+                  opacity: 1,
+                  y: 0,
+                  rotateX: 0,
+                  filter: 'blur(0px)',
+                  transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] },
+                },
+              }}
+              className="inline-block"
+            >
+              {word}
+            </motion.span>
+          ))}
         </motion.h1>
 
         {/* Subtitle with Modern Divider */}
@@ -243,8 +272,14 @@ export function HeroSection() {
         {!isVideoSlide && buttonText && slide.buttonLink && (
           <motion.div
             initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.6 }}
+            animate={{
+              opacity: 1,
+              y: [0, -6, 0],
+            }}
+            transition={{
+              opacity: { duration: 0.6, delay: 0.6 },
+              y: { duration: 2.5, repeat: Infinity, ease: 'easeInOut', delay: 1.5 },
+            }}
           >
             <Button size="lg" asChild className="group">
               <Link href={slide.buttonLink}>
@@ -301,25 +336,63 @@ export function HeroSection() {
         </div>
       </motion.div>
 
-      {/* Title */}
+      {/* Title with word-by-word reveal */}
       <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 tracking-tight">
         <motion.span
-          custom={0}
-          variants={titleVariants}
           initial="hidden"
           animate="visible"
-          className="block"
+          variants={{
+            hidden: {},
+            visible: { transition: { staggerChildren: 0.07, delayChildren: 0.3 } },
+          }}
+          className="flex flex-wrap justify-center gap-x-[0.3em]"
         >
-          {t('hero.title_line1') || 'S.N.A AL-ATTAL'}
+          {(t('hero.title_line1') || 'S.N.A AL-ATTAL').split(' ').filter(Boolean).map((word, i) => (
+            <motion.span
+              key={`l1-${i}`}
+              variants={{
+                hidden: { opacity: 0, y: 50, rotateX: -45, filter: 'blur(6px)' },
+                visible: {
+                  opacity: 1,
+                  y: 0,
+                  rotateX: 0,
+                  filter: 'blur(0px)',
+                  transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] },
+                },
+              }}
+              className="inline-block"
+            >
+              {word}
+            </motion.span>
+          ))}
         </motion.span>
         <motion.span
-          custom={1}
-          variants={titleVariants}
           initial="hidden"
           animate="visible"
-          className="block text-primary mt-2"
+          variants={{
+            hidden: {},
+            visible: { transition: { staggerChildren: 0.07, delayChildren: 0.6 } },
+          }}
+          className="flex flex-wrap justify-center gap-x-[0.3em] text-primary mt-2"
         >
-          {t('hero.title_line2') || 'For Engineering Industries'}
+          {(t('hero.title_line2') || 'For Engineering Industries').split(' ').filter(Boolean).map((word, i) => (
+            <motion.span
+              key={`l2-${i}`}
+              variants={{
+                hidden: { opacity: 0, y: 50, rotateX: -45, filter: 'blur(6px)' },
+                visible: {
+                  opacity: 1,
+                  y: 0,
+                  rotateX: 0,
+                  filter: 'blur(0px)',
+                  transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] },
+                },
+              }}
+              className="inline-block"
+            >
+              {word}
+            </motion.span>
+          ))}
         </motion.span>
       </h1>
 
@@ -349,7 +422,7 @@ export function HeroSection() {
         {t('hero.description')}
       </motion.p>
 
-      {/* CTA Buttons */}
+      {/* CTA Buttons with floating animation */}
       <motion.div
         custom={1.2}
         variants={fadeUpVariants}
@@ -357,21 +430,31 @@ export function HeroSection() {
         animate="visible"
         className="flex flex-col sm:flex-row gap-4 justify-center mb-20"
       >
-        <Button size="lg" asChild className="group">
-          <Link href="/products">
-            {t('hero.cta')}
-            <ArrowRight
-              className={`${isRTL ? 'mr-2 rotate-180 group-hover:-translate-x-1' : 'ml-2 group-hover:translate-x-1'} transition-transform`}
-              size={20}
-            />
-          </Link>
-        </Button>
-        <Button variant="outline" size="lg" asChild className="border-white/20 text-white hover:bg-white/10 hover:border-primary/50 relative overflow-hidden group/btn transition-all duration-500">
-          <Link href="/contact">
-            {t('hero.secondary_cta')}
-            <span className="absolute inset-0 border border-primary/0 group-hover/btn:border-primary/40 transition-all duration-500" />
-          </Link>
-        </Button>
+        <motion.div
+          animate={{ y: [0, -5, 0] }}
+          transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut', delay: 2.0 }}
+        >
+          <Button size="lg" asChild className="group">
+            <Link href="/products">
+              {t('hero.cta')}
+              <ArrowRight
+                className={`${isRTL ? 'mr-2 rotate-180 group-hover:-translate-x-1' : 'ml-2 group-hover:translate-x-1'} transition-transform`}
+                size={20}
+              />
+            </Link>
+          </Button>
+        </motion.div>
+        <motion.div
+          animate={{ y: [0, -5, 0] }}
+          transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut', delay: 2.3 }}
+        >
+          <Button variant="outline" size="lg" asChild className="border-white/20 text-white hover:bg-white/10 hover:border-primary/50 relative overflow-hidden group/btn transition-all duration-500">
+            <Link href="/contact">
+              {t('hero.secondary_cta')}
+              <span className="absolute inset-0 border border-primary/0 group-hover/btn:border-primary/40 transition-all duration-500" />
+            </Link>
+          </Button>
+        </motion.div>
       </motion.div>
 
       {/* Stats Grid - Animated Counters (SACMI-inspired) */}
@@ -408,6 +491,9 @@ export function HeroSection() {
           style={{ y: useTransform(scrollYProgress, [0, 1], [0, -50]) }}
           className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-copper-500/10 blur-3xl opacity-30"
         />
+        {/* Decorative Industrial Gears */}
+        <IndustrialGear size={500} teeth={18} className="absolute -bottom-24 -left-24 text-primary opacity-[0.20] hidden md:block" strokeWidth={2} />
+        <IndustrialGear size={380} teeth={14} className="absolute -top-16 -right-16 text-primary opacity-[0.18] hidden md:block" reverse strokeWidth={2} />
       </div>
 
       {/* Slides Carousel - Always render, show loading state inside */}
@@ -422,7 +508,9 @@ export function HeroSection() {
             <div className="flex h-full">
               {slides.map((slide, index) => {
                 const videoId = getYouTubeVideoId(slide.buttonLink);
-                const isVideo = videoId !== null;
+                const isYouTube = videoId !== null;
+                const isDirectVideo = isDirectVideoUrl(slide.buttonLink);
+                const isAnyVideo = isYouTube || isDirectVideo;
 
                 return (
                   <div
@@ -432,8 +520,34 @@ export function HeroSection() {
                     {/* Slide Background - Video or Image */}
                     <div className="absolute inset-0">
                       {/* Less overlay for video slides to keep them clear */}
-                      <div className={`absolute inset-0 z-10 ${isVideo ? 'bg-gradient-to-b from-steel-900/30 via-transparent to-steel-900/50' : 'bg-gradient-to-b from-steel-900/80 via-steel-900/50 to-steel-900'}`} />
-                      {isVideo ? (
+                      <div className={`absolute inset-0 z-10 ${isAnyVideo ? 'bg-gradient-to-b from-steel-900/30 via-transparent to-steel-900/50' : 'bg-gradient-to-b from-steel-900/80 via-steel-900/50 to-steel-900'}`} />
+                      {isDirectVideo ? (
+                        /* Direct Video Background with Ken Burns */
+                        <div className="absolute inset-0 overflow-hidden">
+                          <video
+                            autoPlay
+                            muted
+                            loop
+                            playsInline
+                            poster={slide.image}
+                            className="absolute inset-0 w-full h-full object-cover md:animate-ken-burns"
+                            onError={(e) => {
+                              (e.currentTarget as HTMLVideoElement).style.display = 'none';
+                            }}
+                          >
+                            <source src={slide.buttonLink!} type={`video/${slide.buttonLink!.split('.').pop()?.toLowerCase()}`} />
+                          </video>
+                          {/* Poster fallback (shown while video loads or on error) */}
+                          <Image
+                            src={slide.image}
+                            alt={getLocalizedField(slide, 'title', locale)}
+                            fill
+                            sizes="100vw"
+                            className="object-cover -z-10"
+                            priority={index === 0}
+                          />
+                        </div>
+                      ) : isYouTube ? (
                         /* YouTube Video Background - only load iframe for active slide */
                         <div className="absolute inset-0 overflow-hidden">
                           {selectedIndex === index ? (
@@ -469,7 +583,7 @@ export function HeroSection() {
                       )}
                     </div>
                     {/* Slide Content */}
-                    {renderSlideContent(slide, isVideo)}
+                    {renderSlideContent(slide, isAnyVideo)}
                   </div>
                 );
               })}
@@ -482,14 +596,14 @@ export function HeroSection() {
               {/* Arrow Navigation */}
               <button
                 onClick={scrollPrev}
-                className="absolute left-4 top-1/2 -translate-y-1/2 z-20 p-3 bg-white/10 backdrop-blur-sm text-white hover:bg-white/20 transition-all duration-300"
+                className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-20 p-3 min-w-[44px] min-h-[44px] flex items-center justify-center bg-white/10 backdrop-blur-sm text-white hover:bg-white/20 transition-all duration-300"
                 aria-label="Previous slide"
               >
                 <ChevronLeft size={24} />
               </button>
               <button
                 onClick={scrollNext}
-                className="absolute right-4 top-1/2 -translate-y-1/2 z-20 p-3 bg-white/10 backdrop-blur-sm text-white hover:bg-white/20 transition-all duration-300"
+                className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-20 p-3 min-w-[44px] min-h-[44px] flex items-center justify-center bg-white/10 backdrop-blur-sm text-white hover:bg-white/20 transition-all duration-300"
                 aria-label="Next slide"
               >
                 <ChevronRight size={24} />
@@ -497,7 +611,7 @@ export function HeroSection() {
 
               {/* Numbered Indicators (GEA-inspired) */}
               <div className={cn(
-                "absolute bottom-28 z-20 flex flex-col gap-3",
+                "absolute bottom-28 z-20 hidden sm:flex flex-col gap-3",
                 isRTL ? "left-6 md:left-10" : "right-6 md:right-10"
               )}>
                 {slides.map((_, index) => (

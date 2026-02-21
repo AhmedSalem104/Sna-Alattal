@@ -12,15 +12,15 @@ const buttonVariants = cva(
       variant: {
         // Default - Premium gold button
         default:
-          'bg-primary text-primary-foreground rounded-lg shadow-soft hover:shadow-soft-md hover:bg-primary-600 hover:scale-[1.02]',
+          'bg-primary text-primary-foreground shadow-soft hover:shadow-soft-md hover:bg-primary-600 hover:scale-[1.02]',
 
         // Secondary - Subtle, muted background
         secondary:
-          'bg-secondary text-secondary-foreground rounded-lg hover:bg-secondary/80 hover:shadow-soft',
+          'bg-secondary text-secondary-foreground hover:bg-secondary/80 hover:shadow-soft',
 
         // Outline - Border with transparent background
         outline:
-          'border border-input bg-transparent rounded-lg hover:bg-accent hover:text-accent-foreground hover:border-primary/50 hover:shadow-soft',
+          'border border-input bg-transparent hover:bg-accent hover:text-accent-foreground hover:border-primary/50 hover:shadow-soft',
 
         // Ghost - Minimal, no background
         ghost:
@@ -28,7 +28,7 @@ const buttonVariants = cva(
 
         // Destructive - For dangerous actions
         destructive:
-          'bg-destructive text-destructive-foreground rounded-lg shadow-soft hover:bg-destructive/90 hover:shadow-soft-md hover:scale-[1.02]',
+          'bg-destructive text-destructive-foreground shadow-soft hover:bg-destructive/90 hover:shadow-soft-md hover:scale-[1.02]',
 
         // Link - Text only, underline on hover
         link:
@@ -40,33 +40,33 @@ const buttonVariants = cva(
 
         // Industrial variants -> mapped to default/outline
         industrial:
-          'bg-primary text-primary-foreground font-semibold uppercase tracking-wide rounded-lg shadow-soft-md hover:shadow-soft-lg hover:bg-primary-600 hover:scale-[1.02]',
+          'bg-primary text-primary-foreground font-semibold uppercase tracking-wide shadow-soft-md hover:shadow-soft-lg hover:bg-primary-600 hover:scale-[1.02]',
 
         industrialOutline:
-          'border-2 border-primary text-primary bg-transparent font-semibold uppercase tracking-wide rounded-lg hover:bg-primary hover:text-primary-foreground hover:shadow-soft-md',
+          'border-2 border-primary text-primary bg-transparent font-semibold uppercase tracking-wide hover:bg-primary hover:text-primary-foreground hover:shadow-soft-md',
 
         industrialDark:
-          'bg-steel-800 text-white border border-steel-700 font-semibold uppercase tracking-wide rounded-lg hover:bg-steel-700 hover:border-primary/50 hover:shadow-soft',
+          'bg-steel-800 text-white border border-steel-700 font-semibold uppercase tracking-wide hover:bg-steel-700 hover:border-primary/50 hover:shadow-soft',
 
         // Gold variants -> mapped to default
         gold:
-          'bg-primary text-primary-foreground rounded-lg shadow-soft hover:shadow-soft-md hover:bg-primary-600 hover:scale-[1.02]',
+          'bg-primary text-primary-foreground shadow-soft hover:shadow-soft-md hover:bg-primary-600 hover:scale-[1.02]',
 
         goldOutline:
-          'border-2 border-primary text-primary bg-transparent rounded-lg hover:bg-primary hover:text-primary-foreground hover:shadow-soft-md',
+          'border-2 border-primary text-primary bg-transparent hover:bg-primary hover:text-primary-foreground hover:shadow-soft-md',
 
         // Status variants - using darker colors for better contrast
         success:
-          'bg-success text-white rounded-lg shadow-soft hover:bg-success-700 hover:shadow-soft-md hover:scale-[1.02]',
+          'bg-success text-white shadow-soft hover:bg-success-700 hover:shadow-soft-md hover:scale-[1.02]',
 
         warning:
-          'bg-warning text-steel-900 rounded-lg shadow-soft hover:bg-warning-700 hover:shadow-soft-md hover:scale-[1.02]',
+          'bg-warning text-steel-900 shadow-soft hover:bg-warning-700 hover:shadow-soft-md hover:scale-[1.02]',
 
         error:
-          'bg-error text-white rounded-lg shadow-soft hover:bg-error-700 hover:shadow-soft-md hover:scale-[1.02]',
+          'bg-error text-white shadow-soft hover:bg-error-700 hover:shadow-soft-md hover:scale-[1.02]',
 
         info:
-          'bg-info text-white rounded-lg shadow-soft hover:bg-info-700 hover:shadow-soft-md hover:scale-[1.02]',
+          'bg-info text-white shadow-soft hover:bg-info-700 hover:shadow-soft-md hover:scale-[1.02]',
       },
       size: {
         default: 'h-10 px-4 py-2',

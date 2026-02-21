@@ -111,7 +111,7 @@ export default function SolutionDetailPage({ params }: SolutionDetailPageProps) 
       <div className="min-h-screen bg-white flex items-center justify-center">
         <div className="text-center">
           <Loader2 className="w-12 h-12 animate-spin text-primary mx-auto mb-4" />
-          <p className="text-gray-600">{t('loading')}</p>
+          <p className="text-neutral-600">{t('loading')}</p>
         </div>
       </div>
     );
@@ -122,10 +122,10 @@ export default function SolutionDetailPage({ params }: SolutionDetailPageProps) 
       <div className="min-h-screen bg-white flex items-center justify-center">
         <div className="text-center max-w-md mx-auto px-4">
           <AlertCircle className="w-16 h-16 text-red-500 mx-auto mb-4" />
-          <h1 className="text-2xl font-bold text-gray-900 mb-2">
+          <h1 className="text-2xl font-bold text-neutral-900 mb-2">
             {error === 'notFound' ? t('errors.notFound') : t('errors.fetchError')}
           </h1>
-          <p className="text-gray-600 mb-6">
+          <p className="text-neutral-600 mb-6">
             {error === 'notFound' ? t('errors.notFoundDesc') : t('errors.fetchErrorDesc')}
           </p>
           <Link href="/solutions">
@@ -142,17 +142,17 @@ export default function SolutionDetailPage({ params }: SolutionDetailPageProps) 
   return (
     <div className="min-h-screen bg-white">
       {/* Breadcrumb */}
-      <div className="bg-gray-50 border-b border-gray-200">
+      <div className="bg-neutral-50 border-b border-neutral-200">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center gap-2 text-sm">
-            <Link href="/" className="text-gray-600 hover:text-primary transition-colors">
+            <Link href="/" className="text-neutral-600 hover:text-primary transition-colors">
               {t('breadcrumb.home')}
             </Link>
-            <ChevronLeft size={16} className="text-gray-600 rtl:rotate-180" />
-            <Link href="/solutions" className="text-gray-600 hover:text-primary transition-colors">
+            <ChevronLeft size={16} className="text-neutral-600 rtl:rotate-180" />
+            <Link href="/solutions" className="text-neutral-600 hover:text-primary transition-colors">
               {t('breadcrumb.solutions')}
             </Link>
-            <ChevronLeft size={16} className="text-gray-600 rtl:rotate-180" />
+            <ChevronLeft size={16} className="text-neutral-600 rtl:rotate-180" />
             <span className="text-primary">{getTitle(solution)}</span>
           </div>
         </div>
@@ -185,10 +185,10 @@ export default function SolutionDetailPage({ params }: SolutionDetailPageProps) 
                 <span className="text-4xl">{solution.icon}</span>
               </div>
             )}
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-neutral-900 mb-6">
               {getTitle(solution)}
             </h1>
-            <p className="text-xl text-gray-700 mb-8">
+            <p className="text-xl text-neutral-700 mb-8">
               {getDescription(solution)}
             </p>
             <div className="flex flex-wrap gap-4">
@@ -213,7 +213,7 @@ export default function SolutionDetailPage({ params }: SolutionDetailPageProps) 
               viewport={{ once: true }}
               className="text-center mb-12"
             >
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              <h2 className="text-3xl md:text-4xl font-bold text-neutral-900 mb-4">
                 {t('keyFeatures')}
               </h2>
             </motion.div>
@@ -226,12 +226,12 @@ export default function SolutionDetailPage({ params }: SolutionDetailPageProps) 
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 }}
-                  className="bg-gray-50 rounded-xl p-6 border border-gray-200"
+                  className="bg-neutral-50 rounded-xl p-6 border border-neutral-200"
                 >
                   <div className="w-10 h-10 bg-primary/20 rounded-lg flex items-center justify-center mb-4">
                     <span className="text-primary font-bold">{index + 1}</span>
                   </div>
-                  <p className="text-gray-700">{feature}</p>
+                  <p className="text-neutral-700">{feature}</p>
                 </motion.div>
               ))}
             </div>
@@ -241,7 +241,7 @@ export default function SolutionDetailPage({ params }: SolutionDetailPageProps) 
 
       {/* Related Products */}
       {products.length > 0 && (
-        <section className="py-20 bg-gray-50">
+        <section className="py-20 bg-neutral-50">
           <div className="container mx-auto px-4">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -249,7 +249,7 @@ export default function SolutionDetailPage({ params }: SolutionDetailPageProps) 
               viewport={{ once: true }}
               className="text-center mb-12"
             >
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              <h2 className="text-3xl md:text-4xl font-bold text-neutral-900 mb-4">
                 {t('relatedProducts')}
               </h2>
             </motion.div>
@@ -264,7 +264,7 @@ export default function SolutionDetailPage({ params }: SolutionDetailPageProps) 
                   transition={{ delay: index * 0.1 }}
                 >
                   <Link href={`/products/${product.slug}`}>
-                    <div className="group bg-white rounded-xl overflow-hidden border border-gray-200 hover:border-primary/50 hover:shadow-lg transition-all">
+                    <div className="group bg-white rounded-xl overflow-hidden border border-neutral-200 hover:border-primary/50 hover:shadow-lg transition-all">
                       <div className="relative h-48 overflow-hidden">
                         <Image
                           src={product.image || '/images/placeholders/product.svg'}
@@ -275,10 +275,10 @@ export default function SolutionDetailPage({ params }: SolutionDetailPageProps) 
                         />
                       </div>
                       <div className="p-4">
-                        <h3 className="text-lg font-semibold text-gray-900 group-hover:text-primary transition-colors">
+                        <h3 className="text-lg font-semibold text-neutral-900 group-hover:text-primary transition-colors">
                           {getName(product)}
                         </h3>
-                        <p className="text-gray-600 text-sm mt-2 line-clamp-2">
+                        <p className="text-neutral-600 text-sm mt-2 line-clamp-2">
                           {getDescription(product)}
                         </p>
                       </div>
@@ -301,7 +301,7 @@ export default function SolutionDetailPage({ params }: SolutionDetailPageProps) 
               viewport={{ once: true }}
               className="text-center mb-12"
             >
-              <h2 className="text-3xl font-bold text-gray-900 mb-4">{t('otherSolutions')}</h2>
+              <h2 className="text-3xl font-bold text-neutral-900 mb-4">{t('otherSolutions')}</h2>
             </motion.div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
@@ -314,13 +314,13 @@ export default function SolutionDetailPage({ params }: SolutionDetailPageProps) 
                   transition={{ delay: index * 0.1 }}
                 >
                   <Link href={`/solutions/${related.slug}`}>
-                    <div className="group bg-gray-50 rounded-xl p-6 border border-gray-200 hover:border-primary/50 hover:shadow-lg transition-all text-center">
+                    <div className="group bg-neutral-50 rounded-xl p-6 border border-neutral-200 hover:border-primary/50 hover:shadow-lg transition-all text-center">
                       {related.icon && (
                         <div className="w-16 h-16 bg-primary/20 rounded-xl flex items-center justify-center mx-auto mb-4">
                           <span className="text-3xl">{related.icon}</span>
                         </div>
                       )}
-                      <h3 className="text-lg font-semibold text-gray-900 group-hover:text-primary transition-colors">
+                      <h3 className="text-lg font-semibold text-neutral-900 group-hover:text-primary transition-colors">
                         {getTitle(related)}
                       </h3>
                     </div>
@@ -340,10 +340,10 @@ export default function SolutionDetailPage({ params }: SolutionDetailPageProps) 
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-neutral-900 mb-4">
               {t('cta.title')}
             </h2>
-            <p className="text-gray-700 mb-8 max-w-2xl mx-auto">
+            <p className="text-neutral-700 mb-8 max-w-2xl mx-auto">
               {t('cta.subtitle')}
             </p>
             <div className="flex flex-wrap justify-center gap-4">

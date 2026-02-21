@@ -31,6 +31,7 @@ import {
 import { useLocale } from '@/hooks/useLocale';
 import { getLocalizedField } from '@/lib/locale-helpers';
 
+
 const contactSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters'),
   email: z.string().email('Invalid email address'),
@@ -165,7 +166,7 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="min-h-screen bg-white">
+    <>
       {/* Hero Section */}
       <section className="relative py-32 bg-gradient-to-b from-primary/20 via-white to-white overflow-hidden">
         <div className="absolute inset-0">
@@ -183,10 +184,10 @@ export default function ContactPage() {
             <span className="inline-block px-4 py-1 bg-primary/20 text-primary rounded-full text-sm mb-4">
               {t('badge')}
             </span>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-neutral-900 mb-6">
               {t('title')}
             </h1>
-            <p className="text-xl text-gray-700">
+            <p className="text-xl text-neutral-700">
               {t('subtitle')}
             </p>
           </motion.div>
@@ -205,8 +206,8 @@ export default function ContactPage() {
               className="lg:col-span-1 space-y-8"
             >
               <div>
-                <h2 className="text-2xl font-bold text-gray-900 mb-6">{t('getInTouch')}</h2>
-                <p className="text-gray-600">{t('getInTouchDesc')}</p>
+                <h2 className="text-2xl font-bold text-neutral-900 mb-6">{t('getInTouch')}</h2>
+                <p className="text-neutral-600">{t('getInTouchDesc')}</p>
               </div>
 
               {/* Offices */}
@@ -218,35 +219,35 @@ export default function ContactPage() {
                 offices.map((office, index) => (
                   <div
                     key={index}
-                    className="bg-gray-50 p-6 rounded-2xl border border-gray-200"
+                    className="bg-neutral-50 p-6 rounded-2xl border border-neutral-200"
                   >
                     <div className="flex items-center gap-3 mb-4">
                       <div className="p-2 bg-primary/20 rounded-lg">
                         <Building2 className="text-primary" size={20} />
                       </div>
-                      <h3 className="text-lg font-bold text-gray-900">{getOfficeName(office)}</h3>
+                      <h3 className="text-lg font-bold text-neutral-900">{getOfficeName(office)}</h3>
                     </div>
 
                     <div className="space-y-3">
                       <div className="flex items-start gap-3">
                         <MapPin className="text-primary mt-1 flex-shrink-0" size={18} />
-                        <span className="text-gray-600 text-sm">{getOfficeAddress(office)}</span>
+                        <span className="text-neutral-600 text-sm">{getOfficeAddress(office)}</span>
                       </div>
                       <div className="flex items-center gap-3">
                         <Phone className="text-primary flex-shrink-0" size={18} />
-                        <a href={`tel:${office.phone}`} className="text-gray-600 text-sm hover:text-primary transition-colors">
+                        <a href={`tel:${office.phone}`} className="text-neutral-600 text-sm hover:text-primary transition-colors">
                           {office.phone}
                         </a>
                       </div>
                       <div className="flex items-center gap-3">
                         <Mail className="text-primary flex-shrink-0" size={18} />
-                        <a href={`mailto:${office.email}`} className="text-gray-600 text-sm hover:text-primary transition-colors">
+                        <a href={`mailto:${office.email}`} className="text-neutral-600 text-sm hover:text-primary transition-colors">
                           {office.email}
                         </a>
                       </div>
                       <div className="flex items-center gap-3">
                         <Clock className="text-primary flex-shrink-0" size={18} />
-                        <span className="text-gray-600 text-sm">{office.hours}</span>
+                        <span className="text-neutral-600 text-sm">{office.hours}</span>
                       </div>
                     </div>
                   </div>
@@ -257,9 +258,9 @@ export default function ContactPage() {
               <div className="bg-primary/10 p-6 rounded-2xl border border-primary/30">
                 <div className="flex items-center gap-3 mb-4">
                   <MessageSquare className="text-primary" size={24} />
-                  <h3 className="text-lg font-bold text-gray-900">{t('quickResponse')}</h3>
+                  <h3 className="text-lg font-bold text-neutral-900">{t('quickResponse')}</h3>
                 </div>
-                <p className="text-gray-600 text-sm mb-4">{t('quickResponseDesc')}</p>
+                <p className="text-neutral-600 text-sm mb-4">{t('quickResponseDesc')}</p>
                 <a
                   href="https://wa.me/201032221038"
                   target="_blank"
@@ -279,8 +280,8 @@ export default function ContactPage() {
               viewport={{ once: true }}
               className="lg:col-span-2"
             >
-              <div className="bg-gray-50 p-8 rounded-2xl border border-gray-200">
-                <h2 className="text-2xl font-bold text-gray-900 mb-6">{t('sendMessage')}</h2>
+              <div className="bg-neutral-50 p-8 rounded-2xl border border-neutral-200">
+                <h2 className="text-2xl font-bold text-neutral-900 mb-6">{t('sendMessage')}</h2>
 
                 {isSuccess && (
                   <motion.div
@@ -310,13 +311,13 @@ export default function ContactPage() {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {/* Name */}
                     <div>
-                      <Label htmlFor="name" className="text-gray-900">{t('form.name')} <span className="text-red-500">*</span></Label>
+                      <Label htmlFor="name" className="text-neutral-900">{t('form.name')} <span className="text-red-500">*</span></Label>
                       <Input
                         id="name"
                         {...register('name')}
                         aria-invalid={!!errors.name}
                         aria-describedby={errors.name ? 'name-error' : undefined}
-                        className="mt-2 bg-white border-gray-200 text-gray-900"
+                        className="mt-2 bg-white border-neutral-200 text-neutral-900"
                         placeholder={t('form.namePlaceholder')}
                       />
                       {errors.name && (
@@ -326,14 +327,14 @@ export default function ContactPage() {
 
                     {/* Email */}
                     <div>
-                      <Label htmlFor="email" className="text-gray-900">{t('form.email')} <span className="text-red-500">*</span></Label>
+                      <Label htmlFor="email" className="text-neutral-900">{t('form.email')} <span className="text-red-500">*</span></Label>
                       <Input
                         id="email"
                         type="email"
                         {...register('email')}
                         aria-invalid={!!errors.email}
                         aria-describedby={errors.email ? 'email-error' : undefined}
-                        className="mt-2 bg-white border-gray-200 text-gray-900"
+                        className="mt-2 bg-white border-neutral-200 text-neutral-900"
                         placeholder={t('form.emailPlaceholder')}
                       />
                       {errors.email && (
@@ -343,13 +344,13 @@ export default function ContactPage() {
 
                     {/* Phone */}
                     <div>
-                      <Label htmlFor="phone" className="text-gray-900">{t('form.phone')} <span className="text-red-500">*</span></Label>
+                      <Label htmlFor="phone" className="text-neutral-900">{t('form.phone')} <span className="text-red-500">*</span></Label>
                       <Input
                         id="phone"
                         {...register('phone')}
                         aria-invalid={!!errors.phone}
                         aria-describedby={errors.phone ? 'phone-error' : undefined}
-                        className="mt-2 bg-white border-gray-200 text-gray-900"
+                        className="mt-2 bg-white border-neutral-200 text-neutral-900"
                         placeholder={t('form.phonePlaceholder')}
                       />
                       {errors.phone && (
@@ -359,11 +360,11 @@ export default function ContactPage() {
 
                     {/* Company */}
                     <div>
-                      <Label htmlFor="company" className="text-gray-900">{t('form.company')}</Label>
+                      <Label htmlFor="company" className="text-neutral-900">{t('form.company')}</Label>
                       <Input
                         id="company"
                         {...register('company')}
-                        className="mt-2 bg-white border-gray-200 text-gray-900"
+                        className="mt-2 bg-white border-neutral-200 text-neutral-900"
                         placeholder={t('form.companyPlaceholder')}
                       />
                     </div>
@@ -371,16 +372,16 @@ export default function ContactPage() {
 
                   {/* Subject */}
                   <div>
-                    <Label className="text-gray-900">{t('form.subject')} <span className="text-red-500">*</span></Label>
+                    <Label className="text-neutral-900">{t('form.subject')} <span className="text-red-500">*</span></Label>
                     <Select onValueChange={(value) => setValue('subject', value)}>
                       <SelectTrigger
-                        className="mt-2 bg-white border-gray-200 text-gray-900"
+                        className="mt-2 bg-white border-neutral-200 text-neutral-900"
                         aria-invalid={!!errors.subject}
                         aria-describedby={errors.subject ? 'subject-error' : undefined}
                       >
                         <SelectValue placeholder={t('form.subjectPlaceholder')} />
                       </SelectTrigger>
-                      <SelectContent className="bg-white border-gray-200">
+                      <SelectContent className="bg-white border-neutral-200">
                         {subjects.map((subject) => (
                           <SelectItem key={subject.value} value={subject.value}>
                             {getSubjectLabel(subject)}
@@ -395,13 +396,13 @@ export default function ContactPage() {
 
                   {/* Message */}
                   <div>
-                    <Label htmlFor="message" className="text-gray-900">{t('form.message')} <span className="text-red-500">*</span></Label>
+                    <Label htmlFor="message" className="text-neutral-900">{t('form.message')} <span className="text-red-500">*</span></Label>
                     <Textarea
                       id="message"
                       {...register('message')}
                       aria-invalid={!!errors.message}
                       aria-describedby={errors.message ? 'message-error' : undefined}
-                      className="mt-2 bg-white border-gray-200 text-gray-900 min-h-[150px]"
+                      className="mt-2 bg-white border-neutral-200 text-neutral-900 min-h-[150px]"
                       placeholder={t('form.messagePlaceholder')}
                     />
                     {errors.message && (
@@ -439,7 +440,7 @@ export default function ContactPage() {
       </section>
 
       {/* Map Section */}
-      <section className="py-20 bg-gray-50">
+      <section className="py-20 bg-neutral-50">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -447,11 +448,11 @@ export default function ContactPage() {
             viewport={{ once: true }}
             className="text-center mb-12"
           >
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">{t('findUs')}</h2>
-            <p className="text-gray-600">{t('findUsDesc')}</p>
+            <h2 className="text-3xl font-bold text-neutral-900 mb-4">{t('findUs')}</h2>
+            <p className="text-neutral-600">{t('findUsDesc')}</p>
           </motion.div>
 
-          <div className="h-64 sm:h-80 md:h-96 lg:h-[450px] xl:h-[500px] 2xl:h-[600px] rounded-2xl overflow-hidden border border-gray-200">
+          <div className="h-64 sm:h-80 md:h-96 lg:h-[450px] xl:h-[500px] 2xl:h-[600px] rounded-2xl overflow-hidden border border-neutral-200">
             <iframe
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3456.123456789!2d31.7654321!3d30.1234567!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzDCsDA3JzI0LjQiTiAzMcKwNDUnNTUuNiJF!5e0!3m2!1sen!2seg!4v1234567890"
               width="100%"
@@ -466,6 +467,6 @@ export default function ContactPage() {
           </div>
         </div>
       </section>
-    </div>
+    </>
   );
 }

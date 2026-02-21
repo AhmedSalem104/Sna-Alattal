@@ -1,18 +1,21 @@
 import { Skeleton } from '@/components/ui/skeleton';
 
 /**
- * Card skeleton loader for product cards, news cards, etc.
- * Provides visual feedback while content is loading
+ * Industrial-themed card skeleton loader.
+ * Gold accent bar on left, shimmer animation.
  */
 export function CardSkeleton() {
   return (
     <div
-      className="bg-gray-50 rounded-2xl border border-gray-200 p-6 space-y-4"
+      className="relative bg-white border border-neutral-200 p-6 space-y-4 overflow-hidden"
       role="status"
       aria-label="Loading content"
     >
+      {/* Gold accent bar */}
+      <div className="absolute top-0 left-0 w-1 h-full bg-primary/40" aria-hidden="true" />
+
       {/* Image skeleton */}
-      <Skeleton className="h-48 w-full rounded-xl" />
+      <Skeleton className="h-48 w-full" />
 
       {/* Content skeleton */}
       <div className="space-y-2">
@@ -22,7 +25,7 @@ export function CardSkeleton() {
       </div>
 
       {/* Button skeleton */}
-      <Skeleton className="h-10 w-32 rounded-lg" />
+      <Skeleton className="h-10 w-32" />
 
       <span className="sr-only">Loading, please wait...</span>
     </div>

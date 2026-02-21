@@ -1,12 +1,14 @@
 'use client';
 
 import { useRef, useState, useEffect, memo } from 'react';
-import Image from 'next/image';
+import { ImageWithSkeleton } from '@/components/ui/image-with-skeleton';
 import { useTranslations } from 'next-intl';
 import { motion, useInView } from 'framer-motion';
-import { Play, Tv, X, Loader2 } from 'lucide-react';
+import { Play, Tv, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { IndustrialSpinner } from '@/components/ui/industrial-spinner';
 import { useLocale } from '@/hooks/useLocale';
+import { IndustrialGear } from '@/components/decorative';
 
 interface TVInterview {
   id: string;
@@ -83,7 +85,7 @@ export const TVSection = memo(function TVSection() {
     <>
       <section
         ref={ref}
-        className="py-20 lg:py-28 bg-white relative overflow-hidden"
+        className="py-20 lg:py-28 bg-white/[0.93] relative overflow-hidden"
         dir={isRTL ? 'rtl' : 'ltr'}
       >
         {/* Industrial Background Pattern */}
@@ -98,6 +100,7 @@ export const TVSection = memo(function TVSection() {
               backgroundSize: '50px 50px',
             }}
           />
+          <IndustrialGear size={280} teeth={14} className="absolute -bottom-10 -right-10 text-primary opacity-[0.15] hidden md:block" reverse strokeWidth={1.5} />
         </div>
 
         {/* Decorative Elements */}
@@ -113,7 +116,7 @@ export const TVSection = memo(function TVSection() {
             className="text-center max-w-3xl mx-auto mb-16"
           >
             {/* Section Tag */}
-            <div className="inline-flex items-center gap-2 border-2 border-primary/30 bg-primary/5 px-4 py-2 mb-6">
+            <div className="inline-flex items-center gap-2 border-2 border-primary/30 bg-primary/15 px-4 py-2 mb-6">
               <Tv size={16} className="text-primary" />
               <span className="text-primary text-sm font-bold uppercase tracking-widest">
                 {t('tv.title') || 'المقابلات التلفزيونية'}
@@ -141,7 +144,7 @@ export const TVSection = memo(function TVSection() {
           {/* Videos Grid */}
           {loading ? (
             <div className="flex justify-center items-center py-20">
-              <Loader2 className="w-8 h-8 animate-spin text-primary" />
+              <IndustrialSpinner size="md" />
             </div>
           ) : tvInterviews.length === 0 ? (
             <div className="text-center py-20">
@@ -155,46 +158,53 @@ export const TVSection = memo(function TVSection() {
               {tvInterviews.map((interview, index) => (
                 <motion.div
                   key={interview.id}
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={isInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                  initial={{ opacity: 0, y: 30, scale: 0.95 }}
+                  animate={isInView ? { opacity: 1, y: 0, scale: 1 } : {}}
+                  transition={{ duration: 0.6, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
                 >
                   <div
-                    className="group relative bg-metal-50 border-2 border-metal-200 overflow-hidden hover:border-primary transition-all duration-300 cursor-pointer"
+                    className="group relative overflow-hidden cursor-pointer aspect-[16/10] bg-steel-900"
                     onClick={() => setActiveVideo(interview.videoUrl)}
                   >
-                    {/* Gold Accent Bar */}
-                    <div className="absolute top-0 left-0 w-1 h-full bg-primary z-10 transform origin-top scale-y-0 group-hover:scale-y-100 transition-transform duration-300" />
+                    {/* Full-bleed thumbnail */}
+                    <ImageWithSkeleton
+                      src={getThumbnail(interview)}
+                      alt={getTitle(interview)}
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      className="object-cover group-hover:scale-[1.08] transition-transform duration-700 ease-out"
+                      wrapperClassName="absolute inset-0"
+                      loading="lazy"
+                    />
 
-                    {/* Thumbnail */}
-                    <div className="relative aspect-video overflow-hidden">
-                      <Image
-                        src={getThumbnail(interview)}
-                        alt={getTitle(interview)}
-                        fill
-                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                        className="object-cover group-hover:scale-110 transition-transform duration-500"
-                        loading="lazy"
-                      />
-                      <div className="absolute inset-0 bg-steel-900/40 group-hover:bg-steel-900/30 transition-colors" />
+                    {/* Cinematic gradient overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-steel-950 via-steel-900/40 to-transparent group-hover:via-steel-900/30 transition-colors duration-300" />
 
-                      {/* Play Button */}
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="relative">
-                          <div className="absolute inset-0 bg-primary/30 group-hover:animate-ping" />
-                          <div className="relative w-16 h-16 bg-primary flex items-center justify-center group-hover:scale-110 transition-transform shadow-gold">
-                            <Play size={28} className="text-steel-900 ml-1" fill="currentColor" />
-                          </div>
+                    {/* Gold top line */}
+                    <div className="absolute top-0 left-0 right-0 h-1 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left z-10" />
+
+                    {/* Channel badge - top left */}
+                    <div className="absolute top-4 left-4 z-10">
+                      <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white/10 backdrop-blur-sm border border-white/20 text-white text-xs font-bold uppercase tracking-wider group-hover:bg-primary/20 group-hover:border-primary/40 transition-all duration-300">
+                        <Tv size={12} />
+                        {getChannel(interview)}
+                      </span>
+                    </div>
+
+                    {/* Center play button */}
+                    <div className="absolute inset-0 flex items-center justify-center z-10">
+                      <div className="relative">
+                        {/* Pulse ring */}
+                        <div className="absolute -inset-3 border-2 border-white/20 rounded-full group-hover:border-primary/40 group-hover:scale-125 transition-all duration-500 opacity-0 group-hover:opacity-100" />
+                        <div className="relative w-14 h-14 bg-white/15 backdrop-blur-sm border border-white/30 rounded-full flex items-center justify-center group-hover:bg-primary group-hover:border-primary transition-all duration-300 shadow-lg">
+                          <Play size={22} className="text-white group-hover:text-steel-900 ml-0.5 transition-colors" fill="currentColor" />
                         </div>
                       </div>
                     </div>
 
-                    {/* Content */}
-                    <div className="p-4 border-t-2 border-metal-100">
-                      <span className="text-xs text-primary font-bold uppercase tracking-wider">
-                        {getChannel(interview)}
-                      </span>
-                      <h3 className="text-steel-900 font-bold uppercase tracking-wide group-hover:text-primary transition-colors mt-1">
+                    {/* Bottom content overlay */}
+                    <div className="absolute bottom-0 left-0 right-0 p-5 z-10">
+                      <h3 className="text-white font-bold text-base uppercase tracking-wide group-hover:text-primary transition-colors duration-300 line-clamp-2">
                         {getTitle(interview)}
                       </h3>
                     </div>

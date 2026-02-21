@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button';
 import { useLocale } from '@/hooks/useLocale';
 import { getLocalizedField } from '@/lib/locale-helpers';
 
+
 interface Client {
   id: string;
   nameAr: string;
@@ -60,7 +61,7 @@ export default function ClientsPage() {
   };
 
   return (
-    <div className="min-h-screen bg-white">
+    <>
       {/* Hero Section */}
       <section className="relative py-32 bg-gradient-to-b from-primary/20 via-white to-white overflow-hidden">
         <div className="absolute inset-0">
@@ -78,10 +79,10 @@ export default function ClientsPage() {
             <span className="inline-block px-4 py-1 bg-primary/20 text-primary rounded-full text-sm mb-4">
               {t('badge')}
             </span>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-neutral-900 mb-6">
               {t('title')}
             </h1>
-            <p className="text-xl text-gray-700">
+            <p className="text-xl text-neutral-700">
               {t('subtitle')}
             </p>
           </motion.div>
@@ -89,7 +90,7 @@ export default function ClientsPage() {
       </section>
 
       {/* Stats Section */}
-      <section className="py-16 bg-gray-50">
+      <section className="py-16 bg-neutral-50">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {stats.map((stat, index) => (
@@ -107,7 +108,7 @@ export default function ClientsPage() {
                 <div className="text-3xl md:text-4xl font-bold text-primary mb-2">
                   {stat.value}
                 </div>
-                <div className="text-gray-600">{t(stat.labelKey)}</div>
+                <div className="text-neutral-600">{t(stat.labelKey)}</div>
               </motion.div>
             ))}
           </div>
@@ -123,10 +124,10 @@ export default function ClientsPage() {
             viewport={{ once: true }}
             className="text-center mb-12"
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-neutral-900 mb-4">
               {t('ourClients')}
             </h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
+            <p className="text-neutral-600 max-w-2xl mx-auto">
               {t('ourClientsDesc')}
             </p>
           </motion.div>
@@ -137,8 +138,8 @@ export default function ClientsPage() {
             </div>
           ) : clients.length === 0 ? (
             <div className="text-center py-20">
-              <Building2 size={48} className="mx-auto text-gray-300 mb-4" />
-              <p className="text-gray-600 text-xl">{t('noClients') || 'No clients available'}</p>
+              <Building2 size={48} className="mx-auto text-neutral-300 mb-4" />
+              <p className="text-neutral-600 text-xl">{t('noClients') || 'No clients available'}</p>
             </div>
           ) : (
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-6">
@@ -158,7 +159,7 @@ export default function ClientsPage() {
                       rel="noopener noreferrer"
                       className="block"
                     >
-                      <div className="aspect-square bg-gray-100 rounded-xl p-6 flex items-center justify-center border border-gray-200 hover:border-primary/50 hover:bg-gray-50 hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+                      <div className="aspect-square bg-neutral-50 p-6 flex items-center justify-center hover:shadow-gold-sm hover:-translate-y-1 transition-all duration-500">
                         <Image
                           src={getClientLogo(client)}
                           alt={getName(client)}
@@ -170,7 +171,7 @@ export default function ClientsPage() {
                       </div>
                     </a>
                   ) : (
-                    <div className="aspect-square bg-gray-100 rounded-xl p-6 flex items-center justify-center border border-gray-200 hover:border-primary/50 hover:bg-gray-50 hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+                    <div className="aspect-square bg-neutral-50 p-6 flex items-center justify-center hover:shadow-gold-sm hover:-translate-y-1 transition-all duration-500">
                       <Image
                         src={getClientLogo(client)}
                         alt={getName(client)}
@@ -189,7 +190,7 @@ export default function ClientsPage() {
       </section>
 
       {/* Trust Indicators */}
-      <section className="py-20 bg-gray-50">
+      <section className="py-20 bg-neutral-50">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -197,10 +198,10 @@ export default function ClientsPage() {
             viewport={{ once: true }}
             className="text-center mb-12"
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-neutral-900 mb-4">
               {t('whyTrustUs')}
             </h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
+            <p className="text-neutral-600 max-w-2xl mx-auto">
               {t('whyTrustUsDesc')}
             </p>
           </motion.div>
@@ -210,13 +211,13 @@ export default function ClientsPage() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="bg-white p-8 rounded-2xl border border-gray-200"
+              className="p-8 hover:shadow-elevation-2 transition-all duration-500"
             >
-              <div className="w-14 h-14 bg-primary/20 rounded-xl flex items-center justify-center mb-6">
+              <div className="w-14 h-14 bg-primary/20 flex items-center justify-center mb-6">
                 <Award className="text-primary" size={28} />
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">{t('trust.quality.title')}</h3>
-              <p className="text-gray-600">{t('trust.quality.desc')}</p>
+              <h3 className="text-xl font-bold text-neutral-900 mb-3">{t('trust.quality.title')}</h3>
+              <p className="text-neutral-600">{t('trust.quality.desc')}</p>
             </motion.div>
 
             <motion.div
@@ -224,13 +225,13 @@ export default function ClientsPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.1 }}
-              className="bg-white p-8 rounded-2xl border border-gray-200"
+              className="p-8 hover:shadow-elevation-2 transition-all duration-500"
             >
-              <div className="w-14 h-14 bg-primary/20 rounded-xl flex items-center justify-center mb-6">
+              <div className="w-14 h-14 bg-primary/20 flex items-center justify-center mb-6">
                 <Users className="text-primary" size={28} />
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">{t('trust.support.title')}</h3>
-              <p className="text-gray-600">{t('trust.support.desc')}</p>
+              <h3 className="text-xl font-bold text-neutral-900 mb-3">{t('trust.support.title')}</h3>
+              <p className="text-neutral-600">{t('trust.support.desc')}</p>
             </motion.div>
 
             <motion.div
@@ -238,13 +239,13 @@ export default function ClientsPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.2 }}
-              className="bg-white p-8 rounded-2xl border border-gray-200"
+              className="p-8 hover:shadow-elevation-2 transition-all duration-500"
             >
-              <div className="w-14 h-14 bg-primary/20 rounded-xl flex items-center justify-center mb-6">
+              <div className="w-14 h-14 bg-primary/20 flex items-center justify-center mb-6">
                 <Globe className="text-primary" size={28} />
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">{t('trust.global.title')}</h3>
-              <p className="text-gray-600">{t('trust.global.desc')}</p>
+              <h3 className="text-xl font-bold text-neutral-900 mb-3">{t('trust.global.title')}</h3>
+              <p className="text-neutral-600">{t('trust.global.desc')}</p>
             </motion.div>
           </div>
         </div>
@@ -258,10 +259,10 @@ export default function ClientsPage() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-neutral-900 mb-4">
               {t('cta.title')}
             </h2>
-            <p className="text-gray-700 mb-8 max-w-2xl mx-auto">
+            <p className="text-neutral-700 mb-8 max-w-2xl mx-auto">
               {t('cta.subtitle')}
             </p>
             <Link href="/contact">
@@ -273,6 +274,6 @@ export default function ClientsPage() {
           </motion.div>
         </div>
       </section>
-    </div>
+    </>
   );
 }

@@ -1,14 +1,16 @@
 'use client';
 
 import { useRef, memo, useState, useEffect } from 'react';
-import Image from 'next/image';
+import { ImageWithSkeleton } from '@/components/ui/image-with-skeleton';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { motion, useInView } from 'framer-motion';
-import { Calendar, ArrowRight, Newspaper, Loader2 } from 'lucide-react';
+import { Calendar, ArrowRight, Newspaper } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { IndustrialSpinner } from '@/components/ui/industrial-spinner';
 import { Badge } from '@/components/ui/badge';
 import { useLocale } from '@/hooks/useLocale';
+import { IndustrialGear } from '@/components/decorative';
 
 interface News {
   id: string;
@@ -73,13 +75,14 @@ export const NewsSection = memo(function NewsSection() {
   return (
     <section
       ref={ref}
-      className="py-20 lg:py-28 bg-gradient-to-b from-neutral-50 to-white relative overflow-hidden"
+      className="py-20 lg:py-28 bg-gradient-to-b from-neutral-50/95 to-white/[0.93] relative overflow-hidden"
       dir={isRTL ? 'rtl' : 'ltr'}
     >
       {/* Modern Subtle Background */}
       <div className="absolute inset-0 z-0 overflow-hidden">
         <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-primary/5 blur-3xl" />
         <div className="absolute top-0 left-0 w-80 h-80 bg-copper-500/5 blur-3xl" />
+        <IndustrialGear size={300} teeth={16} className="absolute -bottom-12 -left-12 text-primary opacity-[0.15] hidden md:block" strokeWidth={1.5} />
       </div>
 
       <div className="container-custom relative z-10">
@@ -123,7 +126,7 @@ export const NewsSection = memo(function NewsSection() {
         {/* Loading State */}
         {loading && (
           <div className="flex items-center justify-center py-20">
-            <Loader2 className="w-8 h-8 animate-spin text-primary" />
+            <IndustrialSpinner size="md" />
           </div>
         )}
 
@@ -146,15 +149,16 @@ export const NewsSection = memo(function NewsSection() {
               className="lg:col-span-2"
             >
               <Link href={`/news/${news[0].slug}`}>
-                <div className="group relative h-full bg-white border border-neutral-200 overflow-hidden hover:border-primary/30 hover:shadow-soft-xl hover:-translate-y-1 transition-all duration-300">
+                <div className="group relative h-full overflow-hidden hover:shadow-elevation-3 transition-all duration-500">
                   <motion.div whileHover={{ scale: 1.05 }} transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}>
                     <div className="relative aspect-[16/9] sm:aspect-[16/10] md:aspect-[2/1] overflow-hidden">
-                      <Image
+                      <ImageWithSkeleton
                         src={news[0].image || '/images/placeholders/news.svg'}
                         alt={getTitle(news[0])}
                         fill
                         sizes="(max-width: 1024px) 100vw, 66vw"
                         className="object-cover group-hover:scale-[1.03] transition-transform duration-500"
+                        wrapperClassName="absolute inset-0"
                         loading="lazy"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-steel-900/70 via-steel-900/30 to-transparent" />
@@ -191,14 +195,15 @@ export const NewsSection = memo(function NewsSection() {
                   transition={{ duration: 0.6, delay: (index + 1) * 0.1 }}
                 >
                   <Link href={`/news/${article.slug}`}>
-                    <div className="group flex gap-4 p-4 bg-white border border-neutral-200 hover:border-primary/30 hover:shadow-soft-lg hover:-translate-y-1 transition-all duration-300">
+                    <div className="group flex gap-4 p-4 hover:shadow-elevation-2 transition-all duration-500">
                       <div className="relative w-28 h-28 shrink-0 overflow-hidden">
-                        <Image
+                        <ImageWithSkeleton
                           src={article.image || '/images/placeholders/news.svg'}
                           alt={getTitle(article)}
                           fill
                           sizes="112px"
                           className="object-cover group-hover:scale-[1.03] transition-transform duration-500"
+                          wrapperClassName="absolute inset-0"
                           loading="lazy"
                         />
                       </div>
@@ -209,7 +214,7 @@ export const NewsSection = memo(function NewsSection() {
                         <h4 className="font-semibold text-steel-900 group-hover:text-primary transition-colors line-clamp-2 mt-1 mb-2 text-sm">
                           {getTitle(article)}
                         </h4>
-                        <div className="flex items-center gap-2 text-xs text-neutral-500">
+                        <div className="flex items-center gap-2 text-xs text-neutral-600">
                           <Calendar size={12} />
                           <span>{formatDate(article.publishedAt)}</span>
                         </div>

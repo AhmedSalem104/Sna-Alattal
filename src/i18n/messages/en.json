@@ -215,6 +215,14 @@
     "newsletter_button": "Subscribe",
     "newsletter_success": "Subscribed successfully!"
   },
+  "parallax": {
+    "products_title": "Complete Production Line Solutions",
+    "products_subtitle": "Local Manufacturing, Global Standards",
+    "clients_title": "Success Partners Worldwide",
+    "clients_subtitle": "Over 300 clients across 15 countries",
+    "global_title": "Global Presence at Major Exhibitions",
+    "global_subtitle": "Representing Egyptian Industry on the World Stage"
+  },
   "floating_widget": {
     "title": "How can we help?",
     "contact_us": "Contact Us",
@@ -722,5 +730,14 @@
       "title": "Questions About Terms?",
       "content": "If you have any questions about these terms and conditions, please contact our legal team."
     }
+  },
+  "productionLine": {
+    "tag": "Production Line",
+    "title": "Complete Production Line",
+    "description": "Explore our fully integrated production line - from filling and capping to labeling and packaging. Use your mouse to zoom and navigate",
+    "hint": "Scroll to zoom, drag to pan",
+    "zoomKeys": "Zoom",
+    "panKeys": "Pan",
+    "scrollZoom": "Scroll to zoom"
   }
 }

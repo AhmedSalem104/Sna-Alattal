@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button';
 import { useLocale } from '@/hooks/useLocale';
 import { getLocalizedField } from '@/lib/locale-helpers';
 
+
 interface Solution {
   id: string;
   titleAr: string;
@@ -89,14 +90,16 @@ export default function SolutionsPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
-        <Loader2 className="w-8 h-8 animate-spin text-primary" />
-      </div>
+      <>
+        <div className="min-h-screen flex items-center justify-center">
+          <Loader2 className="w-8 h-8 animate-spin text-primary" />
+        </div>
+      </>
     );
   }
 
   return (
-    <div className="min-h-screen bg-white">
+    <>
       {/* Hero Section */}
       <section className="relative py-32 bg-gradient-to-b from-primary/20 via-white to-white overflow-hidden">
         <div className="absolute inset-0">
@@ -114,10 +117,10 @@ export default function SolutionsPage() {
             <span className="inline-block px-4 py-1 bg-primary/20 text-primary rounded-full text-sm mb-4">
               {t('badge')}
             </span>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-neutral-900 mb-6">
               {t('title')}
             </h1>
-            <p className="text-xl text-gray-700">
+            <p className="text-xl text-neutral-700">
               {t('subtitle')}
             </p>
           </motion.div>
@@ -129,8 +132,8 @@ export default function SolutionsPage() {
         <div className="container mx-auto px-4">
           {solutions.length === 0 ? (
             <div className="text-center py-20">
-              <Lightbulb size={48} className="mx-auto text-gray-300 mb-4" />
-              <p className="text-gray-600 text-xl">{t('noSolutions') || 'No solutions available'}</p>
+              <Lightbulb size={48} className="mx-auto text-neutral-300 mb-4" />
+              <p className="text-neutral-600 text-xl">{t('noSolutions') || 'No solutions available'}</p>
             </div>
           ) : (
             <div className="space-y-20">
@@ -171,11 +174,11 @@ export default function SolutionsPage() {
                         <span className="text-primary font-medium">{t('industrySolution')}</span>
                       </div>
 
-                      <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                      <h2 className="text-3xl md:text-4xl font-bold text-neutral-900 mb-4">
                         {getTitle(solution)}
                       </h2>
 
-                      <p className="text-gray-700 text-lg mb-6">
+                      <p className="text-neutral-700 text-lg mb-6">
                         {getShortDesc(solution) || getDescription(solution)}
                       </p>
 
@@ -187,7 +190,7 @@ export default function SolutionsPage() {
                               <div className="p-1 bg-primary/20 rounded-full">
                                 <Check className="text-primary" size={14} />
                               </div>
-                              <span className="text-gray-700 text-sm">{feature}</span>
+                              <span className="text-neutral-700 text-sm">{feature}</span>
                             </div>
                           ))}
                         </div>
@@ -199,7 +202,7 @@ export default function SolutionsPage() {
                           {solution.industries.map((industry, i) => (
                             <span
                               key={i}
-                              className="px-3 py-1 bg-gray-100 border border-gray-200 rounded-full text-gray-600 text-sm"
+                              className="px-3 py-1 bg-neutral-100 border border-neutral-200 rounded-full text-neutral-600 text-sm"
                             >
                               {industry}
                             </span>
@@ -223,7 +226,7 @@ export default function SolutionsPage() {
       </section>
 
       {/* Why Choose Us */}
-      <section className="py-20 bg-gray-50">
+      <section className="py-20 bg-neutral-50">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -231,10 +234,10 @@ export default function SolutionsPage() {
             viewport={{ once: true }}
             className="text-center mb-12"
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-neutral-900 mb-4">
               {t('whyChoose.title')}
             </h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
+            <p className="text-neutral-600 max-w-2xl mx-auto">
               {t('whyChoose.subtitle')}
             </p>
           </motion.div>
@@ -252,12 +255,12 @@ export default function SolutionsPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
-                className="text-center p-8 bg-white rounded-2xl border border-gray-200"
+                className="text-center p-8 bg-white rounded-2xl border border-neutral-200"
               >
                 <div className="text-4xl md:text-5xl font-bold text-primary mb-2">
                   {stat.number}
                 </div>
-                <div className="text-gray-600">{stat.label}</div>
+                <div className="text-neutral-600">{stat.label}</div>
               </motion.div>
             ))}
           </div>
@@ -272,10 +275,10 @@ export default function SolutionsPage() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-neutral-900 mb-4">
               {t('cta.title')}
             </h2>
-            <p className="text-gray-700 mb-8 max-w-2xl mx-auto">
+            <p className="text-neutral-700 mb-8 max-w-2xl mx-auto">
               {t('cta.subtitle')}
             </p>
             <Link href="/contact">
@@ -287,6 +290,6 @@ export default function SolutionsPage() {
           </motion.div>
         </div>
       </section>
-    </div>
+    </>
   );
 }

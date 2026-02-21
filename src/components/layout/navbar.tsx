@@ -11,6 +11,7 @@ import { Button } from '@/components/ui/button';
 import { LanguageSwitcher } from '@/components/language-switcher';
 import { useLocale } from '@/hooks/useLocale';
 import { cn } from '@/lib/utils';
+import { IndustrialGear } from '@/components/decorative';
 
 const navItems = [
   { key: 'home', href: '/' },
@@ -74,15 +75,15 @@ export function Navbar() {
               <span className="text-metal-200 font-medium">مصنع ماكينات التعبئة والتغليف</span>
             </div>
           </div>
-          <div className="flex items-center gap-6">
+          <div className="flex items-center gap-6" dir="ltr">
             <a href="tel:+201032221038" className="flex items-center gap-2 text-metal-200 hover:text-primary transition-colors font-medium">
               <Phone size={14} className="text-primary" />
-              <span>+20 103 222 1038</span>
+              <span dir="ltr">+20 103 222 1038</span>
             </a>
             <span className="text-steel-700">|</span>
             <a href="tel:+201006193661" className="flex items-center gap-2 text-metal-200 hover:text-primary transition-colors font-medium">
               <Phone size={14} className="text-primary" />
-              <span>+20 100 619 3661</span>
+              <span dir="ltr">+20 100 619 3661</span>
             </a>
           </div>
         </div>
@@ -103,7 +104,14 @@ export function Navbar() {
         <nav className="container-custom">
           <div className="flex items-center justify-between h-[80px]">
             {/* Logo */}
-            <Link href="/" className="flex items-center gap-3 group">
+            <Link href="/" className="flex items-center gap-2 group">
+              {/* Decorative gear - spins slowly beside logo */}
+              <IndustrialGear
+                size={36}
+                teeth={10}
+                className="text-primary opacity-70 shrink-0 hidden sm:block -mr-1"
+                strokeWidth={2}
+              />
               <div className="relative">
                 <Image
                   src="/images/logo.jpg"

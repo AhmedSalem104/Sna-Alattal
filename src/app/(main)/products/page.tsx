@@ -11,6 +11,7 @@ import { Input } from '@/components/ui/input';
 import { useLocale } from '@/hooks/useLocale';
 import { getLocalizedField } from '@/lib/locale-helpers';
 
+
 interface Category {
   id: string;
   nameAr: string;
@@ -101,7 +102,7 @@ export default function ProductsPage() {
   };
 
   return (
-    <div className="min-h-screen bg-white">
+    <>
       {/* Hero Section */}
       <section className="relative py-32 bg-gradient-to-b from-primary/20 via-white to-white overflow-hidden">
         <div className="absolute inset-0">
@@ -119,10 +120,10 @@ export default function ProductsPage() {
             <span className="inline-block px-4 py-1 bg-primary/20 text-primary rounded-full text-sm mb-4">
               {t('badge')}
             </span>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-neutral-900 mb-6">
               {t('title')}
             </h1>
-            <p className="text-xl text-gray-700">
+            <p className="text-xl text-neutral-700">
               {t('subtitle')}
             </p>
           </motion.div>
@@ -130,17 +131,17 @@ export default function ProductsPage() {
       </section>
 
       {/* Filters Section */}
-      <section className="py-8 border-b border-gray-200">
+      <section className="py-8 border-b border-neutral-200">
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
             {/* Search */}
             <div className="relative w-full md:w-96">
-              <Search className={`absolute ${isRTL ? 'left-3' : 'right-3'} top-1/2 -translate-y-1/2 text-gray-600`} size={20} />
+              <Search className={`absolute ${isRTL ? 'left-3' : 'right-3'} top-1/2 -translate-y-1/2 text-neutral-600`} size={20} />
               <Input
                 placeholder={t('searchPlaceholder')}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className={`${isRTL ? 'pl-10' : 'pr-10'} bg-gray-50 border-gray-200 text-gray-900`}
+                className={`${isRTL ? 'pl-10' : 'pr-10'} bg-neutral-50 border-neutral-200 text-neutral-900`}
               />
             </div>
 
@@ -150,7 +151,7 @@ export default function ProductsPage() {
                 variant={selectedCategory === 'all' ? 'gold' : 'outline'}
                 size="sm"
                 onClick={() => setSelectedCategory('all')}
-                className={selectedCategory !== 'all' ? 'border-gray-300 text-gray-700 hover:text-primary' : ''}
+                className={selectedCategory !== 'all' ? 'border-neutral-300 text-neutral-700 hover:text-primary' : ''}
               >
                 {t('categories.all')}
               </Button>
@@ -160,7 +161,7 @@ export default function ProductsPage() {
                   variant={selectedCategory === category.id ? 'gold' : 'outline'}
                   size="sm"
                   onClick={() => setSelectedCategory(category.id)}
-                  className={selectedCategory !== category.id ? 'border-gray-300 text-gray-700 hover:text-primary' : ''}
+                  className={selectedCategory !== category.id ? 'border-neutral-300 text-neutral-700 hover:text-primary' : ''}
                 >
                   {getName(category)}
                 </Button>
@@ -179,8 +180,8 @@ export default function ProductsPage() {
             </div>
           ) : filteredProducts.length === 0 ? (
             <div className="text-center py-20">
-              <Package size={48} className="mx-auto text-gray-300 mb-4" />
-              <p className="text-gray-600 text-xl">{t('noProducts')}</p>
+              <Package size={48} className="mx-auto text-neutral-300 mb-4" />
+              <p className="text-neutral-600 text-xl">{t('noProducts')}</p>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -192,10 +193,10 @@ export default function ProductsPage() {
                   transition={{ duration: 0.5, delay: index * 0.1 }}
                 >
                   <Link href={`/products/${product.slug}`}>
-                    <div className="group relative bg-gray-50 rounded-2xl overflow-hidden border border-gray-200 hover:border-primary/50 transition-all duration-300">
+                    <div className="group relative overflow-hidden hover:shadow-elevation-3 transition-all duration-500">
                       {/* Featured Badge */}
                       {product.isFeatured && (
-                        <div className={`absolute top-4 ${isRTL ? 'left-4' : 'right-4'} z-10 flex items-center gap-1 px-3 py-1 bg-primary text-gray-900 rounded-full text-sm font-medium`}>
+                        <div className={`absolute top-4 ${isRTL ? 'left-4' : 'right-4'} z-10 flex items-center gap-1 px-3 py-1 bg-primary text-neutral-900 rounded-full text-sm font-medium`}>
                           <Star size={14} fill="currentColor" />
                           {t('featured')}
                         </div>
@@ -223,12 +224,12 @@ export default function ProductsPage() {
                           </span>
                         )}
 
-                        <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-primary transition-colors">
+                        <h3 className="text-xl font-bold text-neutral-900 mb-2 group-hover:text-primary transition-colors">
                           {getName(product)}
                         </h3>
 
                         {getShortDesc(product) && (
-                          <p className="text-gray-600 mb-4 line-clamp-2">
+                          <p className="text-neutral-600 mb-4 line-clamp-2">
                             {getShortDesc(product)}
                           </p>
                         )}
@@ -239,7 +240,7 @@ export default function ProductsPage() {
                             {getSpecifications(product).map((spec, i) => (
                               <span
                                 key={i}
-                                className="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded"
+                                className="px-2 py-1 bg-neutral-100 text-neutral-700 text-xs rounded"
                               >
                                 {spec}
                               </span>
@@ -270,10 +271,10 @@ export default function ProductsPage() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-neutral-900 mb-4">
               {t('cta.title')}
             </h2>
-            <p className="text-gray-700 mb-8 max-w-2xl mx-auto">
+            <p className="text-neutral-700 mb-8 max-w-2xl mx-auto">
               {t('cta.subtitle')}
             </p>
             <Link href="/contact">
@@ -285,6 +286,6 @@ export default function ProductsPage() {
           </motion.div>
         </div>
       </section>
-    </div>
+    </>
   );
 }

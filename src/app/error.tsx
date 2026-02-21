@@ -24,9 +24,9 @@ export default function Error({
           <div className="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
             <AlertTriangle size={40} className="text-red-500" />
           </div>
-          <h1 className="text-6xl font-bold text-gray-900 mb-2">500</h1>
-          <h2 className="text-2xl text-gray-700 mb-4">حدث خطأ غير متوقع</h2>
-          <p className="text-gray-600 mb-8">
+          <h1 className="text-6xl font-bold text-neutral-900 mb-2">500</h1>
+          <h2 className="text-2xl text-neutral-700 mb-4">حدث خطأ غير متوقع</h2>
+          <p className="text-neutral-600 mb-8">
             عذراً، حدث خطأ أثناء معالجة طلبك. يرجى المحاولة مرة أخرى.
           </p>
         </div>
@@ -35,7 +35,7 @@ export default function Error({
           <Button
             onClick={reset}
             variant="outline"
-            className="border-gray-300"
+            className="border-neutral-300"
           >
             <RefreshCw size={18} className="ml-2" />
             إعادة المحاولة
@@ -49,7 +49,7 @@ export default function Error({
         </div>
 
         {error.digest && (
-          <p className="mt-8 text-xs text-gray-400">
+          <p className="mt-8 text-xs text-neutral-400">
             رمز الخطأ: {error.digest}
           </p>
         )}

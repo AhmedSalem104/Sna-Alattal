@@ -5,12 +5,12 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { motion } from 'framer-motion';
-import { Calendar, Clock, ArrowRight, Search, Loader2, Newspaper, Send } from 'lucide-react';
-import { toast } from 'sonner';
+import { Calendar, Clock, ArrowRight, Search, Loader2, Newspaper } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useLocale } from '@/hooks/useLocale';
 import { getLocalizedField } from '@/lib/locale-helpers';
+
 
 interface NewsArticle {
   id: string;
@@ -37,8 +37,6 @@ export default function NewsPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [articles, setArticles] = useState<NewsArticle[]>([]);
   const [loading, setLoading] = useState(true);
-  const [newsletterEmail, setNewsletterEmail] = useState('');
-  const [newsletterLoading, setNewsletterLoading] = useState(false);
 
   useEffect(() => {
     async function fetchNews() {
@@ -125,14 +123,16 @@ export default function NewsPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
-        <Loader2 className="w-8 h-8 animate-spin text-primary" />
-      </div>
+      <>
+        <div className="min-h-screen flex items-center justify-center">
+          <Loader2 className="w-8 h-8 animate-spin text-primary" />
+        </div>
+      </>
     );
   }
 
   return (
-    <div className="min-h-screen bg-white">
+    <>
       {/* Hero Section */}
       <section className="relative py-32 bg-gradient-to-b from-primary/20 via-white to-white overflow-hidden">
         <div className="absolute inset-0">
@@ -150,10 +150,10 @@ export default function NewsPage() {
             <span className="inline-block px-4 py-1 bg-primary/20 text-primary rounded-full text-sm mb-4">
               {t('badge')}
             </span>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-neutral-900 mb-6">
               {t('title')}
             </h1>
-            <p className="text-xl text-gray-700">
+            <p className="text-xl text-neutral-700">
               {t('subtitle')}
             </p>
           </motion.div>
@@ -161,17 +161,17 @@ export default function NewsPage() {
       </section>
 
       {/* Filters */}
-      <section className="py-8 border-b border-gray-200">
+      <section className="py-8 border-b border-neutral-200">
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
             {/* Search */}
             <div className="relative w-full md:w-96">
-              <Search className={`absolute ${isRTL ? 'left-3' : 'right-3'} top-1/2 -translate-y-1/2 text-gray-600`} size={20} />
+              <Search className={`absolute ${isRTL ? 'left-3' : 'right-3'} top-1/2 -translate-y-1/2 text-neutral-600`} size={20} />
               <Input
                 placeholder={t('searchPlaceholder')}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className={`${isRTL ? 'pl-10' : 'pr-10'} bg-gray-50 border-gray-200 text-gray-900`}
+                className={`${isRTL ? 'pl-10' : 'pr-10'} bg-neutral-50 border-neutral-200 text-neutral-900`}
               />
             </div>
 
@@ -183,7 +183,7 @@ export default function NewsPage() {
                   variant={selectedCategory === category.id ? 'gold' : 'outline'}
                   size="sm"
                   onClick={() => setSelectedCategory(category.id)}
-                  className={selectedCategory !== category.id ? 'border-gray-300 text-gray-700 hover:text-primary' : ''}
+                  className={selectedCategory !== category.id ? 'border-neutral-300 text-neutral-700 hover:text-primary' : ''}
                 >
                   {getCategoryLabel(category)}
                 </Button>
@@ -203,7 +203,7 @@ export default function NewsPage() {
               transition={{ duration: 0.6 }}
             >
               <Link href={`/news/${featuredArticle.slug}`}>
-                <div className="group relative rounded-2xl overflow-hidden bg-gray-50 border border-gray-200 hover:border-primary/50 transition-all">
+                <div className="group relative overflow-hidden shadow-soft hover:shadow-elevation-3 transition-all duration-500">
                   <div className="grid grid-cols-1 lg:grid-cols-2">
                     {/* Image */}
                     <div className="relative h-64 lg:h-96">
@@ -214,7 +214,7 @@ export default function NewsPage() {
                         sizes="(max-width: 1024px) 100vw, 50vw"
                         className="object-cover group-hover:scale-105 transition-transform duration-500"
                       />
-                      <div className={`absolute top-4 ${isRTL ? 'left-4' : 'right-4'} px-3 py-1 bg-primary text-gray-900 rounded-full text-sm font-medium`}>
+                      <div className={`absolute top-4 ${isRTL ? 'left-4' : 'right-4'} px-3 py-1 bg-primary text-neutral-900 rounded-full text-sm font-medium`}>
                         {t('featured')}
                       </div>
                     </div>
@@ -223,26 +223,26 @@ export default function NewsPage() {
                     <div className="p-8 lg:p-12 flex flex-col justify-center">
                       <div className="flex items-center gap-4 mb-4 flex-wrap">
                         {featuredArticle.tags && featuredArticle.tags[0] && (
-                          <span className="px-3 py-1 bg-gray-100 rounded-full text-gray-600 text-sm">
+                          <span className="px-3 py-1 bg-neutral-100 rounded-full text-neutral-600 text-sm">
                             {featuredArticle.tags[0]}
                           </span>
                         )}
-                        <span className="flex items-center gap-1 text-gray-600 text-sm">
+                        <span className="flex items-center gap-1 text-neutral-600 text-sm">
                           <Calendar size={14} />
                           {formatDate(featuredArticle.publishedAt)}
                         </span>
-                        <span className="flex items-center gap-1 text-gray-600 text-sm">
+                        <span className="flex items-center gap-1 text-neutral-600 text-sm">
                           <Clock size={14} />
                           {calculateReadTime(featuredArticle)}
                         </span>
                       </div>
 
-                      <h2 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-4 group-hover:text-primary transition-colors">
+                      <h2 className="text-2xl lg:text-3xl font-bold text-neutral-900 mb-4 group-hover:text-primary transition-colors">
                         {getTitle(featuredArticle)}
                       </h2>
 
                       {getExcerpt(featuredArticle) && (
-                        <p className="text-gray-600 mb-6 line-clamp-3">
+                        <p className="text-neutral-600 mb-6 line-clamp-3">
                           {getExcerpt(featuredArticle)}
                         </p>
                       )}
@@ -265,8 +265,8 @@ export default function NewsPage() {
         <div className="container mx-auto px-4">
           {regularArticles.length === 0 && !featuredArticle ? (
             <div className="text-center py-20">
-              <Newspaper size={48} className="mx-auto text-gray-300 mb-4" />
-              <p className="text-gray-600 text-xl">{t('noArticles') || 'No articles found'}</p>
+              <Newspaper size={48} className="mx-auto text-neutral-300 mb-4" />
+              <p className="text-neutral-600 text-xl">{t('noArticles') || 'No articles found'}</p>
             </div>
           ) : (
             <>
@@ -279,7 +279,7 @@ export default function NewsPage() {
                     transition={{ duration: 0.5, delay: index * 0.1 }}
                   >
                     <Link href={`/news/${article.slug}`}>
-                      <div className="group bg-gray-50 rounded-2xl overflow-hidden border border-gray-200 hover:border-primary/50 transition-all h-full">
+                      <div className="group overflow-hidden hover:shadow-elevation-3 transition-all duration-500 h-full">
                         {/* Image */}
                         <div className="relative h-48 overflow-hidden">
                           <Image
@@ -290,7 +290,7 @@ export default function NewsPage() {
                             className="object-cover group-hover:scale-105 transition-transform duration-500"
                           />
                           {article.tags && article.tags[0] && (
-                            <div className={`absolute top-4 ${isRTL ? 'left-4' : 'right-4'} px-3 py-1 bg-white/80 backdrop-blur rounded-full text-gray-700 text-xs`}>
+                            <div className={`absolute top-4 ${isRTL ? 'left-4' : 'right-4'} px-3 py-1 bg-white/80 backdrop-blur rounded-full text-neutral-700 text-xs`}>
                               {article.tags[0]}
                             </div>
                           )}
@@ -299,22 +299,22 @@ export default function NewsPage() {
                         {/* Content */}
                         <div className="p-6">
                           <div className="flex items-center gap-4 mb-3">
-                            <span className="flex items-center gap-1 text-gray-600 text-sm">
+                            <span className="flex items-center gap-1 text-neutral-600 text-sm">
                               <Calendar size={14} />
                               {formatDate(article.publishedAt)}
                             </span>
-                            <span className="flex items-center gap-1 text-gray-600 text-sm">
+                            <span className="flex items-center gap-1 text-neutral-600 text-sm">
                               <Clock size={14} />
                               {calculateReadTime(article)}
                             </span>
                           </div>
 
-                          <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-primary transition-colors line-clamp-2">
+                          <h3 className="text-xl font-bold text-neutral-900 mb-2 group-hover:text-primary transition-colors line-clamp-2">
                             {getTitle(article)}
                           </h3>
 
                           {getExcerpt(article) && (
-                            <p className="text-gray-600 mb-4 line-clamp-2">
+                            <p className="text-neutral-600 mb-4 line-clamp-2">
                               {getExcerpt(article)}
                             </p>
                           )}
@@ -334,66 +334,6 @@ export default function NewsPage() {
         </div>
       </section>
 
-      {/* Newsletter */}
-      <section className="py-20 bg-gradient-to-r from-primary/20 via-white to-primary/20">
-        <div className="container mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="max-w-2xl mx-auto text-center"
-          >
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">{t('newsletter.title')}</h2>
-            <p className="text-gray-700 mb-8">{t('newsletter.subtitle')}</p>
-            <form
-              className="flex flex-col sm:flex-row gap-4"
-              onSubmit={async (e) => {
-                e.preventDefault();
-                if (!newsletterEmail) return;
-
-                setNewsletterLoading(true);
-                try {
-                  const response = await fetch('/api/public/newsletter', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email: newsletterEmail }),
-                  });
-
-                  if (response.ok) {
-                    toast.success(t('newsletter.success') || 'تم الاشتراك بنجاح');
-                    setNewsletterEmail('');
-                  } else {
-                    toast.error(t('newsletter.error') || 'حدث خطأ، حاول مرة أخرى');
-                  }
-                } catch {
-                  toast.error(t('newsletter.error') || 'حدث خطأ، حاول مرة أخرى');
-                } finally {
-                  setNewsletterLoading(false);
-                }
-              }}
-            >
-              <Input
-                type="email"
-                placeholder={t('newsletter.placeholder')}
-                className="flex-1 bg-white border-gray-200 text-gray-900"
-                value={newsletterEmail}
-                onChange={(e) => setNewsletterEmail(e.target.value)}
-                required
-              />
-              <Button variant="gold" size="lg" type="submit" disabled={newsletterLoading}>
-                {newsletterLoading ? (
-                  <Loader2 className="w-4 h-4 animate-spin" />
-                ) : (
-                  <>
-                    {t('newsletter.subscribe')}
-                    <Send size={18} className="mr-2" />
-                  </>
-                )}
-              </Button>
-            </form>
-          </motion.div>
-        </div>
-      </section>
-    </div>
+    </>
   );
 }

@@ -9,7 +9,6 @@ export default function MainLayout({
 }) {
   return (
     <>
-      {/* Skip to main content link for keyboard navigation */}
       <a
         href="#main-content"
         className="skip-to-main"
@@ -21,11 +20,7 @@ export default function MainLayout({
         {children}
       </main>
       <Footer />
-
-      {/* Floating Contact Widget (KHS-inspired) */}
       <FloatingContactWidget />
-
-      {/* Scroll to Top Button */}
       <ScrollToTop threshold={400} />
     </>
   );

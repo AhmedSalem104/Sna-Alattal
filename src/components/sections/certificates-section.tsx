@@ -4,8 +4,10 @@ import { useRef, useState, useEffect } from 'react';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import { motion, useInView } from 'framer-motion';
-import { Award, CheckCircle, Shield, Loader2 } from 'lucide-react';
+import { Award, CheckCircle, Shield } from 'lucide-react';
 import { useLocale } from '@/hooks/useLocale';
+import { IndustrialSpinner } from '@/components/ui/industrial-spinner';
+import { IndustrialRing } from '@/components/decorative';
 
 interface Certificate {
   id: string;
@@ -84,12 +86,13 @@ export function CertificatesSection() {
   return (
     <section
       ref={ref}
-      className="py-20 lg:py-28 bg-white relative overflow-hidden"
+      className="py-20 lg:py-28 bg-white/[0.93] relative overflow-hidden"
       dir={isRTL ? 'rtl' : 'ltr'}
     >
       {/* Subtle Background */}
       <div className="absolute inset-0 z-0 overflow-hidden">
         <div className="absolute bottom-0 left-1/2 w-[800px] h-[400px] bg-primary/5 blur-3xl -translate-x-1/2 opacity-50" />
+        <IndustrialRing size={450} rings={4} dashed className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-primary opacity-[0.18] hidden md:block" strokeWidth={1.5} />
       </div>
 
       <div className="container-custom relative z-10">
@@ -123,7 +126,7 @@ export function CertificatesSection() {
         {/* Loading State */}
         {loading && (
           <div className="flex justify-center items-center py-20">
-            <Loader2 className="w-10 h-10 animate-spin text-primary" />
+            <IndustrialSpinner size="lg" />
           </div>
         )}
 
@@ -137,45 +140,62 @@ export function CertificatesSection() {
 
         {/* Certificates Grid */}
         {!loading && certificates.length > 0 && (
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          <div className="grid md:grid-cols-2 gap-5">
             {certificates.map((cert, index) => (
               <motion.div
                 key={cert.id}
-                initial={{ opacity: 0, y: 30 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
+                initial={{ opacity: 0, y: 30, scale: 0.96 }}
+                animate={isInView ? { opacity: 1, y: 0, scale: 1 } : {}}
+                transition={{ duration: 0.6, delay: index * 0.08, ease: [0.16, 1, 0.3, 1] }}
                 className="group"
               >
-                <div className="relative bg-white border border-gray-200 p-4 hover:border-primary/40 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 text-center h-full">
+                <div className="relative flex gap-5 bg-white border border-neutral-200 p-5 h-full overflow-hidden hover:border-primary/40 hover:shadow-elevation-3 transition-all duration-400">
+                  {/* Gold left accent bar */}
+                  <div className="absolute top-0 left-0 w-1 h-full bg-primary origin-top scale-y-0 group-hover:scale-y-100 transition-transform duration-500" />
+
                   {/* Certificate Image */}
-                  <div className="relative w-20 h-20 mx-auto mb-3">
-                    <div className="relative w-full h-full p-2 flex items-center justify-center bg-neutral-50 border border-gray-200 group-hover:border-primary/40 group-hover:animate-glow-pulse transition-colors">
-                      <Image
-                        src={cert.image}
-                        alt={getName(cert)}
-                        width={56}
-                        height={56}
-                        className="object-contain"
-                        loading="lazy"
-                      />
-                    </div>
+                  <div className="relative shrink-0 w-24 h-24 bg-neutral-50 border border-neutral-200 group-hover:border-primary/30 group-hover:shadow-gold-sm transition-all duration-400">
+                    <Image
+                      src={cert.image}
+                      alt={getName(cert)}
+                      fill
+                      sizes="96px"
+                      className="object-contain p-3 group-hover:scale-110 transition-transform duration-500"
+                      loading="lazy"
+                    />
+                    {/* Shimmer on hover */}
+                    <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out bg-gradient-to-r from-transparent via-primary/10 to-transparent" />
                   </div>
 
                   {/* Content */}
-                  <h3 className="text-sm font-bold text-primary uppercase tracking-wider mb-1">
-                    {getName(cert)}
-                  </h3>
-                  <p className="text-xs text-neutral-500 uppercase tracking-wider mb-2">
-                    {getIssuingBody(cert)}
-                  </p>
-                  <p className="text-neutral-600 text-xs line-clamp-2">{getDescription(cert)}</p>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-start justify-between gap-2 mb-1">
+                      <h3 className="text-base font-bold text-steel-900 group-hover:text-primary transition-colors uppercase tracking-wide">
+                        {getName(cert)}
+                      </h3>
+                      <CheckCircle size={18} className="text-green-600 shrink-0 mt-0.5" />
+                    </div>
 
-                  {/* Verified Badge */}
-                  <div className="mt-3 inline-flex items-center gap-1 px-2 py-1 bg-green-50 border border-green-200">
-                    <CheckCircle size={12} className="text-green-600" />
-                    <span className="text-green-700 text-xs font-semibold uppercase tracking-wider">
-                      {t('certificates.verified')}
-                    </span>
+                    <p className="text-xs text-primary font-semibold uppercase tracking-wider mb-2">
+                      {getIssuingBody(cert)}
+                    </p>
+
+                    <p className="text-neutral-500 text-sm line-clamp-2 mb-3">
+                      {getDescription(cert)}
+                    </p>
+
+                    {/* Footer: date + verified */}
+                    <div className="flex items-center gap-3">
+                      <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-green-50 border border-green-200 text-green-700 text-xs font-semibold uppercase tracking-wider">
+                        <Shield size={12} />
+                        {t('certificates.verified')}
+                      </span>
+                      {cert.issueDate && (
+                        <span className="text-xs text-neutral-400">
+                          {new Date(cert.issueDate).getFullYear()}
+                        </span>
+                      )}
+                    </div>
                   </div>
                 </div>
               </motion.div>
@@ -188,7 +208,7 @@ export function CertificatesSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.5 }}
-          className="mt-12 bg-primary/10 p-6 flex flex-col md:flex-row items-center justify-center gap-4"
+          className="mt-12 bg-primary/15 p-6 flex flex-col md:flex-row items-center justify-center gap-4"
         >
           <Shield size={24} className="text-primary" />
           <p className="text-steel-900 text-center md:text-start">

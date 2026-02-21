@@ -61,7 +61,7 @@ export function FormField({
   return (
     <div className={cn('space-y-2', className)}>
       {/* Label */}
-      <Label htmlFor={id} className="text-gray-900 font-medium">
+      <Label htmlFor={id} className="text-neutral-900 font-medium">
         {label}
         {required && (
           <span className="text-red-500 ml-1 rtl:ml-0 rtl:mr-1" aria-label="required field">
@@ -94,7 +94,7 @@ export function FormField({
       {hint && !error && !success && (
         <div
           id={`${id}-hint`}
-          className="flex items-start gap-1.5 text-sm text-gray-600"
+          className="flex items-start gap-1.5 text-sm text-neutral-600"
         >
           <Info size={14} className="mt-0.5 flex-shrink-0" aria-hidden="true" />
           <span>{hint}</span>
