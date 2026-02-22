@@ -454,7 +454,7 @@ export default function ContactPage() {
 
           <div className="h-64 sm:h-80 md:h-96 lg:h-[450px] xl:h-[500px] 2xl:h-[600px] rounded-2xl overflow-hidden border border-neutral-200">
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3456.123456789!2d31.7654321!3d30.1234567!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzDCsDA3JzI0LjQiTiAzMcKwNDUnNTUuNiJF!5e0!3m2!1sen!2seg!4v1234567890"
+              src="https://maps.google.com/maps?q=10th+of+Ramadan+City+Industrial+Zone+Egypt&t=&z=13&ie=UTF8&iwloc=&output=embed"
               width="100%"
               height="100%"
               style={{ border: 0 }}

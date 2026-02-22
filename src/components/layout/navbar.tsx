@@ -2,8 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Phone, Factory } from 'lucide-react';
@@ -11,7 +10,61 @@ import { Button } from '@/components/ui/button';
 import { LanguageSwitcher } from '@/components/language-switcher';
 import { useLocale } from '@/hooks/useLocale';
 import { cn } from '@/lib/utils';
-import { IndustrialGear } from '@/components/decorative';
+
+/* ─── Gear Logo with SNA - uses CSS animation to avoid hydration mismatch ─── */
+function GearLogo() {
+  return (
+    <div className="relative w-[80px] h-[80px] flex items-center justify-center shrink-0">
+      {/* Big gear - CSS spin */}
+      <svg
+        className="absolute animate-spin-slow"
+        style={{ animationDuration: '30s' }}
+        width="70"
+        height="70"
+        viewBox="0 0 100 100"
+        fill="none"
+      >
+        <path
+          d="M50 8 L54 8 L56 2 L60 2 L62 8 L66 6 L70 1 L73 3 L71 9 L75 10 L80 6 L82 9 L78 13 L81 16 L87 14 L88 17 L83 20 L85 24 L91 23 L91 27 L85 28 L86 32 L92 34 L91 38 L85 37 L84 41 L90 44 L88 47 L82 45 L80 49 L85 53 L82 55 L77 51 L74 54 L77 60 L74 62 L70 57 L66 58 L68 64 L64 65 L62 59 L58 59 L58 66 L54 65 L53 59 L49 58 L47 65 L44 63 L44 57 L40 55 L37 60 L35 58 L37 52 L34 49 L29 53 L28 50 L32 46 L30 42 L24 43 L24 39 L30 38 L29 34 L23 33 L24 29 L30 29 L30 25 L24 23 L26 20 L31 22 L34 18 L29 14 L32 12 L36 16 L40 14 L37 8 L41 7 L43 13 L47 12 L47 6 L50 6 Z"
+          fill="rgba(255,255,255,0.12)"
+          stroke="white"
+          strokeWidth="1.5"
+          strokeLinejoin="round"
+        />
+        <circle cx="50" cy="35" r="14" fill="none" stroke="white" strokeWidth="1.5" />
+        <circle cx="50" cy="35" r="6" fill="none" stroke="white" strokeWidth="1" />
+      </svg>
+
+      {/* Small gear - CSS spin reverse */}
+      <svg
+        className="absolute animate-spin-slow"
+        style={{ animationDuration: '20s', animationDirection: 'reverse', top: '36px', left: '42px' }}
+        width="42"
+        height="42"
+        viewBox="0 0 60 60"
+        fill="none"
+      >
+        <path
+          d="M30 5 L33 5 L34 1 L37 1 L38 5 L41 4 L44 0 L46 2 L44 6 L47 7 L50 4 L51 7 L48 9 L50 12 L54 11 L54 14 L50 15 L51 18 L55 19 L54 22 L50 21 L49 24 L53 26 L51 29 L48 27 L46 30 L49 33 L47 35 L44 32 L41 34 L43 38 L40 39 L38 35 L35 36 L35 40 L32 39 L31 36 L28 35 L27 39 L24 38 L25 34 L22 32 L20 36 L18 34 L20 31 L18 28 L14 29 L14 26 L18 25 L17 22 L13 21 L14 18 L18 19 L19 16 L15 14 L17 12 L20 14 L22 11 L18 9 L20 7 L23 10 L26 8 L24 4 L27 4 L28 8 L30 7 Z"
+          fill="rgba(255,255,255,0.08)"
+          stroke="white"
+          strokeWidth="1.2"
+          strokeLinejoin="round"
+        />
+        <circle cx="30" cy="20" r="8" fill="none" stroke="white" strokeWidth="1.2" />
+        <circle cx="30" cy="20" r="3.5" fill="none" stroke="white" strokeWidth="0.8" />
+      </svg>
+
+      {/* SNA Text */}
+      <span
+        className="relative z-10 text-white font-black text-[22px] tracking-[0.2em] select-none"
+        style={{ textShadow: '0 2px 10px rgba(0,0,0,0.5), 0 0 20px rgba(232,134,42,0.3)' }}
+      >
+        SNA
+      </span>
+    </div>
+  );
+}
 
 const navItems = [
   { key: 'home', href: '/' },
@@ -28,27 +81,15 @@ export function Navbar() {
   const t = useTranslations('nav');
   const pathname = usePathname();
   const { isRTL } = useLocale();
-  const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const router = useRouter();
 
-  // Throttled scroll handler for better performance
+  // Prefetch all nav pages on mount for instant navigation
   useEffect(() => {
-    let ticking = false;
-
-    const handleScroll = () => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          setIsScrolled(window.scrollY > 50);
-          ticking = false;
-        });
-        ticking = true;
-      }
-    };
-
-    handleScroll();
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+    navItems.forEach((item) => {
+      router.prefetch(item.href);
+    });
+  }, [router]);
 
   // Close mobile menu on route change
   useEffect(() => {
@@ -61,80 +102,49 @@ export function Navbar() {
 
   return (
     <>
-      {/* Top Bar - Industrial Style with entrance animation */}
-      <motion.div
-        initial={{ y: -40, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.5 }}
-        className="hidden lg:block bg-steel-900 text-white py-2.5 border-b border-steel-700"
-      >
+      {/* Top Bar */}
+      <div className="hidden lg:block bg-steel-900 text-white py-2.5 border-b border-steel-800">
         <div className="container-custom flex items-center justify-between text-sm">
           <div className="flex items-center gap-6">
             <div className="flex items-center gap-2">
               <Factory size={16} className="text-primary" />
-              <span className="text-metal-200 font-medium">مصنع ماكينات التعبئة والتغليف</span>
+              <span className="text-white/70 font-medium">مصنع ماكينات التعبئة والتغليف</span>
             </div>
           </div>
           <div className="flex items-center gap-6" dir="ltr">
-            <a href="tel:+201032221038" className="flex items-center gap-2 text-metal-200 hover:text-primary transition-colors font-medium">
+            <a href="tel:+201032221038" className="flex items-center gap-2 text-white/70 hover:text-primary transition-colors font-medium">
               <Phone size={14} className="text-primary" />
               <span dir="ltr">+20 103 222 1038</span>
             </a>
-            <span className="text-steel-700">|</span>
-            <a href="tel:+201006193661" className="flex items-center gap-2 text-metal-200 hover:text-primary transition-colors font-medium">
+            <span className="text-white/20">|</span>
+            <a href="tel:+201006193661" className="flex items-center gap-2 text-white/70 hover:text-primary transition-colors font-medium">
               <Phone size={14} className="text-primary" />
               <span dir="ltr">+20 100 619 3661</span>
             </a>
           </div>
         </div>
-      </motion.div>
+      </div>
 
-      {/* Main Navbar - Transparent on homepage, solid on scroll/other pages */}
+      {/* Main Navbar */}
       <header
         className={cn(
           'sticky top-0 left-0 right-0 z-50 transition-all duration-500',
-          pathname === '/' && !isScrolled
-            ? 'bg-steel-900/80 backdrop-blur-md border-b border-white/10'
-            : isScrolled
-              ? 'bg-white shadow-industrial border-b-2 border-primary'
-              : 'bg-white/95 backdrop-blur-sm border-b border-metal-200'
+          'bg-gradient-to-r from-primary-700 via-primary-600 to-primary-500 shadow-lg'
         )}
         dir={isRTL ? 'rtl' : 'ltr'}
       >
         <nav className="container-custom">
-          <div className="flex items-center justify-between h-[80px]">
+          <div className="flex items-center justify-between h-[110px]">
             {/* Logo */}
-            <Link href="/" className="flex items-center gap-2 group">
-              {/* Decorative gear - spins slowly beside logo */}
-              <IndustrialGear
-                size={36}
-                teeth={10}
-                className="text-primary opacity-70 shrink-0 hidden sm:block -mr-1"
-                strokeWidth={2}
-              />
-              <div className="relative">
-                <Image
-                  src="/images/logo.jpg"
-                  alt="S.N.A Al-Attal"
-                  width={56}
-                  height={56}
-                  className="rounded-none border-2 border-primary"
-                  priority
-                />
-                {/* Industrial corner accent */}
-                <div className="absolute -top-1 -right-1 w-3 h-3 bg-primary" />
-              </div>
-              <div className="hidden sm:block">
-                <h1 className={cn(
-                  "text-xl font-bold leading-tight uppercase tracking-wider group-hover:text-primary transition-colors",
-                  pathname === '/' && !isScrolled ? "text-white" : "text-steel-900"
-                )}>
-                  S.N.A AL-ATTAL
+            <Link href="/" className="flex items-center gap-4 group">
+              <GearLogo />
+              <div className="hidden sm:flex flex-col border-s-2 border-white/25 ps-4">
+                <h1 className="text-[26px] font-black leading-tight uppercase tracking-[0.12em] text-white group-hover:text-white/90 transition-colors">
+                  AL-ATTAL
                 </h1>
-                <p className={cn(
-                  "text-sm uppercase tracking-widest transition-colors font-medium",
-                  pathname === '/' && !isScrolled ? "text-primary/80" : "text-metal-500"
-                )}>Engineering Industries</p>
+                <p className="text-[11px] uppercase tracking-[0.3em] text-white/60 font-semibold mt-0.5">
+                  Engineering Industries
+                </p>
               </div>
             </Link>
 
@@ -150,17 +160,15 @@ export function Navbar() {
                     className={cn(
                       "relative px-4 py-2.5 text-[15px] font-bold uppercase tracking-wide transition-all duration-200",
                       isActive
-                        ? "text-primary"
-                        : pathname === '/' && !isScrolled
-                          ? "text-white hover:text-primary"
-                          : "text-steel-900 hover:text-primary"
+                        ? "text-white font-extrabold"
+                        : "text-white/80 hover:text-white"
                     )}
                   >
                     {t(item.key)}
                     {/* Industrial underline indicator */}
                     <span
                       className={cn(
-                        "absolute bottom-0 left-1 right-1 h-[3px] bg-primary transition-transform duration-300",
+                        "absolute bottom-0 left-1 right-1 h-[3px] bg-white transition-transform duration-300",
                         isRTL ? "origin-right" : "origin-left",
                         isActive ? "scale-x-100" : "scale-x-0 hover:scale-x-100"
                       )}
@@ -168,7 +176,7 @@ export function Navbar() {
                     {isActive && (
                       <motion.div
                         layoutId="navbar-indicator"
-                        className="absolute bottom-0 left-1 right-1 h-[3px] bg-gradient-to-r from-primary to-primary/70"
+                        className="absolute bottom-0 left-1 right-1 h-[3px] bg-white"
                         transition={{ type: "spring", stiffness: 380, damping: 30 }}
                       />
                     )}
@@ -198,8 +206,7 @@ export function Navbar() {
                 variant="ghost"
                 size="icon"
                 className={cn(
-                  "lg:hidden hover:text-primary hover:bg-metal-100",
-                  pathname === '/' && !isScrolled ? "text-white" : "text-steel-900"
+                  "lg:hidden text-white hover:text-white/80 hover:bg-white/10"
                 )}
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 aria-label={isMobileMenuOpen ? "إغلاق القائمة" : "فتح القائمة"}
@@ -233,7 +240,7 @@ export function Navbar() {
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.3, ease: 'easeInOut' }}
-              className="lg:hidden bg-steel-900 border-t-2 border-primary overflow-hidden"
+              className="lg:hidden bg-gradient-to-b from-primary-600 to-primary-700 border-t-2 border-white/20 overflow-hidden"
             >
               <div className="container-custom py-4 space-y-1">
                 {navItems.map((item, index) => {
@@ -252,8 +259,8 @@ export function Navbar() {
                         className={cn(
                           "block px-4 py-3.5 text-base font-bold uppercase tracking-wider transition-all duration-200 border-r-2",
                           isActive
-                            ? "text-primary bg-steel-800 border-primary"
-                            : "text-white hover:text-primary hover:bg-steel-800 border-transparent hover:border-primary"
+                            ? "text-white bg-white/15 border-white"
+                            : "text-white/80 hover:text-white hover:bg-white/10 border-transparent hover:border-white/50"
                         )}
                       >
                         <div className="flex items-center justify-between">
@@ -262,7 +269,7 @@ export function Navbar() {
                             <motion.div
                               initial={{ scale: 0 }}
                               animate={{ scale: 1 }}
-                              className="w-2 h-2 bg-primary"
+                              className="w-2 h-2 bg-white"
                             />
                           )}
                         </div>
@@ -274,7 +281,7 @@ export function Navbar() {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: navItems.length * 0.05 }}
-                  className="pt-4 mt-2 border-t border-steel-700"
+                  className="pt-4 mt-2 border-t border-white/20"
                 >
                   <Button variant="industrial" className="w-full" asChild>
                     <Link href="/contact" onClick={closeMobileMenu} prefetch={true}>

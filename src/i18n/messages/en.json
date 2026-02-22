@@ -269,6 +269,10 @@
     "quickResponseDesc": "Our team is available around the clock to respond to your inquiries",
     "sendMessage": "Send Us a Message",
     "successMessage": "Your message has been sent successfully! We'll contact you soon",
+    "errors": {
+      "tooManyRequests": "Too many requests, please try again later",
+      "sendFailed": "Failed to send message, please try again"
+    },
     "findUs": "Find Us",
     "findUsDesc": "Visit us at one of our offices in Egypt or Turkey",
     "form": {
@@ -618,7 +622,36 @@
     "subtitle": "We are proud to have obtained the most important international certificates",
     "viewCertificate": "View Certificate",
     "issuedBy": "Issued By",
-    "validUntil": "Valid Until"
+    "validUntil": "Valid Until",
+    "noCertificates": "No certificates available",
+    "downloadCertificate": "Download Certificate",
+    "whyMatters": {
+      "title": "Why Certificates Matter?",
+      "subtitle": "International certificates ensure the highest quality and safety standards in our products"
+    },
+    "benefits": {
+      "quality": {
+        "title": "Quality Assurance",
+        "desc": "Our certificates confirm our commitment to the highest global manufacturing quality standards"
+      },
+      "trust": {
+        "title": "Customer Trust",
+        "desc": "International accreditations enhance our customers' confidence in our products and services"
+      },
+      "global": {
+        "title": "Global Recognition",
+        "desc": "Our certificates are internationally recognized, enabling us to export to all global markets"
+      }
+    },
+    "accreditation": {
+      "title": "Accreditation Bodies",
+      "subtitle": "Accredited by the most important international bodies"
+    },
+    "cta": {
+      "title": "Want to Learn More About Our Quality Standards?",
+      "subtitle": "Contact us for more information about our certificates and quality standards",
+      "button": "Contact Us"
+    }
   },
   "cataloguesPage": {
     "badge": "Catalogues",

@@ -269,6 +269,10 @@
     "quickResponseDesc": "Ekibimiz sorularınıza yanıt vermek için 7/24 hazır",
     "sendMessage": "Bize Mesaj Gönderin",
     "successMessage": "Mesajınız başarıyla gönderildi! En kısa sürede sizinle iletişime geçeceğiz",
+    "errors": {
+      "tooManyRequests": "Çok fazla istek gönderdiniz, lütfen daha sonra tekrar deneyin",
+      "sendFailed": "Mesaj gönderilemedi, lütfen tekrar deneyin"
+    },
     "findUs": "Bizi Bulun",
     "findUsDesc": "Mısır veya Türkiye'deki ofislerimizden birini ziyaret edin",
     "form": {
@@ -618,7 +622,36 @@
     "subtitle": "En önemli uluslararası sertifikaları almış olmaktan gurur duyuyoruz",
     "viewCertificate": "Sertifikayı Görüntüle",
     "issuedBy": "Veren Kuruluş",
-    "validUntil": "Geçerlilik Tarihi"
+    "validUntil": "Geçerlilik Tarihi",
+    "noCertificates": "Henüz sertifika bulunmamaktadır",
+    "downloadCertificate": "Sertifikayı İndir",
+    "whyMatters": {
+      "title": "Sertifikalar Neden Önemli?",
+      "subtitle": "Uluslararası sertifikalar, ürünlerimizde en yüksek kalite ve güvenlik standartlarını garanti eder"
+    },
+    "benefits": {
+      "quality": {
+        "title": "Kalite Güvencesi",
+        "desc": "Sertifikalarımız, en yüksek küresel üretim kalite standartlarına bağlılığımızı onaylar"
+      },
+      "trust": {
+        "title": "Müşteri Güveni",
+        "desc": "Uluslararası akreditasyonlar, müşterilerimizin ürün ve hizmetlerimize olan güvenini artırır"
+      },
+      "global": {
+        "title": "Küresel Tanınma",
+        "desc": "Sertifikalarımız uluslararası düzeyde tanınmaktadır ve tüm küresel pazarlara ihracat yapmamızı sağlar"
+      }
+    },
+    "accreditation": {
+      "title": "Akreditasyon Kuruluşları",
+      "subtitle": "En önemli uluslararası kuruluşlar tarafından akredite edilmiştir"
+    },
+    "cta": {
+      "title": "Kalite Standartlarımız Hakkında Daha Fazla Bilgi Almak İster misiniz?",
+      "subtitle": "Sertifikalarımız ve kalite standartlarımız hakkında daha fazla bilgi için bizimle iletişime geçin",
+      "button": "Bize Ulaşın"
+    }
   },
   "cataloguesPage": {
     "badge": "Kataloglar",
