@@ -18,7 +18,7 @@ jobs:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_SSH_KEY }}
-          command_timeout: 20m
+          command_timeout: 25m
           script: |
             cd /home/deploy/apps/sna-alattal
 
@@ -26,7 +26,7 @@ jobs:
             git pull origin master
 
             echo "📦 Installing dependencies..."
-            npm ci --prefer-offline
+            npm install --prefer-offline --no-audit --no-fund || npm install --no-audit --no-fund
 
             echo "🔧 Generating Prisma client..."
             npx prisma generate
@@ -35,7 +35,7 @@ jobs:
             npx prisma db push --skip-generate
 
             echo "🔨 Building application..."
-            npm run build
+            NODE_OPTIONS="--max-old-space-size=1536" npm run build
 
             echo "📁 Ensuring logs directory exists..."
             mkdir -p logs
