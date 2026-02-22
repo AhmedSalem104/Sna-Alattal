@@ -41,9 +41,6 @@ export async function middleware(request: NextRequest) {
   const response = NextResponse.next();
   response.headers.set('x-next-intl-locale', locale);
 
-  // Add security headers to all responses
-  response.headers.set('X-Robots-Tag', 'noindex, nofollow');
-
   // Check if it's an admin route (except login)
   const isProtectedRoute = protectedRoutes.some(
     (route) => pathname.startsWith(route) && !pathname.startsWith('/admin/login')
@@ -68,8 +65,8 @@ export async function middleware(request: NextRequest) {
       return NextResponse.redirect(new URL('/admin', request.url));
     }
 
-    // For admin routes, remove noindex to avoid issues but add extra protection
-    response.headers.delete('X-Robots-Tag');
+    // Admin routes: block indexing + no cache
+    response.headers.set('X-Robots-Tag', 'noindex, nofollow');
     response.headers.set('Cache-Control', 'no-store, no-cache, must-revalidate');
   }
 

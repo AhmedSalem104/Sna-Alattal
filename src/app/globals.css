@@ -16,9 +16,9 @@
     --popover: 0 0% 100%;
     --popover-foreground: 222 47% 11%;
 
-    /* Primary - Warm Industrial Gold (#C9A227) */
-    --primary: 45 68% 47%;
-    --primary-foreground: 0 0% 9%;
+    /* Primary - Warm Industrial Orange (#E8862A) */
+    --primary: 27 82% 54%;
+    --primary-foreground: 0 0% 100%;
 
     /* Secondary - Steel */
     --secondary: 225 15% 17%;
@@ -41,7 +41,7 @@
     --input: 220 13% 91%;
 
     /* Ring */
-    --ring: 45 68% 47%;
+    --ring: 27 82% 54%;
 
     /* Radius - Industrial = Sharp corners */
     --radius: 0px;
@@ -50,7 +50,7 @@
     --font-cairo: 'Cairo', 'Segoe UI', system-ui, sans-serif;
 
     /* Industrial Colors - Warm palette */
-    --industrial-gold: 45 68% 47%;
+    --industrial-gold: 27 82% 54%;
     --industrial-steel: 240 22% 13%;
     --industrial-metal: 240 15% 20%;
     --industrial-silver: 220 14% 91%;
@@ -69,8 +69,8 @@
     --card-foreground: 220 14% 96%;
     --popover: 240 22% 14%;
     --popover-foreground: 220 14% 96%;
-    --primary: 45 68% 47%;
-    --primary-foreground: 0 0% 9%;
+    --primary: 27 82% 54%;
+    --primary-foreground: 0 0% 100%;
     --secondary: 225 15% 22%;
     --secondary-foreground: 220 14% 96%;
     --muted: 225 15% 17%;
@@ -81,17 +81,17 @@
     --destructive-foreground: 0 0% 100%;
     --border: 225 15% 25%;
     --input: 225 15% 25%;
-    --ring: 45 68% 47%;
+    --ring: 27 82% 54%;
   }
 
   /* High Contrast Mode Support - WCAG AAA */
   @media (prefers-contrast: high) {
     :root {
-      --primary: 45 75% 38%;
-      --primary-foreground: 0 0% 0%;
+      --primary: 27 82% 44%;
+      --primary-foreground: 0 0% 100%;
       --border: 220 13% 70%;
       --muted-foreground: 220 9% 35%;
-      --ring: 45 75% 38%;
+      --ring: 27 82% 44%;
     }
   }
 
@@ -304,7 +304,7 @@
     @apply relative inline-flex items-center justify-center;
     @apply px-8 py-4 font-bold uppercase tracking-wider;
     @apply bg-gradient-to-r from-primary to-primary-600;
-    @apply text-steel-900 border-0;
+    @apply text-white border-0;
     @apply transition-all duration-300 ease-smooth;
     @apply shadow-soft hover:shadow-soft-md;
     @apply hover:-translate-y-0.5;
@@ -641,7 +641,7 @@
   /* Custom Dark Scrollbar for Admin */
   .custom-scrollbar {
     scrollbar-width: thin;
-    scrollbar-color: rgba(201, 162, 39, 0.3) transparent;
+    scrollbar-color: rgba(232, 134, 42, 0.3) transparent;
   }
 
   .custom-scrollbar::-webkit-scrollbar {
@@ -653,12 +653,12 @@
   }
 
   .custom-scrollbar::-webkit-scrollbar-thumb {
-    background-color: rgba(201, 162, 39, 0.3);
+    background-color: rgba(232, 134, 42, 0.3);
     border-radius: 3px;
   }
 
   .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-    background-color: rgba(201, 162, 39, 0.5);
+    background-color: rgba(232, 134, 42, 0.5);
   }
 
   /* RTL Utilities */

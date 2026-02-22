@@ -23,21 +23,21 @@ const config: Config = {
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
 
-        // Modern Industrial Primary - Warm Gold (refined)
+        // Modern Industrial Primary - Warm Orange
         primary: {
-          DEFAULT: '#C9A227',
-          50: '#FEFCE8',
-          100: '#FEF9C3',
-          200: '#FEF08A',
-          300: '#FDE047',
-          400: '#FACC15',
-          500: '#C9A227',
-          600: '#A88B1F',
-          700: '#8B7E2A',
-          800: '#713F12',
-          900: '#422006',
-          950: '#1a0f03',
-          foreground: '#18181B',
+          DEFAULT: '#E8862A',
+          50: '#FFF7ED',
+          100: '#FFEDD5',
+          200: '#FED7AA',
+          300: '#FDBA74',
+          400: '#FB923C',
+          500: '#E8862A',
+          600: '#D97218',
+          700: '#C2590C',
+          800: '#9A3412',
+          900: '#7C2D12',
+          950: '#431407',
+          foreground: '#FFFFFF',
         },
 
         // Secondary - Warm accent (Copper/Bronze)
@@ -148,21 +148,21 @@ const config: Config = {
           900: '#0F172A',
         },
 
-        // Gold extended (kept for compatibility)
+        // Gold/Orange extended (kept for compatibility)
         gold: {
-          DEFAULT: '#C9A227',
-          light: '#E8C547',
-          dark: '#8B7E2A',
-          50: '#FEFCE8',
-          100: '#FEF9C3',
-          200: '#FEF08A',
-          300: '#FDE047',
-          400: '#FACC15',
-          500: '#C9A227',
-          600: '#A88B1F',
-          700: '#8B7E2A',
-          800: '#713F12',
-          900: '#422006',
+          DEFAULT: '#E8862A',
+          light: '#FB923C',
+          dark: '#C2590C',
+          50: '#FFF7ED',
+          100: '#FFEDD5',
+          200: '#FED7AA',
+          300: '#FDBA74',
+          400: '#FB923C',
+          500: '#E8862A',
+          600: '#D97218',
+          700: '#C2590C',
+          800: '#9A3412',
+          900: '#7C2D12',
         },
 
         // Status Colors - Improved contrast (WCAG compliant)
@@ -251,8 +251,8 @@ const config: Config = {
         'elevation-4': '0 15px 25px rgba(0,0,0,0.15), 0 5px 10px rgba(0,0,0,0.05)',
         'elevation-5': '0 20px 40px rgba(0,0,0,0.2)',
         // Gold glow - Modern
-        'gold-glow': '0 0 20px rgba(212, 160, 10, 0.15)',
-        'gold-glow-lg': '0 0 40px rgba(212, 160, 10, 0.2)',
+        'gold-glow': '0 0 20px rgba(232, 134, 42, 0.15)',
+        'gold-glow-lg': '0 0 40px rgba(232, 134, 42, 0.2)',
         // Card hover
         'card-hover': '0 12px 24px -8px rgba(0, 0, 0, 0.15)',
         // Inner shadows
@@ -263,12 +263,12 @@ const config: Config = {
         'industrial-md': '0 6px 16px rgba(0, 0, 0, 0.12)',
         'industrial-lg': '0 8px 24px rgba(0, 0, 0, 0.14)',
         'industrial-xl': '0 12px 48px rgba(0, 0, 0, 0.18)',
-        'gold-sm': '0 2px 8px rgba(212, 160, 10, 0.15)',
-        'gold': '0 4px 16px rgba(212, 160, 10, 0.2)',
-        'gold-lg': '0 8px 32px rgba(212, 160, 10, 0.25)',
+        'gold-sm': '0 2px 8px rgba(232, 134, 42, 0.15)',
+        'gold': '0 4px 16px rgba(232, 134, 42, 0.2)',
+        'gold-lg': '0 8px 32px rgba(232, 134, 42, 0.25)',
         'offset': '4px 4px 0 #1A1A2E',
         'offset-sm': '2px 2px 0 #1A1A2E',
-        'offset-gold': '4px 4px 0 #D4A00A',
+        'offset-gold': '4px 4px 0 #E8862A',
       },
 
       keyframes: {
@@ -321,8 +321,8 @@ const config: Config = {
           '50%': { transform: 'translateY(-8px)' },
         },
         'glow-pulse': {
-          '0%, 100%': { boxShadow: '0 0 20px rgba(212, 160, 10, 0.2)' },
-          '50%': { boxShadow: '0 0 30px rgba(212, 160, 10, 0.4)' },
+          '0%, 100%': { boxShadow: '0 0 20px rgba(232, 134, 42, 0.2)' },
+          '50%': { boxShadow: '0 0 30px rgba(232, 134, 42, 0.4)' },
         },
         'spin-slow': {
           '0%': { transform: 'rotate(0deg)' },
@@ -385,15 +385,15 @@ const config: Config = {
         // Modern gradients
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
-        // Premium gold gradient
-        'gradient-gold': 'linear-gradient(135deg, #D4A00A 0%, #F4D03F 50%, #D4A00A 100%)',
-        'gradient-gold-subtle': 'linear-gradient(135deg, rgba(201,162,39,0.12) 0%, rgba(201,162,39,0.06) 100%)',
+        // Premium orange gradient
+        'gradient-gold': 'linear-gradient(135deg, #D97218 0%, #FB923C 50%, #D97218 100%)',
+        'gradient-gold-subtle': 'linear-gradient(135deg, rgba(232,134,42,0.12) 0%, rgba(232,134,42,0.06) 100%)',
         // Dark gradients
         'gradient-dark': 'linear-gradient(180deg, #1C1C28 0%, #0E0E14 100%)',
         'gradient-dark-radial': 'radial-gradient(ellipse at center, #26263A 0%, #1C1C28 70%)',
         // Subtle patterns
-        'dots-pattern': 'radial-gradient(circle, rgba(212,160,10,0.1) 1px, transparent 1px)',
-        'grid-pattern': 'linear-gradient(rgba(212,160,10,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(212,160,10,0.03) 1px, transparent 1px)',
+        'dots-pattern': 'radial-gradient(circle, rgba(232,134,42,0.1) 1px, transparent 1px)',
+        'grid-pattern': 'linear-gradient(rgba(232,134,42,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(232,134,42,0.03) 1px, transparent 1px)',
       },
 
       transitionTimingFunction: {
