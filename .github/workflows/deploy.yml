@@ -37,9 +37,10 @@ jobs:
 
       - name: Package standalone build
         run: |
-          mkdir -p deploy-package
+          mkdir -p deploy-package/.next
           cp -r .next/standalone/* deploy-package/
-          cp -r .next/static deploy-package/.next/static
+          mkdir -p deploy-package/.next/static
+          cp -r .next/static/* deploy-package/.next/static/
           cp -r public deploy-package/public
           cp -r prisma deploy-package/prisma
           cp ecosystem.config.js deploy-package/
