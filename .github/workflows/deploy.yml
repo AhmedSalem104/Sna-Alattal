@@ -28,7 +28,12 @@ jobs:
         run: npx prisma generate
 
       - name: Build application
-        run: NEXT_TELEMETRY_DISABLED=1 npm run build
+        env:
+          DATABASE_URL: "mysql://placeholder:placeholder@localhost:3306/placeholder"
+          NEXTAUTH_SECRET: "build-time-placeholder-secret-key-minimum-32-chars"
+          NEXTAUTH_URL: "https://www.snalattal.me"
+          NEXT_TELEMETRY_DISABLED: "1"
+        run: npm run build
 
       - name: Package standalone build
         run: |
