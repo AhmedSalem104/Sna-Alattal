@@ -771,6 +771,17 @@
     "hint": "استخدم الماوس للتكبير والتنقل",
     "zoomKeys": "تكبير / تصغير",
     "panKeys": "تحريك",
-    "scrollZoom": "عجلة الماوس للتكبير"
+    "scrollZoom": "عجلة الماوس للتكبير",
+    "clickToExplore": "اضغط للاستكشاف",
+    "machines": {
+      "waterTreatment": "نظام معالجة المياه",
+      "fillingCapping": "ماكينة التعبئة والتغطية",
+      "bottleUnscrambler": "فارز الزجاجات",
+      "conveyor": "نظام السير الناقل",
+      "blowMolding": "ماكينة النفخ 4C 8000PH",
+      "labeling": "ماكينة اللصق",
+      "shrinkWrapping": "ماكينة التغليف الحراري",
+      "sorting": "نظام الفرز والتغذية"
+    }
   }
 }

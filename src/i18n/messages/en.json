@@ -771,6 +771,17 @@
     "hint": "Scroll to zoom, drag to pan",
     "zoomKeys": "Zoom",
     "panKeys": "Pan",
-    "scrollZoom": "Scroll to zoom"
+    "scrollZoom": "Scroll to zoom",
+    "clickToExplore": "Click to explore",
+    "machines": {
+      "waterTreatment": "Water Treatment System",
+      "fillingCapping": "Filling & Capping Machine",
+      "bottleUnscrambler": "Bottle Unscrambler",
+      "conveyor": "Conveyor System",
+      "blowMolding": "Blow Molding 4C 8000PH",
+      "labeling": "Labeling Machine",
+      "shrinkWrapping": "Shrink Wrapping Machine",
+      "sorting": "Sorting & Feeding System"
+    }
   }
 }

@@ -349,6 +349,15 @@ const config: Config = {
           '50%': { transform: 'scale(1.1) translate(-1%, -1%)' },
           '100%': { transform: 'scale(1) translate(0, 0)' },
         },
+        'hotspot-ping': {
+          '0%': { transform: 'scale(1)', opacity: '0.6' },
+          '50%': { transform: 'scale(2)', opacity: '0' },
+          '100%': { transform: 'scale(1)', opacity: '0.6' },
+        },
+        'hotspot-bounce': {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-6px)' },
+        },
       },
 
       animation: {
@@ -371,6 +380,8 @@ const config: Config = {
         'reveal-up': 'reveal-up 0.8s cubic-bezier(0.16, 1, 0.3, 1)',
         'slide-in-bottom': 'slide-in-bottom 0.5s ease-out',
         'ken-burns': 'ken-burns 20s ease-in-out infinite',
+        'hotspot-ping': 'hotspot-ping 2s cubic-bezier(0, 0, 0.2, 1) infinite',
+        'hotspot-bounce': 'hotspot-bounce 1.5s ease-in-out infinite',
       },
 
       spacing: {

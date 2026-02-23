@@ -2,6 +2,7 @@
 
 import { useRef, useState, useCallback, useEffect, memo } from 'react';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { motion, useInView } from 'framer-motion';
 import { ZoomIn, ZoomOut, RotateCcw, Maximize2, Factory } from 'lucide-react';
@@ -15,6 +16,107 @@ interface Transform {
   scale: number;
 }
 
+interface ProductionLineHotspot {
+  id: string;
+  x: number;
+  y: number;
+  slug: string;
+  labelKey: string;
+}
+
+const PRODUCTION_LINE_HOTSPOTS: ProductionLineHotspot[] = [
+  { id: 'water-treatment', x: 7, y: 48, slug: 'automatic-liquid-filling-machine', labelKey: 'waterTreatment' },
+  { id: 'filling-capping', x: 24, y: 50, slug: 'automatic-liquid-filling-machine', labelKey: 'fillingCapping' },
+  { id: 'conveyor', x: 42, y: 35, slug: 'conveyor-systems', labelKey: 'conveyor' },
+  { id: 'bottle-unscrambler', x: 50, y: 72, slug: 'bottle-unscrambler', labelKey: 'bottleUnscrambler' },
+  { id: 'labeling', x: 58, y: 22, slug: 'automatic-labeling-machine', labelKey: 'labeling' },
+  { id: 'shrink-wrapping', x: 70, y: 12, slug: 'shrink-wrapping-machine', labelKey: 'shrinkWrapping' },
+  { id: 'blow-molding', x: 78, y: 50, slug: 'pet-blow-molding-4c-8000ph', labelKey: 'blowMolding' },
+  { id: 'sorting', x: 92, y: 45, slug: 'bottle-unscrambler', labelKey: 'sorting' },
+];
+
+function HotspotMarker({
+  hotspot,
+  label,
+  scale,
+  isDragging,
+  onNavigate,
+}: {
+  hotspot: ProductionLineHotspot;
+  label: string;
+  scale: number;
+  isDragging: boolean;
+  onNavigate: (slug: string) => void;
+}) {
+  const [showTooltip, setShowTooltip] = useState(false);
+  const pointerDownPos = useRef({ x: 0, y: 0 });
+  const counterScale = 1 / scale;
+
+  const handlePointerDown = useCallback((e: React.PointerEvent) => {
+    pointerDownPos.current = { x: e.clientX, y: e.clientY };
+  }, []);
+
+  const handlePointerUp = useCallback((e: React.PointerEvent) => {
+    const dx = Math.abs(e.clientX - pointerDownPos.current.x);
+    const dy = Math.abs(e.clientY - pointerDownPos.current.y);
+    if (dx < 5 && dy < 5) {
+      e.stopPropagation();
+      e.preventDefault();
+      onNavigate(hotspot.slug);
+    }
+  }, [hotspot.slug, onNavigate]);
+
+  return (
+    <div
+      className="absolute z-10"
+      style={{
+        left: `${hotspot.x}%`,
+        top: `${hotspot.y}%`,
+        transform: `translate(-50%, -50%) scale(${counterScale})`,
+      }}
+    >
+      <div
+        role="link"
+        tabIndex={0}
+        aria-label={label}
+        className="relative cursor-pointer group"
+        onPointerDown={handlePointerDown}
+        onPointerUp={handlePointerUp}
+        onMouseEnter={() => { if (!isDragging) setShowTooltip(true); }}
+        onMouseLeave={() => setShowTooltip(false)}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            e.stopPropagation();
+            onNavigate(hotspot.slug);
+          }
+        }}
+      >
+        {/* Pulse ring */}
+        <span className="absolute inset-0 -m-3 rounded-full animate-hotspot-ping bg-primary/40" />
+
+        {/* Marker body */}
+        <span className="relative flex items-center justify-center w-8 h-8 rounded-full bg-primary shadow-lg shadow-primary/40 animate-hotspot-bounce group-hover:bg-primary-600 transition-colors">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" className="text-white">
+            <path d="M12 5v14M5 12l7 7 7-7" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </span>
+
+        {/* Connecting dot */}
+        <span className="absolute top-full left-1/2 -translate-x-1/2 mt-1 w-1.5 h-1.5 rounded-full bg-primary/60" />
+      </div>
+
+      {/* Tooltip (desktop only via mouse events) */}
+      {showTooltip && (
+        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-4 px-3 py-2 bg-steel-900/95 backdrop-blur-sm text-white text-xs font-medium whitespace-nowrap pointer-events-none animate-fade-in rounded-sm z-50">
+          {label}
+          <span className="absolute top-full left-1/2 -translate-x-1/2 w-0 h-0 border-l-4 border-l-transparent border-r-4 border-r-transparent border-t-4 border-t-steel-900/95" />
+        </div>
+      )}
+    </div>
+  );
+}
+
 const MIN_SCALE = 0.5;
 const MAX_SCALE = 5;
 const ZOOM_STEP = 1.3;
@@ -22,6 +124,7 @@ const ZOOM_STEP = 1.3;
 export const ProductionLineSection = memo(function ProductionLineSection() {
   const t = useTranslations();
   const { isRTL, locale } = useLocale();
+  const router = useRouter();
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef, { once: true, margin: '-100px' });
   const containerRef = useRef<HTMLDivElement>(null);
@@ -250,6 +353,10 @@ export const ProductionLineSection = memo(function ProductionLineSection() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [zoomIn, zoomOut, resetView]);
 
+  const handleHotspotNavigate = useCallback((slug: string) => {
+    router.push(`/products/${slug}`);
+  }, [router]);
+
   const scalePercent = Math.round(transform.scale * 100);
 
   const formatNumber = (num: number) => {
@@ -426,6 +533,18 @@ export const ProductionLineSection = memo(function ProductionLineSection() {
                 quality={90}
                 draggable={false}
               />
+
+              {/* Machine Hotspot Markers */}
+              {PRODUCTION_LINE_HOTSPOTS.map((hotspot) => (
+                <HotspotMarker
+                  key={hotspot.id}
+                  hotspot={hotspot}
+                  label={t(`productionLine.machines.${hotspot.labelKey}`)}
+                  scale={transform.scale}
+                  isDragging={isDragging}
+                  onNavigate={handleHotspotNavigate}
+                />
+              ))}
             </div>
           </div>
 

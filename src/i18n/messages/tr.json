@@ -771,6 +771,17 @@
     "hint": "Yakınlaştırmak için kaydırın, taşımak için sürükleyin",
     "zoomKeys": "Yakınlaştır",
     "panKeys": "Taşı",
-    "scrollZoom": "Yakınlaştırmak için kaydırın"
+    "scrollZoom": "Yakınlaştırmak için kaydırın",
+    "clickToExplore": "Keşfetmek için tıklayın",
+    "machines": {
+      "waterTreatment": "Su Arıtma Sistemi",
+      "fillingCapping": "Dolum ve Kapatma Makinesi",
+      "bottleUnscrambler": "Şişe Düzenleyici",
+      "conveyor": "Konveyör Sistemi",
+      "blowMolding": "Şişirme Makinesi 4C 8000PH",
+      "labeling": "Etiketleme Makinesi",
+      "shrinkWrapping": "Shrink Ambalaj Makinesi",
+      "sorting": "Ayırma ve Besleme Sistemi"
+    }
   }
 }
