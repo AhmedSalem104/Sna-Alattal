@@ -37,23 +37,18 @@ jobs:
 
       - name: Package standalone build
         run: |
-          echo "=== Standalone build contents ==="
-          ls -la .next/standalone/
-          echo "=== .next inside standalone ==="
-          ls -la .next/standalone/.next/ || echo "No .next dir in standalone"
-
           mkdir -p deploy-package
-          cp -r .next/standalone/* deploy-package/
+          # Use /. to copy ALL files including hidden (.next directory)
+          cp -r .next/standalone/. deploy-package/
+          # Copy static assets into .next/static
           cp -r .next/static deploy-package/.next/static
+          # Copy additional files needed on server
           cp -r public deploy-package/public
           cp -r prisma deploy-package/prisma
           cp ecosystem.config.js deploy-package/
-          cp package.json deploy-package/
 
-          echo "=== deploy-package contents ==="
-          ls -la deploy-package/
-          echo "=== deploy-package/.next contents ==="
-          ls -la deploy-package/.next/
+          echo "=== Verifying package ==="
+          ls -la deploy-package/.next/static/ | head -5
 
           tar -czf deploy.tar.gz -C deploy-package .
 
