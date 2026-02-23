@@ -67,7 +67,7 @@ jobs:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_SSH_KEY }}
-          command_timeout: 5m
+          command_timeout: 10m
           script: |
             cd /home/deploy/apps/sna-alattal
 
@@ -111,22 +111,19 @@ jobs:
             sleep 15
 
             echo "🏥 Health check..."
-            for i in 1 2 3; do
-              if curl -sf http://localhost:3000/api/health; then
+            for i in 1 2 3 4 5 6; do
+              if curl -sf --max-time 10 http://localhost:3000/api/health; then
                 echo " ✅ App is healthy!"
                 break
               fi
-              echo " Attempt $i failed, waiting 5s..."
-              sleep 5
+              echo " Attempt $i failed, waiting 10s..."
+              sleep 10
             done
 
             echo "📊 PM2 status:"
             pm2 status
 
             echo "📋 Recent error logs:"
-            pm2 logs sna-alattal --err --lines 30 --nostream 2>/dev/null || true
-
-            echo "📋 Recent output logs:"
-            pm2 logs sna-alattal --out --lines 30 --nostream 2>/dev/null || true
+            pm2 logs sna-alattal --err --lines 20 --nostream 2>/dev/null || true
 
             echo "✅ Deployment completed!"
