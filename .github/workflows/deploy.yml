@@ -7,46 +7,74 @@ on:
   workflow_dispatch:
 
 jobs:
-  deploy:
+  build-and-deploy:
     runs-on: ubuntu-latest
-    timeout-minutes: 35
+    timeout-minutes: 15
 
     steps:
-      - name: Deploy to VPS
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Generate Prisma client
+        run: npx prisma generate
+
+      - name: Build application
+        run: NEXT_TELEMETRY_DISABLED=1 npm run build
+
+      - name: Package standalone build
+        run: |
+          mkdir -p deploy-package
+          cp -r .next/standalone/* deploy-package/
+          cp -r .next/static deploy-package/.next/static
+          cp -r public deploy-package/public
+          cp -r prisma deploy-package/prisma
+          cp ecosystem.config.js deploy-package/
+          cp package.json deploy-package/
+          tar -czf deploy.tar.gz -C deploy-package .
+
+      - name: Upload build to VPS
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          source: "deploy.tar.gz"
+          target: "/home/deploy/apps/"
+
+      - name: Deploy on VPS
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_SSH_KEY }}
-          command_timeout: 30m
+          command_timeout: 5m
           script: |
             cd /home/deploy/apps/sna-alattal
 
-            echo "📥 Pulling latest changes..."
-            git pull origin master
+            echo "🔄 Stopping app..."
+            pm2 stop sna-alattal 2>/dev/null || true
+            pm2 delete sna-alattal 2>/dev/null || true
+            fuser -k 3000/tcp 2>/dev/null || true
+            sleep 2
 
-            echo "📦 Installing dependencies..."
-            npm install --ignore-scripts --prefer-offline --no-audit --no-fund || npm install --ignore-scripts --no-audit --no-fund
-
-            echo "🔧 Generating Prisma client..."
-            npx prisma generate
+            echo "📦 Extracting new build..."
+            tar -xzf /home/deploy/apps/deploy.tar.gz -C /home/deploy/apps/sna-alattal/ --overwrite
+            rm -f /home/deploy/apps/deploy.tar.gz
 
             echo "🗄️ Syncing database schema..."
-            npx prisma db push --skip-generate
+            npx prisma db push --skip-generate 2>/dev/null || true
 
-            echo "🔨 Building application..."
-            NEXT_TELEMETRY_DISABLED=1 NODE_OPTIONS="--max-old-space-size=1536" npm run build
-
-            echo "📁 Ensuring logs directory exists..."
+            echo "📁 Ensuring logs directory..."
             mkdir -p logs
-
-            echo "🔄 Stopping ALL PM2 processes and releasing port..."
-            pm2 stop all 2>/dev/null || true
-            pm2 delete all 2>/dev/null || true
-
-            echo "🔪 Force killing any process on port 3000..."
-            fuser -k 3000/tcp 2>/dev/null || true
-            sleep 3
 
             echo "🚀 Starting app with PM2..."
             pm2 start ecosystem.config.js
@@ -54,8 +82,8 @@ jobs:
             echo "💾 Saving PM2 process list..."
             pm2 save
 
-            echo "⏳ Waiting for app to start (15s)..."
-            sleep 15
+            echo "⏳ Waiting for app to start..."
+            sleep 10
 
             echo "🏥 Health check..."
             for i in 1 2 3; do
@@ -63,8 +91,8 @@ jobs:
                 echo " ✅ App is healthy!"
                 break
               fi
-              echo " Attempt $i failed, waiting 10s..."
-              sleep 10
+              echo " Attempt $i failed, waiting 5s..."
+              sleep 5
             done
 
             echo "📊 PM2 status:"
