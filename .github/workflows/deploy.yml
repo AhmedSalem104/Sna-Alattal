@@ -9,7 +9,7 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 30
 
     steps:
       - name: Checkout code
@@ -38,19 +38,13 @@ jobs:
       - name: Package standalone build
         run: |
           mkdir -p deploy-package
-          # Use /. to copy ALL files including hidden (.next directory)
           cp -r .next/standalone/. deploy-package/
-          # Copy static assets into .next/static
           cp -r .next/static deploy-package/.next/static
-          # Copy additional files needed on server
           cp -r public deploy-package/public
           cp -r prisma deploy-package/prisma
           cp ecosystem.config.js deploy-package/
-
-          echo "=== Verifying package ==="
-          ls -la deploy-package/.next/static/ | head -5
-
           tar -czf deploy.tar.gz -C deploy-package .
+          echo "Package size: $(du -h deploy.tar.gz | cut -f1)"
 
       - name: Upload build to VPS
         uses: appleboy/scp-action@v0.1.7
@@ -60,6 +54,7 @@ jobs:
           key: ${{ secrets.VPS_SSH_KEY }}
           source: "deploy.tar.gz"
           target: "/home/deploy/apps/"
+          timeout: 120s
 
       - name: Deploy on VPS
         uses: appleboy/ssh-action@v1.0.3
@@ -69,75 +64,99 @@ jobs:
           key: ${{ secrets.VPS_SSH_KEY }}
           command_timeout: 10m
           script: |
-            cd /home/deploy/apps/sna-alattal
+            set -e
+            APP_DIR="/home/deploy/apps/sna-alattal"
+            BACKUP_DIR="/home/deploy/apps/sna-alattal-backup"
+            DEPLOY_TAR="/home/deploy/apps/deploy.tar.gz"
 
-            echo "🔄 Stopping ALL processes..."
-            pm2 kill 2>/dev/null || true
-            sleep 2
+            cd "$APP_DIR"
 
-            echo "🔄 Force killing port 3000..."
-            fuser -k 3000/tcp 2>/dev/null || true
-            sleep 1
-            # Double check - kill any remaining node on port 3000
-            lsof -ti:3000 | xargs kill -9 2>/dev/null || true
-            sleep 2
+            # --- Step 1: Extract new build to temp dir FIRST (before stopping app) ---
+            echo "📦 Extracting new build to temp directory..."
+            TEMP_DIR="/home/deploy/apps/sna-alattal-new"
+            rm -rf "$TEMP_DIR"
+            mkdir -p "$TEMP_DIR"
+            tar -xzf "$DEPLOY_TAR" -C "$TEMP_DIR"
+            rm -f "$DEPLOY_TAR"
 
-            echo "🔍 Verifying port 3000 is free..."
-            if fuser 3000/tcp 2>/dev/null; then
-              echo "⚠️ Port 3000 still in use! Force killing..."
-              fuser -k -9 3000/tcp 2>/dev/null || true
-              sleep 3
-            else
-              echo "✅ Port 3000 is free"
+            # Verify critical files exist in new build
+            if [ ! -f "$TEMP_DIR/server.js" ] || [ ! -d "$TEMP_DIR/.next" ]; then
+              echo "❌ CRITICAL: New build is incomplete! Aborting deploy."
+              rm -rf "$TEMP_DIR"
+              exit 1
             fi
+            echo "✅ New build verified"
 
-            echo "📦 Extracting new build..."
-            tar -xzf /home/deploy/apps/deploy.tar.gz -C /home/deploy/apps/sna-alattal/ --overwrite
-            rm -f /home/deploy/apps/deploy.tar.gz
+            # --- Step 2: Backup current .env (it's not in the build) ---
+            cp "$APP_DIR/.env" "$TEMP_DIR/.env" 2>/dev/null || true
 
+            # --- Step 3: NOW stop the app (downtime starts here) ---
+            echo "🔄 Stopping app..."
+            pm2 stop sna-alattal 2>/dev/null || true
+            pm2 delete sna-alattal 2>/dev/null || true
+            sleep 1
+
+            # Kill any remaining process on port 3000
+            fuser -k 3000/tcp 2>/dev/null || true
+            sleep 2
+
+            # --- Step 4: Swap directories (atomic-ish) ---
+            echo "🔄 Swapping builds..."
+            rm -rf "$BACKUP_DIR"
+            # Keep current as backup
+            mv "$APP_DIR" "$BACKUP_DIR" 2>/dev/null || true
+            mv "$TEMP_DIR" "$APP_DIR"
+
+            cd "$APP_DIR"
+
+            # --- Step 5: Sync database ---
             echo "🗄️ Syncing database schema..."
             npx prisma db push --skip-generate 2>/dev/null || true
 
-            echo "📁 Ensuring logs directory..."
+            # --- Step 6: Start app ---
             mkdir -p logs
-
-            echo "🔍 Checking .env file..."
-            if [ -f .env ]; then
-              echo ".env file exists"
-            else
-              echo "⚠️ WARNING: .env file is MISSING!"
-            fi
-
-            echo "🔍 Checking server.js..."
-            ls -la server.js || echo "⚠️ WARNING: server.js not found!"
-
-            echo "🔍 Checking .next directory..."
-            ls -la .next/ || echo "⚠️ WARNING: .next directory not found!"
-            ls -la .next/static/ || echo "⚠️ WARNING: .next/static directory not found!"
-
-            echo "🚀 Starting PM2 daemon and app..."
+            echo "🚀 Starting app..."
             pm2 start ecosystem.config.js --update-env
-
-            echo "💾 Saving PM2 process list..."
             pm2 save
 
-            echo "⏳ Waiting for app to start..."
-            sleep 15
+            # --- Step 7: Health check with generous timeout ---
+            echo "⏳ Waiting for app to initialize..."
+            sleep 20
 
-            echo "🏥 Health check..."
-            for i in 1 2 3 4 5 6; do
-              if curl -sf --max-time 10 http://localhost:3000/api/health; then
-                echo " ✅ App is healthy!"
+            HEALTHY=false
+            for i in 1 2 3 4 5 6 7 8; do
+              if curl -sf --max-time 10 http://localhost:3000 > /dev/null 2>&1; then
+                echo "✅ App is healthy! (attempt $i)"
+                HEALTHY=true
                 break
               fi
-              echo " Attempt $i failed, waiting 10s..."
+              echo "  Attempt $i/8 - waiting 10s..."
               sleep 10
             done
 
+            if [ "$HEALTHY" = false ]; then
+              echo "⚠️ Health check failed - checking PM2 logs..."
+              pm2 logs sna-alattal --err --lines 15 --nostream 2>/dev/null || true
+
+              # Rollback if backup exists
+              if [ -d "$BACKUP_DIR" ]; then
+                echo "🔄 Rolling back to previous version..."
+                pm2 delete sna-alattal 2>/dev/null || true
+                fuser -k 3000/tcp 2>/dev/null || true
+                sleep 2
+                rm -rf "$APP_DIR"
+                mv "$BACKUP_DIR" "$APP_DIR"
+                cd "$APP_DIR"
+                pm2 start ecosystem.config.js --update-env
+                pm2 save
+                echo "✅ Rollback complete"
+                exit 1
+              fi
+            fi
+
+            # Cleanup backup on success
+            rm -rf "$BACKUP_DIR"
+
             echo "📊 PM2 status:"
             pm2 status
-
-            echo "📋 Recent error logs:"
-            pm2 logs sna-alattal --err --lines 20 --nostream 2>/dev/null || true
-
             echo "✅ Deployment completed!"
