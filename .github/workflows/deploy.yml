@@ -71,11 +71,25 @@ jobs:
           script: |
             cd /home/deploy/apps/sna-alattal
 
-            echo "🔄 Stopping app..."
-            pm2 stop sna-alattal 2>/dev/null || true
-            pm2 delete sna-alattal 2>/dev/null || true
-            fuser -k 3000/tcp 2>/dev/null || true
+            echo "🔄 Stopping ALL processes..."
+            pm2 kill 2>/dev/null || true
             sleep 2
+
+            echo "🔄 Force killing port 3000..."
+            fuser -k 3000/tcp 2>/dev/null || true
+            sleep 1
+            # Double check - kill any remaining node on port 3000
+            lsof -ti:3000 | xargs kill -9 2>/dev/null || true
+            sleep 2
+
+            echo "🔍 Verifying port 3000 is free..."
+            if fuser 3000/tcp 2>/dev/null; then
+              echo "⚠️ Port 3000 still in use! Force killing..."
+              fuser -k -9 3000/tcp 2>/dev/null || true
+              sleep 3
+            else
+              echo "✅ Port 3000 is free"
+            fi
 
             echo "📦 Extracting new build..."
             tar -xzf /home/deploy/apps/deploy.tar.gz -C /home/deploy/apps/sna-alattal/ --overwrite
@@ -101,8 +115,8 @@ jobs:
             ls -la .next/ || echo "⚠️ WARNING: .next directory not found!"
             ls -la .next/static/ || echo "⚠️ WARNING: .next/static directory not found!"
 
-            echo "🚀 Starting app with PM2..."
-            pm2 start ecosystem.config.js
+            echo "🚀 Starting PM2 daemon and app..."
+            pm2 start ecosystem.config.js --update-env
 
             echo "💾 Saving PM2 process list..."
             pm2 save

@@ -6,15 +6,15 @@ module.exports = {
       cwd: '/home/deploy/apps/sna-alattal',
 
       // Prevent crash loop - wait for port release
-      kill_timeout: 5000,           // Wait 5 seconds before force kill
+      kill_timeout: 10000,          // Wait 10 seconds before force kill
       wait_ready: false,            // Don't wait for ready signal
-      listen_timeout: 30000,        // Wait 30 seconds for port binding
+      listen_timeout: 60000,        // Wait 60 seconds for port binding
 
       // Restart limits to prevent infinite loop
-      max_restarts: 10,
-      min_uptime: 10000,
-      restart_delay: 3000,
-      exp_backoff_restart_delay: 100,
+      max_restarts: 3,
+      min_uptime: 30000,
+      restart_delay: 5000,
+      exp_backoff_restart_delay: 1000,
       autorestart: true,
 
       // Environment
