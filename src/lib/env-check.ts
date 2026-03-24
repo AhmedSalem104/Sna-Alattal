@@ -4,7 +4,6 @@
  */
 
 const REQUIRED_VARS = [
-  'DATABASE_URL',
   'NEXTAUTH_SECRET',
   'NEXTAUTH_URL',
 ] as const;
