@@ -8,8 +8,8 @@ const withBundleAnalyzer = bundleAnalyzer({
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Standalone output for optimized production deployment
-  output: 'standalone',
+  // Use standalone only for VPS, Vercel doesn't need it
+  ...(process.env.VERCEL ? {} : { output: 'standalone' }),
 
   // Performance optimizations
   reactStrictMode: true,
