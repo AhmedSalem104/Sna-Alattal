@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { checkRateLimit, getClientIP, RATE_LIMITS } from '@/lib/rate-limit';
-import { db } from '@/lib/db';
+import { getCategories } from '@/lib/static-data';
 
 // GET - List active categories (public)
 export async function GET(request: NextRequest) {
@@ -14,18 +14,7 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    const categories = await db.category.findMany({
-      where: {
-        isActive: true,
-        deletedAt: null,
-      },
-      include: {
-        _count: {
-          select: { products: { where: { isActive: true, deletedAt: null } } },
-        },
-      },
-      orderBy: [{ order: 'asc' }, { nameAr: 'asc' }],
-    });
+    const categories = getCategories();
 
     return NextResponse.json(categories, {
       headers: { 'Cache-Control': 'public, s-maxage=300, stale-while-revalidate=600' },

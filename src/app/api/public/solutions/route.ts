@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { db } from '@/lib/db';
+import { getSolutions } from '@/lib/static-data';
 import { checkRateLimit, getClientIP, RATE_LIMITS } from '@/lib/rate-limit';
 
 // GET - List active solutions (public)
@@ -18,23 +18,9 @@ export async function GET(request: NextRequest) {
     const featured = searchParams.get('featured') === 'true';
     const limit = searchParams.get('limit') ? parseInt(searchParams.get('limit')!) : undefined;
 
-    const solutions = await db.solution.findMany({
-      where: {
-        isActive: true,
-        deletedAt: null,
-        ...(featured && { isFeatured: true }),
-      },
-      include: {
-        products: {
-          include: {
-            product: {
-              select: { id: true, nameAr: true, nameEn: true, nameTr: true, slug: true },
-            },
-          },
-        },
-      },
-      orderBy: [{ order: 'asc' }, { createdAt: 'desc' }],
-      ...(limit && { take: limit }),
+    const solutions = getSolutions({
+      ...(featured && { featured }),
+      ...(limit && { limit }),
     });
 
     return NextResponse.json(solutions, {

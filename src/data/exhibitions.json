@@ -1,0 +1,42 @@
+[
+  {
+    "id": "exhibition-gulfood-2025",
+    "nameAr": "معرض جلفود 2025",
+    "nameEn": "Gulfood Exhibition 2025",
+    "nameTr": "Gulfood Fuarı 2025",
+    "descriptionAr": "أكبر معرض سنوي للأغذية والمشروبات في الشرق الأوسط",
+    "descriptionEn": "The largest annual food and beverage exhibition in the Middle East",
+    "descriptionTr": "Orta Doğu'nun en büyük yıllık gıda ve içecek fuarı",
+    "locationAr": "مركز دبي التجاري العالمي، الإمارات",
+    "locationEn": "Dubai World Trade Centre, UAE",
+    "locationTr": "Dubai Dünya Ticaret Merkezi, BAE",
+    "startDate": "2025-02-17T00:00:00.000Z",
+    "endDate": "2025-02-21T00:00:00.000Z",
+    "images": ["/uploads/exhibitions/factory-1.jpg", "/uploads/exhibitions/factory-2.jpg"],
+    "isActive": true,
+    "order": 1,
+    "createdAt": "2025-01-01T00:00:00.000Z",
+    "updatedAt": "2025-01-01T00:00:00.000Z",
+    "deletedAt": null
+  },
+  {
+    "id": "exhibition-packprocess-2025",
+    "nameAr": "معرض باك بروسيس 2025",
+    "nameEn": "Pack Process Exhibition 2025",
+    "nameTr": "Pack Process Fuarı 2025",
+    "descriptionAr": "معرض متخصص في تقنيات التعبئة والتغليف في مصر",
+    "descriptionEn": "Specialized exhibition for packaging technologies in Egypt",
+    "descriptionTr": "Mısır'da paketleme teknolojileri için uzmanlaşmış fuar",
+    "locationAr": "مركز مصر الدولي للمعارض، القاهرة",
+    "locationEn": "Egypt International Exhibition Center, Cairo",
+    "locationTr": "Mısır Uluslararası Fuar Merkezi, Kahire",
+    "startDate": "2025-03-10T00:00:00.000Z",
+    "endDate": "2025-03-13T00:00:00.000Z",
+    "images": ["/uploads/exhibitions/factory-3.jpg", "/uploads/exhibitions/factory-4.jpg"],
+    "isActive": true,
+    "order": 2,
+    "createdAt": "2025-01-01T00:00:00.000Z",
+    "updatedAt": "2025-01-01T00:00:00.000Z",
+    "deletedAt": null
+  }
+]

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { db } from '@/lib/db';
+import { getNews } from '@/lib/static-data';
 import { checkRateLimit, getClientIP, RATE_LIMITS } from '@/lib/rate-limit';
 
 // GET - List active news (public)
@@ -18,15 +18,9 @@ export async function GET(request: NextRequest) {
     const featured = searchParams.get('featured') === 'true';
     const limit = searchParams.get('limit') ? parseInt(searchParams.get('limit')!) : undefined;
 
-    const news = await db.news.findMany({
-      where: {
-        isActive: true,
-        deletedAt: null,
-        publishedAt: { lte: new Date() },
-        ...(featured && { isFeatured: true }),
-      },
-      orderBy: [{ publishedAt: 'desc' }, { createdAt: 'desc' }],
-      ...(limit && { take: limit }),
+    const news = getNews({
+      ...(featured && { featured }),
+      ...(limit && { limit }),
     });
 
     return NextResponse.json(news, {

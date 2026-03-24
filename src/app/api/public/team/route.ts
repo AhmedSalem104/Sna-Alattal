@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { db } from '@/lib/db';
+import { getTeam } from '@/lib/static-data';
 
 // GET - List active team members (public)
 export async function GET(request: NextRequest) {
@@ -7,13 +7,8 @@ export async function GET(request: NextRequest) {
     const searchParams = request.nextUrl.searchParams;
     const limit = searchParams.get('limit') ? parseInt(searchParams.get('limit')!) : undefined;
 
-    const team = await db.teamMember.findMany({
-      where: {
-        isActive: true,
-        deletedAt: null,
-      },
-      orderBy: [{ order: 'asc' }, { createdAt: 'desc' }],
-      ...(limit && { take: limit }),
+    const team = getTeam({
+      ...(limit && { limit }),
     });
 
     return NextResponse.json(team);

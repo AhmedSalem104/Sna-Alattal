@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { db } from '@/lib/db';
-import { parseImages } from '@/lib/parse-images';
+import { getProducts } from '@/lib/static-data';
 import { checkRateLimit, getClientIP, RATE_LIMITS } from '@/lib/rate-limit';
 
 // GET - List active products (public)
@@ -20,27 +19,11 @@ export async function GET(request: NextRequest) {
     const limit = searchParams.get('limit') ? parseInt(searchParams.get('limit')!) : undefined;
     const categoryId = searchParams.get('categoryId');
 
-    const products = await db.product.findMany({
-      where: {
-        isActive: true,
-        deletedAt: null,
-        ...(featured && { isFeatured: true }),
-        ...(categoryId && { categoryId }),
-      },
-      include: {
-        category: {
-          select: { id: true, nameAr: true, nameEn: true, nameTr: true, slug: true },
-        },
-      },
-      orderBy: [{ order: 'asc' }, { createdAt: 'desc' }],
-      ...(limit && { take: limit }),
+    const transformedProducts = getProducts({
+      ...(featured && { featured }),
+      ...(limit && { limit }),
+      ...(categoryId && { categoryId }),
     });
-
-    // Transform products to ensure images is always an array
-    const transformedProducts = products.map(p => ({
-      ...p,
-      images: parseImages(p.images),
-    }));
 
     return NextResponse.json(transformedProducts, {
       headers: { 'Cache-Control': 'public, s-maxage=300, stale-while-revalidate=600' },

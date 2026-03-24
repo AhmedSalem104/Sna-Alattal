@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { db } from '@/lib/db';
+import { getClients } from '@/lib/static-data';
 import { checkRateLimit, getClientIP, RATE_LIMITS } from '@/lib/rate-limit';
 
 // GET - List active clients (public)
@@ -18,14 +18,9 @@ export async function GET(request: NextRequest) {
     const featured = searchParams.get('featured') === 'true';
     const limit = searchParams.get('limit') ? parseInt(searchParams.get('limit')!) : undefined;
 
-    const clients = await db.client.findMany({
-      where: {
-        isActive: true,
-        deletedAt: null,
-        ...(featured && { isFeatured: true }),
-      },
-      orderBy: [{ order: 'asc' }, { createdAt: 'desc' }],
-      ...(limit && { take: limit }),
+    const clients = getClients({
+      ...(featured && { featured }),
+      ...(limit && { limit }),
     });
 
     return NextResponse.json(clients, {

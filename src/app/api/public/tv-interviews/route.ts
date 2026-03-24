@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { checkRateLimit, getClientIP, RATE_LIMITS } from '@/lib/rate-limit';
-import { db } from '@/lib/db';
+import { getTvInterviews } from '@/lib/static-data';
 
 // GET - List active TV interviews (public)
 export async function GET(request: NextRequest) {
@@ -17,13 +17,8 @@ export async function GET(request: NextRequest) {
     const searchParams = request.nextUrl.searchParams;
     const limit = searchParams.get('limit') ? parseInt(searchParams.get('limit')!) : undefined;
 
-    const tvInterviews = await db.tVInterview.findMany({
-      where: {
-        isActive: true,
-        deletedAt: null,
-      },
-      orderBy: [{ date: 'desc' }, { createdAt: 'desc' }],
-      ...(limit && { take: limit }),
+    const tvInterviews = getTvInterviews({
+      ...(limit && { limit }),
     });
 
     return NextResponse.json(tvInterviews, {

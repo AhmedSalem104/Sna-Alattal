@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { checkRateLimit, getClientIP, RATE_LIMITS } from '@/lib/rate-limit';
-import { db } from '@/lib/db';
+import { getSettings } from '@/lib/static-data';
 
 // Only expose specific public groups
 const PUBLIC_GROUPS = ['timeline', 'offices', 'statistics', 'contact', 'general'];
@@ -27,18 +27,14 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    const settings = await db.settings.findMany({
-      where: group
-        ? { group }
-        : { group: { in: PUBLIC_GROUPS } },
-      orderBy: { key: 'asc' },
-    });
+    const settingsObject = getSettings(group || undefined);
 
-    // Transform settings array to object for easier consumption
-    const settingsObject = settings.reduce((acc, setting) => {
-      acc[setting.key] = setting.value;
-      return acc;
-    }, {} as Record<string, unknown>);
+    if (settingsObject === null) {
+      return NextResponse.json(
+        { error: 'Invalid group' },
+        { status: 400 }
+      );
+    }
 
     return NextResponse.json(settingsObject, {
       headers: { 'Cache-Control': 'public, s-maxage=300, stale-while-revalidate=600' },

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { db } from '@/lib/db';
+import { getCertificates } from '@/lib/static-data';
 import { checkRateLimit, getClientIP, RATE_LIMITS } from '@/lib/rate-limit';
 
 // GET - List active certificates (public)
@@ -17,13 +17,8 @@ export async function GET(request: NextRequest) {
     const searchParams = request.nextUrl.searchParams;
     const limit = searchParams.get('limit') ? parseInt(searchParams.get('limit')!) : undefined;
 
-    const certificates = await db.certificate.findMany({
-      where: {
-        isActive: true,
-        deletedAt: null,
-      },
-      orderBy: [{ order: 'asc' }, { createdAt: 'desc' }],
-      ...(limit && { take: limit }),
+    const certificates = getCertificates({
+      ...(limit && { limit }),
     });
 
     return NextResponse.json(certificates, {

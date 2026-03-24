@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { db } from '@/lib/db';
-import { parseImages } from '@/lib/parse-images';
+import { getExhibitions } from '@/lib/static-data';
 import { checkRateLimit, getClientIP, RATE_LIMITS } from '@/lib/rate-limit';
 
 // GET - List active exhibitions (public)
@@ -18,20 +17,9 @@ export async function GET(request: NextRequest) {
     const searchParams = request.nextUrl.searchParams;
     const limit = searchParams.get('limit') ? parseInt(searchParams.get('limit')!) : undefined;
 
-    const exhibitions = await db.exhibition.findMany({
-      where: {
-        isActive: true,
-        deletedAt: null,
-      },
-      orderBy: [{ startDate: 'desc' }, { createdAt: 'desc' }],
-      ...(limit && { take: limit }),
+    const transformedExhibitions = getExhibitions({
+      ...(limit && { limit }),
     });
-
-    // Ensure images is always a proper array
-    const transformedExhibitions = exhibitions.map(e => ({
-      ...e,
-      images: parseImages(e.images),
-    }));
 
     return NextResponse.json(transformedExhibitions, {
       headers: { 'Cache-Control': 'public, s-maxage=300, stale-while-revalidate=600' },

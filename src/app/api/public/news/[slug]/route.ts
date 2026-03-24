@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { db } from '@/lib/db';
+import { getNewsBySlug } from '@/lib/static-data';
 
 // GET - Get single news article by slug (public)
 export async function GET(
@@ -9,47 +9,16 @@ export async function GET(
   try {
     const { slug } = await params;
 
-    const news = await db.news.findFirst({
-      where: {
-        slug,
-        isActive: true,
-        deletedAt: null,
-        publishedAt: { lte: new Date() },
-      },
-    });
+    const result = getNewsBySlug(slug);
 
-    if (!news) {
+    if (!result) {
       return NextResponse.json(
         { error: 'News article not found' },
         { status: 404 }
       );
     }
 
-    // Get related news articles
-    const relatedNews = await db.news.findMany({
-      where: {
-        isActive: true,
-        deletedAt: null,
-        publishedAt: { lte: new Date() },
-        id: { not: news.id },
-      },
-      take: 3,
-      orderBy: { publishedAt: 'desc' },
-      select: {
-        id: true,
-        titleAr: true,
-        titleEn: true,
-        titleTr: true,
-        slug: true,
-        image: true,
-        publishedAt: true,
-      },
-    });
-
-    return NextResponse.json({
-      ...news,
-      relatedNews,
-    });
+    return NextResponse.json(result);
   } catch (error) {
     console.error('Error fetching news:', error);
     return NextResponse.json(
