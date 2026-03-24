@@ -114,7 +114,11 @@ jobs:
             echo "🗄️ Syncing database schema..."
             npx prisma db push --skip-generate 2>/dev/null || true
 
-            # --- Step 6: Start app ---
+            # --- Step 6: Ensure nginx is running ---
+            echo "🌐 Checking nginx..."
+            sudo systemctl restart nginx 2>/dev/null || sudo service nginx restart 2>/dev/null || true
+
+            # --- Step 7: Start app ---
             mkdir -p logs
             echo "🚀 Starting app..."
             pm2 start ecosystem.config.js --update-env
