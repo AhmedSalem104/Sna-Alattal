@@ -138,7 +138,21 @@
       "Bash(while read:*)",
       "Bash(do sed:*)",
       "Bash(rm -rf src/app/admin)",
-      "Bash(rm -rf src/components/admin)"
+      "Bash(rm -rf src/components/admin)",
+      "Bash(for f:*)",
+      "Bash(do echo:*)",
+      "Bash(npm list:*)",
+      "Bash(vercel --version)",
+      "Bash(vercel login:*)",
+      "Bash(vercel --yes)",
+      "Bash(vercel --prod --yes)",
+      "Bash(vercel git:*)",
+      "Bash(vercel ls:*)",
+      "Bash(vercel inspect:*)",
+      "Bash(vercel logs:*)",
+      "Bash(vercel env:*)",
+      "WebFetch(domain:sna-alattal-ph8cqnoi6-ahmedsalem104s-projects.vercel.app)",
+      "Bash(vercel deploy:*)"
     ]
   }
 }

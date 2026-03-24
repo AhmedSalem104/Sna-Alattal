@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { db } from '@/lib/db';
 import { checkRateLimit, getClientIP, RATE_LIMITS } from '@/lib/rate-limit';
 
 const FORMSPREE_URL = 'https://formspree.io/f/xvzbgjny';
@@ -32,39 +31,30 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Create contact message in database
-    const message = await db.contactMessage.create({
-      data: {
+    // Send via Formspree
+    const formspreeResponse = await fetch(FORMSPREE_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({
         name: body.name,
         email: body.email,
-        phone: body.phone || null,
-        company: body.company || null,
+        phone: body.phone || '',
+        company: body.company || '',
         subject: body.subject,
         message: body.message,
-      },
+        _subject: `رسالة جديدة من الموقع: ${body.subject}`,
+      }),
     });
 
-    // Send email notification via Formspree
-    try {
-      await fetch(FORMSPREE_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-        body: JSON.stringify({
-          name: body.name,
-          email: body.email,
-          phone: body.phone || '',
-          company: body.company || '',
-          subject: body.subject,
-          message: body.message,
-          _subject: `رسالة جديدة من الموقع: ${body.subject}`,
-        }),
-      });
-    } catch (emailError) {
-      console.error('Failed to send Formspree notification:', emailError);
-      // Don't fail the request if email fails
+    if (!formspreeResponse.ok) {
+      console.error('Formspree error:', formspreeResponse.status);
+      return NextResponse.json(
+        { error: 'Failed to send message' },
+        { status: 500 }
+      );
     }
 
-    return NextResponse.json({ success: true, id: message.id }, { status: 201 });
+    return NextResponse.json({ success: true }, { status: 201 });
   } catch (error) {
     console.error('Error creating contact message:', error);
     return NextResponse.json(

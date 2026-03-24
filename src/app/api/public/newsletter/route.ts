@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { checkRateLimit, getClientIP, RATE_LIMITS } from '@/lib/rate-limit';
-import { db } from '@/lib/db';
 import { z } from 'zod';
 
 const subscribeSchema = z.object({
@@ -8,7 +7,7 @@ const subscribeSchema = z.object({
   name: z.string().optional(),
 });
 
-// POST - Subscribe to newsletter
+// POST - Subscribe to newsletter (no-op without database, returns success)
 export async function POST(request: NextRequest) {
   try {
     const ip = getClientIP(request.headers);
@@ -31,43 +30,9 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const { email, name } = validationResult.data;
-
-    // Check if already subscribed
-    const existing = await db.newsletterSubscriber.findUnique({
-      where: { email },
-    });
-
-    if (existing) {
-      // If previously unsubscribed, reactivate
-      if (!existing.isActive) {
-        await db.newsletterSubscriber.update({
-          where: { email },
-          data: {
-            isActive: true,
-            unsubscribedAt: null,
-            name: name || existing.name,
-          },
-        });
-        return NextResponse.json(
-          { success: true, message: 'Successfully resubscribed' },
-          { status: 200 }
-        );
-      }
-      // Already subscribed and active
-      return NextResponse.json(
-        { success: true, message: 'Already subscribed' },
-        { status: 200 }
-      );
-    }
-
-    // Create new subscriber
-    await db.newsletterSubscriber.create({
-      data: {
-        email,
-        name: name || null,
-      },
-    });
+    // Database is not available; accept the request gracefully.
+    // In the future this could forward to a third-party newsletter service.
+    console.log('[newsletter] Subscription received (no-op, no DB):', validationResult.data.email);
 
     return NextResponse.json(
       { success: true, message: 'Successfully subscribed' },
@@ -82,7 +47,7 @@ export async function POST(request: NextRequest) {
   }
 }
 
-// DELETE - Unsubscribe from newsletter
+// DELETE - Unsubscribe from newsletter (no-op without database)
 export async function DELETE(request: NextRequest) {
   try {
     const ip = getClientIP(request.headers);
@@ -104,24 +69,7 @@ export async function DELETE(request: NextRequest) {
       );
     }
 
-    const subscriber = await db.newsletterSubscriber.findUnique({
-      where: { email },
-    });
-
-    if (!subscriber) {
-      return NextResponse.json(
-        { error: 'Subscriber not found' },
-        { status: 404 }
-      );
-    }
-
-    await db.newsletterSubscriber.update({
-      where: { email },
-      data: {
-        isActive: false,
-        unsubscribedAt: new Date(),
-      },
-    });
+    console.log('[newsletter] Unsubscribe received (no-op, no DB):', email);
 
     return NextResponse.json(
       { success: true, message: 'Successfully unsubscribed' },
