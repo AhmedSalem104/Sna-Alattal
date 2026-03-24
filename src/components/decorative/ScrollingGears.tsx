@@ -93,6 +93,7 @@ export function ScrollingGears() {
     <div
       className="fixed inset-0 z-0 pointer-events-none overflow-hidden"
       aria-hidden="true"
+      style={{ contain: 'layout style paint' }}
     >
       {GEARS.map((gear, i) => {
         const rotation = scrollY * gear.speed * (gear.reverse ? -1 : 1);

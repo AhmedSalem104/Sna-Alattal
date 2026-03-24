@@ -330,6 +330,9 @@ export function HeroSection() {
             height={140}
             className="mx-auto shadow-soft-xl"
             priority
+            loading="eager"
+            fetchPriority="high"
+            sizes="140px"
           />
           {/* Modern Glow Effect */}
           <div className="absolute inset-0 bg-primary/20 blur-xl -z-10" />
@@ -545,6 +548,8 @@ export function HeroSection() {
                             sizes="100vw"
                             className="object-cover -z-10"
                             priority={index === 0}
+                            loading={index === 0 ? 'eager' : 'lazy'}
+                            fetchPriority={index === 0 ? 'high' : 'auto'}
                           />
                         </div>
                       ) : isYouTube ? (
@@ -566,6 +571,7 @@ export function HeroSection() {
                               sizes="100vw"
                               className="object-cover"
                               loading="lazy"
+                              fetchPriority="low"
                             />
                           )}
                         </div>
@@ -578,7 +584,8 @@ export function HeroSection() {
                           sizes="100vw"
                           className="object-cover"
                           priority={index === 0}
-                          loading={index === 0 ? undefined : 'lazy'}
+                          loading={index === 0 ? 'eager' : 'lazy'}
+                          fetchPriority={index === 0 ? 'high' : 'auto'}
                         />
                       )}
                     </div>

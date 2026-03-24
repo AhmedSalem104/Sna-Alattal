@@ -169,6 +169,7 @@ export const ClientsSection = memo(function ClientsSection() {
                       height={110}
                       className="object-contain"
                       loading="lazy"
+                      sizes="(max-width: 768px) 80px, 110px"
                     />
                   </div>
                 </div>
@@ -188,6 +189,7 @@ export const ClientsSection = memo(function ClientsSection() {
                       height={110}
                       className="object-contain"
                       loading="lazy"
+                      sizes="(max-width: 768px) 80px, 110px"
                     />
                   </div>
                 </div>

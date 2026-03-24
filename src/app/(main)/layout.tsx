@@ -1,7 +1,16 @@
+import dynamic from 'next/dynamic';
 import { Navbar, Footer } from '@/components/layout';
-import { ScrollToTop } from '@/components/ui/scroll-to-top';
-import { FloatingContactWidget } from '@/components/ui/floating-contact-widget';
-import { ScrollingGears } from '@/components/decorative/ScrollingGears';
+
+// Lazy load non-critical UI widgets
+const ScrollToTop = dynamic(
+  () => import('@/components/ui/scroll-to-top').then(m => ({ default: m.ScrollToTop }))
+);
+const FloatingContactWidget = dynamic(
+  () => import('@/components/ui/floating-contact-widget').then(m => ({ default: m.FloatingContactWidget }))
+);
+const ScrollingGears = dynamic(
+  () => import('@/components/decorative/ScrollingGears').then(m => ({ default: m.ScrollingGears }))
+);
 
 export default function MainLayout({
   children,

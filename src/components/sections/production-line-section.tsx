@@ -514,9 +514,10 @@ export const ProductionLineSection = memo(function ProductionLineSection() {
                 src="/images/production-line.jpg"
                 alt={t('productionLine.title')}
                 fill
-                sizes="100vw"
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 1200px"
                 className="object-contain"
                 priority={false}
+                loading="lazy"
                 quality={90}
                 draggable={false}
               />
