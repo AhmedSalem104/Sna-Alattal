@@ -22,6 +22,7 @@ module.exports = {
         NODE_ENV: 'production',
         PORT: 3000,
         HOSTNAME: '0.0.0.0',
+        NODE_OPTIONS: '--max-old-space-size=256',
       },
 
       // Logs with rotation
@@ -32,11 +33,11 @@ module.exports = {
       max_size: '50M',
       retain: 5,
 
-      // Auto restart on memory limit
-      max_memory_restart: '500M',
+      // Auto restart on memory limit - keep low to avoid CPU limitation
+      max_memory_restart: '256M',
 
-      // Cron restart: restart every day at 4 AM
-      cron_restart: '0 4 * * *',
+      // No cron restart - avoid unnecessary CPU spikes
+      // cron_restart: '0 4 * * *',
 
       // Watch disabled in production
       watch: false,

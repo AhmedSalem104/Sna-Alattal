@@ -90,15 +90,16 @@ jobs:
             # --- Step 2: Backup current .env (it's not in the build) ---
             cp "$APP_DIR/.env" "$TEMP_DIR/.env" 2>/dev/null || true
 
-            # --- Step 3: NOW stop the app (downtime starts here) ---
-            echo "🔄 Stopping app..."
-            pm2 stop sna-alattal 2>/dev/null || true
-            pm2 delete sna-alattal 2>/dev/null || true
-            sleep 1
-
-            # Kill any remaining process on port 3000
-            fuser -k 3000/tcp 2>/dev/null || true
+            # --- Step 3: Cleanup to reduce CPU usage ---
+            echo "🧹 Cleaning up to reduce CPU..."
+            pm2 kill 2>/dev/null || true
             sleep 2
+            fuser -k 3000/tcp 2>/dev/null || true
+            # Clean old logs and cache
+            rm -rf "$APP_DIR/logs/"*.log 2>/dev/null || true
+            rm -rf "$APP_DIR/.next/cache" 2>/dev/null || true
+            rm -rf /tmp/prisma* 2>/dev/null || true
+            sleep 1
 
             # --- Step 4: Swap directories (atomic-ish) ---
             echo "🔄 Swapping builds..."
