@@ -97,25 +97,22 @@ export function Footer() {
   };
 
   return (
-    <footer className="bg-steel-900 text-white relative overflow-hidden" dir={isRTL ? 'rtl' : 'ltr'}>
+    <footer className="bg-gradient-to-r from-primary-700 via-primary-600 to-primary-500 text-white relative overflow-hidden" dir={isRTL ? 'rtl' : 'ltr'}>
       {/* Industrial Pattern Background */}
       <div className="absolute inset-0 z-0">
         <div
-          className="absolute inset-0 opacity-[0.02]"
+          className="absolute inset-0 opacity-[0.05]"
           style={{
             backgroundImage: `
-              linear-gradient(rgba(212, 160, 10, 0.5) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(212, 160, 10, 0.5) 1px, transparent 1px)
+              linear-gradient(rgba(255,255,255, 0.4) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(255,255,255, 0.4) 1px, transparent 1px)
             `,
             backgroundSize: '40px 40px',
           }}
         />
         {/* Decorative Gear */}
-        <IndustrialGear size={400} teeth={14} className="absolute -bottom-16 -right-16 text-primary opacity-[0.18]" strokeWidth={2} />
+        <IndustrialGear size={400} teeth={14} className="absolute -bottom-16 -right-16 text-white opacity-[0.10]" strokeWidth={2} />
       </div>
-
-      {/* Top Gold Border */}
-      <div className="h-1.5 bg-gradient-to-r from-primary via-primary/80 to-primary" />
 
       {/* Main Footer */}
       <div className="container-custom py-16 relative z-10">
@@ -129,16 +126,16 @@ export function Footer() {
                   alt="S.N.A Al-Attal"
                   width={60}
                   height={60}
-                  className="border-2 border-primary"
+                  className="border-2 border-white/40"
                   loading="lazy"
                 />
                 <div className="absolute -top-1 -right-1 w-3 h-3 bg-primary" />
               </div>
               <div>
-                <h3 className="text-lg font-bold text-primary uppercase tracking-wider group-hover:text-primary/80 transition-colors">
+                <h3 className="text-lg font-bold text-white uppercase tracking-wider group-hover:text-white/80 transition-colors">
                   S.N.A AL-ATTAL
                 </h3>
-                <p className="text-xs text-metal-400 uppercase tracking-widest">
+                <p className="text-xs text-white/80 uppercase tracking-widest">
                   Engineering Industries
                 </p>
               </div>
@@ -152,14 +149,14 @@ export function Footer() {
               />
             </Link>
 
-            <p className="text-metal-300 text-sm leading-relaxed">
+            <p className="text-white/80 text-sm leading-relaxed">
               {t('footer.description')}
             </p>
 
             {/* Factory Badge */}
-            <div className="inline-flex items-center gap-2 px-3 py-2 border border-steel-700 bg-steel-800">
+            <div className="inline-flex items-center gap-2 px-3 py-2 border border-white/20 bg-white/10">
               <Factory size={16} className="text-primary" />
-              <span className="text-xs text-metal-400 uppercase tracking-wider">
+              <span className="text-xs text-white/80 uppercase tracking-wider">
                 {t('footer.since') || 'Since 1994'}
               </span>
             </div>
@@ -172,7 +169,7 @@ export function Footer() {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-10 h-10 border-2 border-steel-700 bg-steel-800 flex items-center justify-center text-metal-400 hover:bg-primary hover:border-primary hover:text-steel-900 transition-all duration-300"
+                  className="w-10 h-10 border-2 border-white/20 bg-white/10 flex items-center justify-center text-white/80 hover:bg-primary hover:border-primary hover:text-steel-900 transition-all duration-300"
                   aria-label={social.label}
                 >
                   <social.icon size={18} />
@@ -192,7 +189,7 @@ export function Footer() {
                 <li key={link.key}>
                   <Link
                     href={link.href}
-                    className="text-metal-400 hover:text-primary transition-colors text-sm flex items-center gap-2 group"
+                    className="text-white/80 hover:text-primary transition-colors text-sm flex items-center gap-2 group"
                   >
                     <span className="w-0 group-hover:w-2 h-0.5 bg-primary transition-all duration-300" />
                     {t(`nav.${link.key}`)}
@@ -209,14 +206,14 @@ export function Footer() {
               {t('contact.info.egypt.title')}
             </h4>
             <ul className="space-y-4">
-              <li className="flex items-start gap-3 text-metal-400 text-sm">
-                <div className="w-8 h-8 border border-steel-700 bg-steel-800 flex items-center justify-center shrink-0">
+              <li className="flex items-start gap-3 text-white/80 text-sm">
+                <div className="w-8 h-8 border border-white/20 bg-white/10 flex items-center justify-center shrink-0">
                   <MapPin size={14} className="text-primary" />
                 </div>
                 <span className="pt-1">{t('contact.info.egypt.address')}</span>
               </li>
-              <li className="flex items-center gap-3 text-metal-400 text-sm">
-                <div className="w-8 h-8 border border-steel-700 bg-steel-800 flex items-center justify-center shrink-0">
+              <li className="flex items-center gap-3 text-white/80 text-sm">
+                <div className="w-8 h-8 border border-white/20 bg-white/10 flex items-center justify-center shrink-0">
                   <Phone size={14} className="text-primary" />
                 </div>
                 <a
@@ -226,8 +223,8 @@ export function Footer() {
                   01032221038
                 </a>
               </li>
-              <li className="flex items-center gap-3 text-metal-400 text-sm">
-                <div className="w-8 h-8 border border-steel-700 bg-steel-800 flex items-center justify-center shrink-0">
+              <li className="flex items-center gap-3 text-white/80 text-sm">
+                <div className="w-8 h-8 border border-white/20 bg-white/10 flex items-center justify-center shrink-0">
                   <Phone size={14} className="text-primary" />
                 </div>
                 <a
@@ -237,8 +234,8 @@ export function Footer() {
                   01006193661
                 </a>
               </li>
-              <li className="flex items-center gap-3 text-metal-400 text-sm">
-                <div className="w-8 h-8 border border-steel-700 bg-steel-800 flex items-center justify-center shrink-0">
+              <li className="flex items-center gap-3 text-white/80 text-sm">
+                <div className="w-8 h-8 border border-white/20 bg-white/10 flex items-center justify-center shrink-0">
                   <Mail size={14} className="text-primary" />
                 </div>
                 <a
@@ -258,14 +255,14 @@ export function Footer() {
               {t('contact.info.turkey.title')}
             </h4>
             <ul className="space-y-4">
-              <li className="flex items-start gap-3 text-metal-400 text-sm">
-                <div className="w-8 h-8 border border-steel-700 bg-steel-800 flex items-center justify-center shrink-0">
+              <li className="flex items-start gap-3 text-white/80 text-sm">
+                <div className="w-8 h-8 border border-white/20 bg-white/10 flex items-center justify-center shrink-0">
                   <MapPin size={14} className="text-primary" />
                 </div>
                 <span className="pt-1">{t('contact.info.turkey.address')}</span>
               </li>
-              <li className="flex items-center gap-3 text-metal-400 text-sm">
-                <div className="w-8 h-8 border border-steel-700 bg-steel-800 flex items-center justify-center shrink-0">
+              <li className="flex items-center gap-3 text-white/80 text-sm">
+                <div className="w-8 h-8 border border-white/20 bg-white/10 flex items-center justify-center shrink-0">
                   <Phone size={14} className="text-primary" />
                 </div>
                 <a
@@ -281,22 +278,22 @@ export function Footer() {
       </div>
 
       {/* Bottom Footer */}
-      <div className="border-t border-steel-800">
+      <div className="border-t border-white/15">
         <div className="container-custom py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-metal-500 text-sm text-center sm:text-start">
+          <p className="text-white/60 text-sm text-center sm:text-start">
             &copy; {new Date().getFullYear()} S.N.A Al-Attal Engineering Industries.{' '}
             {t('footer.rights')}.
           </p>
           <div className="flex items-center gap-6">
             <Link
               href="/privacy"
-              className="text-metal-500 hover:text-primary text-sm transition-colors uppercase tracking-wider"
+              className="text-white/60 hover:text-primary text-sm transition-colors uppercase tracking-wider"
             >
               {t('footer.privacy')}
             </Link>
             <Link
               href="/terms"
-              className="text-metal-500 hover:text-primary text-sm transition-colors uppercase tracking-wider"
+              className="text-white/60 hover:text-primary text-sm transition-colors uppercase tracking-wider"
             >
               {t('footer.terms')}
             </Link>
@@ -304,7 +301,7 @@ export function Footer() {
               variant="ghost"
               size="icon"
               onClick={scrollToTop}
-              className="w-10 h-10 border-2 border-steel-700 bg-steel-800 text-metal-400 hover:bg-primary hover:border-primary hover:text-steel-900 rounded-none transition-all duration-300"
+              className="w-10 h-10 border-2 border-white/20 bg-white/10 text-white/80 hover:bg-primary hover:border-primary hover:text-steel-900 rounded-none transition-all duration-300"
             >
               <ArrowUp size={18} />
             </Button>
@@ -313,7 +310,7 @@ export function Footer() {
       </div>
 
       {/* Bottom Gold Accent */}
-      <div className="h-1.5 bg-primary" />
+      <div className="h-1 bg-white/20" />
     </footer>
   );
 }

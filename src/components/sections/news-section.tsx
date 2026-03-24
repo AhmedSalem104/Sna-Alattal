@@ -82,7 +82,7 @@ export const NewsSection = memo(function NewsSection() {
       <div className="absolute inset-0 z-0 overflow-hidden">
         <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-primary/5 blur-3xl" />
         <div className="absolute top-0 left-0 w-80 h-80 bg-copper-500/5 blur-3xl" />
-        <IndustrialGear size={300} teeth={16} className="absolute -bottom-12 -left-12 text-primary opacity-[0.15] hidden md:block" strokeWidth={1.5} />
+        <IndustrialGear size={300} teeth={16} className="absolute -bottom-12 -left-12 text-primary opacity-[0.35] hidden md:block" strokeWidth={2.5} />
       </div>
 
       <div className="container-custom relative z-10">

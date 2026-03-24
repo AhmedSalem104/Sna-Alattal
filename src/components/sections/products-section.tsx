@@ -97,7 +97,7 @@ export const ProductsSection = memo(function ProductsSection() {
   return (
     <section
       ref={ref}
-      className="py-20 lg:py-28 bg-white/[0.93] relative overflow-hidden"
+      className="py-20 lg:py-28 bg-white/80 relative overflow-hidden"
       dir={isRTL ? 'rtl' : 'ltr'}
     >
       {/* Industrial grid background */}
@@ -114,7 +114,7 @@ export const ProductsSection = memo(function ProductsSection() {
         />
       </div>
 
-      <IndustrialGear size={450} teeth={18} className="absolute -bottom-20 -right-20 text-primary opacity-[0.20] hidden md:block" strokeWidth={2} />
+      <IndustrialGear size={450} teeth={18} className="absolute -bottom-20 -right-20 text-primary opacity-[0.40] hidden md:block" strokeWidth={2.5} />
 
       <div className="container-custom relative z-10">
         {/* Header */}
@@ -180,7 +180,7 @@ export const ProductsSection = memo(function ProductsSection() {
               >
                 <TiltCard className="h-full">
                 <Link href={`/products/${product.slug}`} className="block h-full">
-                  <div className="group relative overflow-hidden h-full hover:shadow-elevation-3 transition-all duration-500">
+                  <div className="group relative overflow-hidden h-full border border-primary/20 hover:border-primary/60 hover:shadow-elevation-3 transition-all duration-500">
                     {/* Image */}
                     <div className="relative aspect-[4/3] overflow-hidden">
                       <ImageWithSkeleton

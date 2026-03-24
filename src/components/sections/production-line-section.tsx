@@ -369,23 +369,14 @@ export const ProductionLineSection = memo(function ProductionLineSection() {
   return (
     <section
       ref={sectionRef}
-      className="py-20 lg:py-28 bg-gradient-to-b from-steel-900 to-steel-800 relative overflow-hidden"
+      className="py-20 lg:py-28 bg-white/80 relative overflow-hidden"
       dir={isRTL ? 'rtl' : 'ltr'}
     >
-      {/* Industrial Background */}
-      <div className="absolute inset-0 z-0">
-        <div
-          className="absolute inset-0 opacity-[0.03]"
-          style={{
-            backgroundImage: `
-              linear-gradient(rgba(201, 162, 39, 0.4) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(201, 162, 39, 0.4) 1px, transparent 1px)
-            `,
-            backgroundSize: '60px 60px',
-          }}
-        />
-        <IndustrialGear size={400} teeth={16} className="absolute -top-16 -left-16 text-primary opacity-[0.15] hidden md:block" strokeWidth={1.5} />
-        <IndustrialGear size={300} teeth={12} className="absolute -bottom-12 -right-12 text-primary opacity-[0.15] hidden md:block" reverse strokeWidth={1.5} />
+      {/* Subtle Background */}
+      <div className="absolute inset-0 z-0 overflow-hidden">
+        <div className="absolute top-0 left-1/2 w-[800px] h-[400px] bg-primary/5 blur-3xl -translate-x-1/2" />
+        <IndustrialGear size={400} teeth={16} className="absolute -top-16 -left-16 text-primary opacity-[0.35] hidden md:block" strokeWidth={2.5} />
+        <IndustrialGear size={300} teeth={12} className="absolute -bottom-12 -right-12 text-primary opacity-[0.35] hidden md:block" reverse strokeWidth={2.5} />
       </div>
 
       <div className="container-custom relative z-10">
@@ -404,20 +395,16 @@ export const ProductionLineSection = memo(function ProductionLineSection() {
             </span>
           </div>
 
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white uppercase tracking-wide mb-4">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-steel-900 uppercase tracking-wide mb-4">
             {t('productionLine.title')}
           </h2>
 
           {/* Gold Divider */}
-          <div className="flex items-center justify-center gap-4 mb-6">
-            <div className="h-1 w-8 bg-primary/25" />
-            <div className="h-1 w-16 bg-primary/50" />
-            <div className="h-1 w-24 bg-primary" />
-            <div className="h-1 w-16 bg-primary/50" />
-            <div className="h-1 w-8 bg-primary/25" />
+          <div className="flex items-center justify-center gap-2 mb-6">
+            <div className="h-1 w-16 bg-gradient-to-r from-transparent via-primary to-transparent" />
           </div>
 
-          <p className="text-metal-300">
+          <p className="text-neutral-600">
             {t('productionLine.description')}
           </p>
         </motion.div>
@@ -549,19 +536,19 @@ export const ProductionLineSection = memo(function ProductionLineSection() {
           </div>
 
           {/* Controls hint bar */}
-          <div className="flex items-center justify-center gap-6 mt-4 text-metal-400 text-xs">
+          <div className="flex items-center justify-center gap-6 mt-4 text-neutral-400 text-xs">
             <span className="hidden md:inline-flex items-center gap-1.5">
-              <kbd className="bg-steel-700 text-metal-300 px-1.5 py-0.5 text-[10px] border border-steel-600">+</kbd>
-              <kbd className="bg-steel-700 text-metal-300 px-1.5 py-0.5 text-[10px] border border-steel-600">-</kbd>
+              <kbd className="bg-neutral-100 text-neutral-500 px-1.5 py-0.5 text-[10px] border border-neutral-200">+</kbd>
+              <kbd className="bg-neutral-100 text-neutral-500 px-1.5 py-0.5 text-[10px] border border-neutral-200">-</kbd>
               {t('productionLine.zoomKeys')}
             </span>
             <span className={`hidden md:inline-flex items-center gap-1.5 ${isRTL ? 'flex-row-reverse' : ''}`}>
-              <kbd className="bg-steel-700 text-metal-300 px-1.5 py-0.5 text-[10px] border border-steel-600">{isRTL ? '&rarr;' : '&larr;'}</kbd>
-              <kbd className="bg-steel-700 text-metal-300 px-1.5 py-0.5 text-[10px] border border-steel-600">{isRTL ? '&larr;' : '&rarr;'}</kbd>
+              <kbd className="bg-neutral-100 text-neutral-500 px-1.5 py-0.5 text-[10px] border border-neutral-200">{isRTL ? '&rarr;' : '&larr;'}</kbd>
+              <kbd className="bg-neutral-100 text-neutral-500 px-1.5 py-0.5 text-[10px] border border-neutral-200">{isRTL ? '&larr;' : '&rarr;'}</kbd>
               {t('productionLine.panKeys')}
             </span>
             <span className="inline-flex items-center gap-1.5">
-              <span className="w-4 h-4 border border-metal-500 flex items-center justify-center text-[8px]">&#x1f5b1;</span>
+              <span className="w-4 h-4 border border-neutral-300 flex items-center justify-center text-[8px]">&#x1f5b1;</span>
               {t('productionLine.scrollZoom')}
             </span>
           </div>

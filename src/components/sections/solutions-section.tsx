@@ -69,7 +69,7 @@ export function SolutionsSection() {
   return (
     <section
       ref={ref}
-      className="py-20 lg:py-28 bg-white/[0.93] relative overflow-hidden"
+      className="py-20 lg:py-28 bg-white/80 relative overflow-hidden"
       dir={isRTL ? 'rtl' : 'ltr'}
     >
       {/* Industrial grid background */}
@@ -84,7 +84,7 @@ export function SolutionsSection() {
             backgroundSize: '60px 60px',
           }}
         />
-        <IndustrialGear size={400} teeth={16} className="absolute -top-12 -left-12 text-primary opacity-[0.20] hidden md:block" reverse strokeWidth={2} />
+        <IndustrialGear size={400} teeth={16} className="absolute -top-12 -left-12 text-primary opacity-[0.40] hidden md:block" reverse strokeWidth={2.5} />
       </div>
 
       {/* Top gold accent lines */}

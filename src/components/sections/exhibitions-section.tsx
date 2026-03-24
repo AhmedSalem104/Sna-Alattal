@@ -107,7 +107,7 @@ export function ExhibitionsSection() {
       <div className="absolute inset-0 z-0 overflow-hidden">
         <div className="absolute top-0 left-1/2 w-[800px] h-[400px] bg-primary/5 blur-3xl -translate-x-1/2 opacity-50" />
         <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-copper-500/5 blur-3xl opacity-30" />
-        <IndustrialGear size={350} teeth={20} className="absolute -top-16 -right-16 text-primary opacity-[0.15] hidden md:block" reverse strokeWidth={1.5} />
+        <IndustrialGear size={350} teeth={20} className="absolute -top-16 -right-16 text-primary opacity-[0.35] hidden md:block" reverse strokeWidth={2.5} />
       </div>
 
       <div className="container-custom relative z-10">

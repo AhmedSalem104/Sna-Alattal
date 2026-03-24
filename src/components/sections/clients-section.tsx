@@ -79,7 +79,7 @@ export const ClientsSection = memo(function ClientsSection() {
   return (
     <section
       ref={ref}
-      className="py-20 lg:py-28 bg-white/[0.93] relative overflow-hidden"
+      className="py-20 lg:py-28 bg-white/80 relative overflow-hidden"
       dir={isRTL ? 'rtl' : 'ltr'}
     >
       {/* Modern Subtle Background */}
@@ -157,16 +157,16 @@ export const ClientsSection = memo(function ClientsSection() {
             <div className="absolute right-0 top-0 bottom-0 w-16 md:w-24 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none" />
 
             {/* Row 1 - scrolls left */}
-            <div className="flex animate-marquee hover:[animation-play-state:paused] mb-4">
+            <div className="flex animate-marquee hover:[animation-play-state:paused] mb-5">
               {[...clients, ...clients].map((client, index) => (
-                <div key={`r1-${client.id}-${index}`} className="flex-shrink-0 mx-3">
-                  <div className="w-20 h-20 md:w-24 md:h-24 bg-white p-3 md:p-4 flex items-center justify-center
+                <div key={`r1-${client.id}-${index}`} className="flex-shrink-0 mx-4">
+                  <div className="w-28 h-28 md:w-36 md:h-36 bg-white border border-primary/10 hover:border-primary/40 p-4 md:p-5 flex items-center justify-center
                     hover:shadow-gold-sm hover:-translate-y-1 hover:scale-105 transition-all duration-500">
                     <Image
                       src={client.logo}
                       alt={getName(client)}
-                      width={72}
-                      height={72}
+                      width={110}
+                      height={110}
                       className="object-contain"
                       loading="lazy"
                     />
@@ -175,26 +175,24 @@ export const ClientsSection = memo(function ClientsSection() {
               ))}
             </div>
 
-            {/* Row 2 - scrolls right (reverse) */}
-            {clients.length > 10 && (
-              <div className="flex animate-marquee-reverse hover:[animation-play-state:paused]">
-                {[...clients.slice().reverse(), ...clients.slice().reverse()].map((client, index) => (
-                  <div key={`r2-${client.id}-${index}`} className="flex-shrink-0 mx-3">
-                    <div className="w-20 h-20 md:w-24 md:h-24 bg-white p-3 md:p-4 flex items-center justify-center
-                      grayscale hover:grayscale-0 opacity-60 hover:opacity-100 hover:shadow-gold-sm hover:-translate-y-1 transition-all duration-500">
-                      <Image
-                        src={client.logo}
-                        alt={getName(client)}
-                        width={72}
-                        height={72}
-                        className="object-contain"
-                        loading="lazy"
-                      />
-                    </div>
+            {/* Row 2 - scrolls right (always visible) */}
+            <div className="flex animate-marquee-reverse hover:[animation-play-state:paused]">
+              {[...clients.slice().reverse(), ...clients.slice().reverse()].map((client, index) => (
+                <div key={`r2-${client.id}-${index}`} className="flex-shrink-0 mx-4">
+                  <div className="w-28 h-28 md:w-36 md:h-36 bg-white border border-primary/10 hover:border-primary/40 p-4 md:p-5 flex items-center justify-center
+                    grayscale hover:grayscale-0 opacity-70 hover:opacity-100 hover:shadow-gold-sm hover:-translate-y-1 transition-all duration-500">
+                    <Image
+                      src={client.logo}
+                      alt={getName(client)}
+                      width={110}
+                      height={110}
+                      className="object-contain"
+                      loading="lazy"
+                    />
                   </div>
-                ))}
-              </div>
-            )}
+                </div>
+              ))}
+            </div>
           </motion.div>
         )}
 

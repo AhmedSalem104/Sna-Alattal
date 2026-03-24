@@ -374,6 +374,7 @@ async function main() {
     { id: 'client-nab3-rayan', nameAr: 'نبع الريان', nameEn: 'Nab3 Al Rayan', nameTr: 'Nab3 Al Rayan', logo: '/uploads/clients/nab3-al-rayan.jpg', order: 26 },
     { id: 'client-hydro', nameAr: 'هيدرو', nameEn: 'Hydro', nameTr: 'Hydro', logo: '/uploads/clients/hydro.jpg', order: 27 },
     { id: 'client-well-plast', nameAr: 'ويل بلاست', nameEn: 'Well Plast', nameTr: 'Well Plast', logo: '/uploads/clients/well-plast.jpg', order: 28 },
+    { id: 'client-pepsi', nameAr: 'بيبسي', nameEn: 'Pepsi', nameTr: 'Pepsi', logo: '/uploads/clients/pepsi.jpg', order: 29 },
   ];
 
   const clients = await Promise.all(

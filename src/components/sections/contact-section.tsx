@@ -82,7 +82,7 @@ export function ContactSection() {
         <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-copper-500/5 blur-3xl opacity-30" />
       </div>
 
-      <IndustrialGear size={350} teeth={12} className="absolute -bottom-12 -right-12 text-primary opacity-[0.20] hidden md:block" strokeWidth={2} />
+      <IndustrialGear size={350} teeth={12} className="absolute -bottom-12 -right-12 text-primary opacity-[0.40] hidden md:block" strokeWidth={2.5} />
 
       <div className="container-custom relative z-10">
         {/* Header */}

@@ -85,7 +85,7 @@ export const TVSection = memo(function TVSection() {
     <>
       <section
         ref={ref}
-        className="py-20 lg:py-28 bg-white/[0.93] relative overflow-hidden"
+        className="py-20 lg:py-28 bg-white/80 relative overflow-hidden"
         dir={isRTL ? 'rtl' : 'ltr'}
       >
         {/* Industrial Background Pattern */}
@@ -100,7 +100,7 @@ export const TVSection = memo(function TVSection() {
               backgroundSize: '50px 50px',
             }}
           />
-          <IndustrialGear size={280} teeth={14} className="absolute -bottom-10 -right-10 text-primary opacity-[0.15] hidden md:block" reverse strokeWidth={1.5} />
+          <IndustrialGear size={280} teeth={14} className="absolute -bottom-10 -right-10 text-primary opacity-[0.35] hidden md:block" reverse strokeWidth={2.5} />
         </div>
 
         {/* Decorative Elements */}

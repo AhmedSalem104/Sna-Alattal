@@ -3,3 +3,4 @@
 export { IndustrialGear } from './IndustrialGear';
 export { IndustrialRing } from './IndustrialRing';
 export { GridPattern } from './GridPattern';
+export { ScrollingGears } from './ScrollingGears';

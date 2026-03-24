@@ -492,8 +492,8 @@ export function HeroSection() {
           className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-copper-500/10 blur-3xl opacity-30"
         />
         {/* Decorative Industrial Gears */}
-        <IndustrialGear size={500} teeth={18} className="absolute -bottom-24 -left-24 text-primary opacity-[0.20] hidden md:block" strokeWidth={2} />
-        <IndustrialGear size={380} teeth={14} className="absolute -top-16 -right-16 text-primary opacity-[0.18] hidden md:block" reverse strokeWidth={2} />
+        <IndustrialGear size={500} teeth={18} className="absolute -bottom-24 -left-24 text-primary opacity-[0.40] hidden md:block" strokeWidth={2.5} />
+        <IndustrialGear size={380} teeth={14} className="absolute -top-16 -right-16 text-primary opacity-[0.35] hidden md:block" reverse strokeWidth={2.5} />
       </div>
 
       {/* Slides Carousel - Always render, show loading state inside */}

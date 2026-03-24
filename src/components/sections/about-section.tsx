@@ -64,7 +64,7 @@ export const AboutSection = memo(function AboutSection() {
   return (
     <section
       ref={ref}
-      className="py-20 lg:py-28 bg-white/[0.93] relative overflow-hidden"
+      className="py-20 lg:py-28 bg-white/80 relative overflow-hidden"
       dir={isRTL ? 'rtl' : 'ltr'}
     >
       {/* Modern Subtle Background */}
