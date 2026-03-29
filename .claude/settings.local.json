@@ -152,7 +152,12 @@
       "Bash(vercel logs:*)",
       "Bash(vercel env:*)",
       "WebFetch(domain:sna-alattal-ph8cqnoi6-ahmedsalem104s-projects.vercel.app)",
-      "Bash(vercel deploy:*)"
+      "Bash(vercel deploy:*)",
+      "Bash(pip install:*)",
+      "Bash(pip3 install:*)",
+      "Bash(python3 -c \":*)",
+      "Bash(cp \"/c/Users/B-SMART/Desktop/WhatsApp Video 2026-03-03 at 12.05.16 PM.mp4\" \"/c/Users/B-SMART/Desktop/Al-attal S.N.A/Sna-Alattal/public/videos/hero-slide.mp4\")",
+      "Bash(cp \"/c/Users/B-SMART/Desktop/nazeer .mp4\" \"/c/Users/B-SMART/Desktop/Al-attal S.N.A/Sna-Alattal/public/videos/about-story.mp4\")"
     ]
   }
 }

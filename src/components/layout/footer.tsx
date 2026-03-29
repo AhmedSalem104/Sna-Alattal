@@ -97,25 +97,21 @@ export function Footer() {
   };
 
   return (
-    <footer className="bg-gradient-to-r from-primary-700 via-primary-600 to-primary-500 text-white relative overflow-hidden" dir={isRTL ? 'rtl' : 'ltr'}>
-      {/* Industrial Pattern Background */}
-      <div className="absolute inset-0 z-0">
-        <div
-          className="absolute inset-0 opacity-[0.05]"
-          style={{
-            backgroundImage: `
-              linear-gradient(rgba(255,255,255, 0.4) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(255,255,255, 0.4) 1px, transparent 1px)
-            `,
-            backgroundSize: '40px 40px',
-          }}
-        />
-        {/* Decorative Gear */}
-        <IndustrialGear size={400} teeth={14} className="absolute -bottom-16 -right-16 text-white opacity-[0.10]" strokeWidth={2} />
+    <footer className="text-white relative overflow-hidden" dir={isRTL ? 'rtl' : 'ltr'}>
+      {/* Factory Image Background with parallax */}
+      <div className="absolute inset-0 z-0 overflow-hidden">
+        <div className="absolute inset-0 -top-20 -bottom-20" style={{ backgroundImage: 'url(/images/factory-bg.jpg)', backgroundSize: 'cover', backgroundPosition: 'center', backgroundAttachment: 'fixed' }} aria-hidden="true" />
+        {/* Dark overlay for readability */}
+        <div className="absolute inset-0 bg-steel-950/80" />
+        {/* Subtle gold tint */}
+        <div className="absolute inset-0 bg-gradient-to-b from-primary/10 via-transparent to-primary/5" />
       </div>
 
+      {/* Top Gold Border */}
+      <div className="relative z-10 h-1 bg-gradient-to-r from-primary/40 via-primary to-primary/40" />
+
       {/* Main Footer */}
-      <div className="container-custom py-16 relative z-10">
+      <div className="container-custom py-20 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           {/* Company Info */}
           <div className="space-y-6">
@@ -126,17 +122,17 @@ export function Footer() {
                   alt="S.N.A Al-Attal"
                   width={60}
                   height={60}
-                  className="border-2 border-white/40"
+                  className="border-2 border-primary/50"
                   loading="lazy"
                   sizes="60px"
                 />
                 <div className="absolute -top-1 -right-1 w-3 h-3 bg-primary" />
               </div>
               <div>
-                <h3 className="text-lg font-bold text-white uppercase tracking-wider group-hover:text-white/80 transition-colors">
+                <h3 className="text-lg font-bold text-primary uppercase tracking-wider group-hover:text-primary/80 transition-colors">
                   S.N.A AL-ATTAL
                 </h3>
-                <p className="text-xs text-white/80 uppercase tracking-widest">
+                <p className="text-xs text-white/50 uppercase tracking-widest">
                   Engineering Industries
                 </p>
               </div>
@@ -150,14 +146,14 @@ export function Footer() {
               />
             </Link>
 
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white/70 text-sm leading-relaxed">
               {t('footer.description')}
             </p>
 
             {/* Factory Badge */}
-            <div className="inline-flex items-center gap-2 px-3 py-2 border border-white/20 bg-white/10">
+            <div className="inline-flex items-center gap-2 px-3 py-2 border border-white/10 bg-white/5">
               <Factory size={16} className="text-primary" />
-              <span className="text-xs text-white/80 uppercase tracking-wider">
+              <span className="text-xs text-white/70 uppercase tracking-wider">
                 {t('footer.since') || 'Since 1994'}
               </span>
             </div>
@@ -170,7 +166,7 @@ export function Footer() {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-10 h-10 border-2 border-white/20 bg-white/10 flex items-center justify-center text-white/80 hover:bg-primary hover:border-primary hover:text-steel-900 transition-all duration-300"
+                  className="w-10 h-10 border-2 border-white/10 bg-white/5 flex items-center justify-center text-white/70 hover:bg-primary hover:border-primary hover:text-steel-900 transition-all duration-300"
                   aria-label={social.label}
                 >
                   <social.icon size={18} />
@@ -190,7 +186,7 @@ export function Footer() {
                 <li key={link.key}>
                   <Link
                     href={link.href}
-                    className="text-white/80 hover:text-primary transition-colors text-sm flex items-center gap-2 group"
+                    className="text-white/70 hover:text-primary transition-colors text-sm flex items-center gap-2 group"
                   >
                     <span className="w-0 group-hover:w-2 h-0.5 bg-primary transition-all duration-300" />
                     {t(`nav.${link.key}`)}
@@ -207,14 +203,14 @@ export function Footer() {
               {t('contact.info.egypt.title')}
             </h4>
             <ul className="space-y-4">
-              <li className="flex items-start gap-3 text-white/80 text-sm">
-                <div className="w-8 h-8 border border-white/20 bg-white/10 flex items-center justify-center shrink-0">
+              <li className="flex items-start gap-3 text-white/70 text-sm">
+                <div className="w-8 h-8 border border-white/10 bg-white/5 flex items-center justify-center shrink-0">
                   <MapPin size={14} className="text-primary" />
                 </div>
                 <span className="pt-1">{t('contact.info.egypt.address')}</span>
               </li>
-              <li className="flex items-center gap-3 text-white/80 text-sm">
-                <div className="w-8 h-8 border border-white/20 bg-white/10 flex items-center justify-center shrink-0">
+              <li className="flex items-center gap-3 text-white/70 text-sm">
+                <div className="w-8 h-8 border border-white/10 bg-white/5 flex items-center justify-center shrink-0">
                   <Phone size={14} className="text-primary" />
                 </div>
                 <a
@@ -224,8 +220,8 @@ export function Footer() {
                   01032221038
                 </a>
               </li>
-              <li className="flex items-center gap-3 text-white/80 text-sm">
-                <div className="w-8 h-8 border border-white/20 bg-white/10 flex items-center justify-center shrink-0">
+              <li className="flex items-center gap-3 text-white/70 text-sm">
+                <div className="w-8 h-8 border border-white/10 bg-white/5 flex items-center justify-center shrink-0">
                   <Phone size={14} className="text-primary" />
                 </div>
                 <a
@@ -235,8 +231,8 @@ export function Footer() {
                   01006193661
                 </a>
               </li>
-              <li className="flex items-center gap-3 text-white/80 text-sm">
-                <div className="w-8 h-8 border border-white/20 bg-white/10 flex items-center justify-center shrink-0">
+              <li className="flex items-center gap-3 text-white/70 text-sm">
+                <div className="w-8 h-8 border border-white/10 bg-white/5 flex items-center justify-center shrink-0">
                   <Mail size={14} className="text-primary" />
                 </div>
                 <a
@@ -256,14 +252,14 @@ export function Footer() {
               {t('contact.info.turkey.title')}
             </h4>
             <ul className="space-y-4">
-              <li className="flex items-start gap-3 text-white/80 text-sm">
-                <div className="w-8 h-8 border border-white/20 bg-white/10 flex items-center justify-center shrink-0">
+              <li className="flex items-start gap-3 text-white/70 text-sm">
+                <div className="w-8 h-8 border border-white/10 bg-white/5 flex items-center justify-center shrink-0">
                   <MapPin size={14} className="text-primary" />
                 </div>
                 <span className="pt-1">{t('contact.info.turkey.address')}</span>
               </li>
-              <li className="flex items-center gap-3 text-white/80 text-sm">
-                <div className="w-8 h-8 border border-white/20 bg-white/10 flex items-center justify-center shrink-0">
+              <li className="flex items-center gap-3 text-white/70 text-sm">
+                <div className="w-8 h-8 border border-white/10 bg-white/5 flex items-center justify-center shrink-0">
                   <Phone size={14} className="text-primary" />
                 </div>
                 <a
@@ -279,7 +275,7 @@ export function Footer() {
       </div>
 
       {/* Bottom Footer */}
-      <div className="border-t border-white/15">
+      <div className="border-t border-white/10 relative z-10">
         <div className="container-custom py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-white/60 text-sm text-center sm:text-start">
             &copy; {new Date().getFullYear()} S.N.A Al-Attal Engineering Industries.{' '}
@@ -302,7 +298,7 @@ export function Footer() {
               variant="ghost"
               size="icon"
               onClick={scrollToTop}
-              className="w-10 h-10 border-2 border-white/20 bg-white/10 text-white/80 hover:bg-primary hover:border-primary hover:text-steel-900 rounded-none transition-all duration-300"
+              className="w-10 h-10 border-2 border-white/10 bg-white/5 text-white/70 hover:bg-primary hover:border-primary hover:text-steel-900 rounded-none transition-all duration-300"
             >
               <ArrowUp size={18} />
             </Button>
@@ -311,7 +307,7 @@ export function Footer() {
       </div>
 
       {/* Bottom Gold Accent */}
-      <div className="h-1 bg-white/20" />
+      <div className="relative z-10 h-1 bg-gradient-to-r from-primary/30 via-primary to-primary/30" />
     </footer>
   );
 }

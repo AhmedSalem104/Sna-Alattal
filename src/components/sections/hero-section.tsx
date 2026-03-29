@@ -522,10 +522,12 @@ export function HeroSection() {
                   >
                     {/* Slide Background - Video or Image */}
                     <div className="absolute inset-0">
-                      {/* Less overlay for video slides to keep them clear */}
-                      <div className={`absolute inset-0 z-10 ${isAnyVideo ? 'bg-gradient-to-b from-steel-900/30 via-transparent to-steel-900/50' : 'bg-gradient-to-b from-steel-900/80 via-steel-900/50 to-steel-900'}`} />
+                      {/* Overlay - none for direct video, light for youtube, full for images */}
+                      {!isDirectVideo && (
+                        <div className={`absolute inset-0 z-10 ${isAnyVideo ? 'bg-gradient-to-b from-steel-900/30 via-transparent to-steel-900/50' : 'bg-gradient-to-b from-steel-900/80 via-steel-900/50 to-steel-900'}`} />
+                      )}
                       {isDirectVideo ? (
-                        /* Direct Video Background with Ken Burns */
+                        /* Direct Video Background - no zoom, clean display */
                         <div className="absolute inset-0 overflow-hidden">
                           <video
                             autoPlay
@@ -533,7 +535,7 @@ export function HeroSection() {
                             loop
                             playsInline
                             poster={slide.image}
-                            className="absolute inset-0 w-full h-full object-cover md:animate-ken-burns"
+                            className="absolute inset-0 w-full h-full object-cover"
                             onError={(e) => {
                               (e.currentTarget as HTMLVideoElement).style.display = 'none';
                             }}
@@ -589,8 +591,8 @@ export function HeroSection() {
                         />
                       )}
                     </div>
-                    {/* Slide Content */}
-                    {renderSlideContent(slide, isAnyVideo)}
+                    {/* Slide Content - hide for direct video slides */}
+                    {!isDirectVideo && renderSlideContent(slide, isAnyVideo)}
                   </div>
                 );
               })}

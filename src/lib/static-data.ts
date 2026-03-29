@@ -14,6 +14,7 @@ import teamData from '@/data/team.json';
 import tvInterviewsData from '@/data/tv-interviews.json';
 import newsData from '@/data/news.json';
 import solutionsData from '@/data/solutions.json';
+import compressorsData from '@/data/compressors.json';
 import { parseImages } from '@/lib/parse-images';
 
 // ─── Types ───────────────────────────────────────────────────────────────────
@@ -28,6 +29,7 @@ type TeamMember = (typeof teamData)[number];
 type TVInterview = (typeof tvInterviewsData)[number];
 type NewsItem = (typeof newsData)[number];
 type Solution = (typeof solutionsData)[number];
+type Compressor = (typeof compressorsData)[number];
 
 // ─── Helper: sort by multiple fields ─────────────────────────────────────────
 
@@ -455,5 +457,49 @@ export function getSolutionBySlug(slug: string) {
     features,
     products: transformedProducts,
     relatedSolutions,
+  };
+}
+
+// ─── Compressors ──────────────────────────────────────────────────────────────
+
+export function getCompressors(options?: { limit?: number }) {
+  let items = [...(compressorsData as Compressor[])];
+
+  items = sortBy(items, { key: 'order', dir: 'asc' });
+
+  if (options?.limit) {
+    items = items.slice(0, options.limit);
+  }
+
+  return items;
+}
+
+export function getCompressorBySlug(slug: string) {
+  const allCompressors = compressorsData as Compressor[];
+  const compressor = allCompressors.find((c) => c.slug === slug);
+
+  if (!compressor) return null;
+
+  // Get related compressors
+  const relatedCompressors = sortBy(
+    allCompressors.filter((c) => c.id !== compressor.id),
+    { key: 'order', dir: 'asc' }
+  )
+    .slice(0, 3)
+    .map((c) => ({
+      id: c.id,
+      slug: c.slug,
+      nameAr: c.nameAr,
+      nameEn: c.nameEn,
+      nameTr: c.nameTr,
+      shortDescAr: c.shortDescAr,
+      shortDescEn: c.shortDescEn,
+      shortDescTr: c.shortDescTr,
+      image: c.image,
+    }));
+
+  return {
+    ...compressor,
+    relatedCompressors,
   };
 }

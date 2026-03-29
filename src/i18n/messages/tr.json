@@ -13,7 +13,8 @@
     "contact": "İletişim",
     "exhibitions": "Fuarlar",
     "team": "Ekibimiz",
-    "certificates": "Sertifikalar"
+    "certificates": "Sertifikalar",
+    "compressors": "Kompresörler"
   },
   "hero": {
     "badge": "1994'ten beri",
@@ -762,6 +763,36 @@
     "questions": {
       "title": "Şartlar Hakkında Sorularınız mı Var?",
       "content": "Bu şartlar ve koşullar hakkında herhangi bir sorunuz varsa, lütfen hukuk ekibimizle iletişime geçin."
+    }
+  },
+  "compressors": {
+    "title": "Kompresörler",
+    "subtitle": "Lider Vidalı Hava Kompresörleri",
+    "description": "SNA, en son teknolojiler ve en yüksek kalite standartlarıyla hava kompresörü ekipmanlarının üretimi, kurulumu ve tedarikinde öncüdür",
+    "sectionDesc": "SNA, hava kompresörü ekipmanlarının üretimi, kurulumu ve tedarikinde öncüdür",
+    "viewAll": "Tüm Kompresörleri Görüntüle",
+    "viewDetails": "Detaylar",
+    "features": "Ozellikler",
+    "specifications": "Teknik Ozellikler",
+    "models": "Modeller",
+    "requestQuote": "Teklif Iste",
+    "backToList": "Kompresörlere Dön",
+    "noCompressors": "Kompresör bulunamadi",
+    "loading": "Veriler yükleniyor...",
+    "relatedCompressors": "Ilgili Kompresörler",
+    "ctaText": "Vidali hava kompresörleri ve yardimci ekipmanlarimizin tam yelpazesini kesfedin",
+    "breadcrumb": {
+      "home": "Ana Sayfa"
+    },
+    "errors": {
+      "notFound": "Kompresör Bulunamadi",
+      "notFoundDesc": "Üzgünüz, aradiginiz kompresör bulunamadi.",
+      "fetchError": "Veri Yükleme Hatasi",
+      "fetchErrorDesc": "Kompresör verileri yüklenirken bir hata olustu. Lütfen tekrar deneyin."
+    },
+    "cta": {
+      "title": "Projeniz icin hava kompresörüne mi ihtiyaciniz var?",
+      "subtitle": "Ücretsiz danismanlik ve ihtiyaclariniza özel teklif icin bugün bize ulasin"
     }
   },
   "productionLine": {

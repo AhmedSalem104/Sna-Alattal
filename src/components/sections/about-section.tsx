@@ -1,11 +1,11 @@
 'use client';
 
-import { useRef, memo } from 'react';
+import { useRef, memo, useState, useCallback } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { motion, useInView, useScroll, useTransform } from 'framer-motion';
-import { ArrowRight, Factory, Globe, Users, Award, Settings, Target } from 'lucide-react';
+import { ArrowRight, Factory, Globe, Users, Award, Settings, Target, Volume2, VolumeX } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useLocale } from '@/hooks/useLocale';
 import { useCountUp } from '@/hooks/useAnimations';
@@ -29,6 +29,15 @@ export const AboutSection = memo(function AboutSection() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
   const imageRef = useRef<HTMLDivElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [isMuted, setIsMuted] = useState(true);
+
+  const toggleSound = useCallback(() => {
+    if (videoRef.current) {
+      videoRef.current.muted = !videoRef.current.muted;
+      setIsMuted(videoRef.current.muted);
+    }
+  }, []);
   const { scrollYProgress: imageScroll } = useScroll({ target: imageRef, offset: ['start end', 'end start'] });
   const imageY = useTransform(imageScroll, [0, 1], [30, -30]);
   const experienceCount = useCountUp(30, 2000, isInView);
@@ -87,15 +96,25 @@ export const AboutSection = memo(function AboutSection() {
             <div className="relative" ref={imageRef}>
               <div className="relative aspect-[4/3] overflow-hidden shadow-soft-xl">
                 <motion.div style={{ y: imageY }} className="absolute inset-0">
-                  <Image
-                    src="/images/about/factory.jpg"
-                    alt="About S.N.A Al-Attal"
-                    fill
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                    className="object-cover"
+                  <video
+                    ref={videoRef}
+                    src="/videos/about-story.mp4"
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    className="w-full h-full object-cover"
                   />
                 </motion.div>
                 <div className="absolute inset-0 bg-gradient-to-t from-steel-900/30 to-transparent" />
+                {/* Sound toggle button */}
+                <button
+                  onClick={toggleSound}
+                  className="absolute bottom-4 right-4 z-30 w-10 h-10 bg-steel-900/70 backdrop-blur-sm border border-white/20 flex items-center justify-center text-white hover:bg-primary hover:text-steel-900 transition-all duration-300"
+                  aria-label={isMuted ? 'Unmute' : 'Mute'}
+                >
+                  {isMuted ? <VolumeX size={18} /> : <Volume2 size={18} />}
+                </button>
                 <motion.div
                   initial={{ scaleX: 1 }}
                   animate={isInView ? { scaleX: 0 } : {}}
@@ -104,32 +123,7 @@ export const AboutSection = memo(function AboutSection() {
                 />
               </div>
 
-              {/* Floating Stats */}
-              <div className="absolute -bottom-6 left-4 right-4 md:left-6 md:right-6 flex gap-4">
-                {highlights.map((item, index) => (
-                  <motion.div
-                    key={item.labelKey}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-                    transition={{ delay: 0.5 + index * 0.1 }}
-                    className="flex-1 bg-white shadow-soft-lg p-4 border border-neutral-100 hover:-translate-y-1 transition-transform"
-                  >
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 bg-primary/10 flex items-center justify-center">
-                        <item.icon size={20} className="text-primary" />
-                      </div>
-                      <div>
-                        <div className="text-2xl font-bold text-steel-900">
-                          {item.value}
-                        </div>
-                        <div className="text-xs text-neutral-500">
-                          {t(item.labelKey) || item.labelKey.split('.').pop()}
-                        </div>
-                      </div>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
+              {/* Floating Stats removed - clean video display */}
             </div>
 
             {/* Experience Badge */}

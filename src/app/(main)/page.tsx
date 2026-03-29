@@ -23,6 +23,10 @@ const ProductsSection = dynamic(
   () => import('@/components/sections/products-section').then(m => ({ default: m.ProductsSection })),
   { loading: () => <SectionSkeleton /> }
 );
+const CompressorsSection = dynamic(
+  () => import('@/components/sections/compressors-section').then(m => ({ default: m.CompressorsSection })),
+  { loading: () => <SectionSkeleton /> }
+);
 const ClientsSection = dynamic(
   () => import('@/components/sections/clients-section').then(m => ({ default: m.ClientsSection })),
   { loading: () => <SectionSkeleton /> }
@@ -51,6 +55,7 @@ export default function HomePage() {
       <AboutSection />
       <ProductionLineSection />
       <ProductsSection />
+      <CompressorsSection />
       <ClientsSection />
       <CertificatesSection />
       <ExhibitionsSection />

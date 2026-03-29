@@ -1,7 +1,7 @@
 {
   "metadata": {
     "title": "S.N.A Al-Attal Engineering Industries",
-    "description": "Leading manufacturer of liquid filling production lines in Egypt and Turkey"
+    "description": "Professional manufacturer and supplier specializing in production lines and premium automatic liquid filling machines in Egypt and Turkey"
   },
   "nav": {
     "home": "Home",
@@ -13,7 +13,8 @@
     "contact": "Contact",
     "exhibitions": "Exhibitions",
     "team": "Our Team",
-    "certificates": "Certificates"
+    "certificates": "Certificates",
+    "compressors": "Compressors"
   },
   "hero": {
     "badge": "Since 1994",
@@ -21,7 +22,7 @@
     "title_line1": "S.N.A Al-Attal",
     "title_line2": "Engineering Industries",
     "subtitle": "Shaping the Future of Packaging",
-    "description": "Leading manufacturer of liquid filling production lines with over 30 years of experience",
+    "description": "As a professional manufacturer and supplier, S.N.A specializes in production lines and offers a wide range of premium automatic liquid filling machines",
     "cta": "Discover Our Products",
     "secondary_cta": "Contact Us",
     "scroll": "Discover More",
@@ -32,7 +33,7 @@
   "about": {
     "title": "About Us",
     "subtitle": "A Success Story Spanning Three Decades",
-    "description": "S.N.A Al-Attal Engineering Industries is a leading Egyptian company in manufacturing liquid filling production lines, established in 10th of Ramadan City and expanded to Istanbul, Turkey.",
+    "description": "As a professional manufacturer and supplier, S.N.A specializes in production lines and offers a wide range of premium automatic liquid filling machines. Our products feature PLC systems and flexible, easy-to-use equipment, with the ability to fill in different shapes and sizes.",
     "experience": "Years of Experience",
     "projects": "Completed Projects",
     "clients": "Satisfied Clients",
@@ -199,7 +200,7 @@
     }
   },
   "footer": {
-    "description": "Leading manufacturer of liquid filling production lines",
+    "description": "Professional manufacturer and supplier of premium automatic liquid filling machines. Complete 3-in-1 solutions for washing, filling and capping with CE and ISO standards.",
     "quickLinks": "Quick Links",
     "contactInfo": "Contact Information",
     "followUs": "Follow Us",
@@ -762,6 +763,36 @@
     "questions": {
       "title": "Questions About Terms?",
       "content": "If you have any questions about these terms and conditions, please contact our legal team."
+    }
+  },
+  "compressors": {
+    "title": "Compressors",
+    "subtitle": "Leading Screw Air Compressors",
+    "description": "SNA is a pioneer in manufacturing, installing, and supplying air compressor equipment with the latest technologies and highest quality standards",
+    "sectionDesc": "SNA is a pioneer in manufacturing, installing, and supplying air compressor equipment",
+    "viewAll": "View All Compressors",
+    "viewDetails": "Details",
+    "features": "Features",
+    "specifications": "Technical Specifications",
+    "models": "Models",
+    "requestQuote": "Request a Quote",
+    "backToList": "Back to Compressors",
+    "noCompressors": "No compressors available",
+    "loading": "Loading data...",
+    "relatedCompressors": "Related Compressors",
+    "ctaText": "Discover our complete range of screw air compressors and auxiliary equipment",
+    "breadcrumb": {
+      "home": "Home"
+    },
+    "errors": {
+      "notFound": "Compressor Not Found",
+      "notFoundDesc": "Sorry, the compressor you are looking for could not be found.",
+      "fetchError": "Error Loading Data",
+      "fetchErrorDesc": "An error occurred while loading compressor data. Please try again."
+    },
+    "cta": {
+      "title": "Need an air compressor for your project?",
+      "subtitle": "Contact us today for a free consultation and a customized quote tailored to your needs"
     }
   },
   "productionLine": {

@@ -1,0 +1,975 @@
+[
+  {
+    "id": "belt-driven-screw",
+    "slug": "belt-driven-screw",
+    "nameAr": "ضاغط الهواء اللولبي بالسير",
+    "nameEn": "Belt Driven Screw Air Compressor",
+    "nameTr": "Kayış Tahrikli Vidalı Hava Kompresörü",
+    "descriptionAr": "ضاغط الهواء اللولبي بالسير من سلسلة HDS يتميز بكفاءة عالية وتوفير في الطاقة ومفهوم تصميم مختلف. يوفر أداءً موثوقاً للتطبيقات الصناعية المتنوعة مع مستويات ضوضاء منخفضة وعمر تشغيلي طويل. مصمم وفقاً لأعلى المعايير الدولية لضمان الجودة والمتانة.",
+    "descriptionEn": "The HDS series Belt Driven Screw Air Compressor features high efficiency, energy saving performance, and a different design concept. It delivers reliable performance for diverse industrial applications with low noise levels and long operational life. Designed according to the highest international standards to ensure quality and durability.",
+    "descriptionTr": "HDS serisi Kayış Tahrikli Vidalı Hava Kompresörü, yüksek verimlilik, enerji tasarrufu ve farklı tasarım konseptiyle öne çıkar. Düşük gürültü seviyeleri ve uzun operasyonel ömürle çeşitli endüstriyel uygulamalar için güvenilir performans sunar.",
+    "shortDescAr": "كفاءة عالية وتوفير في الطاقة بمفهوم تصميم متطور",
+    "shortDescEn": "High efficiency, energy saving with advanced design concept",
+    "shortDescTr": "Gelişmiş tasarım konseptiyle yüksek verimlilik ve enerji tasarrufu",
+    "image": "/images/compressors/belt-driven.jpg",
+    "features": [
+      "High efficiency and energy saving",
+      "Different design concept",
+      "Low noise level",
+      "Long operational life",
+      "Reliable industrial performance",
+      "Easy maintenance"
+    ],
+    "featuresAr": [
+      "كفاءة عالية وتوفير في الطاقة",
+      "مفهوم تصميم مختلف ومتطور",
+      "مستوى ضوضاء منخفض",
+      "عمر تشغيلي طويل",
+      "أداء صناعي موثوق",
+      "سهولة الصيانة"
+    ],
+    "featuresTr": [
+      "Yüksek verimlilik ve enerji tasarrufu",
+      "Farklı tasarım konsepti",
+      "Düşük gürültü seviyesi",
+      "Uzun operasyonel ömür",
+      "Güvenilir endüstriyel performans",
+      "Kolay bakım"
+    ],
+    "specifications": {
+      "type": "Belt Driven Screw",
+      "series": "HDS",
+      "powerRange": "7.5HP - 100HP",
+      "pressureRange": "8 bar - 13 bar"
+    },
+    "models": [
+      {
+        "model": "HDS-7.5",
+        "power": "7.5HP / 5.5KW",
+        "airFlow": "0.65 m³/min",
+        "pressure": "8 bar",
+        "noise": "62 dB(A)",
+        "weight": "180 kg",
+        "dimensions": "860×570×835 mm"
+      },
+      {
+        "model": "HDS-10",
+        "power": "10HP / 7.5KW",
+        "airFlow": "1.0 m³/min",
+        "pressure": "8 bar",
+        "noise": "63 dB(A)",
+        "weight": "210 kg",
+        "dimensions": "960×620×900 mm"
+      },
+      {
+        "model": "HDS-15",
+        "power": "15HP / 11KW",
+        "airFlow": "1.6 m³/min",
+        "pressure": "8 bar",
+        "noise": "65 dB(A)",
+        "weight": "280 kg",
+        "dimensions": "1100×750×1000 mm"
+      },
+      {
+        "model": "HDS-20",
+        "power": "20HP / 15KW",
+        "airFlow": "2.3 m³/min",
+        "pressure": "8 bar",
+        "noise": "66 dB(A)",
+        "weight": "350 kg",
+        "dimensions": "1200×800×1100 mm"
+      },
+      {
+        "model": "HDS-25",
+        "power": "25HP / 18.5KW",
+        "airFlow": "3.0 m³/min",
+        "pressure": "8 bar",
+        "noise": "68 dB(A)",
+        "weight": "400 kg",
+        "dimensions": "1300×860×1150 mm"
+      },
+      {
+        "model": "HDS-30",
+        "power": "30HP / 22KW",
+        "airFlow": "3.6 m³/min",
+        "pressure": "8 bar",
+        "noise": "69 dB(A)",
+        "weight": "480 kg",
+        "dimensions": "1400×900×1200 mm"
+      },
+      {
+        "model": "HDS-40",
+        "power": "40HP / 30KW",
+        "airFlow": "5.0 m³/min",
+        "pressure": "8 bar",
+        "noise": "70 dB(A)",
+        "weight": "580 kg",
+        "dimensions": "1500×1000×1300 mm"
+      },
+      {
+        "model": "HDS-50",
+        "power": "50HP / 37KW",
+        "airFlow": "6.2 m³/min",
+        "pressure": "8 bar",
+        "noise": "72 dB(A)",
+        "weight": "720 kg",
+        "dimensions": "1600×1100×1400 mm"
+      },
+      {
+        "model": "HDS-60",
+        "power": "60HP / 45KW",
+        "airFlow": "7.5 m³/min",
+        "pressure": "8 bar",
+        "noise": "73 dB(A)",
+        "weight": "850 kg",
+        "dimensions": "1700×1200×1450 mm"
+      },
+      {
+        "model": "HDS-75",
+        "power": "75HP / 55KW",
+        "airFlow": "10.0 m³/min",
+        "pressure": "8 bar",
+        "noise": "75 dB(A)",
+        "weight": "1050 kg",
+        "dimensions": "1900×1300×1550 mm"
+      },
+      {
+        "model": "HDS-100",
+        "power": "100HP / 75KW",
+        "airFlow": "13.0 m³/min",
+        "pressure": "8 bar",
+        "noise": "76 dB(A)",
+        "weight": "1350 kg",
+        "dimensions": "2100×1400×1650 mm"
+      }
+    ],
+    "order": 1
+  },
+  {
+    "id": "direct-connected-screw",
+    "slug": "direct-connected-screw",
+    "nameAr": "ضاغط الهواء بالاتصال المباشر",
+    "nameEn": "Direct Connected Screw Air Compressor",
+    "nameTr": "Doğrudan Bağlantılı Vidalı Hava Kompresörü",
+    "descriptionAr": "ضاغط الهواء اللولبي بالاتصال المباشر يعمل بدون سير مما يعني عدم وجود تآكل للسير، كفاءة أعلى، ونقل أفضل للطاقة. يعتمد تقنية القيادة المباشرة مع محولات بدء التشغيل الناعم لضمان تشغيل سلس وموثوق. يوفر أداءً متفوقاً مع انخفاض تكاليف الصيانة وعمر خدمة أطول.",
+    "descriptionEn": "The Direct Connected Screw Air Compressor operates without a belt, meaning no belt wear, higher efficiency, and better energy transmission. It adopts Direct Driven Technology with soft start transducers for smooth and reliable operation. Delivers superior performance with reduced maintenance costs and longer service life.",
+    "descriptionTr": "Doğrudan Bağlantılı Vidalı Hava Kompresörü kayış olmadan çalışır, bu da kayış aşınması olmaması, daha yüksek verimlilik ve daha iyi enerji iletimi anlamına gelir. Yumuşak başlatma transdüserleri ile Doğrudan Tahrik Teknolojisini benimser.",
+    "shortDescAr": "بدون سير - كفاءة أعلى ونقل أفضل للطاقة",
+    "shortDescEn": "No belt - higher efficiency and better energy transmission",
+    "shortDescTr": "Kayışsız - daha yüksek verimlilik ve daha iyi enerji iletimi",
+    "image": "/images/compressors/direct-connected.jpg",
+    "features": [
+      "No belt - zero belt wear",
+      "Higher efficiency than belt-driven",
+      "Better energy transmission",
+      "Direct Driven Technology",
+      "Soft start transducers",
+      "Lower maintenance costs",
+      "Longer service life",
+      "Smooth and reliable operation"
+    ],
+    "featuresAr": [
+      "بدون سير - صفر تآكل",
+      "كفاءة أعلى من الضاغط بالسير",
+      "نقل أفضل للطاقة",
+      "تقنية القيادة المباشرة",
+      "محولات بدء التشغيل الناعم",
+      "تكاليف صيانة أقل",
+      "عمر خدمة أطول",
+      "تشغيل سلس وموثوق"
+    ],
+    "featuresTr": [
+      "Kayışsız - sıfır aşınma",
+      "Kayış tahrikli kompresörlerden daha yüksek verimlilik",
+      "Daha iyi enerji iletimi",
+      "Doğrudan Tahrik Teknolojisi",
+      "Yumuşak başlatma transdüserleri",
+      "Daha düşük bakım maliyetleri",
+      "Daha uzun servis ömrü",
+      "Sorunsuz ve güvenilir çalışma"
+    ],
+    "specifications": {
+      "type": "Direct Connected Screw",
+      "driveType": "Direct Drive",
+      "startType": "Soft Start Transducer",
+      "beltRequired": "No"
+    },
+    "models": [
+      {
+        "model": "HDD-7.5",
+        "power": "7.5HP / 5.5KW",
+        "airFlow": "0.70 m³/min",
+        "pressure": "8 bar",
+        "noise": "60 dB(A)",
+        "weight": "190 kg",
+        "dimensions": "870×580×840 mm"
+      },
+      {
+        "model": "HDD-10",
+        "power": "10HP / 7.5KW",
+        "airFlow": "1.05 m³/min",
+        "pressure": "8 bar",
+        "noise": "61 dB(A)",
+        "weight": "220 kg",
+        "dimensions": "970×630×910 mm"
+      },
+      {
+        "model": "HDD-15",
+        "power": "15HP / 11KW",
+        "airFlow": "1.65 m³/min",
+        "pressure": "8 bar",
+        "noise": "63 dB(A)",
+        "weight": "290 kg",
+        "dimensions": "1110×760×1010 mm"
+      },
+      {
+        "model": "HDD-20",
+        "power": "20HP / 15KW",
+        "airFlow": "2.4 m³/min",
+        "pressure": "8 bar",
+        "noise": "64 dB(A)",
+        "weight": "360 kg",
+        "dimensions": "1210×810×1110 mm"
+      },
+      {
+        "model": "HDD-25",
+        "power": "25HP / 18.5KW",
+        "airFlow": "3.1 m³/min",
+        "pressure": "8 bar",
+        "noise": "66 dB(A)",
+        "weight": "420 kg",
+        "dimensions": "1310×870×1160 mm"
+      },
+      {
+        "model": "HDD-30",
+        "power": "30HP / 22KW",
+        "airFlow": "3.7 m³/min",
+        "pressure": "8 bar",
+        "noise": "67 dB(A)",
+        "weight": "500 kg",
+        "dimensions": "1410×910×1210 mm"
+      },
+      {
+        "model": "HDD-50",
+        "power": "50HP / 37KW",
+        "airFlow": "6.5 m³/min",
+        "pressure": "8 bar",
+        "noise": "70 dB(A)",
+        "weight": "740 kg",
+        "dimensions": "1610×1110×1410 mm"
+      },
+      {
+        "model": "HDD-75",
+        "power": "75HP / 55KW",
+        "airFlow": "10.5 m³/min",
+        "pressure": "8 bar",
+        "noise": "73 dB(A)",
+        "weight": "1080 kg",
+        "dimensions": "1910×1310×1560 mm"
+      },
+      {
+        "model": "HDD-100",
+        "power": "100HP / 75KW",
+        "airFlow": "13.5 m³/min",
+        "pressure": "8 bar",
+        "noise": "74 dB(A)",
+        "weight": "1380 kg",
+        "dimensions": "2110×1410×1660 mm"
+      }
+    ],
+    "order": 2
+  },
+  {
+    "id": "integrated-screw",
+    "slug": "integrated-screw",
+    "nameAr": "ضاغط الهواء اللولبي المتكامل",
+    "nameEn": "Integrated Screw Air Compressor",
+    "nameTr": "Entegre Vidalı Hava Kompresörü",
+    "descriptionAr": "ضاغط الهواء اللولبي المتكامل يجمع بين الضاغط ومجفف الهواء والخزان في وحدة واحدة متكاملة. يتميز بأداء متفوق مع كفاءة عالية، اهتزاز منخفض، ضوضاء منخفضة، وعمر تشغيلي طويل. متوفر بضغط يصل إلى 16 بار لتطبيقات الضغط العالي.",
+    "descriptionEn": "The Integrated Screw Air Compressor combines the compressor, air dryer, and tank in one integrated unit. Features superior performance with high efficiency, low vibration, low noise, and long operational life. Available in pressures up to 16 bar for high-pressure applications.",
+    "descriptionTr": "Entegre Vidalı Hava Kompresörü, kompresör, hava kurutucu ve tankı tek bir entegre ünitede birleştirir. Yüksek verimlilik, düşük titreşim, düşük gürültü ve uzun operasyonel ömür ile üstün performans sunar.",
+    "shortDescAr": "وحدة متكاملة: ضاغط + مجفف + خزان في جهاز واحد",
+    "shortDescEn": "All-in-one unit: compressor + dryer + tank in one device",
+    "shortDescTr": "Hepsi bir arada: kompresör + kurutucu + tank tek cihazda",
+    "image": "/images/compressors/integrated.jpg",
+    "features": [
+      "All-in-one integrated unit",
+      "Built-in air dryer",
+      "Built-in air tank",
+      "High efficiency",
+      "Low vibration",
+      "Low noise",
+      "Long service life",
+      "Up to 16 bar pressure",
+      "Compact design saves space"
+    ],
+    "featuresAr": [
+      "وحدة متكاملة الكل في واحد",
+      "مجفف هواء مدمج",
+      "خزان هواء مدمج",
+      "كفاءة عالية",
+      "اهتزاز منخفض",
+      "ضوضاء منخفضة",
+      "عمر خدمة طويل",
+      "ضغط يصل إلى 16 بار",
+      "تصميم مدمج يوفر المساحة"
+    ],
+    "featuresTr": [
+      "Hepsi bir arada entegre ünite",
+      "Dahili hava kurutucu",
+      "Dahili hava tankı",
+      "Yüksek verimlilik",
+      "Düşük titreşim",
+      "Düşük gürültü",
+      "Uzun servis ömrü",
+      "16 bar'a kadar basınç",
+      "Kompakt tasarım alan tasarrufu sağlar"
+    ],
+    "specifications": {
+      "type": "Integrated Screw",
+      "maxPressure": "16 bar",
+      "integratedComponents": "Compressor + Air Dryer + Tank",
+      "design": "Compact All-in-One"
+    },
+    "models": [
+      {
+        "model": "HD-15CTAS",
+        "power": "15HP / 11KW",
+        "airFlow": "1.2 m³/min",
+        "pressure": "16 bar",
+        "noise": "65 dB(A)",
+        "weight": "380 kg",
+        "dimensions": "1150×700×1150 mm"
+      },
+      {
+        "model": "HD-20CTAS",
+        "power": "20HP / 15KW",
+        "airFlow": "1.6 m³/min",
+        "pressure": "16 bar",
+        "noise": "66 dB(A)",
+        "weight": "420 kg",
+        "dimensions": "1250×750×1200 mm"
+      },
+      {
+        "model": "HD-25CTAS",
+        "power": "25HP / 18.5KW",
+        "airFlow": "2.0 m³/min",
+        "pressure": "16 bar",
+        "noise": "68 dB(A)",
+        "weight": "480 kg",
+        "dimensions": "1350×800×1250 mm"
+      },
+      {
+        "model": "HD-30CTAS",
+        "power": "30HP / 22KW",
+        "airFlow": "2.5 m³/min",
+        "pressure": "16 bar",
+        "noise": "69 dB(A)",
+        "weight": "550 kg",
+        "dimensions": "1450×850×1300 mm"
+      },
+      {
+        "model": "HD-35CTAS",
+        "power": "35HP / 25KW",
+        "airFlow": "3.0 m³/min",
+        "pressure": "16 bar",
+        "noise": "70 dB(A)",
+        "weight": "620 kg",
+        "dimensions": "1550×900×1350 mm"
+      },
+      {
+        "model": "HD-50",
+        "power": "50HP / 37KW",
+        "airFlow": "5.5 m³/min",
+        "pressure": "8 bar",
+        "noise": "72 dB(A)",
+        "weight": "800 kg",
+        "dimensions": "1700×1050×1450 mm"
+      },
+      {
+        "model": "HD-60",
+        "power": "60HP / 45KW",
+        "airFlow": "7.0 m³/min",
+        "pressure": "8 bar",
+        "noise": "73 dB(A)",
+        "weight": "920 kg",
+        "dimensions": "1800×1100×1500 mm"
+      },
+      {
+        "model": "HD-75",
+        "power": "75HP / 55KW",
+        "airFlow": "9.5 m³/min",
+        "pressure": "8 bar",
+        "noise": "75 dB(A)",
+        "weight": "1100 kg",
+        "dimensions": "1950×1200×1550 mm"
+      },
+      {
+        "model": "HD-100",
+        "power": "100HP / 75KW",
+        "airFlow": "13.0 m³/min",
+        "pressure": "8 bar",
+        "noise": "76 dB(A)",
+        "weight": "1400 kg",
+        "dimensions": "2150×1350×1650 mm"
+      }
+    ],
+    "order": 3
+  },
+  {
+    "id": "permanent-variable-frequency",
+    "slug": "permanent-variable-frequency",
+    "nameAr": "ضاغط التحكم بتغيير التردد",
+    "nameEn": "Permanent Variable Frequency Compressor",
+    "nameTr": "Kalıcı Değişken Frekanslı Kompresör",
+    "descriptionAr": "ضاغط التحكم عن طريق تغيير التردد يوفر طاقة بنسبة 30-50% مقارنة بالضواغط العادية. يعمل على ضبط السرعة لتتناسب مع الطلب على الهواء من 0 إلى 100%. يعمل أيضاً كمضخة تفريغ للتطبيقات المتنوعة مثل البلاستيك وأجهزة CNC وتصنيع LED والتعبئة والتغليف.",
+    "descriptionEn": "The Permanent Variable Frequency Compressor saves 30-50% energy compared to ordinary compressors. It adjusts speed to match air demand from 0 to 100%. Also serves as a vacuum pump for diverse applications including plastic, CNC machines, LED manufacturing, and packaging industries.",
+    "descriptionTr": "Kalıcı Değişken Frekanslı Kompresör, normal kompresörlere kıyasla %30-50 enerji tasarrufu sağlar. Hava talebine uygun olarak hızı %0'dan %100'e ayarlar. Ayrıca plastik, CNC makineleri, LED üretimi ve ambalaj endüstrileri dahil çeşitli uygulamalar için vakum pompası olarak da hizmet eder.",
+    "shortDescAr": "توفير طاقة 30-50% مع ضبط تلقائي للسرعة",
+    "shortDescEn": "30-50% energy saving with automatic speed adjustment",
+    "shortDescTr": "%30-50 enerji tasarrufu ile otomatik hız ayarı",
+    "image": "/images/compressors/variable-frequency.jpg",
+    "features": [
+      "30-50% energy saving vs ordinary compressors",
+      "Speed adjusts 0-100% to match air demand",
+      "Permanent magnet motor technology",
+      "Also functions as vacuum pump",
+      "Suitable for plastic, CNC, LED, packaging",
+      "Reduced operational costs",
+      "Intelligent control system",
+      "Quiet operation"
+    ],
+    "featuresAr": [
+      "توفير طاقة 30-50% مقارنة بالضواغط العادية",
+      "ضبط السرعة من 0 إلى 100% حسب الطلب",
+      "تقنية محرك المغناطيس الدائم",
+      "يعمل أيضاً كمضخة تفريغ",
+      "مناسب للبلاستيك وCNC وLED والتعبئة",
+      "تكاليف تشغيل منخفضة",
+      "نظام تحكم ذكي",
+      "تشغيل هادئ"
+    ],
+    "featuresTr": [
+      "Normal kompresörlere göre %30-50 enerji tasarrufu",
+      "Hava talebine göre %0-100 hız ayarı",
+      "Kalıcı mıknatıs motor teknolojisi",
+      "Vakum pompası olarak da çalışır",
+      "Plastik, CNC, LED, ambalaj için uygun",
+      "Düşük işletme maliyetleri",
+      "Akıllı kontrol sistemi",
+      "Sessiz çalışma"
+    ],
+    "specifications": {
+      "type": "Variable Frequency Drive (VFD)",
+      "series": "HD-D",
+      "energySaving": "30-50%",
+      "speedRange": "0-100%",
+      "motorType": "Permanent Magnet"
+    },
+    "models": [
+      {
+        "model": "HD-10D",
+        "power": "10HP / 7.5KW",
+        "airFlow": "0.3-1.1 m³/min",
+        "pressure": "8 bar",
+        "noise": "60 dB(A)",
+        "weight": "230 kg",
+        "dimensions": "980×640×920 mm"
+      },
+      {
+        "model": "HD-15D",
+        "power": "15HP / 11KW",
+        "airFlow": "0.5-1.7 m³/min",
+        "pressure": "8 bar",
+        "noise": "62 dB(A)",
+        "weight": "300 kg",
+        "dimensions": "1120×770×1020 mm"
+      },
+      {
+        "model": "HD-20D",
+        "power": "20HP / 15KW",
+        "airFlow": "0.7-2.5 m³/min",
+        "pressure": "8 bar",
+        "noise": "63 dB(A)",
+        "weight": "370 kg",
+        "dimensions": "1220×820×1120 mm"
+      },
+      {
+        "model": "HD-25D",
+        "power": "25HP / 18.5KW",
+        "airFlow": "0.9-3.2 m³/min",
+        "pressure": "8 bar",
+        "noise": "65 dB(A)",
+        "weight": "430 kg",
+        "dimensions": "1320×880×1170 mm"
+      },
+      {
+        "model": "HD-30D",
+        "power": "30HP / 22KW",
+        "airFlow": "1.1-3.8 m³/min",
+        "pressure": "8 bar",
+        "noise": "66 dB(A)",
+        "weight": "510 kg",
+        "dimensions": "1420×920×1220 mm"
+      },
+      {
+        "model": "HD-40D",
+        "power": "40HP / 30KW",
+        "airFlow": "1.5-5.2 m³/min",
+        "pressure": "8 bar",
+        "noise": "68 dB(A)",
+        "weight": "600 kg",
+        "dimensions": "1520×1020×1320 mm"
+      },
+      {
+        "model": "HD-50D",
+        "power": "50HP / 37KW",
+        "airFlow": "1.9-6.5 m³/min",
+        "pressure": "8 bar",
+        "noise": "70 dB(A)",
+        "weight": "750 kg",
+        "dimensions": "1620×1120×1420 mm"
+      },
+      {
+        "model": "HD-60D",
+        "power": "60HP / 45KW",
+        "airFlow": "2.3-7.8 m³/min",
+        "pressure": "8 bar",
+        "noise": "71 dB(A)",
+        "weight": "870 kg",
+        "dimensions": "1720×1220×1470 mm"
+      },
+      {
+        "model": "HD-75D",
+        "power": "75HP / 55KW",
+        "airFlow": "3.0-10.5 m³/min",
+        "pressure": "8 bar",
+        "noise": "73 dB(A)",
+        "weight": "1100 kg",
+        "dimensions": "1920×1320×1570 mm"
+      },
+      {
+        "model": "HD-100D",
+        "power": "100HP / 75KW",
+        "airFlow": "4.0-13.5 m³/min",
+        "pressure": "8 bar",
+        "noise": "74 dB(A)",
+        "weight": "1400 kg",
+        "dimensions": "2120×1420×1670 mm"
+      },
+      {
+        "model": "HD-125D",
+        "power": "125HP / 90KW",
+        "airFlow": "5.0-16.5 m³/min",
+        "pressure": "8 bar",
+        "noise": "76 dB(A)",
+        "weight": "1650 kg",
+        "dimensions": "2300×1500×1750 mm"
+      }
+    ],
+    "order": 4
+  },
+  {
+    "id": "three-cylinder-booster",
+    "slug": "three-cylinder-booster",
+    "nameAr": "ضاغط معزز بثلاث أسطوانات",
+    "nameEn": "Three Cylinder Booster Compressor",
+    "nameTr": "Üç Silindirli Takviye Kompresörü",
+    "descriptionAr": "ضاغط معزز بثلاث أسطوانات يوفر ضغط خرج أعلى وأكثر استقراراً. يستخدم في صناعات الطيران والسيارات والطب والميكانيكا والإلكترونيات. يشمل سلسلة HPS للضغط المتوسط وسلسلة TG للتطبيقات المتخصصة.",
+    "descriptionEn": "The Three Cylinder Booster Compressor delivers higher and more stable output pressure. Used in aviation, automotive, medical, mechanical, and electronic industries. Includes HPS series for medium pressure and TG series for specialized applications.",
+    "descriptionTr": "Üç Silindirli Takviye Kompresörü, daha yüksek ve daha stabil çıkış basıncı sağlar. Havacılık, otomotiv, tıp, mekanik ve elektronik endüstrilerinde kullanılır. Orta basınç için HPS serisi ve özel uygulamalar için TG serisi içerir.",
+    "shortDescAr": "ضغط خرج أعلى واستقرار أكبر للتطبيقات المتخصصة",
+    "shortDescEn": "Higher output pressure and greater stability for specialized applications",
+    "shortDescTr": "Özel uygulamalar için daha yüksek çıkış basıncı ve daha fazla kararlılık",
+    "image": "/images/compressors/booster.jpg",
+    "features": [
+      "Higher output pressure",
+      "More stable pressure delivery",
+      "Three cylinder design",
+      "Aviation industry applications",
+      "Automotive industry applications",
+      "Medical industry applications",
+      "Mechanical and electronic applications",
+      "HPS series (medium pressure)",
+      "TG series (specialized)"
+    ],
+    "featuresAr": [
+      "ضغط خرج أعلى",
+      "استقرار أكبر في توصيل الضغط",
+      "تصميم ثلاث أسطوانات",
+      "تطبيقات صناعة الطيران",
+      "تطبيقات صناعة السيارات",
+      "تطبيقات الصناعة الطبية",
+      "تطبيقات ميكانيكية وإلكترونية",
+      "سلسلة HPS (ضغط متوسط)",
+      "سلسلة TG (متخصصة)"
+    ],
+    "featuresTr": [
+      "Daha yüksek çıkış basıncı",
+      "Daha stabil basınç dağıtımı",
+      "Üç silindirli tasarım",
+      "Havacılık endüstrisi uygulamaları",
+      "Otomotiv endüstrisi uygulamaları",
+      "Tıp endüstrisi uygulamaları",
+      "Mekanik ve elektronik uygulamalar",
+      "HPS serisi (orta basınç)",
+      "TG serisi (özel)"
+    ],
+    "specifications": {
+      "type": "Three Cylinder Booster",
+      "series": "HPS / TG",
+      "applications": "Aviation, Automotive, Medical, Mechanical, Electronic",
+      "pressureType": "Medium to High Pressure"
+    },
+    "models": [
+      {
+        "model": "HPS-1.0/30",
+        "power": "7.5KW",
+        "airFlow": "1.0 m³/min",
+        "pressure": "30 bar",
+        "noise": "75 dB(A)",
+        "weight": "350 kg",
+        "dimensions": "1200×800×1000 mm"
+      },
+      {
+        "model": "HPS-1.6/30",
+        "power": "11KW",
+        "airFlow": "1.6 m³/min",
+        "pressure": "30 bar",
+        "noise": "76 dB(A)",
+        "weight": "420 kg",
+        "dimensions": "1350×850×1050 mm"
+      },
+      {
+        "model": "HPS-2.0/30",
+        "power": "15KW",
+        "airFlow": "2.0 m³/min",
+        "pressure": "30 bar",
+        "noise": "78 dB(A)",
+        "weight": "500 kg",
+        "dimensions": "1450×900×1100 mm"
+      },
+      {
+        "model": "HPS-3.0/30",
+        "power": "22KW",
+        "airFlow": "3.0 m³/min",
+        "pressure": "30 bar",
+        "noise": "80 dB(A)",
+        "weight": "620 kg",
+        "dimensions": "1600×950×1150 mm"
+      },
+      {
+        "model": "TG-1.0/40",
+        "power": "11KW",
+        "airFlow": "1.0 m³/min",
+        "pressure": "40 bar",
+        "noise": "78 dB(A)",
+        "weight": "480 kg",
+        "dimensions": "1400×850×1100 mm"
+      },
+      {
+        "model": "TG-1.6/40",
+        "power": "15KW",
+        "airFlow": "1.6 m³/min",
+        "pressure": "40 bar",
+        "noise": "80 dB(A)",
+        "weight": "560 kg",
+        "dimensions": "1500×900×1150 mm"
+      },
+      {
+        "model": "TG-2.0/40",
+        "power": "22KW",
+        "airFlow": "2.0 m³/min",
+        "pressure": "40 bar",
+        "noise": "82 dB(A)",
+        "weight": "680 kg",
+        "dimensions": "1650×950×1200 mm"
+      }
+    ],
+    "order": 5
+  },
+  {
+    "id": "precision-filter",
+    "slug": "precision-filter",
+    "nameAr": "الفلاتر المتعاقبة الدقيقة",
+    "nameEn": "Series Precision Filter",
+    "nameTr": "Seri Hassas Filtre",
+    "descriptionAr": "الفلاتر المتعاقبة الدقيقة توفر دقة ترشيح عالية، مقاومة للحرارة العالية، وعمر خدمة طويل. متوفرة بمجموعة واسعة من الأحجام من 015 إلى DN600FL لتلبية مختلف احتياجات أنظمة الهواء المضغوط.",
+    "descriptionEn": "Series Precision Filters provide high filter fineness, high temperature resistance, and long service life. Available in a wide range of sizes from 015 to DN600FL to meet various compressed air system requirements.",
+    "descriptionTr": "Seri Hassas Filtreler, yüksek filtreleme inceliği, yüksek sıcaklık dayanımı ve uzun servis ömrü sağlar. Çeşitli basınçlı hava sistemi gereksinimlerini karşılamak için 015'ten DN600FL'ye kadar geniş bir boyut yelpazesinde mevcuttur.",
+    "shortDescAr": "دقة ترشيح عالية ومقاومة للحرارة وعمر طويل",
+    "shortDescEn": "High filter fineness, heat resistant, and long life",
+    "shortDescTr": "Yüksek filtreleme inceliği, ısıya dayanıklı ve uzun ömürlü",
+    "image": "/images/compressors/precision-filter.jpg",
+    "features": [
+      "High filter fineness",
+      "High temperature resistance",
+      "Long service life",
+      "Wide range of sizes available",
+      "Multiple filtration grades",
+      "Easy element replacement",
+      "Low pressure drop",
+      "Suitable for all compressor types"
+    ],
+    "featuresAr": [
+      "دقة ترشيح عالية",
+      "مقاومة للحرارة العالية",
+      "عمر خدمة طويل",
+      "مجموعة واسعة من الأحجام",
+      "درجات ترشيح متعددة",
+      "سهولة استبدال عنصر الفلتر",
+      "انخفاض ضغط منخفض",
+      "مناسب لجميع أنواع الضواغط"
+    ],
+    "featuresTr": [
+      "Yüksek filtreleme inceliği",
+      "Yüksek sıcaklık dayanımı",
+      "Uzun servis ömrü",
+      "Geniş boyut yelpazesi",
+      "Çoklu filtreleme dereceleri",
+      "Kolay eleman değişimi",
+      "Düşük basınç düşüşü",
+      "Tüm kompresör tipleri için uygun"
+    ],
+    "specifications": {
+      "type": "Series Precision Filter",
+      "sizeRange": "015 - DN600FL",
+      "temperatureResistance": "High",
+      "filterGrades": "Multiple"
+    },
+    "models": [
+      {
+        "model": "015",
+        "connection": "1/2\"",
+        "maxFlow": "1.5 m³/min",
+        "pressure": "16 bar",
+        "weight": "2.5 kg"
+      },
+      {
+        "model": "024",
+        "connection": "3/4\"",
+        "maxFlow": "2.4 m³/min",
+        "pressure": "16 bar",
+        "weight": "3.0 kg"
+      },
+      {
+        "model": "035",
+        "connection": "3/4\"",
+        "maxFlow": "3.5 m³/min",
+        "pressure": "16 bar",
+        "weight": "3.5 kg"
+      },
+      {
+        "model": "060",
+        "connection": "1\"",
+        "maxFlow": "6.0 m³/min",
+        "pressure": "16 bar",
+        "weight": "5.0 kg"
+      },
+      {
+        "model": "090",
+        "connection": "1-1/2\"",
+        "maxFlow": "9.0 m³/min",
+        "pressure": "16 bar",
+        "weight": "7.0 kg"
+      },
+      {
+        "model": "120",
+        "connection": "2\"",
+        "maxFlow": "12.0 m³/min",
+        "pressure": "16 bar",
+        "weight": "9.0 kg"
+      },
+      {
+        "model": "180",
+        "connection": "2-1/2\"",
+        "maxFlow": "18.0 m³/min",
+        "pressure": "16 bar",
+        "weight": "14.0 kg"
+      },
+      {
+        "model": "DN250FL",
+        "connection": "DN250 Flange",
+        "maxFlow": "25.0 m³/min",
+        "pressure": "16 bar",
+        "weight": "35.0 kg"
+      },
+      {
+        "model": "DN350FL",
+        "connection": "DN350 Flange",
+        "maxFlow": "35.0 m³/min",
+        "pressure": "16 bar",
+        "weight": "55.0 kg"
+      },
+      {
+        "model": "DN600FL",
+        "connection": "DN600 Flange",
+        "maxFlow": "60.0 m³/min",
+        "pressure": "16 bar",
+        "weight": "95.0 kg"
+      }
+    ],
+    "order": 6
+  },
+  {
+    "id": "air-dryers",
+    "slug": "air-dryers",
+    "nameAr": "مجفف الهواء",
+    "nameEn": "Refrigerated Air Dryer",
+    "nameTr": "Soğutmalı Hava Kurutucu",
+    "descriptionAr": "مجفف الهواء يعمل بالمبدأ الفيزيائي لإزالة الرطوبة من الهواء المضغوط. يستخدم تقنية التبريد لتكثيف وإزالة الرطوبة بكفاءة عالية، مما يحمي المعدات والأدوات الهوائية من التآكل والأعطال الناتجة عن الرطوبة.",
+    "descriptionEn": "The Refrigerated Air Dryer uses a physical principle for moisture removal from compressed air. It employs refrigeration technology to efficiently condense and remove moisture, protecting equipment and pneumatic tools from corrosion and moisture-related failures.",
+    "descriptionTr": "Soğutmalı Hava Kurutucu, basınçlı havadan nem giderme için fiziksel prensip kullanır. Nemi verimli bir şekilde yoğunlaştırmak ve gidermek için soğutma teknolojisi kullanarak ekipmanı ve pnömatik aletleri korozyondan ve nemle ilgili arızalardan korur.",
+    "shortDescAr": "إزالة الرطوبة من الهواء المضغوط بتقنية التبريد",
+    "shortDescEn": "Moisture removal from compressed air using refrigeration technology",
+    "shortDescTr": "Soğutma teknolojisi ile basınçlı havadan nem giderme",
+    "image": "/images/compressors/air-dryer.jpg",
+    "features": [
+      "Physical principle moisture removal",
+      "Refrigerated drying technology",
+      "Protects equipment from corrosion",
+      "Prevents moisture-related failures",
+      "Energy efficient operation",
+      "Low maintenance requirements",
+      "Wide capacity range",
+      "Reliable and consistent dew point"
+    ],
+    "featuresAr": [
+      "إزالة الرطوبة بالمبدأ الفيزيائي",
+      "تقنية التجفيف بالتبريد",
+      "حماية المعدات من التآكل",
+      "منع الأعطال الناتجة عن الرطوبة",
+      "تشغيل موفر للطاقة",
+      "متطلبات صيانة منخفضة",
+      "نطاق سعة واسع",
+      "نقطة ندى موثوقة وثابتة"
+    ],
+    "featuresTr": [
+      "Fiziksel prensiple nem giderme",
+      "Soğutmalı kurutma teknolojisi",
+      "Ekipmanı korozyondan koruma",
+      "Nemle ilgili arızaları önleme",
+      "Enerji verimli çalışma",
+      "Düşük bakım gereksinimleri",
+      "Geniş kapasite aralığı",
+      "Güvenilir ve tutarlı çiy noktası"
+    ],
+    "specifications": {
+      "type": "Refrigerated Air Dryer",
+      "series": "HD-A",
+      "dryingMethod": "Refrigeration / Physical Principle",
+      "application": "Compressed Air Moisture Removal"
+    },
+    "models": [
+      {
+        "model": "HD-7.5A",
+        "airFlow": "1.0 m³/min",
+        "power": "0.3KW",
+        "refrigerant": "R134a",
+        "dewPoint": "2-10°C",
+        "pressure": "16 bar",
+        "weight": "45 kg"
+      },
+      {
+        "model": "HD-10A",
+        "airFlow": "1.5 m³/min",
+        "power": "0.37KW",
+        "refrigerant": "R134a",
+        "dewPoint": "2-10°C",
+        "pressure": "16 bar",
+        "weight": "52 kg"
+      },
+      {
+        "model": "HD-15A",
+        "airFlow": "2.5 m³/min",
+        "power": "0.55KW",
+        "refrigerant": "R134a",
+        "dewPoint": "2-10°C",
+        "pressure": "16 bar",
+        "weight": "65 kg"
+      },
+      {
+        "model": "HD-20A",
+        "airFlow": "3.5 m³/min",
+        "power": "0.75KW",
+        "refrigerant": "R134a",
+        "dewPoint": "2-10°C",
+        "pressure": "16 bar",
+        "weight": "78 kg"
+      },
+      {
+        "model": "HD-30A",
+        "airFlow": "5.0 m³/min",
+        "power": "1.1KW",
+        "refrigerant": "R134a",
+        "dewPoint": "2-10°C",
+        "pressure": "16 bar",
+        "weight": "95 kg"
+      },
+      {
+        "model": "HD-50A",
+        "airFlow": "7.5 m³/min",
+        "power": "1.5KW",
+        "refrigerant": "R407C",
+        "dewPoint": "2-10°C",
+        "pressure": "16 bar",
+        "weight": "125 kg"
+      },
+      {
+        "model": "HD-75A",
+        "airFlow": "10.0 m³/min",
+        "power": "2.2KW",
+        "refrigerant": "R407C",
+        "dewPoint": "2-10°C",
+        "pressure": "16 bar",
+        "weight": "165 kg"
+      },
+      {
+        "model": "HD-100A",
+        "airFlow": "15.0 m³/min",
+        "power": "3.0KW",
+        "refrigerant": "R407C",
+        "dewPoint": "2-10°C",
+        "pressure": "16 bar",
+        "weight": "210 kg"
+      },
+      {
+        "model": "HD-150A",
+        "airFlow": "22.0 m³/min",
+        "power": "4.0KW",
+        "refrigerant": "R407C",
+        "dewPoint": "2-10°C",
+        "pressure": "16 bar",
+        "weight": "280 kg"
+      },
+      {
+        "model": "HD-200A",
+        "airFlow": "30.0 m³/min",
+        "power": "5.5KW",
+        "refrigerant": "R407C",
+        "dewPoint": "2-10°C",
+        "pressure": "16 bar",
+        "weight": "350 kg"
+      },
+      {
+        "model": "HD-300A",
+        "airFlow": "45.0 m³/min",
+        "power": "7.5KW",
+        "refrigerant": "R407C",
+        "dewPoint": "2-10°C",
+        "pressure": "16 bar",
+        "weight": "480 kg"
+      },
+      {
+        "model": "HD-400A",
+        "airFlow": "60.0 m³/min",
+        "power": "11KW",
+        "refrigerant": "R407C",
+        "dewPoint": "2-10°C",
+        "pressure": "16 bar",
+        "weight": "620 kg"
+      }
+    ],
+    "order": 7
+  }
+]

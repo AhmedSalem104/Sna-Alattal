@@ -11,15 +11,29 @@ import { LanguageSwitcher } from '@/components/language-switcher';
 import { useLocale } from '@/hooks/useLocale';
 import { cn } from '@/lib/utils';
 
-/* ─── SNA Logo - clean text only ─── */
+/* ─── SNA Logo with half-gear on left of S ─── */
 function GearLogo() {
   return (
-    <div className="relative w-[60px] h-[60px] flex items-center justify-center shrink-0">
+    <div className="relative flex items-center shrink-0 h-[50px]">
+      {/* Half gear behind/left of S */}
+      <svg width="32" height="40" viewBox="0 0 50 60" fill="none" className="text-white/90 -mr-[6px] mt-[2px]">
+        <clipPath id="half-gear">
+          <rect x="12" y="0" width="38" height="60" />
+        </clipPath>
+        <g clipPath="url(#half-gear)">
+          <path
+            d="M30 5 L33 5 L34 1 L37 1 L38 5 L41 4 L44 0 L46 2 L44 6 L47 7 L50 4 L51 7 L48 9 L50 12 L54 11 L54 14 L50 15 L51 18 L55 19 L54 22 L50 21 L49 24 L53 26 L51 29 L48 27 L46 30 L49 33 L47 35 L44 32 L41 34 L43 38 L40 39 L38 35 L35 36 L35 40 L32 39 L31 36 L28 35 L27 39 L24 38 L25 34 L22 32 L20 36 L18 34 L20 31 L18 28 L14 29 L14 26 L18 25 L17 22 L13 21 L14 18 L18 19 L19 16 L15 14 L17 12 L20 14 L22 11 L18 9 L20 7 L23 10 L26 8 L24 4 L27 4 L28 8 L30 7 Z"
+            fill="currentColor"
+            transform="translate(-2, 10) scale(0.85)"
+          />
+          <circle cx="25" cy="27" r="8" fill="none" stroke="currentColor" strokeWidth="2" />
+        </g>
+      </svg>
       <span
-        className="text-white font-black text-[22px] tracking-[0.2em] select-none"
-        style={{ textShadow: '0 2px 10px rgba(0,0,0,0.5), 0 0 20px rgba(232,134,42,0.3)' }}
+        className="text-white font-black text-[28px] tracking-[0.12em] select-none"
+        style={{ textShadow: '0 2px 10px rgba(0,0,0,0.4)' }}
       >
-        SNA
+        S.N.A
       </span>
     </div>
   );
@@ -29,6 +43,7 @@ const navItems = [
   { key: 'home', href: '/' },
   { key: 'about', href: '/about' },
   { key: 'products', href: '/products' },
+  { key: 'compressors', href: '/compressors' },
   { key: 'clients', href: '/clients' },
   { key: 'exhibitions', href: '/exhibitions' },
   { key: 'contact', href: '/contact' },
