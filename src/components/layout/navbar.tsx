@@ -11,31 +11,12 @@ import { LanguageSwitcher } from '@/components/language-switcher';
 import { useLocale } from '@/hooks/useLocale';
 import { cn } from '@/lib/utils';
 
-/* ─── SNA Logo with half-gear on left of S ─── */
+/* ─── SNA Logo - clean text ─── */
 function GearLogo() {
   return (
-    <div className="relative flex items-center shrink-0 h-[50px]">
-      {/* Half gear behind/left of S */}
-      <svg width="32" height="40" viewBox="0 0 50 60" fill="none" className="text-white/90 -mr-[6px] mt-[2px]">
-        <clipPath id="half-gear">
-          <rect x="12" y="0" width="38" height="60" />
-        </clipPath>
-        <g clipPath="url(#half-gear)">
-          <path
-            d="M30 5 L33 5 L34 1 L37 1 L38 5 L41 4 L44 0 L46 2 L44 6 L47 7 L50 4 L51 7 L48 9 L50 12 L54 11 L54 14 L50 15 L51 18 L55 19 L54 22 L50 21 L49 24 L53 26 L51 29 L48 27 L46 30 L49 33 L47 35 L44 32 L41 34 L43 38 L40 39 L38 35 L35 36 L35 40 L32 39 L31 36 L28 35 L27 39 L24 38 L25 34 L22 32 L20 36 L18 34 L20 31 L18 28 L14 29 L14 26 L18 25 L17 22 L13 21 L14 18 L18 19 L19 16 L15 14 L17 12 L20 14 L22 11 L18 9 L20 7 L23 10 L26 8 L24 4 L27 4 L28 8 L30 7 Z"
-            fill="currentColor"
-            transform="translate(-2, 10) scale(0.85)"
-          />
-          <circle cx="25" cy="27" r="8" fill="none" stroke="currentColor" strokeWidth="2" />
-        </g>
-      </svg>
-      <span
-        className="text-white font-black text-[28px] tracking-[0.12em] select-none"
-        style={{ textShadow: '0 2px 10px rgba(0,0,0,0.4)' }}
-      >
-        S.N.A
-      </span>
-    </div>
+    <span className="text-white font-black text-[28px] tracking-[0.15em] select-none shrink-0">
+      S.N.A
+    </span>
   );
 }
 
@@ -106,22 +87,22 @@ export function Navbar() {
         dir={isRTL ? 'rtl' : 'ltr'}
       >
         <nav className="container-custom">
-          <div className="flex items-center justify-between h-[110px]">
+          <div className="flex items-center justify-between h-[80px] md:h-[90px]">
             {/* Logo */}
-            <Link href="/" className="flex items-center gap-4 group">
+            <Link href="/" className="flex items-center gap-3 group shrink-0">
               <GearLogo />
-              <div className="hidden sm:flex flex-col border-s-2 border-white/25 ps-4">
-                <h1 className="text-[26px] font-black leading-tight uppercase tracking-[0.12em] text-white group-hover:text-white/90 transition-colors">
+              <div className="hidden md:flex flex-col border-s-2 border-white/25 ps-3">
+                <h1 className="text-[20px] lg:text-[24px] font-black leading-tight uppercase tracking-[0.1em] text-white group-hover:text-white/90 transition-colors">
                   AL-ATTAL
                 </h1>
-                <p className="text-[11px] uppercase tracking-[0.3em] text-white/60 font-semibold mt-0.5">
+                <p className="text-[10px] uppercase tracking-[0.25em] text-white/60 font-semibold">
                   Engineering Industries
                 </p>
               </div>
             </Link>
 
             {/* Desktop Navigation */}
-            <div className={cn("hidden lg:flex items-center", isRTL ? "gap-1" : "gap-1")}>
+            <div className={cn("hidden xl:flex items-center", isRTL ? "gap-0.5" : "gap-0.5")}>
               {navItems.map((item) => {
                 const isActive = pathname === item.href;
                 return (
@@ -130,17 +111,16 @@ export function Navbar() {
                     href={item.href}
                     prefetch={true}
                     className={cn(
-                      "relative px-4 py-2.5 text-[15px] font-bold uppercase tracking-wide transition-all duration-200",
+                      "relative px-3 lg:px-4 py-2 text-[13px] lg:text-[14px] font-bold uppercase tracking-wide transition-all duration-200 whitespace-nowrap",
                       isActive
                         ? "text-white font-extrabold"
-                        : "text-white/80 hover:text-white"
+                        : "text-white/75 hover:text-white"
                     )}
                   >
                     {t(item.key)}
-                    {/* Industrial underline indicator */}
                     <span
                       className={cn(
-                        "absolute bottom-0 left-1 right-1 h-[3px] bg-white transition-transform duration-300",
+                        "absolute bottom-0 left-1 right-1 h-[2px] bg-white transition-transform duration-300",
                         isRTL ? "origin-right" : "origin-left",
                         isActive ? "scale-x-100" : "scale-x-0 hover:scale-x-100"
                       )}
@@ -148,7 +128,7 @@ export function Navbar() {
                     {isActive && (
                       <motion.div
                         layoutId="navbar-indicator"
-                        className="absolute bottom-0 left-1 right-1 h-[3px] bg-white"
+                        className="absolute bottom-0 left-1 right-1 h-[2px] bg-white"
                         transition={{ type: "spring", stiffness: 380, damping: 30 }}
                       />
                     )}
@@ -178,7 +158,7 @@ export function Navbar() {
                 variant="ghost"
                 size="icon"
                 className={cn(
-                  "lg:hidden text-white hover:text-white/80 hover:bg-white/10"
+                  "xl:hidden text-white hover:text-white/80 hover:bg-white/10"
                 )}
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 aria-label={isMobileMenuOpen ? "إغلاق القائمة" : "فتح القائمة"}
@@ -212,7 +192,7 @@ export function Navbar() {
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.3, ease: 'easeInOut' }}
-              className="lg:hidden bg-gradient-to-b from-primary-600 to-primary-700 border-t-2 border-white/20 overflow-hidden"
+              className="xl:hidden bg-gradient-to-b from-primary-600 to-primary-700 border-t-2 border-white/20 overflow-hidden"
             >
               <div className="container-custom py-4 space-y-1">
                 {navItems.map((item, index) => {

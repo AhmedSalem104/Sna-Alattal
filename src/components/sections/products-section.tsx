@@ -1,12 +1,14 @@
 'use client';
 
-import { useRef, memo, useState, useEffect } from 'react';
+import { useRef, memo, useState, useEffect, useCallback } from 'react';
+import { createPortal } from 'react-dom';
 import { ImageWithSkeleton } from '@/components/ui/image-with-skeleton';
 import { TiltCard } from '@/components/ui/tilt-card';
+import Image from 'next/image';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
-import { motion, useInView, type Variants } from 'framer-motion';
-import { ArrowRight, Package } from 'lucide-react';
+import { motion, useInView, AnimatePresence, type Variants } from 'framer-motion';
+import { ArrowRight, Package, X, CheckCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { IndustrialSpinner } from '@/components/ui/industrial-spinner';
 import { useLocale } from '@/hooks/useLocale';
@@ -18,9 +20,17 @@ interface Product {
   nameAr: string;
   nameEn: string;
   nameTr: string;
+  descriptionAr?: string;
+  descriptionEn?: string;
+  descriptionTr?: string;
+  shortDescAr?: string;
+  shortDescEn?: string;
+  shortDescTr?: string;
   slug: string;
   images: string[];
   isFeatured: boolean;
+  specifications?: Record<string, string>;
+  features?: string[];
   category?: {
     id: string;
     nameAr: string;
@@ -28,6 +38,10 @@ interface Product {
     nameTr: string;
     slug: string;
   };
+}
+
+interface ProductDetail extends Product {
+  relatedProducts?: Product[];
 }
 
 export const ProductsSection = memo(function ProductsSection() {
@@ -38,6 +52,8 @@ export const ProductsSection = memo(function ProductsSection() {
 
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
+  const [drawerProduct, setDrawerProduct] = useState<ProductDetail | null>(null);
+  const [drawerLoading, setDrawerLoading] = useState(false);
 
   useEffect(() => {
     async function fetchProducts() {
@@ -55,6 +71,42 @@ export const ProductsSection = memo(function ProductsSection() {
     }
     fetchProducts();
   }, []);
+
+  // Open drawer with full product details
+  const openDrawer = useCallback(async (slug: string) => {
+    setDrawerLoading(true);
+    setDrawerProduct(null);
+    try {
+      const res = await fetch(`/api/public/products/${slug}`);
+      if (res.ok) {
+        const data = await res.json();
+        setDrawerProduct(data);
+      }
+    } catch (e) { console.error(e); }
+    finally { setDrawerLoading(false); }
+  }, []);
+
+  const closeDrawer = useCallback(() => {
+    setDrawerProduct(null);
+  }, []);
+
+  // Lock scroll when drawer open
+  useEffect(() => {
+    if (drawerProduct || drawerLoading) {
+      document.body.style.overflow = 'hidden';
+      const navbar = document.querySelector('header');
+      if (navbar) (navbar as HTMLElement).style.zIndex = '0';
+    } else {
+      document.body.style.overflow = '';
+      const navbar = document.querySelector('header');
+      if (navbar) (navbar as HTMLElement).style.zIndex = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+      const navbar = document.querySelector('header');
+      if (navbar) (navbar as HTMLElement).style.zIndex = '';
+    };
+  }, [drawerProduct, drawerLoading]);
 
   const getName = (product: Product) => {
     if (locale === 'ar') return product.nameAr;
@@ -179,7 +231,7 @@ export const ProductsSection = memo(function ProductsSection() {
                 variants={cardVariants}
               >
                 <TiltCard className="h-full">
-                <Link href={`/products/${product.slug}`} className="block h-full">
+                <div onClick={() => openDrawer(product.slug)} className="block h-full cursor-pointer">
                   <div className="group relative overflow-hidden h-full border border-primary/20 hover:border-primary/60 hover:shadow-elevation-3 transition-all duration-500">
                     {/* Image */}
                     <div className="relative aspect-[4/3] overflow-hidden">
@@ -234,7 +286,7 @@ export const ProductsSection = memo(function ProductsSection() {
                       isRTL ? "right-0" : "left-0"
                     )} />
                   </div>
-                </Link>
+                </div>
                 </TiltCard>
               </motion.div>
             ))}
@@ -258,14 +310,135 @@ export const ProductsSection = memo(function ProductsSection() {
                 {t('products.browseAll') || 'تصفح جميع المنتجات'}
               </Link>
             </Button>
-            <Button variant="industrial" size="lg" asChild>
-              <Link href="/contact">
-                {t('products.requestQuote') || 'طلب عرض سعر'}
-              </Link>
-            </Button>
           </div>
         </motion.div>
       </div>
+
+      {/* Product Drawer */}
+      {typeof document !== 'undefined' && createPortal(
+        <AnimatePresence>
+          {(drawerProduct || drawerLoading) && (
+            <>
+              <motion.div
+                className="fixed inset-0 bg-black/70 backdrop-blur-sm z-[100]"
+                initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+                onClick={closeDrawer}
+              />
+              <motion.div
+                className={cn(
+                  'fixed z-[101] bg-white overflow-y-auto overscroll-contain shadow-2xl',
+                  'inset-x-0 bottom-0 top-[5vh] rounded-t-2xl',
+                  'md:inset-y-0 md:rounded-none md:top-0',
+                  isRTL ? 'md:left-0 md:right-auto md:w-[65vw] xl:w-[55vw]' : 'md:right-0 md:left-auto md:w-[65vw] xl:w-[55vw]'
+                )}
+                initial={{ x: isRTL ? '-100%' : '100%' }}
+                animate={{ x: 0 }}
+                exit={{ x: isRTL ? '-100%' : '100%' }}
+                transition={{ type: 'spring', damping: 30, stiffness: 300 }}
+              >
+                <button onClick={closeDrawer}
+                  className="absolute top-4 right-4 md:top-6 md:right-6 z-20 w-10 h-10 flex items-center justify-center bg-white/90 backdrop-blur-sm border border-neutral-200 hover:border-primary rounded-full shadow-md">
+                  <X size={18} className="text-steel-900" />
+                </button>
+
+                {drawerLoading ? (
+                  <div className="flex items-center justify-center h-full">
+                    <IndustrialSpinner size="md" />
+                  </div>
+                ) : drawerProduct ? (
+                  <>
+                    {/* Image */}
+                    <div className="relative h-64 md:h-80 bg-neutral-50 overflow-hidden">
+                      <Image
+                        src={drawerProduct.images?.[0] || '/images/placeholders/product.jpg'}
+                        alt={getName(drawerProduct)}
+                        fill
+                        className="object-contain p-6"
+                        sizes="(max-width: 768px) 100vw, 55vw"
+                      />
+                    </div>
+
+                    {/* Name + Category */}
+                    <div className="px-5 md:px-8 py-4 border-b border-neutral-100">
+                      {drawerProduct.category && (
+                        <span className="text-xs text-primary font-bold uppercase tracking-wider">
+                          {getCategoryName(drawerProduct.category)}
+                        </span>
+                      )}
+                      <h3 className="text-xl md:text-2xl font-black text-steel-900 uppercase mt-1">
+                        {getName(drawerProduct)}
+                      </h3>
+                    </div>
+
+                    {/* Content - two columns */}
+                    <div className="p-5 md:p-8">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        {/* Col 1: Description + Features */}
+                        <div>
+                          {(() => {
+                            const desc = locale === 'ar' ? drawerProduct.descriptionAr : locale === 'tr' ? drawerProduct.descriptionTr : drawerProduct.descriptionEn;
+                            return desc ? <p className="text-neutral-600 text-sm leading-relaxed mb-4">{desc}</p> : null;
+                          })()}
+
+                          {drawerProduct.features && drawerProduct.features.length > 0 && (
+                            <div>
+                              <span className="text-primary text-[10px] font-bold uppercase tracking-[0.15em] mb-2 block">
+                                {locale === 'ar' ? 'المميزات' : 'FEATURES'}
+                              </span>
+                              <div className="space-y-1.5">
+                                {drawerProduct.features.map((f: string, i: number) => (
+                                  <div key={i} className="flex items-start gap-2 text-xs text-neutral-600">
+                                    <CheckCircle size={12} className="text-primary mt-0.5 shrink-0" />
+                                    {f}
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          )}
+                        </div>
+
+                        {/* Col 2: Specifications */}
+                        {drawerProduct.specifications && Object.keys(drawerProduct.specifications).length > 0 && (
+                          <div>
+                            <span className="text-primary text-[10px] font-bold uppercase tracking-[0.15em] mb-2 block">
+                              {locale === 'ar' ? 'المواصفات الفنية' : 'SPECIFICATIONS'}
+                            </span>
+                            <div className="border border-neutral-200 divide-y divide-neutral-100">
+                              {Object.entries(drawerProduct.specifications).map(([key, val]) => (
+                                <div key={key} className={cn("flex justify-between px-3 py-2 text-xs", isRTL && "flex-row-reverse")}>
+                                  <span className="text-neutral-400 capitalize">{key.replace(/_/g, ' ')}</span>
+                                  <span className="text-steel-900 font-semibold">{String(val)}</span>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Additional images */}
+                      {drawerProduct.images && drawerProduct.images.length > 1 && (
+                        <div className="mt-6">
+                          <span className="text-primary text-[10px] font-bold uppercase tracking-[0.15em] mb-2 block">
+                            {locale === 'ar' ? 'صور إضافية' : 'MORE IMAGES'}
+                          </span>
+                          <div className="flex gap-2 overflow-x-auto">
+                            {drawerProduct.images.slice(1).map((img: string, i: number) => (
+                              <div key={i} className="relative w-24 h-24 shrink-0 bg-neutral-50 border border-neutral-200">
+                                <Image src={img} alt="" fill className="object-contain p-2" sizes="96px" />
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </>
+                ) : null}
+              </motion.div>
+            </>
+          )}
+        </AnimatePresence>,
+        document.body
+      )}
     </section>
   );
 });

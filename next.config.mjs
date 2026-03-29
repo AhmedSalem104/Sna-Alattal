@@ -13,6 +13,7 @@ const nextConfig = {
 
   // Performance optimizations
   reactStrictMode: true,
+  swcMinify: true,
   compress: true,
   poweredByHeader: false,
 
@@ -53,7 +54,14 @@ const nextConfig = {
 
   // Experimental features for better performance
   experimental: {
-    optimizePackageImports: ['framer-motion', 'lucide-react', '@radix-ui/react-icons'],
+    optimizePackageImports: [
+      'framer-motion',
+      'lucide-react',
+      '@radix-ui/react-icons',
+      'date-fns',
+      'embla-carousel-react',
+      'embla-carousel-autoplay',
+    ],
   },
   // Remove console.log in production builds
   compiler: {
@@ -100,6 +108,7 @@ const nextConfig = {
         ],
       },
       {
+        // Static image assets - aggressive caching
         source: '/images/:path*',
         headers: [
           {
@@ -118,11 +127,52 @@ const nextConfig = {
         ],
       },
       {
+        // Next.js static assets (JS/CSS chunks) - immutable
         source: '/_next/static/:path*',
         headers: [
           {
             key: 'Cache-Control',
             value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+      {
+        // Font files - aggressive caching
+        source: '/fonts/:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+      {
+        // Next.js optimized images - long cache with revalidation
+        source: '/_next/image/:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=86400, stale-while-revalidate=604800',
+          },
+        ],
+      },
+      {
+        // SVG and icon assets
+        source: '/:path*.svg',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+      {
+        // Manifest and other static JSON
+        source: '/manifest.json',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=86400, stale-while-revalidate=604800',
           },
         ],
       },

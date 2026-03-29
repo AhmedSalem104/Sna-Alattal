@@ -421,6 +421,7 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
                         fill
                         sizes="(max-width: 768px) 50vw, 25vw"
                         className="object-cover group-hover:scale-105 transition-transform"
+                        loading="lazy"
                       />
                     </div>
                     <div className="p-4">

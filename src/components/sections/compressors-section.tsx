@@ -171,7 +171,7 @@ export const CompressorsSection = memo(function CompressorsSection() {
                 variants={cardVariants}
               >
                 <TiltCard className="h-full">
-                <Link href={`/compressors/${compressor.slug}`} className="block h-full">
+                <Link href="/compressors" className="block h-full">
                   <div className="group relative overflow-hidden h-full border border-primary/20 hover:border-primary/60 hover:shadow-elevation-3 transition-all duration-500">
                     {/* Image */}
                     <div className="relative aspect-[4/3] overflow-hidden">
@@ -244,11 +244,6 @@ export const CompressorsSection = memo(function CompressorsSection() {
             <Button variant="outline" size="lg" asChild>
               <Link href="/compressors">
                 {t('compressors.viewAll')}
-              </Link>
-            </Button>
-            <Button variant="industrial" size="lg" asChild>
-              <Link href="/contact">
-                {t('compressors.requestQuote')}
               </Link>
             </Button>
           </div>

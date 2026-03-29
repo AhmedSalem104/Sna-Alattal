@@ -11,7 +11,7 @@
     "shortDescAr": "كفاءة عالية وتوفير في الطاقة بمفهوم تصميم متطور",
     "shortDescEn": "High efficiency, energy saving with advanced design concept",
     "shortDescTr": "Gelişmiş tasarım konseptiyle yüksek verimlilik ve enerji tasarrufu",
-    "image": "/images/compressors/belt-driven.jpg",
+    "image": "/images/compressors/belt-driven-hds.png",
     "features": [
       "High efficiency and energy saving",
       "Different design concept",
@@ -157,7 +157,7 @@
     "shortDescAr": "بدون سير - كفاءة أعلى ونقل أفضل للطاقة",
     "shortDescEn": "No belt - higher efficiency and better energy transmission",
     "shortDescTr": "Kayışsız - daha yüksek verimlilik ve daha iyi enerji iletimi",
-    "image": "/images/compressors/direct-connected.jpg",
+    "image": "/images/compressors/direct-connected-open.png",
     "features": [
       "No belt - zero belt wear",
       "Higher efficiency than belt-driven",
@@ -291,7 +291,7 @@
     "shortDescAr": "وحدة متكاملة: ضاغط + مجفف + خزان في جهاز واحد",
     "shortDescEn": "All-in-one unit: compressor + dryer + tank in one device",
     "shortDescTr": "Hepsi bir arada: kompresör + kurutucu + tank tek cihazda",
-    "image": "/images/compressors/integrated.jpg",
+    "image": "/images/compressors/integrated-station.png",
     "features": [
       "All-in-one integrated unit",
       "Built-in air dryer",
@@ -581,7 +581,7 @@
     "shortDescAr": "ضغط خرج أعلى واستقرار أكبر للتطبيقات المتخصصة",
     "shortDescEn": "Higher output pressure and greater stability for specialized applications",
     "shortDescTr": "Özel uygulamalar için daha yüksek çıkış basıncı ve daha fazla kararlılık",
-    "image": "/images/compressors/booster.jpg",
+    "image": "/images/compressors/booster-cylinders.png",
     "features": [
       "Higher output pressure",
       "More stable pressure delivery",
@@ -700,7 +700,7 @@
     "shortDescAr": "دقة ترشيح عالية ومقاومة للحرارة وعمر طويل",
     "shortDescEn": "High filter fineness, heat resistant, and long life",
     "shortDescTr": "Yüksek filtreleme inceliği, ısıya dayanıklı ve uzun ömürlü",
-    "image": "/images/compressors/precision-filter.jpg",
+    "image": "/images/compressors/precision-filters.png",
     "features": [
       "High filter fineness",
       "High temperature resistance",
@@ -823,7 +823,7 @@
     "shortDescAr": "إزالة الرطوبة من الهواء المضغوط بتقنية التبريد",
     "shortDescEn": "Moisture removal from compressed air using refrigeration technology",
     "shortDescTr": "Soğutma teknolojisi ile basınçlı havadan nem giderme",
-    "image": "/images/compressors/air-dryer.jpg",
+    "image": "/images/compressors/integrated-station.png",
     "features": [
       "Physical principle moisture removal",
       "Refrigerated drying technology",

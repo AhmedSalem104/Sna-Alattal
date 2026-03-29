@@ -479,7 +479,7 @@ export function HeroSection() {
   return (
     <section
       ref={containerRef}
-      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-steel-900"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-steel-900 -mt-[80px] pt-[80px] md:-mt-[90px] md:pt-[90px]"
       dir={isRTL ? 'rtl' : 'ltr'}
     >
       {/* Modern Gradient Background with Parallax Orbs (GEA-inspired) */}
@@ -524,7 +524,7 @@ export function HeroSection() {
                     <div className="absolute inset-0">
                       {/* Overlay - none for direct video, light for youtube, full for images */}
                       {!isDirectVideo && (
-                        <div className={`absolute inset-0 z-10 ${isAnyVideo ? 'bg-gradient-to-b from-steel-900/30 via-transparent to-steel-900/50' : 'bg-gradient-to-b from-steel-900/80 via-steel-900/50 to-steel-900'}`} />
+                        <div className={`absolute inset-0 z-10 ${isAnyVideo ? 'bg-gradient-to-b from-steel-900/30 via-transparent to-steel-900/50' : 'bg-gradient-to-b from-steel-900/50 via-steel-900/30 to-steel-900/70'}`} />
                       )}
                       {isDirectVideo ? (
                         /* Direct Video Background - no zoom, clean display */
@@ -584,7 +584,7 @@ export function HeroSection() {
                           alt={getLocalizedField(slide, 'title', locale)}
                           fill
                           sizes="100vw"
-                          className="object-cover"
+                          className="object-cover object-top"
                           priority={index === 0}
                           loading={index === 0 ? 'eager' : 'lazy'}
                           fetchPriority={index === 0 ? 'high' : 'auto'}

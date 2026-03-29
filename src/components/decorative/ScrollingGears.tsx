@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect, useRef, useMemo } from 'react';
 
 /* ── Gear SVG path generator ── */
 function gearPath(cx: number, cy: number, outerR: number, teeth: number): string {
@@ -56,24 +56,31 @@ const GEARS: GearDef[] = [
 ];
 
 export function ScrollingGears() {
-  const [scrollY, setScrollY] = useState(0);
+  const containerRef = useRef<HTMLDivElement>(null);
 
+  // Update a single CSS custom property on scroll -- zero React re-renders
   useEffect(() => {
     let ticking = false;
     const onScroll = () => {
       if (!ticking) {
         requestAnimationFrame(() => {
-          setScrollY(window.scrollY);
+          if (containerRef.current) {
+            containerRef.current.style.setProperty('--scroll-y', String(window.scrollY));
+          }
           ticking = false;
         });
         ticking = true;
       }
     };
     window.addEventListener('scroll', onScroll, { passive: true });
+    // Set initial value
+    if (containerRef.current) {
+      containerRef.current.style.setProperty('--scroll-y', String(window.scrollY));
+    }
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  // Pre-compute gear paths
+  // Pre-compute gear paths (only once, never changes)
   const gearPaths = useMemo(() => {
     return GEARS.map((g) => {
       const cx = g.size / 2;
@@ -91,20 +98,23 @@ export function ScrollingGears() {
 
   return (
     <div
+      ref={containerRef}
       className="fixed inset-0 z-0 pointer-events-none overflow-hidden"
       aria-hidden="true"
-      style={{ contain: 'layout style paint' }}
+      style={{ contain: 'layout style paint' } as React.CSSProperties}
     >
       {GEARS.map((gear, i) => {
-        const rotation = scrollY * gear.speed * (gear.reverse ? -1 : 1);
         const paths = gearPaths[i];
+        // Speed factor baked into CSS calc: scrollY * speed * direction
+        const speedFactor = gear.speed * (gear.reverse ? -1 : 1);
         const posStyle: React.CSSProperties = {
           position: 'absolute',
           top: `${gear.y}vh`,
           [gear.side]: gear.x,
           width: gear.size,
           height: gear.size,
-          transform: `rotate(${rotation}deg)`,
+          // CSS-driven rotation: no React re-render on scroll
+          transform: `rotate(calc(var(--scroll-y, 0) * ${speedFactor} * 1deg))`,
           willChange: 'transform',
           opacity: gear.opacity,
         };

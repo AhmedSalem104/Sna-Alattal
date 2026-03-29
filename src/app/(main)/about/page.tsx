@@ -138,6 +138,7 @@ export default function AboutPage() {
                     fill
                     sizes="(max-width: 1024px) 100vw, 50vw"
                     className="object-cover"
+                    loading="lazy"
                   />
                 </div>
                 {/* Experience Badge */}

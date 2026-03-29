@@ -157,7 +157,13 @@
       "Bash(pip3 install:*)",
       "Bash(python3 -c \":*)",
       "Bash(cp \"/c/Users/B-SMART/Desktop/WhatsApp Video 2026-03-03 at 12.05.16 PM.mp4\" \"/c/Users/B-SMART/Desktop/Al-attal S.N.A/Sna-Alattal/public/videos/hero-slide.mp4\")",
-      "Bash(cp \"/c/Users/B-SMART/Desktop/nazeer .mp4\" \"/c/Users/B-SMART/Desktop/Al-attal S.N.A/Sna-Alattal/public/videos/about-story.mp4\")"
+      "Bash(cp \"/c/Users/B-SMART/Desktop/nazeer .mp4\" \"/c/Users/B-SMART/Desktop/Al-attal S.N.A/Sna-Alattal/public/videos/about-story.mp4\")",
+      "Bash(cp \"/c/Users/B-SMART/Pictures/Screenshots/Screenshot 2026-03-29 191102.png\" hero-world-leading.png)",
+      "Bash(cp \"/c/Users/B-SMART/Pictures/Screenshots/Screenshot 2026-03-29 191133.png\" belt-driven-hds.png)",
+      "Bash(cp \"/c/Users/B-SMART/Pictures/Screenshots/Screenshot 2026-03-29 191155.png\" direct-connected-open.png)",
+      "Bash(cp \"/c/Users/B-SMART/Pictures/Screenshots/Screenshot 2026-03-29 191213.png\" integrated-station.png)",
+      "Bash(cp \"/c/Users/B-SMART/Pictures/Screenshots/Screenshot 2026-03-29 191237.png\" booster-cylinders.png)",
+      "Bash(wc:*)"
     ]
   }
 }
