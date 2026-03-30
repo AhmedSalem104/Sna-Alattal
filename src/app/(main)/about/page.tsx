@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
@@ -14,11 +14,11 @@ import {
   Globe,
   Factory,
   Calendar,
-  Loader2
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useLocale } from '@/hooks/useLocale';
 import { getLocalizedField } from '@/lib/locale-helpers';
+import { getSettings } from '@/lib/static-data';
 
 
 interface TimelineItem {
@@ -30,12 +30,12 @@ interface TimelineItem {
 
 // Fallback timeline data (used if settings not yet populated)
 const defaultTimeline: TimelineItem[] = [
-  { year: '1994', eventAr: 'تأسيس شركة S.N.A العطال في مصر', eventEn: 'Founded S.N.A Al-Attal in Egypt', eventTr: 'Mısır\'da S.N.A Al-Attal kuruldu' },
-  { year: '2000', eventAr: 'التوسع في خطوط الإنتاج', eventEn: 'Expanded production lines', eventTr: 'Üretim hatları genişletildi' },
-  { year: '2010', eventAr: 'افتتاح فرع تركيا', eventEn: 'Opened Turkey branch', eventTr: 'Türkiye şubesi açıldı' },
-  { year: '2015', eventAr: 'الحصول على شهادة ISO 9001', eventEn: 'Achieved ISO 9001 certification', eventTr: 'ISO 9001 sertifikası alındı' },
-  { year: '2020', eventAr: 'تصدير لأكثر من 15 دولة', eventEn: 'Exporting to 15+ countries', eventTr: '15+ ülkeye ihracat' },
-  { year: '2024', eventAr: 'مشاريع جديدة في الخليج العربي', eventEn: 'New projects in Gulf region', eventTr: 'Körfez bölgesinde yeni projeler' },
+  { year: '1997', eventAr: 'تأسيس شركة العتال للصناعات الهندسية SNA في سوريا، حلب', eventEn: 'Founded S.N.A Alattal Company for Engineering Industries in Syria, Aleppo', eventTr: 'S.N.A Al-Attal Mühendislik Sanayi Suriye Halep\'te kuruldu' },
+  { year: '2005', eventAr: 'التوسع في خطوط إنتاج المياه المعدنية والعصائر', eventEn: 'Expanded production lines for mineral water and juices', eventTr: 'Maden suyu ve meyve suyu üretim hatları genişletildi' },
+  { year: '2010', eventAr: 'الحصول على شهادات ISO 9001 و CE و SGS', eventEn: 'Achieved ISO 9001, CE, and SGS certifications', eventTr: 'ISO 9001, CE ve SGS sertifikaları alındı' },
+  { year: '2013', eventAr: 'نقل النشاط التجاري والصناعي إلى جمهورية مصر العربية - العاشر من رمضان', eventEn: 'Transferred commercial and industrial activities to Egypt - 10th of Ramadan City', eventTr: 'Ticari ve endüstriyel faaliyetler Mısır\'a taşındı - 10. Ramazan Şehri' },
+  { year: '2018', eventAr: 'افتتاح فرع إسطنبول - تركيا', eventEn: 'Opened Istanbul branch - Turkey', eventTr: 'İstanbul şubesi açıldı - Türkiye' },
+  { year: '2024', eventAr: 'إطلاق كانز PET الشفاف الجديد وتوسع في الأسواق الإقليمية', eventEn: 'Launched new transparent PET Cans and expanded to regional markets', eventTr: 'Yeni şeffaf PET kutular piyasaya sürüldü ve bölgesel pazarlara genişleme' },
 ];
 
 const values = [
@@ -64,36 +64,20 @@ const values = [
 export default function AboutPage() {
   const t = useTranslations('aboutPage');
   const { locale, isRTL } = useLocale();
-  const [timeline, setTimeline] = useState<TimelineItem[]>(defaultTimeline);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    async function fetchTimeline() {
-      try {
-        const res = await fetch('/api/public/settings?group=timeline');
-        if (res.ok) {
-          const data = await res.json();
-          if (data.company_timeline && Array.isArray(data.company_timeline) && data.company_timeline.length > 0) {
-            setTimeline(data.company_timeline);
-          }
-        }
-      } catch (error) {
-        console.error('Error fetching timeline:', error);
-        // Keep using default timeline
-      } finally {
-        setLoading(false);
-      }
+  const [timeline] = useState<TimelineItem[]>(() => {
+    const data = getSettings('timeline') as Record<string, unknown> | null;
+    if (data?.company_timeline && Array.isArray(data.company_timeline) && data.company_timeline.length > 0) {
+      return data.company_timeline as TimelineItem[];
     }
-
-    fetchTimeline();
-  }, []);
+    return defaultTimeline;
+  });
 
   const getEvent = (item: TimelineItem) => getLocalizedField(item, 'event', locale);
 
   return (
     <>
       {/* Hero Section */}
-      <section className="relative py-32 bg-gradient-to-b from-primary/20 via-white to-white overflow-hidden">
+      <section className="relative py-20 md:py-24 bg-gradient-to-b from-primary/20 via-white to-white overflow-hidden">
         <div className="absolute inset-0">
           <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl" />
           <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-primary/5 rounded-full blur-3xl" />
@@ -121,9 +105,9 @@ export default function AboutPage() {
 
 
       {/* Story Section */}
-      <section className="py-20">
+      <section className="py-12 md:py-16">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -131,7 +115,7 @@ export default function AboutPage() {
               transition={{ duration: 0.6 }}
             >
               <div className="relative">
-                <div className="relative h-96 rounded-2xl overflow-hidden">
+                <div className="relative h-64 md:h-96 rounded-2xl overflow-hidden">
                   <Image
                     src="/images/about/factory.jpg"
                     alt="S.N.A Al-Attal Factory"
@@ -185,7 +169,7 @@ export default function AboutPage() {
 
 
       {/* Vision & Mission */}
-      <section className="py-20 bg-neutral-50">
+      <section className="py-12 md:py-16 bg-neutral-50">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* Vision */}
@@ -222,7 +206,7 @@ export default function AboutPage() {
 
 
       {/* Values */}
-      <section className="py-20">
+      <section className="py-12 md:py-16">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -261,7 +245,7 @@ export default function AboutPage() {
 
 
       {/* Timeline */}
-      <section className="py-20 bg-neutral-50">
+      <section className="py-12 md:py-16 bg-neutral-50">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -276,11 +260,6 @@ export default function AboutPage() {
           </motion.div>
 
           <div className="max-w-4xl mx-auto">
-            {loading ? (
-              <div className="flex items-center justify-center py-12">
-                <Loader2 className="w-8 h-8 animate-spin text-primary" />
-              </div>
-            ) : (
               <div className="relative">
                 {/* Timeline Line - Left on mobile, center on desktop */}
                 <div className="absolute top-0 bottom-0 left-4 md:left-1/2 w-px bg-primary/30 md:transform md:translate-x-1/2" />
@@ -310,14 +289,13 @@ export default function AboutPage() {
                   </motion.div>
                 ))}
               </div>
-            )}
           </div>
         </div>
       </section>
 
 
       {/* CTA */}
-      <section className="py-20 bg-gradient-to-r from-primary/20 via-white to-primary/20">
+      <section className="py-10 md:py-14 bg-gradient-to-r from-primary/20 via-white to-primary/20">
         <div className="container mx-auto px-4 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -327,7 +305,7 @@ export default function AboutPage() {
             <h2 className="text-3xl md:text-4xl font-bold text-neutral-900 mb-4">
               {t('cta.title')}
             </h2>
-            <p className="text-neutral-700 mb-8 max-w-2xl mx-auto">
+            <p className="text-neutral-700 mb-6 max-w-2xl mx-auto">
               {t('cta.subtitle')}
             </p>
             <Link href="/contact">

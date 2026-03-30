@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { motion } from 'framer-motion';
 import { useForm } from 'react-hook-form';
@@ -15,7 +15,6 @@ import {
   MessageSquare,
   Building2,
   Globe,
-  Loader2
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -30,6 +29,7 @@ import {
 } from '@/components/ui/select';
 import { useLocale } from '@/hooks/useLocale';
 import { getLocalizedField } from '@/lib/locale-helpers';
+import { getSettings } from '@/lib/static-data';
 
 
 const contactSchema = z.object({
@@ -63,11 +63,11 @@ const defaultOffices: Office[] = [
     nameAr: 'المقر الرئيسي - مصر',
     nameEn: 'Headquarters - Egypt',
     nameTr: 'Genel Merkez - Mısır',
-    addressAr: 'ب4، ثان، العاشر من رمضان، مدينة العاشر من رمضان، 44634، EG',
-    addressEn: 'B4, 2nd, 10th of Ramadan, 10th of Ramadan City, 44634, EG',
-    addressTr: 'B4, 2., 10. Ramazan, 10. Ramazan Şehri, 44634, EG',
-    phone: '01032221038',
-    email: 'snaalattal@gmail.com',
+    addressAr: 'مدينة العاشر من رمضان — المنطقة الصناعية B4 — قطعة 183',
+    addressEn: '10th of Ramadan City, Industrial Zone B4, Plot 183',
+    addressTr: '10. Ramazan Şehri, B4 Sanayi Bölgesi, Parsel 183',
+    phone: '+201032221038 / +20554501557',
+    email: 'info@snalattal.com',
     hours: '8:00 AM - 5:00 PM (Sun-Thu)',
   },
   {
@@ -75,12 +75,24 @@ const defaultOffices: Office[] = [
     nameAr: 'فرع تركيا',
     nameEn: 'Turkey Branch',
     nameTr: 'Türkiye Şubesi',
-    addressAr: 'إسطنبول، تركيا',
-    addressEn: 'Istanbul, Turkey',
-    addressTr: 'İstanbul, Türkiye',
-    phone: '+90 212 345 6789',
-    email: 'snaalattal@gmail.com',
+    addressAr: 'إسطنبول، ديميركابي',
+    addressEn: 'Istanbul City, Demirkapi',
+    addressTr: 'İstanbul, Demirkapı',
+    phone: '',
+    email: 'info@snalattal.com',
     hours: '9:00 - 18:00 (Mon-Fri)',
+  },
+  {
+    country: 'syria',
+    nameAr: 'فرع سوريا',
+    nameEn: 'Syria Branch',
+    nameTr: 'Suriye Şubesi',
+    addressAr: 'حلب، ريف المهندسين الأول',
+    addressEn: 'Aleppo City, Rif Mohandiseen Alawal',
+    addressTr: 'Halep, Rif Mühendisler Birinci',
+    phone: '',
+    email: 'info@snalattal.com',
+    hours: '',
   },
 ];
 
@@ -98,8 +110,13 @@ export default function ContactPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [offices, setOffices] = useState<Office[]>(defaultOffices);
-  const [loadingOffices, setLoadingOffices] = useState(true);
+  const [offices] = useState<Office[]>(() => {
+    const data = getSettings('offices') as Record<string, unknown> | null;
+    if (data?.office_locations && Array.isArray(data.office_locations) && data.office_locations.length > 0) {
+      return data.office_locations as Office[];
+    }
+    return defaultOffices;
+  });
 
   const {
     register,
@@ -110,27 +127,6 @@ export default function ContactPage() {
   } = useForm<ContactFormData>({
     resolver: zodResolver(contactSchema),
   });
-
-  useEffect(() => {
-    async function fetchOffices() {
-      try {
-        const res = await fetch('/api/public/settings?group=offices');
-        if (res.ok) {
-          const data = await res.json();
-          if (data.office_locations && Array.isArray(data.office_locations) && data.office_locations.length > 0) {
-            setOffices(data.office_locations);
-          }
-        }
-      } catch (error) {
-        console.error('Error fetching offices:', error);
-        // Keep using default offices
-      } finally {
-        setLoadingOffices(false);
-      }
-    }
-
-    fetchOffices();
-  }, []);
 
   const getOfficeName = (office: Office) => getLocalizedField(office, 'name', locale);
   const getOfficeAddress = (office: Office) => getLocalizedField(office, 'address', locale);
@@ -168,7 +164,7 @@ export default function ContactPage() {
   return (
     <>
       {/* Hero Section */}
-      <section className="relative py-32 bg-gradient-to-b from-primary/20 via-white to-white overflow-hidden">
+      <section className="relative py-20 md:py-24 bg-gradient-to-b from-primary/20 via-white to-white overflow-hidden">
         <div className="absolute inset-0">
           <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl" />
           <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-primary/5 rounded-full blur-3xl" />
@@ -195,9 +191,9 @@ export default function ContactPage() {
       </section>
 
       {/* Contact Info + Form */}
-      <section className="py-20">
+      <section className="py-12 md:py-16">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* Contact Info */}
             <motion.div
               initial={{ opacity: 0, x: -20 }}
@@ -211,12 +207,7 @@ export default function ContactPage() {
               </div>
 
               {/* Offices */}
-              {loadingOffices ? (
-                <div className="flex items-center justify-center py-8">
-                  <Loader2 className="w-6 h-6 animate-spin text-primary" />
-                </div>
-              ) : (
-                offices.map((office, index) => (
+              {offices.map((office, index) => (
                   <div
                     key={index}
                     className="bg-neutral-50 p-6 rounded-2xl border border-neutral-200"
@@ -251,8 +242,7 @@ export default function ContactPage() {
                       </div>
                     </div>
                   </div>
-                ))
-              )}
+                ))}
 
               {/* Quick Contact */}
               <div className="bg-primary/10 p-6 rounded-2xl border border-primary/30">
@@ -280,7 +270,7 @@ export default function ContactPage() {
               viewport={{ once: true }}
               className="lg:col-span-2"
             >
-              <div className="bg-neutral-50 p-8 rounded-2xl border border-neutral-200">
+              <div className="bg-neutral-50 p-4 md:p-8 rounded-2xl border border-neutral-200">
                 <h2 className="text-2xl font-bold text-neutral-900 mb-6">{t('sendMessage')}</h2>
 
                 {isSuccess && (
@@ -440,7 +430,7 @@ export default function ContactPage() {
       </section>
 
       {/* Map Section */}
-      <section className="py-20 bg-neutral-50">
+      <section className="py-12 md:py-16 bg-neutral-50">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}

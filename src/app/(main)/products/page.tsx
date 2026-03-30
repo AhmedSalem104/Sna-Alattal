@@ -1,15 +1,17 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
+import { createPortal } from 'react-dom';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
-import { motion } from 'framer-motion';
-import { Search, ArrowRight, Star, Loader2, Package } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ArrowRight, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import { useLocale } from '@/hooks/useLocale';
 import { getLocalizedField } from '@/lib/locale-helpers';
+import { cn } from '@/lib/utils';
+import { getProducts, getCategories } from '@/lib/static-data';
 
 
 interface Category {
@@ -18,6 +20,9 @@ interface Category {
   nameEn: string;
   nameTr: string;
   slug: string;
+  descriptionAr?: string;
+  descriptionEn?: string;
+  descriptionTr?: string;
   _count?: { products: number };
 }
 
@@ -30,10 +35,16 @@ interface Product {
   shortDescAr?: string;
   shortDescEn?: string;
   shortDescTr?: string;
+  descriptionAr?: string;
+  descriptionEn?: string;
+  descriptionTr?: string;
   images: string[];
   categoryId: string;
   isFeatured: boolean;
   specifications?: Record<string, string>;
+  features?: string[];
+  featuresEn?: string[];
+  models?: Array<Record<string, string>>;
   category?: {
     id: string;
     nameAr: string;
@@ -46,48 +57,29 @@ interface Product {
 export default function ProductsPage() {
   const t = useTranslations('productsPage');
   const { locale, isRTL } = useLocale();
-  const [selectedCategory, setSelectedCategory] = useState('all');
-  const [searchQuery, setSearchQuery] = useState('');
-  const [products, setProducts] = useState<Product[]>([]);
-  const [categories, setCategories] = useState<Category[]>([]);
-  const [loading, setLoading] = useState(true);
+  const isAr = locale === 'ar';
+  const [products] = useState<Product[]>(() => getProducts() as unknown as Product[]);
+  const [categories] = useState<Category[]>(() => getCategories() as unknown as Category[]);
+  const [drawerProduct, setDrawerProduct] = useState<Product | null>(null);
+
+  // Drawer controls
+  const closeDrawer = useCallback(() => setDrawerProduct(null), []);
 
   useEffect(() => {
-    async function fetchData() {
-      try {
-        const [productsRes, categoriesRes] = await Promise.all([
-          fetch('/api/public/products'),
-          fetch('/api/public/categories'),
-        ]);
-
-        if (productsRes.ok) {
-          const productsData = await productsRes.json();
-          setProducts(productsData);
-        }
-
-        if (categoriesRes.ok) {
-          const categoriesData = await categoriesRes.json();
-          setCategories(categoriesData);
-        }
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      } finally {
-        setLoading(false);
-      }
+    if (drawerProduct) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
     }
+    return () => { document.body.style.overflow = ''; };
+  }, [drawerProduct]);
 
-    fetchData();
-  }, []);
-
-  const getName = (item: Product | Category) => getLocalizedField(item, 'name', locale);
-  const getShortDesc = (item: Product) => getLocalizedField(item, 'shortDesc', locale);
-
-  const filteredProducts = products.filter((product) => {
-    const matchesCategory = selectedCategory === 'all' || product.categoryId === selectedCategory;
-    const productName = getName(product).toLowerCase();
-    const matchesSearch = productName.includes(searchQuery.toLowerCase());
-    return matchesCategory && matchesSearch;
-  });
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const getName = (item: any) => getLocalizedField(item, 'name', locale);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const getShortDesc = (item: any) => getLocalizedField(item, 'shortDesc', locale);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const getDesc = (item: any) => getLocalizedField(item, 'description', locale);
 
   const getProductImage = (product: Product) => {
     if (product.images && product.images.length > 0) {
@@ -101,170 +93,183 @@ export default function ProductsPage() {
     return Object.values(product.specifications).slice(0, 3);
   };
 
+  const [activeTab, setActiveTab] = useState<string>('all');
+
+  // Scroll to category on hash change
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.location.hash) {
+      const id = window.location.hash.slice(1);
+      setActiveTab(id);
+      setTimeout(() => {
+        document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 500);
+    }
+  }, []);
+
+  const displayedCategories = activeTab === 'all'
+    ? categories
+    : categories.filter(c => c.id === activeTab);
+
   return (
     <>
-      {/* Hero Section */}
-      <section className="relative py-32 bg-gradient-to-b from-primary/20 via-white to-white overflow-hidden">
-        <div className="absolute inset-0">
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl" />
-          <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-primary/5 rounded-full blur-3xl" />
-        </div>
-
-        <div className="container mx-auto px-4 relative z-10">
+      {/* Compact Header + Tabs */}
+      <section className="pt-20 pb-6 bg-white border-b border-neutral-200 sticky top-0 z-30">
+        <div className="container mx-auto px-4">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-center max-w-3xl mx-auto"
+            className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-5"
           >
-            <span className="inline-block px-4 py-1 bg-primary/20 text-primary rounded-full text-sm mb-4">
-              {t('badge')}
-            </span>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-neutral-900 mb-6">
+            <h1 className="text-2xl md:text-3xl font-bold text-neutral-900">
               {t('title')}
             </h1>
-            <p className="text-xl text-neutral-700">
-              {t('subtitle')}
-            </p>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Filters Section */}
-      <section className="py-8 border-b border-neutral-200">
-        <div className="container mx-auto px-4">
-          <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
-            {/* Search */}
-            <div className="relative w-full md:w-96">
-              <Search className={`absolute ${isRTL ? 'left-3' : 'right-3'} top-1/2 -translate-y-1/2 text-neutral-600`} size={20} />
-              <Input
-                placeholder={t('searchPlaceholder')}
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className={`${isRTL ? 'pl-10' : 'pr-10'} bg-neutral-50 border-neutral-200 text-neutral-900`}
-              />
-            </div>
-
-            {/* Category Filter */}
-            <div className="flex flex-wrap gap-2">
-              <Button
-                variant={selectedCategory === 'all' ? 'gold' : 'outline'}
-                size="sm"
-                onClick={() => setSelectedCategory('all')}
-                className={selectedCategory !== 'all' ? 'border-neutral-300 text-neutral-700 hover:text-primary' : ''}
-              >
-                {t('categories.all')}
+            <Link href="/contact">
+              <Button variant="gold" size="sm">
+                {isAr ? 'طلب عرض سعر' : 'Request Quote'}
+                <ArrowRight size={14} className={cn('ml-1', isRTL && 'rotate-180 mr-1 ml-0')} />
               </Button>
-              {categories.map((category) => (
-                <Button
-                  key={category.id}
-                  variant={selectedCategory === category.id ? 'gold' : 'outline'}
-                  size="sm"
-                  onClick={() => setSelectedCategory(category.id)}
-                  className={selectedCategory !== category.id ? 'border-neutral-300 text-neutral-700 hover:text-primary' : ''}
-                >
-                  {getName(category)}
-                </Button>
-              ))}
-            </div>
+            </Link>
+          </motion.div>
+
+          {/* Category Tabs */}
+          <div className="flex flex-wrap gap-2">
+            <button
+              onClick={() => setActiveTab('all')}
+              className={cn(
+                'px-4 py-2 text-xs font-bold uppercase tracking-wider transition-all duration-300 border',
+                activeTab === 'all'
+                  ? 'bg-primary text-steel-900 border-primary'
+                  : 'bg-white text-neutral-500 border-neutral-200 hover:border-primary/50 hover:text-primary'
+              )}
+            >
+              {isAr ? 'الكل' : 'All'}
+            </button>
+            {categories.map((cat) => (
+              <button
+                key={cat.id}
+                onClick={() => {
+                  setActiveTab(cat.id);
+                  setTimeout(() => {
+                    document.getElementById(cat.id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                  }, 100);
+                }}
+                className={cn(
+                  'px-4 py-2 text-xs font-bold uppercase tracking-wider transition-all duration-300 border',
+                  activeTab === cat.id
+                    ? 'bg-primary text-steel-900 border-primary'
+                    : 'bg-white text-neutral-500 border-neutral-200 hover:border-primary/50 hover:text-primary'
+                )}
+              >
+                {getName(cat)}
+              </button>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Products Grid */}
-      <section className="py-20">
-        <div className="container mx-auto px-4">
-          {loading ? (
-            <div className="flex items-center justify-center py-20">
-              <Loader2 className="w-8 h-8 animate-spin text-primary" />
-            </div>
-          ) : filteredProducts.length === 0 ? (
-            <div className="text-center py-20">
-              <Package size={48} className="mx-auto text-neutral-300 mb-4" />
-              <p className="text-neutral-600 text-xl">{t('noProducts')}</p>
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {filteredProducts.map((product, index) => (
+      {/* Products by Category */}
+      {displayedCategories.map((category, catIndex) => {
+          const categoryProducts = products.filter(p => p.categoryId === category.id);
+          if (categoryProducts.length === 0) return null;
+
+          return (
+            <section
+              key={category.id}
+              id={category.id}
+              className={`py-16 scroll-mt-20 ${catIndex % 2 === 1 ? 'bg-neutral-50' : 'bg-white'}`}
+            >
+              <div className="container mx-auto px-4">
+                {/* Category Header */}
                 <motion.div
-                  key={product.id}
                   initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  className="mb-10"
                 >
-                  <Link href={`/products/${product.slug}`}>
-                    <div className="group relative overflow-hidden hover:shadow-elevation-3 transition-all duration-500">
-                      {/* Featured Badge */}
-                      {product.isFeatured && (
-                        <div className={`absolute top-4 ${isRTL ? 'left-4' : 'right-4'} z-10 flex items-center gap-1 px-3 py-1 bg-primary text-neutral-900 rounded-full text-sm font-medium`}>
-                          <Star size={14} fill="currentColor" />
-                          {t('featured')}
-                        </div>
-                      )}
-
-                      {/* Image */}
-                      <div className="relative h-64 overflow-hidden">
-                        <div className="absolute inset-0 bg-gradient-to-t from-white-50 via-transparent to-transparent z-10" />
-                        <Image
-                          src={getProductImage(product)}
-                          alt={getName(product)}
-                          fill
-                          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                          className="object-cover group-hover:scale-110 transition-transform duration-500"
-                          loading="lazy"
-                        />
-                      </div>
-
-                      {/* Content */}
-                      <div className="p-6">
-                        {/* Category Tag */}
-                        {product.category && (
-                          <span className="inline-block px-2 py-1 bg-primary/10 text-primary text-xs rounded mb-2">
-                            {getLocalizedField(product.category, 'name', locale)}
-                          </span>
-                        )}
-
-                        <h3 className="text-xl font-bold text-neutral-900 mb-2 group-hover:text-primary transition-colors">
-                          {getName(product)}
-                        </h3>
-
-                        {getShortDesc(product) && (
-                          <p className="text-neutral-600 mb-4 line-clamp-2">
-                            {getShortDesc(product)}
-                          </p>
-                        )}
-
-                        {/* Specs */}
-                        {getSpecifications(product).length > 0 && (
-                          <div className="flex flex-wrap gap-2 mb-4">
-                            {getSpecifications(product).map((spec, i) => (
-                              <span
-                                key={i}
-                                className="px-2 py-1 bg-neutral-100 text-neutral-700 text-xs rounded"
-                              >
-                                {spec}
-                              </span>
-                            ))}
-                          </div>
-                        )}
-
-                        {/* CTA */}
-                        <div className="flex items-center text-primary font-medium group-hover:gap-2 transition-all">
-                          <span>{t('viewDetails')}</span>
-                          <ArrowRight size={18} className={`${isRTL ? 'mr-1 rotate-180' : 'ml-1'}`} />
-                        </div>
-                      </div>
-                    </div>
-                  </Link>
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="w-8 h-[2px] bg-primary" />
+                    <span className="text-primary text-xs font-bold uppercase tracking-[0.2em]">
+                      {categoryProducts.length} {isAr ? 'منتجات' : 'Products'}
+                    </span>
+                  </div>
+                  <h2 className="text-2xl md:text-3xl font-bold text-neutral-900 mb-2">
+                    {getName(category)}
+                  </h2>
+                  <p className="text-neutral-600 max-w-2xl">
+                    {getLocalizedField(category as any, 'description', locale)}
+                  </p>
                 </motion.div>
-              ))}
-            </div>
-          )}
-        </div>
-      </section>
+
+                {/* Products Grid */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                  {categoryProducts.map((product, index) => (
+                    <motion.div
+                      key={product.id}
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true, margin: '-50px' }}
+                      transition={{ duration: 0.5, delay: index * 0.08 }}
+                    >
+                      <div
+                        onClick={() => setDrawerProduct(product)}
+                        className="group relative bg-white border border-neutral-200 overflow-hidden hover:border-primary/60 transition-all duration-500 h-full flex flex-col cursor-pointer"
+                      >
+                        {/* Image */}
+                        <div className="relative h-52 overflow-hidden bg-neutral-50">
+                          <Image
+                            src={getProductImage(product)}
+                            alt={getName(product)}
+                            fill
+                            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                            className="object-contain p-4 group-hover:scale-105 transition-transform duration-700"
+                            loading="lazy"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent opacity-80" />
+                        </div>
+
+                        {/* Content */}
+                        <div className="p-5 flex-1 flex flex-col">
+                          <h3 className="text-base font-bold text-neutral-900 mb-1 group-hover:text-primary transition-colors uppercase">
+                            {getName(product)}
+                          </h3>
+
+                          {getShortDesc(product) && (
+                            <p className="text-neutral-500 text-xs mb-3 line-clamp-2">
+                              {getShortDesc(product)}
+                            </p>
+                          )}
+
+                          {/* Specs */}
+                          {getSpecifications(product).length > 0 && (
+                            <div className="flex flex-wrap gap-1.5 mb-4">
+                              {getSpecifications(product).map((spec, i) => (
+                                <span
+                                  key={i}
+                                  className="px-2 py-0.5 bg-primary/10 text-primary text-[10px] font-semibold"
+                                >
+                                  {spec}
+                                </span>
+                              ))}
+                            </div>
+                          )}
+
+                          {/* CTA */}
+                          <div className="flex items-center gap-2 text-primary text-xs font-bold uppercase tracking-wider mt-auto pt-3">
+                            <span>{isAr ? 'استكشف' : 'EXPLORE'}</span>
+                            <ArrowRight size={14} className={isRTL ? 'rotate-180' : ''} />
+                          </div>
+                        </div>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+            </section>
+          );
+        })}
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-primary/20 via-white to-primary/20">
+      <section className="py-10 md:py-14 bg-gradient-to-r from-primary/20 via-white to-primary/20">
         <div className="container mx-auto px-4 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -274,7 +279,7 @@ export default function ProductsPage() {
             <h2 className="text-3xl md:text-4xl font-bold text-neutral-900 mb-4">
               {t('cta.title')}
             </h2>
-            <p className="text-neutral-700 mb-8 max-w-2xl mx-auto">
+            <p className="text-neutral-700 mb-6 max-w-2xl mx-auto">
               {t('cta.subtitle')}
             </p>
             <Link href="/contact">
@@ -286,6 +291,168 @@ export default function ProductsPage() {
           </motion.div>
         </div>
       </section>
+
+      {/* ═══════════════════════════════════════════════════════
+          PRODUCT DRAWER (slide-in panel)
+          ═══════════════════════════════════════════════════════ */}
+      {typeof document !== 'undefined' && createPortal(
+      <AnimatePresence>
+        {drawerProduct && (
+          <>
+            {/* Backdrop */}
+            <motion.div
+              className="fixed inset-0 bg-black/70 backdrop-blur-sm z-[100]"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={closeDrawer}
+            />
+
+            {/* Drawer - side panel */}
+            <motion.div
+              className={cn(
+                'fixed z-[101] bg-white overflow-y-auto overscroll-contain shadow-2xl',
+                'inset-x-0 bottom-0 top-[5vh] rounded-t-2xl',
+                'md:inset-y-0 md:rounded-none md:top-0',
+                isRTL
+                  ? 'md:left-0 md:right-auto md:w-[70vw] lg:w-[65vw] xl:w-[60vw]'
+                  : 'md:right-0 md:left-auto md:w-[70vw] lg:w-[65vw] xl:w-[60vw]'
+              )}
+              initial={{ x: isRTL ? '-100%' : '100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: isRTL ? '-100%' : '100%' }}
+              transition={{ type: 'spring', damping: 30, stiffness: 300 }}
+            >
+              {/* Close button */}
+              <button
+                onClick={closeDrawer}
+                className="absolute top-4 right-4 md:top-6 md:right-6 z-20 w-10 h-10 flex items-center justify-center bg-white/90 backdrop-blur-sm border border-neutral-200 hover:border-primary transition-colors rounded-full shadow-md"
+              >
+                <X size={18} className="text-steel-900" />
+              </button>
+
+              {/* Mobile drag handle */}
+              <div className="md:hidden flex justify-center pt-3 pb-2">
+                <div className="w-10 h-1 bg-neutral-300 rounded-full" />
+              </div>
+
+              {/* Product image */}
+              <div className="relative h-64 md:h-80 bg-neutral-50 overflow-hidden">
+                <Image
+                  src={getProductImage(drawerProduct)}
+                  alt={getName(drawerProduct)}
+                  fill
+                  className="object-contain p-6"
+                  sizes="(max-width: 768px) 100vw, 60vw"
+                />
+              </div>
+
+              {/* Name + category */}
+              <div className="px-5 md:px-8 py-4 border-b border-neutral-100">
+                {drawerProduct.category && (
+                  <span className="text-xs px-3 py-1 bg-primary/10 text-primary font-semibold mb-2 inline-block">
+                    {getName(drawerProduct.category)}
+                  </span>
+                )}
+                <h3 className="text-2xl md:text-3xl font-black text-steel-900 uppercase mb-1">
+                  {getName(drawerProduct)}
+                </h3>
+                <p className="text-neutral-400 text-sm">
+                  {isAr ? drawerProduct.nameEn : drawerProduct.nameAr}
+                </p>
+              </div>
+
+              {/* Content */}
+              <div className="p-5 md:p-8">
+
+                {/* Description */}
+                {getDesc(drawerProduct) && (
+                  <div className="mb-5">
+                    <p className="text-neutral-600 text-sm leading-relaxed">
+                      {getDesc(drawerProduct)}
+                    </p>
+                  </div>
+                )}
+
+                {/* Specifications */}
+                {drawerProduct.specifications && Object.keys(drawerProduct.specifications).length > 0 && (
+                  <div className="mb-5">
+                    <span className="text-primary text-xs font-bold uppercase tracking-[0.15em] mb-2 block">
+                      {isAr ? 'المواصفات' : 'SPECIFICATIONS'}
+                    </span>
+                    <div className="border border-neutral-200 divide-y divide-neutral-100">
+                      {Object.entries(drawerProduct.specifications).map(([key, val]) => (
+                        <div key={key} className={cn("flex justify-between px-4 py-2 text-sm", isAr && "flex-row-reverse")}>
+                          <span className="text-neutral-400 capitalize">{key.replace(/_/g, ' ')}</span>
+                          <span className="text-steel-900 font-semibold">{val}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Models Table */}
+                {drawerProduct.models && drawerProduct.models.length > 0 && (() => {
+                  const headers = Object.keys(drawerProduct.models![0]);
+                  return (
+                    <div className="mb-5">
+                      <span className="text-primary text-xs font-bold uppercase tracking-[0.15em] mb-2 block">
+                        {isAr ? 'الموديلات' : 'MODELS'} ({drawerProduct.models!.length})
+                      </span>
+                      <div className="overflow-x-auto border border-neutral-200 max-h-[300px] overflow-y-auto">
+                        <table className="w-full text-xs">
+                          <thead className="sticky top-0">
+                            <tr className="bg-neutral-100">
+                              {headers.map(h => (
+                                <th key={h} className="px-2 py-1.5 text-steel-900 font-bold uppercase text-start whitespace-nowrap">{h.replace(/_/g, ' ')}</th>
+                              ))}
+                            </tr>
+                          </thead>
+                          <tbody className="divide-y divide-neutral-50">
+                            {drawerProduct.models!.map((model, i) => (
+                              <tr key={i} className="hover:bg-primary/5">
+                                {headers.map(h => (
+                                  <td key={h} className="px-2 py-1 text-neutral-600 whitespace-nowrap">{model[h] || '-'}</td>
+                                ))}
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  );
+                })()}
+
+                {/* Features */}
+                {(() => {
+                  const features = isAr
+                    ? (drawerProduct.features || [])
+                    : (drawerProduct.featuresEn || drawerProduct.features || []);
+                  if (features.length === 0) return null;
+                  return (
+                    <div className="mb-4">
+                      <span className="text-primary text-xs font-bold uppercase tracking-[0.15em]">
+                        {isAr ? 'المميزات' : 'FEATURES'}
+                      </span>
+                      <div className="grid grid-cols-2 gap-x-4 gap-y-2 mt-2">
+                        {features.map((f: string, i: number) => (
+                          <div key={i} className="flex items-start gap-2 text-sm text-neutral-600">
+                            <div className="w-1 h-1 bg-primary rounded-full mt-1.5 shrink-0" />
+                            {f}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  );
+                })()}
+
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>,
+      document.body
+      )}
     </>
   );
 }

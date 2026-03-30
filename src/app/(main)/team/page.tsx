@@ -1,11 +1,12 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import { motion } from 'framer-motion';
-import { Users, Linkedin, Mail, Loader2 } from 'lucide-react';
+import { Users, Linkedin, Mail } from 'lucide-react';
 import { useLocale } from '@/hooks/useLocale';
+import { getTeam } from '@/lib/static-data';
 
 interface TeamMember {
   id: string;
@@ -23,26 +24,8 @@ interface TeamMember {
 export default function TeamPage() {
   const t = useTranslations();
   const { locale, isRTL } = useLocale();
-  const [team, setTeam] = useState<TeamMember[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    async function fetchTeam() {
-      try {
-        const res = await fetch('/api/public/team');
-        if (res.ok) {
-          const data = await res.json();
-          setTeam(data);
-        }
-      } catch (error) {
-        console.error('Error fetching team:', error);
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    fetchTeam();
-  }, []);
+  const [team] = useState<TeamMember[]>(() => getTeam() as TeamMember[]);
+  const loading = false;
 
   const getName = (member: TeamMember) => {
     if (locale === 'ar') return member.nameAr;
@@ -59,7 +42,7 @@ export default function TeamPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="relative py-32 bg-gradient-to-b from-primary/20 via-white to-white overflow-hidden">
+      <section className="relative py-20 md:py-24 bg-gradient-to-b from-primary/20 via-white to-white overflow-hidden">
         <div className="absolute inset-0">
           <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl" />
           <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-primary/5 rounded-full blur-3xl" />
@@ -86,7 +69,7 @@ export default function TeamPage() {
       </section>
 
       {/* Team Grid */}
-      <section className="py-20">
+      <section className="py-12 md:py-16">
         <div className="container mx-auto px-4">
           {loading ? (
             <div className="flex items-center justify-center py-20">

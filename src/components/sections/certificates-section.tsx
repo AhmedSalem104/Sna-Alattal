@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState, useEffect, useMemo } from 'react';
+import { useRef, useState, useMemo } from 'react';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import { motion, useInView } from 'framer-motion';
@@ -8,6 +8,7 @@ import { Award, CheckCircle, Shield } from 'lucide-react';
 import { useLocale } from '@/hooks/useLocale';
 import { IndustrialSpinner } from '@/components/ui/industrial-spinner';
 import { IndustrialRing } from '@/components/decorative';
+import certificatesData from '@/data/certificates.json';
 
 interface Certificate {
   id: string;
@@ -63,26 +64,8 @@ export function CertificatesSection() {
   const { isRTL, locale } = useLocale();
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
-  const [certificates, setCertificates] = useState<Certificate[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchCertificates = async () => {
-      try {
-        const response = await fetch('/api/public/certificates');
-        if (response.ok) {
-          const data = await response.json();
-          setCertificates(data);
-        }
-      } catch (error) {
-        console.error('Error fetching certificates:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchCertificates();
-  }, []);
+  const [certificates] = useState<Certificate[]>(() => (certificatesData as any[]).filter(c => c.isActive && !c.deletedAt).sort((a, b) => (a.order ?? 0) - (b.order ?? 0)) as Certificate[]);
+  const loading = false;
 
   const getName = (cert: Certificate) => {
     switch (locale) {
@@ -116,7 +99,7 @@ export function CertificatesSection() {
   return (
     <section
       ref={ref}
-      className="py-20 lg:py-28 bg-white/80 relative overflow-hidden"
+      className="py-12 lg:py-16 bg-white/80 relative overflow-hidden"
       dir={isRTL ? 'rtl' : 'ltr'}
     >
       {/* Subtle Background */}
@@ -131,7 +114,7 @@ export function CertificatesSection() {
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="text-center max-w-3xl mx-auto mb-16"
+          className="text-center max-w-3xl mx-auto mb-10"
         >
           <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 mb-6">
             <Award size={16} />

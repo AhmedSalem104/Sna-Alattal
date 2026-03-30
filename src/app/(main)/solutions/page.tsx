@@ -1,14 +1,15 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { motion } from 'framer-motion';
-import { ArrowRight, Check, Factory, Beaker, Sparkles, FlaskConical, Loader2, Lightbulb, Cog, Zap, type LucideIcon } from 'lucide-react';
+import { ArrowRight, Check, Factory, Beaker, Sparkles, FlaskConical, Lightbulb, Cog, Zap, type LucideIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useLocale } from '@/hooks/useLocale';
 import { getLocalizedField } from '@/lib/locale-helpers';
+import { getSolutions } from '@/lib/static-data';
 
 
 interface Solution {
@@ -53,26 +54,8 @@ const colorGradients = [
 export default function SolutionsPage() {
   const t = useTranslations('solutionsPage');
   const { locale, isRTL } = useLocale();
-  const [solutions, setSolutions] = useState<Solution[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    async function fetchSolutions() {
-      try {
-        const res = await fetch('/api/public/solutions');
-        if (res.ok) {
-          const data = await res.json();
-          setSolutions(data);
-        }
-      } catch (error) {
-        console.error('Error fetching solutions:', error);
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    fetchSolutions();
-  }, []);
+  const [solutions] = useState<Solution[]>(() => getSolutions() as Solution[]);
+  const loading = false;
 
   const getTitle = (item: Solution) => getLocalizedField(item, 'title', locale);
   const getDescription = (item: Solution) => getLocalizedField(item, 'description', locale);
@@ -101,7 +84,7 @@ export default function SolutionsPage() {
   return (
     <>
       {/* Hero Section */}
-      <section className="relative py-32 bg-gradient-to-b from-primary/20 via-white to-white overflow-hidden">
+      <section className="relative py-20 md:py-24 bg-gradient-to-b from-primary/20 via-white to-white overflow-hidden">
         <div className="absolute inset-0">
           <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl" />
           <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-primary/5 rounded-full blur-3xl" />
@@ -128,7 +111,7 @@ export default function SolutionsPage() {
       </section>
 
       {/* Solutions List */}
-      <section className="py-20">
+      <section className="py-12 md:py-16">
         <div className="container mx-auto px-4">
           {solutions.length === 0 ? (
             <div className="text-center py-20">
@@ -226,7 +209,7 @@ export default function SolutionsPage() {
       </section>
 
       {/* Why Choose Us */}
-      <section className="py-20 bg-neutral-50">
+      <section className="py-12 md:py-16 bg-neutral-50">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -268,7 +251,7 @@ export default function SolutionsPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-primary/20 via-white to-primary/20">
+      <section className="py-10 md:py-14 bg-gradient-to-r from-primary/20 via-white to-primary/20">
         <div className="container mx-auto px-4 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -278,7 +261,7 @@ export default function SolutionsPage() {
             <h2 className="text-3xl md:text-4xl font-bold text-neutral-900 mb-4">
               {t('cta.title')}
             </h2>
-            <p className="text-neutral-700 mb-8 max-w-2xl mx-auto">
+            <p className="text-neutral-700 mb-6 max-w-2xl mx-auto">
               {t('cta.subtitle')}
             </p>
             <Link href="/contact">

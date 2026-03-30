@@ -73,7 +73,7 @@ export const AboutSection = memo(function AboutSection() {
   return (
     <section
       ref={ref}
-      className="py-20 lg:py-28 bg-white/80 relative overflow-hidden"
+      className="py-12 lg:py-16 bg-white/80 relative overflow-hidden"
       dir={isRTL ? 'rtl' : 'ltr'}
     >
       {/* Modern Subtle Background */}
@@ -88,7 +88,7 @@ export const AboutSection = memo(function AboutSection() {
           variants={containerVariants}
           initial="hidden"
           animate={isInView ? 'visible' : 'hidden'}
-          className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center"
+          className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center"
         >
           {/* Image Side */}
           <motion.div variants={imageSlideVariants} className="relative">

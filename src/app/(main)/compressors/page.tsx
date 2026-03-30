@@ -5,11 +5,12 @@ import { createPortal } from 'react-dom';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion, AnimatePresence, useInView } from 'framer-motion';
-import { X, Download, ArrowRight, Loader2, ChevronDown, Factory, Cog, Printer, Package, Gauge, Layers, Wind } from 'lucide-react';
+import { X, Download, ArrowRight, ChevronDown, Factory, Cog, Printer, Package, Gauge, Layers, Wind } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useLocale } from '@/hooks/useLocale';
 import { useCountUp } from '@/hooks/useAnimations';
 import { cn } from '@/lib/utils';
+import { getCompressors } from '@/lib/static-data';
 
 // ─── Types ────────────────────────────────────────────
 interface Compressor {
@@ -228,8 +229,7 @@ export default function CompressorsPage() {
   const { locale, isRTL } = useLocale();
   const isAr = locale === 'ar';
 
-  const [compressors, setCompressors] = useState<Compressor[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [compressors] = useState<Compressor[]>(() => getCompressors() as unknown as Compressor[]);
   const [activeApp, setActiveApp] = useState<ApplicationKey | null>(null);
   const [drawerProduct, setDrawerProduct] = useState<ProductCard | null>(null);
   const [showAllSpecs, setShowAllSpecs] = useState(false);
@@ -237,24 +237,6 @@ export default function CompressorsPage() {
   const gridRef = useRef<HTMLDivElement>(null);
   const statsRef = useRef<HTMLDivElement>(null);
   const statsInView = useInView(statsRef, { once: true, margin: '-100px' });
-
-  // Fetch API data (for models/specs enrichment)
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const res = await fetch('/api/public/compressors');
-        if (res.ok) {
-          const data = await res.json();
-          setCompressors(data);
-        }
-      } catch (e) {
-        console.error(e);
-      } finally {
-        setLoading(false);
-      }
-    }
-    fetchData();
-  }, []);
 
   // Match API compressor to a product card
   // Direct mapping from card key to API slug
@@ -326,67 +308,63 @@ export default function CompressorsPage() {
           <div className="absolute inset-0 bg-gradient-to-b from-steel-900/60 via-steel-900/40 to-steel-900" />
         </div>
 
-        <div className="container mx-auto px-4 sm:px-6 relative z-10 pt-24 pb-20">
-          {/* Badge */}
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="inline-flex items-center gap-2 border border-primary/20 bg-primary/5 px-4 py-1.5 mb-6">
-            <Wind size={14} className="text-primary" />
-            <span className="text-primary text-[10px] md:text-xs font-bold uppercase tracking-[0.25em]">
-              {isAr ? 'ضواغط الهواء اللولبية' : 'SCREW AIR COMPRESSORS'}
-            </span>
-          </motion.div>
+        <div className="container mx-auto px-4 sm:px-6 relative z-10 pt-20 pb-12">
+          <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 items-start">
+            {/* Left: Title + Description (3 cols) */}
+            <div className="lg:col-span-3">
+              {/* Badge */}
+              <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="inline-flex items-center gap-2 border border-primary/20 bg-primary/5 px-3 py-1 mb-4">
+                <Wind size={12} className="text-primary" />
+                <span className="text-primary text-[10px] font-bold uppercase tracking-[0.25em]">
+                  {isAr ? 'ضواغط الهواء اللولبية' : 'SCREW AIR COMPRESSORS'}
+                </span>
+              </motion.div>
 
-          {/* Title */}
-          <motion.h1 initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
-            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white uppercase tracking-tight max-w-4xl mb-6">
-            {isAr ? 'ضواغط الهواء اللولبية الرائدة على مستوى العالم' : 'THE WORLD LEADING SCREW AIR COMPRESSORS'}
-          </motion.h1>
+              {/* Title */}
+              <motion.h1 initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
+                className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-white uppercase tracking-tight mb-4">
+                {isAr ? 'ضواغط الهواء اللولبية الرائدة عالمياً' : 'WORLD LEADING SCREW AIR COMPRESSORS'}
+              </motion.h1>
 
-          {/* Two column: Description + Features */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 mt-10">
-            {/* Left: About text */}
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
-              <p className="text-white/70 text-base md:text-lg leading-relaxed mb-6">
+              <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
+                className="text-white/60 text-sm md:text-base leading-relaxed mb-6 max-w-2xl">
                 {isAr
-                  ? 'تعد شركة SNA العتال من الشركات الرائدة في مجال تصنيع وتركيب وتوريد معدات ضغط الهواء بكافة أشكالها وأحجامها وأنواعها. تتمتع الشركة بسمعة طيبة في السوق بفضل جودة منتجاتها العالية ومتانتها وفعاليتها.'
-                  : 'SNA is a pioneer in the manufacturing, installation, and supply of air compressor equipment in all its shapes, sizes, and types. The company enjoys a strong reputation in the market due to the high quality, durability, and efficiency of its products.'}
-              </p>
-              <p className="text-white/50 text-sm leading-relaxed mb-8">
-                {isAr
-                  ? 'نحن نقدم أفضل التقنيات الأوروبية ذات الأداء الأفضل عالمياً. يتم استخدامها في آلاف الضواغط في العالم، وتشتهر بخلوها من العيوب وأقل تكاليف الصيانة. هدفنا هو تلبية احتياجات الضواغط من الموثوقية الصناعية العالية والكفاءة العالية واستهلاك الطاقة المنخفض.'
-                  : 'We introduce European top technology with best performance in the world. Used in thousands of compressors globally, known for defect-free operation and lowest maintenance costs. Our goal is to satisfy industrial high-reliability, high-efficiency and low-energy compressor needs.'}
-              </p>
+                  ? 'تعد شركة SNA العتال من الشركات الرائدة في تصنيع وتوريد معدات ضغط الهواء. نقدم أفضل التقنيات الأوروبية المعروفة بخلوها من العيوب وأقل تكاليف الصيانة.'
+                  : 'SNA is a pioneer in manufacturing and supplying air compressor equipment. We introduce European top technology known for defect-free operation and lowest maintenance costs.'}
+              </motion.p>
 
               {/* Download */}
-              <a href="/downloads/compressors-catalog.pdf" download="SNA-Compressors-Catalog.pdf"
-                className="inline-flex items-center gap-3 bg-primary hover:bg-primary/90 px-7 py-4 transition-all duration-300 shadow-lg">
-                <Download size={20} className="text-steel-900" />
+              <motion.a initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }}
+                href="/downloads/compressors-catalog.pdf" download="SNA-Compressors-Catalog.pdf"
+                className="inline-flex items-center gap-3 bg-primary hover:bg-primary/90 px-5 py-3 transition-all duration-300 shadow-lg">
+                <Download size={18} className="text-steel-900" />
                 <div>
-                  <div className="text-steel-900 font-bold text-sm uppercase tracking-wider">
+                  <div className="text-steel-900 font-bold text-xs uppercase tracking-wider">
                     {isAr ? 'تحميل الكتالوج' : 'Download Catalog'}
                   </div>
-                  <div className="text-steel-900/50 text-[10px]">PDF • 3.6 MB</div>
+                  <div className="text-steel-900/50 text-[9px]">PDF • 3.6 MB</div>
                 </div>
-              </a>
-          </motion.div>
+              </motion.a>
+            </div>
 
-            {/* Right: Product Features */}
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.35 }}>
-              <h3 className="text-primary text-xs font-bold uppercase tracking-[0.2em] mb-5">
+            {/* Right: Features (2 cols) */}
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="lg:col-span-2">
+              <h3 className="text-primary text-[10px] font-bold uppercase tracking-[0.2em] mb-3">
                 {isAr ? 'مميزات المنتج' : 'PRODUCT FEATURES'}
               </h3>
-              <div className="space-y-4">
+              <div className="space-y-2.5">
                 {[
                   { titleAr: 'صوت منخفض', titleEn: 'Low Noise', descAr: 'نقل الحركة مباشرة دون ضوضاء', descEn: 'Direct driven, without gear noise' },
-                  { titleAr: 'توفير طاقة', titleEn: 'Energy Saving', descAr: 'توفر الطاقة بشكل كبير حيث تصل كل آلة إلى معيار توفير الطاقة العالمي', descEn: 'Greatly saves energy, each machine reaches global energy saving standard' },
-                  { titleAr: 'تصميم خارجي فعال', titleEn: 'High Effective Mainframe', descAr: 'محرك ذو فعالية عالية مع نظام تشغيل مباشر بدون تروس', descEn: 'High effective motor with direct driven system, no gears' },
-                  { titleAr: 'مروحة تبريد متغيرة التردد', titleEn: 'Frequency Conversion Cooling', descAr: 'مروحة تبريد زيت متغيرة التردد لأداء مثالي', descEn: 'Frequency conversion oil-cooling fan for optimal performance' },
-                  { titleAr: 'مصداقية عالية', titleEn: 'High Reliability', descAr: 'منتجات ذات جودة وكفاءة عالية مع النقل المباشر للحركة', descEn: 'Products of high quality and efficiency with direct driven big rotor' },
+                  { titleAr: 'توفير طاقة', titleEn: 'Energy Saving', descAr: 'توفير حتى 30-50% من الطاقة', descEn: 'Saves 30-50% energy' },
+                  { titleAr: 'تصميم فعال', titleEn: 'Effective Design', descAr: 'محرك عالي الكفاءة بدون تروس', descEn: 'High effective motor, no gears' },
+                  { titleAr: 'تبريد متقدم', titleEn: 'Advanced Cooling', descAr: 'مروحة تبريد متغيرة التردد', descEn: 'Variable frequency cooling fan' },
+                  { titleAr: 'مصداقية عالية', titleEn: 'High Reliability', descAr: 'جودة عالية مع النقل المباشر', descEn: 'High quality with direct drive' },
                 ].map((feat, i) => (
-                  <div key={i} className="flex gap-3">
-                    <div className="w-1.5 h-1.5 bg-primary rounded-full mt-2 shrink-0" />
+                  <div key={i} className="flex gap-2.5">
+                    <div className="w-1 h-1 bg-primary rounded-full mt-1.5 shrink-0" />
                     <div>
-                      <h4 className="text-white text-sm font-bold mb-0.5">{isAr ? feat.titleAr : feat.titleEn}</h4>
-                      <p className="text-white/40 text-xs leading-relaxed">{isAr ? feat.descAr : feat.descEn}</p>
+                      <h4 className="text-white text-xs font-bold">{isAr ? feat.titleAr : feat.titleEn}</h4>
+                      <p className="text-white/35 text-[10px] leading-relaxed">{isAr ? feat.descAr : feat.descEn}</p>
                     </div>
                   </div>
                 ))}
@@ -397,34 +375,55 @@ export default function CompressorsPage() {
       </section>
 
       {/* ═══════════════════════════════════════════════════════
-          PRODUCT GRID - ASYMMETRIC LAYOUT
+          APPLICATION FILTER + PRODUCT GRID
           ═══════════════════════════════════════════════════════ */}
-      <section ref={gridRef} className="py-16 md:py-24 scroll-mt-20">
+      <section ref={gridRef} className="py-10 md:py-14 scroll-mt-16">
         <div className="container mx-auto px-4 sm:px-6">
-          {/* Section header */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="mb-12"
-          >
-            <div className="flex items-center gap-3 mb-3">
-              <div className="w-8 h-[2px] bg-primary" />
-              <span className="text-primary text-xs font-bold uppercase tracking-[0.2em]">
-                {isAr ? '\u0645\u0646\u062A\u062C\u0627\u062A\u0646\u0627' : 'OUR PRODUCTS'}
-              </span>
+          {/* Section header + filter */}
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8">
+            <div>
+              <div className="flex items-center gap-3 mb-2">
+                <div className="w-6 h-[2px] bg-primary" />
+                <span className="text-primary text-xs font-bold uppercase tracking-[0.2em]">
+                  {isAr ? 'منتجاتنا' : 'OUR PRODUCTS'}
+                </span>
+              </div>
+              <h2 className="text-xl md:text-3xl font-black text-steel-900 uppercase tracking-tight">
+                {isAr ? 'استكشف المجموعة' : 'EXPLORE THE RANGE'}
+              </h2>
             </div>
-            <h2 className="text-2xl md:text-4xl font-black text-steel-900 uppercase tracking-tight">
-              {isAr ? '\u0627\u0633\u062A\u0643\u0634\u0641 \u0627\u0644\u0645\u062C\u0645\u0648\u0639\u0629' : 'EXPLORE THE RANGE'}
-            </h2>
-          </motion.div>
 
-          {loading ? (
-            <div className="flex items-center justify-center py-32">
-              <Loader2 className="w-8 h-8 animate-spin text-primary" />
+            {/* Application Filter Tabs */}
+            <div className="flex flex-wrap gap-1.5">
+              <button
+                onClick={() => setActiveApp(null)}
+                className={cn(
+                  'px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider transition-all duration-300 border',
+                  !activeApp
+                    ? 'bg-primary text-steel-900 border-primary'
+                    : 'bg-white text-neutral-400 border-neutral-200 hover:border-primary/50 hover:text-primary'
+                )}
+              >
+                {isAr ? 'الكل' : 'All'}
+              </button>
+              {APPLICATIONS.map(app => (
+                <button
+                  key={app.key}
+                  onClick={() => handleAppClick(app.key)}
+                  className={cn(
+                    'px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider transition-all duration-300 border inline-flex items-center gap-1',
+                    activeApp === app.key
+                      ? 'bg-primary text-steel-900 border-primary'
+                      : 'bg-white text-neutral-400 border-neutral-200 hover:border-primary/50 hover:text-primary'
+                  )}
+                >
+                  <app.icon size={10} />
+                  {isAr ? app.labelAr : app.labelEn}
+                </button>
+              ))}
             </div>
-          ) : (
+          </div>
+
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
               {PRODUCTS.map((product, i) => (
                 <ProductGridCard
@@ -438,16 +437,15 @@ export default function CompressorsPage() {
                 />
               ))}
             </div>
-          )}
         </div>
       </section>
 
       {/* ═══════════════════════════════════════════════════════
           WHY SNA STRIP - ANIMATED COUNTERS
           ═══════════════════════════════════════════════════════ */}
-      <section ref={statsRef} className="py-16 md:py-20 bg-steel-900">
+      <section ref={statsRef} className="py-10 md:py-14 bg-steel-900">
         <div className="container mx-auto px-4 sm:px-6">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
             <CounterStat
               value={1997}
               label={isAr ? '\u062A\u0623\u0633\u0633\u062A' : 'ESTABLISHED'}

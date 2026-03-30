@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState } from 'react';
 import { ImageWithSkeleton } from '@/components/ui/image-with-skeleton';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button';
 import { IndustrialSpinner } from '@/components/ui/industrial-spinner';
 import { useLocale } from '@/hooks/useLocale';
 import { IndustrialGear } from '@/components/decorative';
+import exhibitionsData from '@/data/exhibitions.json';
 
 interface Exhibition {
   id: string;
@@ -30,26 +31,8 @@ export function ExhibitionsSection() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
 
-  const [exhibitions, setExhibitions] = useState<Exhibition[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchExhibitions = async () => {
-      try {
-        const response = await fetch('/api/public/exhibitions?limit=4');
-        if (response.ok) {
-          const data = await response.json();
-          setExhibitions(Array.isArray(data) ? data : data.exhibitions || []);
-        }
-      } catch (error) {
-        console.error('Error fetching exhibitions:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchExhibitions();
-  }, []);
+  const [exhibitions] = useState<Exhibition[]>(() => (exhibitionsData as any[]).filter(e => e.isActive && !e.deletedAt).sort((a, b) => (a.order ?? 0) - (b.order ?? 0)).slice(0, 4) as Exhibition[]);
+  const loading = false;
 
   const formatDate = (date: string) => {
     return new Date(date).toLocaleDateString(isRTL ? 'ar-EG' : 'en-US', {
@@ -100,7 +83,7 @@ export function ExhibitionsSection() {
   return (
     <section
       ref={ref}
-      className="py-20 lg:py-28 bg-gradient-to-b from-neutral-50/95 to-white/[0.93] relative overflow-hidden"
+      className="py-12 lg:py-16 bg-gradient-to-b from-neutral-50/95 to-white/[0.93] relative overflow-hidden"
       dir={isRTL ? 'rtl' : 'ltr'}
     >
       {/* Subtle Background */}

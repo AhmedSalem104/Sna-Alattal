@@ -1,13 +1,14 @@
 'use client';
 
-import { use, useState, useEffect } from 'react';
+import { use, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { motion } from 'framer-motion';
-import { ChevronLeft, Phone, Mail, Loader2, AlertCircle } from 'lucide-react';
+import { ChevronLeft, Phone, Mail, AlertCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useLocale } from '@/hooks/useLocale';
+import { getSolutionBySlug } from '@/lib/static-data';
 
 interface SolutionDetailPageProps {
   params: Promise<{ slug: string }>;
@@ -52,35 +53,9 @@ export default function SolutionDetailPage({ params }: SolutionDetailPageProps) 
   const { slug } = use(params);
   const t = useTranslations('solutionDetail');
   const { locale } = useLocale();
-  const [solution, setSolution] = useState<Solution | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    const fetchSolution = async () => {
-      try {
-        setLoading(true);
-        const response = await fetch(`/api/public/solutions/${slug}`);
-        if (!response.ok) {
-          if (response.status === 404) {
-            setError('notFound');
-          } else {
-            setError('fetchError');
-          }
-          return;
-        }
-        const data = await response.json();
-        setSolution(data);
-      } catch (err) {
-        console.error('Error fetching solution:', err);
-        setError('fetchError');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchSolution();
-  }, [slug]);
+  const [solution] = useState<Solution | null>(() => getSolutionBySlug(slug) as Solution | null);
+  const loading = false;
+  const error = solution ? null : 'notFound';
 
   const getTitle = (item: { titleAr: string; titleEn: string; titleTr: string }) => {
     switch (locale) {

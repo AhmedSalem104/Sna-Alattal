@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, memo, useState, useEffect } from 'react';
+import { useRef, memo, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
@@ -9,6 +9,7 @@ import { Linkedin, Mail, ArrowRight, Users } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { IndustrialSpinner } from '@/components/ui/industrial-spinner';
 import { useLocale } from '@/hooks/useLocale';
+import teamData from '@/data/team.json';
 
 interface TeamMember {
   id: string;
@@ -28,26 +29,8 @@ export const TeamSection = memo(function TeamSection() {
   const { isRTL, locale } = useLocale();
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
-  const [team, setTeam] = useState<TeamMember[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchTeam = async () => {
-      try {
-        const response = await fetch('/api/public/team?limit=4');
-        if (response.ok) {
-          const data = await response.json();
-          setTeam(data);
-        }
-      } catch (error) {
-        console.error('Error fetching team:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchTeam();
-  }, []);
+  const [team] = useState<TeamMember[]>(() => (teamData as any[]).filter(t => t.isActive && !t.deletedAt).sort((a, b) => (a.order ?? 0) - (b.order ?? 0)).slice(0, 4) as TeamMember[]);
+  const loading = false;
 
   const getName = (member: TeamMember) => {
     if (locale === 'ar') return member.nameAr;
@@ -64,7 +47,7 @@ export const TeamSection = memo(function TeamSection() {
   return (
     <section
       ref={ref}
-      className="py-20 lg:py-28 bg-metal-50 relative overflow-hidden"
+      className="py-12 lg:py-16 bg-metal-50 relative overflow-hidden"
       dir={isRTL ? 'rtl' : 'ltr'}
     >
       {/* Industrial Background Pattern */}

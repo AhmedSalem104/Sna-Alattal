@@ -1,14 +1,15 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { motion } from 'framer-motion';
-import { Calendar, MapPin, ArrowRight, ExternalLink, Loader2, CalendarDays } from 'lucide-react';
+import { Calendar, MapPin, ArrowRight, ExternalLink, CalendarDays } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useLocale } from '@/hooks/useLocale';
 import { getLocalizedField, formatLocalizedDate } from '@/lib/locale-helpers';
+import { getExhibitions } from '@/lib/static-data';
 
 
 interface Exhibition {
@@ -31,26 +32,8 @@ interface Exhibition {
 export default function ExhibitionsPage() {
   const t = useTranslations('exhibitionsPage');
   const { locale, isRTL } = useLocale();
-  const [exhibitions, setExhibitions] = useState<Exhibition[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    async function fetchExhibitions() {
-      try {
-        const res = await fetch('/api/public/exhibitions');
-        if (res.ok) {
-          const data = await res.json();
-          setExhibitions(data);
-        }
-      } catch (error) {
-        console.error('Error fetching exhibitions:', error);
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    fetchExhibitions();
-  }, []);
+  const [exhibitions] = useState<Exhibition[]>(() => getExhibitions() as Exhibition[]);
+  const loading = false;
 
   const getName = (item: Exhibition) => getLocalizedField(item, 'name', locale);
   const getLocation = (item: Exhibition) => getLocalizedField(item, 'location', locale);
@@ -107,7 +90,7 @@ export default function ExhibitionsPage() {
   return (
     <>
       {/* Hero Section */}
-      <section className="relative py-32 bg-gradient-to-b from-primary/20 via-white to-white overflow-hidden">
+      <section className="relative py-20 md:py-24 bg-gradient-to-b from-primary/20 via-white to-white overflow-hidden">
         <div className="absolute inset-0">
           <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl" />
           <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-primary/5 rounded-full blur-3xl" />
@@ -135,7 +118,7 @@ export default function ExhibitionsPage() {
 
       {/* Upcoming Exhibitions */}
       {upcomingExhibitions.length > 0 && (
-        <section className="py-20">
+        <section className="py-12 md:py-16">
           <div className="container mx-auto px-4">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -227,7 +210,7 @@ export default function ExhibitionsPage() {
       )}
 
       {/* Past Exhibitions */}
-      <section className="py-20 bg-neutral-50">
+      <section className="py-12 md:py-16 bg-neutral-50">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -293,7 +276,7 @@ export default function ExhibitionsPage() {
       </section>
 
       {/* CTA */}
-      <section className="py-20 bg-gradient-to-r from-primary/20 via-white to-primary/20">
+      <section className="py-10 md:py-14 bg-gradient-to-r from-primary/20 via-white to-primary/20">
         <div className="container mx-auto px-4 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -303,7 +286,7 @@ export default function ExhibitionsPage() {
             <h2 className="text-3xl md:text-4xl font-bold text-neutral-900 mb-4">
               {t('cta.title')}
             </h2>
-            <p className="text-neutral-700 mb-8 max-w-2xl mx-auto">
+            <p className="text-neutral-700 mb-6 max-w-2xl mx-auto">
               {t('cta.subtitle')}
             </p>
             <Link href="/contact">

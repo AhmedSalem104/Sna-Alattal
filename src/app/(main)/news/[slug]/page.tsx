@@ -1,13 +1,14 @@
 'use client';
 
-import { use, useState, useEffect } from 'react';
+import { use, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { motion } from 'framer-motion';
-import { Calendar, Clock, ChevronLeft, Share2, Facebook, Twitter, Linkedin, ArrowRight, Loader2, AlertCircle } from 'lucide-react';
+import { Calendar, Clock, ChevronLeft, Share2, Facebook, Twitter, Linkedin, ArrowRight, AlertCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useLocale } from '@/hooks/useLocale';
+import { getNewsBySlug } from '@/lib/static-data';
 
 interface NewsDetailPageProps {
   params: Promise<{ slug: string }>;
@@ -42,35 +43,9 @@ export default function NewsDetailPage({ params }: NewsDetailPageProps) {
   const { slug } = use(params);
   const t = useTranslations('newsDetail');
   const { locale } = useLocale();
-  const [article, setArticle] = useState<NewsArticle | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    const fetchArticle = async () => {
-      try {
-        setLoading(true);
-        const response = await fetch(`/api/public/news/${slug}`);
-        if (!response.ok) {
-          if (response.status === 404) {
-            setError('notFound');
-          } else {
-            setError('fetchError');
-          }
-          return;
-        }
-        const data = await response.json();
-        setArticle(data);
-      } catch (err) {
-        console.error('Error fetching article:', err);
-        setError('fetchError');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchArticle();
-  }, [slug]);
+  const [article] = useState<NewsArticle | null>(() => getNewsBySlug(slug) as NewsArticle | null);
+  const loading = false;
+  const error = article ? null : 'notFound';
 
   const getTitle = (item: { titleAr: string; titleEn: string; titleTr: string }) => {
     switch (locale) {

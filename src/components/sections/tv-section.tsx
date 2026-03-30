@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState, useEffect, memo } from 'react';
+import { useRef, useState, memo } from 'react';
 import { ImageWithSkeleton } from '@/components/ui/image-with-skeleton';
 import { useTranslations } from 'next-intl';
 import { motion, useInView } from 'framer-motion';
@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button';
 import { IndustrialSpinner } from '@/components/ui/industrial-spinner';
 import { useLocale } from '@/hooks/useLocale';
 import { IndustrialGear } from '@/components/decorative';
+import tvInterviewsData from '@/data/tv-interviews.json';
 
 interface TVInterview {
   id: string;
@@ -26,26 +27,8 @@ interface TVInterview {
 export const TVSection = memo(function TVSection() {
   const t = useTranslations();
   const { isRTL, locale } = useLocale();
-  const [tvInterviews, setTvInterviews] = useState<TVInterview[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchTvInterviews = async () => {
-      try {
-        const response = await fetch('/api/public/tv-interviews?limit=6');
-        if (response.ok) {
-          const data = await response.json();
-          setTvInterviews(data);
-        }
-      } catch (error) {
-        console.error('Error fetching TV interviews:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchTvInterviews();
-  }, []);
+  const [tvInterviews] = useState<TVInterview[]>(() => (tvInterviewsData as any[]).filter(t => t.isActive && !t.deletedAt).sort((a, b) => (a.order ?? 0) - (b.order ?? 0)).slice(0, 6) as TVInterview[]);
+  const loading = false;
 
   const getTitle = (interview: TVInterview) => {
     switch (locale) {
@@ -85,7 +68,7 @@ export const TVSection = memo(function TVSection() {
     <>
       <section
         ref={ref}
-        className="py-20 lg:py-28 bg-white/80 relative overflow-hidden"
+        className="py-12 lg:py-16 bg-white/80 relative overflow-hidden"
         dir={isRTL ? 'rtl' : 'ltr'}
       >
         {/* Industrial Background Pattern */}
@@ -113,7 +96,7 @@ export const TVSection = memo(function TVSection() {
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6 }}
-            className="text-center max-w-3xl mx-auto mb-16"
+            className="text-center max-w-3xl mx-auto mb-10"
           >
             {/* Section Tag */}
             <div className="inline-flex items-center gap-2 border-2 border-primary/30 bg-primary/15 px-4 py-2 mb-6">

@@ -1,13 +1,14 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { motion } from 'framer-motion';
-import { Award, Shield, CheckCircle, Download, ArrowRight, Loader2 } from 'lucide-react';
+import { Award, Shield, CheckCircle, Download, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useLocale } from '@/hooks/useLocale';
+import { getCertificates } from '@/lib/static-data';
 
 
 interface Certificate {
@@ -36,26 +37,8 @@ const accreditations = [
 export default function CertificatesPage() {
   const t = useTranslations('certificatesPage');
   const { locale } = useLocale();
-  const [certificates, setCertificates] = useState<Certificate[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchCertificates = async () => {
-      try {
-        const response = await fetch('/api/public/certificates');
-        if (response.ok) {
-          const data = await response.json();
-          setCertificates(data);
-        }
-      } catch (error) {
-        console.error('Error fetching certificates:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchCertificates();
-  }, []);
+  const [certificates] = useState<Certificate[]>(() => getCertificates() as Certificate[]);
+  const loading = false;
 
   const getName = (cert: Certificate) => {
     switch (locale) {
@@ -99,7 +82,7 @@ export default function CertificatesPage() {
   return (
     <>
       {/* Hero Section */}
-      <section className="relative py-32 bg-gradient-to-b from-primary/20 via-white to-white overflow-hidden">
+      <section className="relative py-20 md:py-24 bg-gradient-to-b from-primary/20 via-white to-white overflow-hidden">
         <div className="absolute inset-0">
           <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl" />
           <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-primary/5 rounded-full blur-3xl" />
@@ -126,7 +109,7 @@ export default function CertificatesPage() {
       </section>
 
       {/* Certificates Grid */}
-      <section className="py-20">
+      <section className="py-12 md:py-16">
         <div className="container mx-auto px-4">
           {loading ? (
             <div className="flex justify-center items-center py-20">
@@ -198,7 +181,7 @@ export default function CertificatesPage() {
       </section>
 
       {/* Why It Matters */}
-      <section className="py-20 bg-neutral-50">
+      <section className="py-12 md:py-16 bg-neutral-50">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -252,7 +235,7 @@ export default function CertificatesPage() {
       </section>
 
       {/* Accreditation Partners */}
-      <section className="py-20">
+      <section className="py-12 md:py-16">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -288,7 +271,7 @@ export default function CertificatesPage() {
       </section>
 
       {/* CTA */}
-      <section className="py-20 bg-gradient-to-r from-primary/20 via-white to-primary/20">
+      <section className="py-10 md:py-14 bg-gradient-to-r from-primary/20 via-white to-primary/20">
         <div className="container mx-auto px-4 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -298,7 +281,7 @@ export default function CertificatesPage() {
             <h2 className="text-3xl md:text-4xl font-bold text-neutral-900 mb-4">
               {t('cta.title')}
             </h2>
-            <p className="text-neutral-700 mb-8 max-w-2xl mx-auto">
+            <p className="text-neutral-700 mb-6 max-w-2xl mx-auto">
               {t('cta.subtitle')}
             </p>
             <Link href="/contact">

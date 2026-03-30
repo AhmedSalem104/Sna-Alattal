@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, memo, useState, useEffect } from 'react';
+import { useRef, memo, useState } from 'react';
 import { ImageWithSkeleton } from '@/components/ui/image-with-skeleton';
 import { TiltCard } from '@/components/ui/tilt-card';
 import Link from 'next/link';
@@ -12,6 +12,7 @@ import { IndustrialSpinner } from '@/components/ui/industrial-spinner';
 import { useLocale } from '@/hooks/useLocale';
 import { cn } from '@/lib/utils';
 import { IndustrialGear } from '@/components/decorative';
+import compressorsData from '@/data/compressors.json';
 
 interface Compressor {
   id: string;
@@ -32,25 +33,8 @@ export const CompressorsSection = memo(function CompressorsSection() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
 
-  const [compressors, setCompressors] = useState<Compressor[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    async function fetchCompressors() {
-      try {
-        const res = await fetch('/api/public/compressors?limit=4');
-        if (res.ok) {
-          const data = await res.json();
-          setCompressors(data);
-        }
-      } catch (error) {
-        console.error('Error fetching compressors:', error);
-      } finally {
-        setLoading(false);
-      }
-    }
-    fetchCompressors();
-  }, []);
+  const [compressors] = useState<Compressor[]>(() => (compressorsData as any[]).sort((a, b) => (a.order ?? 0) - (b.order ?? 0)).slice(0, 4) as Compressor[]);
+  const loading = false;
 
   const getName = (item: Compressor) => {
     if (locale === 'ar') return item.nameAr;
@@ -85,7 +69,7 @@ export const CompressorsSection = memo(function CompressorsSection() {
   return (
     <section
       ref={ref}
-      className="py-20 lg:py-28 bg-neutral-50/80 relative overflow-hidden"
+      className="py-12 lg:py-16 bg-neutral-50/80 relative overflow-hidden"
       dir={isRTL ? 'rtl' : 'ltr'}
     >
       {/* Industrial grid background */}
@@ -110,7 +94,7 @@ export const CompressorsSection = memo(function CompressorsSection() {
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-14"
+          className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-10"
         >
           <div>
             <div className="inline-flex items-center gap-2 border-2 border-primary/30 bg-primary/5 px-4 py-2 mb-4">

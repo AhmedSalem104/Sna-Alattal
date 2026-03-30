@@ -13,6 +13,7 @@ import useEmblaCarousel from 'embla-carousel-react';
 import Autoplay from 'embla-carousel-autoplay';
 import { cn } from '@/lib/utils';
 import { IndustrialGear } from '@/components/decorative';
+import slidesData from '@/data/slides.json';
 
 // Check if a URL points to a direct video file
 function isDirectVideoUrl(url: string | null): boolean {
@@ -93,8 +94,10 @@ export function HeroSection() {
   const t = useTranslations();
   const { isRTL, locale } = useLocale();
   const containerRef = useRef<HTMLDivElement>(null);
-  const [slides, setSlides] = useState<Slide[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [slides] = useState<Slide[]>(() =>
+    (slidesData.filter((s: any) => s.isActive && !s.deletedAt).sort((a: any, b: any) => (a.order ?? 0) - (b.order ?? 0)) as Slide[]).filter((s) => !isVideoSlide(s) || isDirectVideoUrl(s.buttonLink))
+  );
+  const isLoading = false;
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   const { scrollYProgress } = useScroll({
@@ -140,24 +143,6 @@ export function HeroSection() {
       emblaApi.off('select', onSelect);
     };
   }, [emblaApi]);
-
-  // Fetch slides from API
-  useEffect(() => {
-    async function fetchSlides() {
-      try {
-        const response = await fetch('/api/public/slides');
-        if (response.ok) {
-          const data = await response.json();
-          setSlides(data.filter((s: Slide) => !isVideoSlide(s) || isDirectVideoUrl(s.buttonLink)));
-        }
-      } catch (error) {
-        console.error('Error fetching slides:', error);
-      } finally {
-        setIsLoading(false);
-      }
-    }
-    fetchSlides();
-  }, []);
 
   // Framer Motion variants
   const titleVariants = {
@@ -209,7 +194,7 @@ export function HeroSection() {
     const titleWords = title.split(' ').filter(Boolean);
 
     return (
-      <div className="container-custom relative z-10 text-center pt-20 pb-32 min-h-screen flex flex-col items-center justify-center">
+      <div className="container-custom relative z-10 text-center pt-16 pb-20 min-h-screen flex flex-col items-center justify-center">
         {/* Title with word-by-word reveal */}
         <motion.h1
           initial="hidden"
@@ -262,7 +247,7 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
-            className="text-base sm:text-lg text-neutral-300 max-w-3xl mx-auto mb-12 leading-relaxed drop-shadow-md"
+            className="text-base sm:text-lg text-neutral-300 max-w-3xl mx-auto mb-8 leading-relaxed drop-shadow-md"
           >
             {description}
           </motion.p>
@@ -300,7 +285,7 @@ export function HeroSection() {
   const renderDefaultHero = () => (
     <motion.div
       style={{ opacity }}
-      className="container-custom relative z-10 text-center pt-20 pb-32"
+      className="container-custom relative z-10 text-center pt-16 pb-20"
     >
       {/* Factory Badge */}
       <motion.div
@@ -420,7 +405,7 @@ export function HeroSection() {
         variants={fadeUpVariants}
         initial="hidden"
         animate="visible"
-        className="text-base sm:text-lg text-neutral-300 max-w-3xl mx-auto mb-12 leading-relaxed"
+        className="text-base sm:text-lg text-neutral-300 max-w-3xl mx-auto mb-8 leading-relaxed"
       >
         {t('hero.description')}
       </motion.p>
@@ -431,7 +416,7 @@ export function HeroSection() {
         variants={fadeUpVariants}
         initial="hidden"
         animate="visible"
-        className="flex flex-col sm:flex-row gap-4 justify-center mb-20"
+        className="flex flex-col sm:flex-row gap-4 justify-center mb-12"
       >
         <motion.div
           animate={{ y: [0, -5, 0] }}
@@ -479,7 +464,7 @@ export function HeroSection() {
   return (
     <section
       ref={containerRef}
-      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-steel-900 -mt-[80px] pt-[80px] md:-mt-[90px] md:pt-[90px]"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-steel-900 -mt-[64px] pt-[64px] md:-mt-[72px] md:pt-[72px]"
       dir={isRTL ? 'rtl' : 'ltr'}
     >
       {/* Modern Gradient Background with Parallax Orbs (GEA-inspired) */}

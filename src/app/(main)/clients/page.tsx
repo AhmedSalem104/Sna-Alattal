@@ -1,14 +1,15 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { motion } from 'framer-motion';
-import { ArrowRight, Building2, Globe, Award, Users, Loader2 } from 'lucide-react';
+import { ArrowRight, Building2, Globe, Award, Users } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useLocale } from '@/hooks/useLocale';
 import { getLocalizedField } from '@/lib/locale-helpers';
+import { getClients } from '@/lib/static-data';
 
 
 interface Client {
@@ -33,26 +34,7 @@ const stats = [
 export default function ClientsPage() {
   const t = useTranslations('clientsPage');
   const { locale, isRTL } = useLocale();
-  const [clients, setClients] = useState<Client[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    async function fetchClients() {
-      try {
-        const res = await fetch('/api/public/clients');
-        if (res.ok) {
-          const data = await res.json();
-          setClients(data);
-        }
-      } catch (error) {
-        console.error('Error fetching clients:', error);
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    fetchClients();
-  }, []);
+  const [clients] = useState<Client[]>(() => getClients() as unknown as Client[]);
 
   const getName = (client: Client) => getLocalizedField(client, 'name', locale);
 
@@ -63,7 +45,7 @@ export default function ClientsPage() {
   return (
     <>
       {/* Hero Section */}
-      <section className="relative py-32 bg-gradient-to-b from-primary/20 via-white to-white overflow-hidden">
+      <section className="relative py-20 md:py-24 bg-gradient-to-b from-primary/20 via-white to-white overflow-hidden">
         <div className="absolute inset-0">
           <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl" />
           <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-primary/5 rounded-full blur-3xl" />
@@ -116,7 +98,7 @@ export default function ClientsPage() {
       </section>
 
       {/* Clients Grid */}
-      <section className="py-20">
+      <section className="py-12 md:py-16">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -132,17 +114,13 @@ export default function ClientsPage() {
             </p>
           </motion.div>
 
-          {loading ? (
-            <div className="flex items-center justify-center py-20">
-              <Loader2 className="w-8 h-8 animate-spin text-primary" />
-            </div>
-          ) : clients.length === 0 ? (
+          {clients.length === 0 ? (
             <div className="text-center py-20">
               <Building2 size={48} className="mx-auto text-neutral-300 mb-4" />
               <p className="text-neutral-600 text-xl">{t('noClients') || 'No clients available'}</p>
             </div>
           ) : (
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-6">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-3 md:gap-6">
               {clients.map((client, index) => (
                 <motion.div
                   key={client.id}
@@ -190,7 +168,7 @@ export default function ClientsPage() {
       </section>
 
       {/* Trust Indicators */}
-      <section className="py-20 bg-neutral-50">
+      <section className="py-12 md:py-16 bg-neutral-50">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -252,7 +230,7 @@ export default function ClientsPage() {
       </section>
 
       {/* CTA */}
-      <section className="py-20 bg-gradient-to-r from-primary/20 via-white to-primary/20">
+      <section className="py-10 md:py-14 bg-gradient-to-r from-primary/20 via-white to-primary/20">
         <div className="container mx-auto px-4 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -262,7 +240,7 @@ export default function ClientsPage() {
             <h2 className="text-3xl md:text-4xl font-bold text-neutral-900 mb-4">
               {t('cta.title')}
             </h2>
-            <p className="text-neutral-700 mb-8 max-w-2xl mx-auto">
+            <p className="text-neutral-700 mb-6 max-w-2xl mx-auto">
               {t('cta.subtitle')}
             </p>
             <Link href="/contact">

@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, memo, useState, useEffect } from 'react';
+import { useRef, memo, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button';
 import { IndustrialSpinner } from '@/components/ui/industrial-spinner';
 import { useLocale } from '@/hooks/useLocale';
 import { useCountUp } from '@/hooks/useAnimations';
+import clientsData from '@/data/clients.json';
 
 interface Client {
   id: string;
@@ -50,25 +51,8 @@ export const ClientsSection = memo(function ClientsSection() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
 
-  const [clients, setClients] = useState<Client[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    async function fetchClients() {
-      try {
-        const res = await fetch('/api/public/clients');
-        if (res.ok) {
-          const data = await res.json();
-          setClients(data);
-        }
-      } catch (error) {
-        console.error('Error fetching clients:', error);
-      } finally {
-        setLoading(false);
-      }
-    }
-    fetchClients();
-  }, []);
+  const [clients] = useState<Client[]>(() => (clientsData as any[]).filter(c => c.isActive && !c.deletedAt).sort((a, b) => (a.order ?? 0) - (b.order ?? 0)) as Client[]);
+  const loading = false;
 
   const getName = (client: Client) => {
     if (locale === 'ar') return client.nameAr;
@@ -79,7 +63,7 @@ export const ClientsSection = memo(function ClientsSection() {
   return (
     <section
       ref={ref}
-      className="py-20 lg:py-28 bg-white/80 relative overflow-hidden"
+      className="py-12 lg:py-16 bg-white/80 relative overflow-hidden"
       dir={isRTL ? 'rtl' : 'ltr'}
     >
       {/* Modern Subtle Background */}
@@ -93,7 +77,7 @@ export const ClientsSection = memo(function ClientsSection() {
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="text-center max-w-3xl mx-auto mb-16"
+          className="text-center max-w-3xl mx-auto mb-10"
         >
           {/* Section Tag */}
           <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 mb-6">

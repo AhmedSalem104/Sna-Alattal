@@ -369,7 +369,7 @@ export const ProductionLineSection = memo(function ProductionLineSection() {
   return (
     <section
       ref={sectionRef}
-      className="py-20 lg:py-28 bg-white/80 relative overflow-hidden"
+      className="py-12 lg:py-16 bg-white/80 relative overflow-hidden"
       dir={isRTL ? 'rtl' : 'ltr'}
     >
       {/* Subtle Background */}

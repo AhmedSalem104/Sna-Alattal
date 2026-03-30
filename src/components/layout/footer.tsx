@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -22,6 +22,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { useLocale } from '@/hooks/useLocale';
 import { IndustrialGear } from '@/components/decorative';
+import settingsData from '@/data/settings.json';
 
 // TikTok icon (not in lucide)
 function TikTokIcon({ size = 18 }: { size?: number }) {
@@ -69,28 +70,22 @@ const productLinks = [
 export function Footer() {
   const t = useTranslations();
   const { isRTL } = useLocale();
-  const [socialLinks, setSocialLinks] = useState<{ icon: LucideIcon | typeof TikTokIcon; href: string; label: string }[]>([]);
-
-  useEffect(() => {
-    fetch('/api/public/settings?group=general')
-      .then(res => res.json())
-      .then(data => {
-        const links: typeof socialLinks = [];
-        const platforms = ['facebook', 'instagram', 'youtube', 'linkedin', 'twitter', 'tiktok'];
-        for (const platform of platforms) {
-          const value = typeof data[platform] === 'string' ? data[platform] : '';
-          if (value && SOCIAL_ICON_MAP[platform]) {
-            links.push({
-              icon: SOCIAL_ICON_MAP[platform],
-              href: value,
-              label: SOCIAL_LABELS[platform] || platform,
-            });
-          }
-        }
-        setSocialLinks(links);
-      })
-      .catch(() => {});
-  }, []);
+  const [socialLinks] = useState(() => {
+    const data = settingsData || {};
+    const links: { icon: LucideIcon | typeof TikTokIcon; href: string; label: string }[] = [];
+    const platforms = ['facebook', 'instagram', 'youtube', 'linkedin', 'twitter', 'tiktok'];
+    for (const platform of platforms) {
+      const value = typeof data[platform] === 'string' ? data[platform] : '';
+      if (value && SOCIAL_ICON_MAP[platform]) {
+        links.push({
+          icon: SOCIAL_ICON_MAP[platform],
+          href: value,
+          label: SOCIAL_LABELS[platform] || platform,
+        });
+      }
+    }
+    return links;
+  });
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -111,8 +106,8 @@ export function Footer() {
       <div className="relative z-10 h-1 bg-gradient-to-r from-primary/40 via-primary to-primary/40" />
 
       {/* Main Footer */}
-      <div className="container-custom py-20 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+      <div className="container-custom py-12 md:py-16 relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-10">
           {/* Company Info */}
           <div className="space-y-6">
             <Link href="/" className="flex items-center gap-3 group">

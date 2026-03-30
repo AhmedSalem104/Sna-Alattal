@@ -1,6 +1,6 @@
 'use client';
 
-import { use, useState, useEffect } from 'react';
+import { use, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
@@ -11,13 +11,13 @@ import {
   ChevronLeft,
   ChevronRight,
   ArrowRight,
-  Loader2,
   AlertCircle,
   Wind,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useLocale } from '@/hooks/useLocale';
 import { getLocalizedField } from '@/lib/locale-helpers';
+import { getCompressorBySlug } from '@/lib/static-data';
 
 interface CompressorDetailPageProps {
   params: Promise<{ slug: string }>;
@@ -59,44 +59,10 @@ export default function CompressorDetailPage({ params }: CompressorDetailPagePro
   const { slug } = use(params);
   const t = useTranslations('compressors');
   const { locale, isRTL } = useLocale();
-  const [compressor, setCompressor] = useState<Compressor | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [compressor] = useState<Compressor | null>(() => getCompressorBySlug(slug) as unknown as Compressor | null);
+  const error = compressor ? null : 'notFound';
 
-  useEffect(() => {
-    async function fetchCompressor() {
-      try {
-        const res = await fetch(`/api/public/compressors/${slug}`);
-        if (res.ok) {
-          const data = await res.json();
-          setCompressor(data);
-        } else if (res.status === 404) {
-          setError('notFound');
-        } else {
-          setError('fetchError');
-        }
-      } catch (err) {
-        console.error('Error fetching compressor:', err);
-        setError('fetchError');
-      } finally {
-        setLoading(false);
-      }
-    }
-    fetchCompressor();
-  }, [slug]);
-
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <Loader2 className="w-12 h-12 animate-spin text-primary mx-auto mb-4" />
-          <p className="text-neutral-600">{t('loading')}</p>
-        </div>
-      </div>
-    );
-  }
-
-  if (error || !compressor) {
+  if (!compressor) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center max-w-md">
@@ -150,7 +116,7 @@ export default function CompressorDetailPage({ params }: CompressorDetailPagePro
       </div>
 
       {/* Hero */}
-      <section className="py-12 md:py-20">
+      <section className="py-10 md:py-16">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
             {/* Image */}
@@ -221,7 +187,7 @@ export default function CompressorDetailPage({ params }: CompressorDetailPagePro
       </section>
 
       {/* Features */}
-      <section className="py-16 bg-neutral-50">
+      <section className="py-10 md:py-14 bg-neutral-50">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -252,7 +218,7 @@ export default function CompressorDetailPage({ params }: CompressorDetailPagePro
 
       {/* Specifications Table */}
       {compressor.specifications && (
-        <section className="py-16">
+        <section className="py-10 md:py-14">
           <div className="container mx-auto px-4">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -285,7 +251,7 @@ export default function CompressorDetailPage({ params }: CompressorDetailPagePro
 
       {/* Models Table */}
       {compressor.models.length > 0 && (
-        <section className="py-16 bg-neutral-50">
+        <section className="py-10 md:py-14 bg-neutral-50">
           <div className="container mx-auto px-4">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -339,7 +305,7 @@ export default function CompressorDetailPage({ params }: CompressorDetailPagePro
 
       {/* Related Compressors */}
       {compressor.relatedCompressors && compressor.relatedCompressors.length > 0 && (
-        <section className="py-16">
+        <section className="py-10 md:py-14">
           <div className="container mx-auto px-4">
             <h2 className="text-2xl md:text-3xl font-bold text-neutral-900 mb-8">
               {t('relatedCompressors')}

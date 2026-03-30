@@ -1,15 +1,16 @@
 'use client';
 
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { motion } from 'framer-motion';
-import { Calendar, Clock, ArrowRight, Search, Loader2, Newspaper } from 'lucide-react';
+import { Calendar, Clock, ArrowRight, Search, Newspaper } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useLocale } from '@/hooks/useLocale';
 import { getLocalizedField } from '@/lib/locale-helpers';
+import { getNews } from '@/lib/static-data';
 
 
 interface NewsArticle {
@@ -35,26 +36,8 @@ export default function NewsPage() {
   const { locale, isRTL } = useLocale();
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
-  const [articles, setArticles] = useState<NewsArticle[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    async function fetchNews() {
-      try {
-        const res = await fetch('/api/public/news');
-        if (res.ok) {
-          const data = await res.json();
-          setArticles(data);
-        }
-      } catch (error) {
-        console.error('Error fetching news:', error);
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    fetchNews();
-  }, []);
+  const [articles] = useState<NewsArticle[]>(() => getNews() as NewsArticle[]);
+  const loading = false;
 
   const getTitle = (item: NewsArticle) => getLocalizedField(item, 'title', locale);
   const getExcerpt = (item: NewsArticle) => getLocalizedField(item, 'excerpt', locale);
@@ -134,7 +117,7 @@ export default function NewsPage() {
   return (
     <>
       {/* Hero Section */}
-      <section className="relative py-32 bg-gradient-to-b from-primary/20 via-white to-white overflow-hidden">
+      <section className="relative py-20 md:py-24 bg-gradient-to-b from-primary/20 via-white to-white overflow-hidden">
         <div className="absolute inset-0">
           <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl" />
           <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-primary/5 rounded-full blur-3xl" />

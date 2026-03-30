@@ -87,7 +87,7 @@ export function Navbar() {
         dir={isRTL ? 'rtl' : 'ltr'}
       >
         <nav className="container-custom">
-          <div className="flex items-center justify-between h-[80px] md:h-[90px]">
+          <div className="flex items-center justify-between h-[64px] md:h-[72px]">
             {/* Logo */}
             <Link href="/" className="flex items-center gap-3 group shrink-0">
               <GearLogo />
@@ -209,7 +209,7 @@ export function Navbar() {
                         onClick={closeMobileMenu}
                         prefetch={true}
                         className={cn(
-                          "block px-4 py-3.5 text-base font-bold uppercase tracking-wider transition-all duration-200 border-r-2",
+                          "block px-4 py-3 text-base font-bold uppercase tracking-wider transition-all duration-200 border-r-2",
                           isActive
                             ? "text-white bg-white/15 border-white"
                             : "text-white/80 hover:text-white hover:bg-white/10 border-transparent hover:border-white/50"

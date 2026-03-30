@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, memo, useState, useEffect } from 'react';
+import { useRef, memo, useState } from 'react';
 import { ImageWithSkeleton } from '@/components/ui/image-with-skeleton';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
@@ -11,6 +11,7 @@ import { IndustrialSpinner } from '@/components/ui/industrial-spinner';
 import { Badge } from '@/components/ui/badge';
 import { useLocale } from '@/hooks/useLocale';
 import { IndustrialGear } from '@/components/decorative';
+import newsData from '@/data/news.json';
 
 interface News {
   id: string;
@@ -31,26 +32,8 @@ export const NewsSection = memo(function NewsSection() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
 
-  const [news, setNews] = useState<News[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchNews = async () => {
-      try {
-        const response = await fetch('/api/public/news?limit=3');
-        if (response.ok) {
-          const data = await response.json();
-          setNews(Array.isArray(data) ? data : data.news || []);
-        }
-      } catch (error) {
-        console.error('Error fetching news:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchNews();
-  }, []);
+  const [news] = useState<News[]>(() => (newsData as any[]).filter(n => n.isActive && !n.deletedAt).sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()).slice(0, 3) as News[]);
+  const loading = false;
 
   const formatDate = (date: string) => {
     return new Date(date).toLocaleDateString(isRTL ? 'ar-EG' : 'en-US', {
@@ -75,7 +58,7 @@ export const NewsSection = memo(function NewsSection() {
   return (
     <section
       ref={ref}
-      className="py-20 lg:py-28 bg-gradient-to-b from-neutral-50/95 to-white/[0.93] relative overflow-hidden"
+      className="py-12 lg:py-16 bg-gradient-to-b from-neutral-50/95 to-white/[0.93] relative overflow-hidden"
       dir={isRTL ? 'rtl' : 'ltr'}
     >
       {/* Modern Subtle Background */}

@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState } from 'react';
 import { ImageWithSkeleton } from '@/components/ui/image-with-skeleton';
 import { TiltCard } from '@/components/ui/tilt-card';
 import Link from 'next/link';
@@ -12,6 +12,7 @@ import { IndustrialSpinner } from '@/components/ui/industrial-spinner';
 import { useLocale } from '@/hooks/useLocale';
 import { cn } from '@/lib/utils';
 import { IndustrialGear } from '@/components/decorative';
+import solutionsData from '@/data/solutions.json';
 
 interface Solution {
   id: string;
@@ -33,26 +34,8 @@ export function SolutionsSection() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
 
-  const [solutions, setSolutions] = useState<Solution[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchSolutions = async () => {
-      try {
-        const response = await fetch('/api/public/solutions?limit=4');
-        if (response.ok) {
-          const data = await response.json();
-          setSolutions(Array.isArray(data) ? data : data.solutions || []);
-        }
-      } catch (error) {
-        console.error('Error fetching solutions:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchSolutions();
-  }, []);
+  const [solutions] = useState<Solution[]>(() => (solutionsData as any[]).filter(s => s.isActive && !s.deletedAt).sort((a, b) => (a.order ?? 0) - (b.order ?? 0)).slice(0, 4) as Solution[]);
+  const loading = false;
 
   const getTitle = (solution: Solution) => {
     if (locale === 'ar') return solution.titleAr;
@@ -69,7 +52,7 @@ export function SolutionsSection() {
   return (
     <section
       ref={ref}
-      className="py-20 lg:py-28 bg-white/80 relative overflow-hidden"
+      className="py-12 lg:py-16 bg-white/80 relative overflow-hidden"
       dir={isRTL ? 'rtl' : 'ltr'}
     >
       {/* Industrial grid background */}
@@ -97,7 +80,7 @@ export function SolutionsSection() {
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="text-center max-w-3xl mx-auto mb-16"
+          className="text-center max-w-3xl mx-auto mb-10"
         >
           <div className="inline-flex items-center gap-2 border-2 border-primary/30 bg-primary/5 px-4 py-2 mb-6">
             <Lightbulb size={16} className="text-primary" />
