@@ -1,14 +1,17 @@
 'use client';
 
 import { useRef, useState, useCallback, useEffect, memo } from 'react';
+import { createPortal } from 'react-dom';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
-import { motion, useInView } from 'framer-motion';
-import { ZoomIn, ZoomOut, RotateCcw, Maximize2, Factory } from 'lucide-react';
+import { motion, useInView, AnimatePresence } from 'framer-motion';
+import { ZoomIn, ZoomOut, RotateCcw, Maximize2, Factory, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useLocale } from '@/hooks/useLocale';
+import { cn } from '@/lib/utils';
 import { IndustrialGear } from '@/components/decorative';
+import productsData from '@/data/products.json';
+import { getLocalizedField } from '@/lib/locale-helpers';
 
 interface Transform {
   x: number;
@@ -25,13 +28,13 @@ interface ProductionLineHotspot {
 }
 
 const PRODUCTION_LINE_HOTSPOTS: ProductionLineHotspot[] = [
-  { id: 'water-treatment', x: 7, y: 48, slug: 'automatic-liquid-filling-machine', labelKey: 'waterTreatment' },
-  { id: 'filling-capping', x: 24, y: 50, slug: 'automatic-liquid-filling-machine', labelKey: 'fillingCapping' },
+  { id: 'water-treatment', x: 7, y: 48, slug: 'filling-machine-f50', labelKey: 'waterTreatment' },
+  { id: 'filling-capping', x: 24, y: 50, slug: 'filling-machine-f40', labelKey: 'fillingCapping' },
   { id: 'conveyor', x: 42, y: 35, slug: 'conveyor-systems', labelKey: 'conveyor' },
   { id: 'bottle-unscrambler', x: 50, y: 72, slug: 'bottle-unscrambler', labelKey: 'bottleUnscrambler' },
-  { id: 'labeling', x: 58, y: 22, slug: 'automatic-labeling-machine', labelKey: 'labeling' },
+  { id: 'labeling', x: 58, y: 22, slug: 'opp-labeling-machine', labelKey: 'labeling' },
   { id: 'shrink-wrapping', x: 70, y: 12, slug: 'shrink-wrapping-machine', labelKey: 'shrinkWrapping' },
-  { id: 'blow-molding', x: 78, y: 50, slug: 'pet-blow-molding-4c-8000ph', labelKey: 'blowMolding' },
+  { id: 'blow-molding', x: 78, y: 50, slug: 'pet-blow-molding-8c-16000ph', labelKey: 'blowMolding' },
   { id: 'sorting', x: 92, y: 45, slug: 'bottle-unscrambler', labelKey: 'sorting' },
 ];
 
@@ -121,11 +124,27 @@ const MIN_SCALE = 0.5;
 const MAX_SCALE = 5;
 const ZOOM_STEP = 1.3;
 
+interface DrawerProduct {
+  nameAr: string;
+  nameEn: string;
+  nameTr: string;
+  descriptionAr?: string;
+  descriptionEn?: string;
+  descriptionTr?: string;
+  images: string[];
+  specifications?: Record<string, string>;
+  features?: string[];
+  featuresEn?: string[];
+  models?: Array<Record<string, string>>;
+  category?: { nameAr: string; nameEn: string; nameTr: string };
+}
+
 export const ProductionLineSection = memo(function ProductionLineSection() {
   const t = useTranslations();
   const { isRTL, locale } = useLocale();
-  const router = useRouter();
+  const isAr = locale === 'ar';
   const sectionRef = useRef(null);
+  const [drawerProduct, setDrawerProduct] = useState<DrawerProduct | null>(null);
   const isInView = useInView(sectionRef, { once: true, margin: '-100px' });
   const containerRef = useRef<HTMLDivElement>(null);
   const [transform, setTransform] = useState<Transform>({ x: 0, y: 0, scale: 1 });
@@ -353,9 +372,24 @@ export const ProductionLineSection = memo(function ProductionLineSection() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [zoomIn, zoomOut, resetView]);
 
+  // Open drawer with product details
   const handleHotspotNavigate = useCallback((slug: string) => {
-    router.push(`/products/${slug}`);
-  }, [router]);
+    const product = (productsData as any[]).find(p => p.slug === slug);
+    if (product) {
+      setDrawerProduct(product as DrawerProduct);
+    }
+  }, []);
+
+  const closeDrawer = useCallback(() => setDrawerProduct(null), []);
+
+  useEffect(() => {
+    if (drawerProduct) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => { document.body.style.overflow = ''; };
+  }, [drawerProduct]);
 
   const scalePercent = Math.round(transform.scale * 100);
 
@@ -555,6 +589,153 @@ export const ProductionLineSection = memo(function ProductionLineSection() {
           </div>
         </motion.div>
       </div>
+
+      {/* Product Drawer */}
+      {typeof document !== 'undefined' && createPortal(
+        <AnimatePresence>
+          {drawerProduct && (
+            <>
+              <motion.div
+                className="fixed inset-0 bg-black/70 backdrop-blur-sm z-[100]"
+                initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+                onClick={closeDrawer}
+              />
+              <motion.div
+                className={cn(
+                  'fixed z-[101] bg-white overflow-y-auto overscroll-contain shadow-2xl',
+                  'inset-x-0 bottom-0 top-[5vh] rounded-t-2xl',
+                  'md:inset-y-0 md:rounded-none md:top-0',
+                  isRTL
+                    ? 'md:left-0 md:right-auto md:w-[70vw] lg:w-[65vw] xl:w-[60vw]'
+                    : 'md:right-0 md:left-auto md:w-[70vw] lg:w-[65vw] xl:w-[60vw]'
+                )}
+                initial={{ x: isRTL ? '-100%' : '100%' }}
+                animate={{ x: 0 }}
+                exit={{ x: isRTL ? '-100%' : '100%' }}
+                transition={{ type: 'spring', damping: 30, stiffness: 300 }}
+              >
+                <button onClick={closeDrawer}
+                  className="absolute top-4 right-4 md:top-6 md:right-6 z-20 w-10 h-10 flex items-center justify-center bg-white/90 backdrop-blur-sm border border-neutral-200 hover:border-primary transition-colors rounded-full shadow-md">
+                  <X size={18} className="text-steel-900" />
+                </button>
+
+                <div className="md:hidden flex justify-center pt-3 pb-2">
+                  <div className="w-10 h-1 bg-neutral-300 rounded-full" />
+                </div>
+
+                {/* Image */}
+                <div className="relative h-64 md:h-80 bg-neutral-50 overflow-hidden">
+                  <Image
+                    src={drawerProduct.images?.[0] || '/images/placeholders/product.svg'}
+                    alt={getLocalizedField(drawerProduct as any, 'name', locale)}
+                    fill
+                    className="object-contain p-6"
+                    sizes="(max-width: 768px) 100vw, 60vw"
+                  />
+                </div>
+
+                {/* Name */}
+                <div className="px-5 md:px-8 py-4 border-b border-neutral-100">
+                  {drawerProduct.category && (
+                    <span className="text-xs px-3 py-1 bg-primary/10 text-primary font-semibold mb-2 inline-block">
+                      {getLocalizedField(drawerProduct.category as any, 'name', locale)}
+                    </span>
+                  )}
+                  <h3 className="text-2xl md:text-3xl font-black text-steel-900 uppercase mb-1">
+                    {getLocalizedField(drawerProduct as any, 'name', locale)}
+                  </h3>
+                  <p className="text-neutral-400 text-sm">
+                    {isAr ? drawerProduct.nameEn : drawerProduct.nameAr}
+                  </p>
+                </div>
+
+                {/* Content */}
+                <div className="p-5 md:p-8">
+                  {/* Description */}
+                  {getLocalizedField(drawerProduct as any, 'description', locale) && (
+                    <p className="text-neutral-600 text-sm leading-relaxed mb-5">
+                      {getLocalizedField(drawerProduct as any, 'description', locale)}
+                    </p>
+                  )}
+
+                  {/* Specifications */}
+                  {drawerProduct.specifications && Object.keys(drawerProduct.specifications).length > 0 && (
+                    <div className="mb-5">
+                      <span className="text-primary text-xs font-bold uppercase tracking-[0.15em] mb-2 block">
+                        {isAr ? 'المواصفات' : 'SPECIFICATIONS'}
+                      </span>
+                      <div className="border border-neutral-200 divide-y divide-neutral-100">
+                        {Object.entries(drawerProduct.specifications).map(([key, val]) => (
+                          <div key={key} className={cn("flex justify-between px-4 py-2 text-sm", isAr && "flex-row-reverse")}>
+                            <span className="text-neutral-400 capitalize">{key.replace(/_/g, ' ')}</span>
+                            <span className="text-steel-900 font-semibold">{val}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Models Table */}
+                  {drawerProduct.models && drawerProduct.models.length > 0 && (() => {
+                    const headers = Object.keys(drawerProduct.models![0]);
+                    return (
+                      <div className="mb-5">
+                        <span className="text-primary text-xs font-bold uppercase tracking-[0.15em] mb-2 block">
+                          {isAr ? 'الموديلات' : 'MODELS'} ({drawerProduct.models!.length})
+                        </span>
+                        <div className="overflow-x-auto border border-neutral-200 max-h-[300px] overflow-y-auto">
+                          <table className="w-full text-xs">
+                            <thead className="sticky top-0">
+                              <tr className="bg-neutral-100">
+                                {headers.map(h => (
+                                  <th key={h} className="px-2 py-1.5 text-steel-900 font-bold uppercase text-start whitespace-nowrap">{h.replace(/_/g, ' ')}</th>
+                                ))}
+                              </tr>
+                            </thead>
+                            <tbody className="divide-y divide-neutral-50">
+                              {drawerProduct.models!.map((model, i) => (
+                                <tr key={i} className="hover:bg-primary/5">
+                                  {headers.map(h => (
+                                    <td key={h} className="px-2 py-1 text-neutral-600 whitespace-nowrap">{model[h] || '-'}</td>
+                                  ))}
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    );
+                  })()}
+
+                  {/* Features */}
+                  {(() => {
+                    const features = isAr
+                      ? (drawerProduct.features || [])
+                      : (drawerProduct.featuresEn || drawerProduct.features || []);
+                    if (features.length === 0) return null;
+                    return (
+                      <div className="mb-4">
+                        <span className="text-primary text-xs font-bold uppercase tracking-[0.15em]">
+                          {isAr ? 'المميزات' : 'FEATURES'}
+                        </span>
+                        <div className="grid grid-cols-2 gap-x-4 gap-y-2 mt-2">
+                          {features.map((f: string, i: number) => (
+                            <div key={i} className="flex items-start gap-2 text-sm text-neutral-600">
+                              <div className="w-1 h-1 bg-primary rounded-full mt-1.5 shrink-0" />
+                              {f}
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    );
+                  })()}
+                </div>
+              </motion.div>
+            </>
+          )}
+        </AnimatePresence>,
+        document.body
+      )}
     </section>
   );
 });

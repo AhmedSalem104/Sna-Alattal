@@ -169,7 +169,9 @@
       "Bash(rm -rf .next)",
       "Bash(rm -rf node_modules/.cache)",
       "Bash(npx --yes kill-port 3000 3001 3002 3003)",
-      "Bash(npx:*)"
+      "Bash(npx:*)",
+      "Bash(for key:*)",
+      "Bash(break)"
     ]
   }
 }
