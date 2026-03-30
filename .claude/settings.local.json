@@ -163,7 +163,13 @@
       "Bash(cp \"/c/Users/B-SMART/Pictures/Screenshots/Screenshot 2026-03-29 191155.png\" direct-connected-open.png)",
       "Bash(cp \"/c/Users/B-SMART/Pictures/Screenshots/Screenshot 2026-03-29 191213.png\" integrated-station.png)",
       "Bash(cp \"/c/Users/B-SMART/Pictures/Screenshots/Screenshot 2026-03-29 191237.png\" booster-cylinders.png)",
-      "Bash(wc:*)"
+      "Bash(wc:*)",
+      "Bash(find /c/Users/B-SMART/Desktop/Al-attal S.N.A/Sna-Alattal -type f \\\\\\(-name *.json -o -name *.ts \\\\\\) -path */messages/* -o -path */i18n/*)",
+      "WebFetch(domain:localhost)",
+      "Bash(rm -rf .next)",
+      "Bash(rm -rf node_modules/.cache)",
+      "Bash(npx --yes kill-port 3000 3001 3002 3003)",
+      "Bash(npx:*)"
     ]
   }
 }
