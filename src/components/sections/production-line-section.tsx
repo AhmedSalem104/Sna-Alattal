@@ -28,14 +28,12 @@ interface ProductionLineHotspot {
 }
 
 const PRODUCTION_LINE_HOTSPOTS: ProductionLineHotspot[] = [
-  { id: 'water-treatment', x: 7, y: 48, slug: 'filling-machine-f50', labelKey: 'waterTreatment' },
-  { id: 'filling-capping', x: 24, y: 50, slug: 'filling-machine-f40', labelKey: 'fillingCapping' },
-  { id: 'conveyor', x: 42, y: 35, slug: 'conveyor-systems', labelKey: 'conveyor' },
-  { id: 'bottle-unscrambler', x: 50, y: 72, slug: 'bottle-unscrambler', labelKey: 'bottleUnscrambler' },
-  { id: 'labeling', x: 58, y: 22, slug: 'opp-labeling-machine', labelKey: 'labeling' },
-  { id: 'shrink-wrapping', x: 70, y: 12, slug: 'shrink-wrapping-machine', labelKey: 'shrinkWrapping' },
-  { id: 'blow-molding', x: 78, y: 50, slug: 'pet-blow-molding-8c-16000ph', labelKey: 'blowMolding' },
-  { id: 'sorting', x: 92, y: 45, slug: 'bottle-unscrambler', labelKey: 'sorting' },
+  { id: 'shrink-wrapping', x: 57, y: 33, slug: 'shrink-wrapping-machine', labelKey: 'shrinkWrapping' },
+  { id: 'labeling', x: 30, y: 38, slug: 'opp-labeling-machine', labelKey: 'labeling' },
+  { id: 'conveyor', x: 48, y: 20, slug: 'conveyor-systems', labelKey: 'conveyor' },
+  { id: 'filling-capping', x: 70, y: 18, slug: 'filling-machine-f50', labelKey: 'fillingCapping' },
+  { id: 'bottle-unscrambler', x: 60, y: 58, slug: 'bottle-unscrambler', labelKey: 'bottleUnscrambler' },
+  { id: 'blow-molding', x: 83, y: 42, slug: 'pet-blow-molding-4c-8000ph', labelKey: 'blowMolding' }
 ];
 
 function HotspotMarker({
