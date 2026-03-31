@@ -171,7 +171,21 @@
       "Bash(npx --yes kill-port 3000 3001 3002 3003)",
       "Bash(npx:*)",
       "Bash(for key:*)",
-      "Bash(break)"
+      "Bash(break)",
+      "Bash(SRC=\"C:/Users/B-SMART/Desktop/Al-attal S.N.A/Media/شعارات عملائنا\")",
+      "Bash(DST=\"C:/Users/B-SMART/Desktop/Al-attal S.N.A/Sna-Alattal/public/uploads/clients\")",
+      "Bash(__NEW_LINE_c2ee892b841ed69c__ cp:*)",
+      "Bash(cp \"$SRC/سينالكو.jpg\" \"$DST/sinalco.jpg\")",
+      "Bash(cp \"$SRC/سوريانا-لوغو-2.jpg\" \"$DST/souriana.jpg\")",
+      "Bash(__NEW_LINE_b63f21bbbfaefaf2__ cp:*)",
+      "Bash(cp \"$SRC/أمان سيوة.jpg\" \"$DST/aman-siwa.jpg\")",
+      "Bash(cp \"$SRC/أكوا بيرتي.jpg\" \"$DST/aqua-purity.jpg\")",
+      "Bash(cp \"$SRC/أكوا-دلتا.jpg\" \"$DST/aqua-delta.jpg\")",
+      "Bash(cp \"$SRC/الرواسي-5.jpg\" \"$DST/al-rawasi.jpg\")",
+      "WebFetch(domain:maps.app.goo.gl)",
+      "Bash(cp filling-f50-v2.png filling-f50-new.png)",
+      "Bash(cp filling-f32-v2.png filling-f32-new.png)",
+      "Bash(ssh-keygen -R 72.60.132.3)"
     ]
   }
 }

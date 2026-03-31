@@ -22,12 +22,11 @@ function GearLogo() {
 
 const navItems = [
   { key: 'home', href: '/' },
-  { key: 'about', href: '/about' },
   { key: 'products', href: '/products' },
   { key: 'compressors', href: '/compressors' },
-  { key: 'clients', href: '/clients' },
   { key: 'exhibitions', href: '/exhibitions' },
-  { key: 'contact', href: '/contact' },
+  { key: 'clients', href: '/clients' },
+  { key: 'about', href: '/about' },
 ];
 
 export function Navbar() {

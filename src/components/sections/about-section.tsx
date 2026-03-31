@@ -153,7 +153,7 @@ export const AboutSection = memo(function AboutSection() {
             </div>
 
             {/* Title */}
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-steel-900 tracking-tight leading-tight">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-steel-900 tracking-tight leading-tight border-l-4 border-primary pl-4 rtl:border-l-0 rtl:border-r-4 rtl:pl-0 rtl:pr-4">
               {t('about.subtitle')}
             </h2>
 

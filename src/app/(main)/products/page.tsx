@@ -6,7 +6,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, X } from 'lucide-react';
+import { ArrowRight, Download, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useLocale } from '@/hooks/useLocale';
 import { getLocalizedField } from '@/lib/locale-helpers';
@@ -95,14 +95,22 @@ export default function ProductsPage() {
 
   const [activeTab, setActiveTab] = useState<string>('all');
 
-  // Scroll to category on hash change
+  // Read hash on mount and scroll to category
   useEffect(() => {
-    if (typeof window !== 'undefined' && window.location.hash) {
+    if (window.location.hash) {
       const id = window.location.hash.slice(1);
       setActiveTab(id);
-      setTimeout(() => {
-        document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }, 500);
+      let attempts = 0;
+      const tryScroll = () => {
+        const el = document.getElementById(id);
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } else if (attempts < 10) {
+          attempts++;
+          setTimeout(tryScroll, 200);
+        }
+      };
+      setTimeout(tryScroll, 300);
     }
   }, []);
 
@@ -123,12 +131,16 @@ export default function ProductsPage() {
             <h1 className="text-2xl md:text-3xl font-bold text-neutral-900">
               {t('title')}
             </h1>
-            <Link href="/contact">
-              <Button variant="gold" size="sm">
-                {isAr ? 'طلب عرض سعر' : 'Request Quote'}
-                <ArrowRight size={14} className={cn('ml-1', isRTL && 'rotate-180 mr-1 ml-0')} />
-              </Button>
-            </Link>
+            <a href="/downloads/products-catalog.pdf" download="SNA-Products-Catalog.pdf"
+              className="inline-flex items-center gap-3 bg-primary hover:bg-primary/90 px-5 py-3 transition-all duration-300 shadow-lg">
+              <Download size={16} className="text-steel-900" />
+              <div>
+                <div className="text-steel-900 font-bold text-xs uppercase tracking-wider">
+                  {isAr ? 'تحميل الكتالوج' : 'Download Catalog'}
+                </div>
+                <div className="text-steel-900/50 text-[9px]">PDF</div>
+              </div>
+            </a>
           </motion.div>
 
           {/* Category Tabs */}
@@ -315,8 +327,8 @@ export default function ProductsPage() {
                 'inset-x-0 bottom-0 top-[5vh] rounded-t-2xl',
                 'md:inset-y-0 md:rounded-none md:top-0',
                 isRTL
-                  ? 'md:left-0 md:right-auto md:w-[70vw] lg:w-[65vw] xl:w-[60vw]'
-                  : 'md:right-0 md:left-auto md:w-[70vw] lg:w-[65vw] xl:w-[60vw]'
+                  ? 'md:left-0 md:right-auto md:w-[80vw] lg:w-[75vw] xl:w-[70vw]'
+                  : 'md:right-0 md:left-auto md:w-[80vw] lg:w-[75vw] xl:w-[70vw]'
               )}
               initial={{ x: isRTL ? '-100%' : '100%' }}
               animate={{ x: 0 }}
@@ -336,30 +348,41 @@ export default function ProductsPage() {
                 <div className="w-10 h-1 bg-neutral-300 rounded-full" />
               </div>
 
-              {/* Product image */}
-              <div className="relative h-64 md:h-80 bg-neutral-50 overflow-hidden">
+              {/* Product image - FULL */}
+              <div className="relative h-[400px] md:h-[550px] bg-neutral-50 overflow-hidden">
                 <Image
                   src={getProductImage(drawerProduct)}
                   alt={getName(drawerProduct)}
                   fill
-                  className="object-contain p-6"
+                  className="object-contain p-4 md:p-8"
                   sizes="(max-width: 768px) 100vw, 60vw"
+                  priority
                 />
               </div>
 
-              {/* Name + category */}
-              <div className="px-5 md:px-8 py-4 border-b border-neutral-100">
+              {/* Name + category + model */}
+              <div className="px-5 md:px-8 py-4 border-b-4 border-primary">
                 {drawerProduct.category && (
-                  <span className="text-xs px-3 py-1 bg-primary/10 text-primary font-semibold mb-2 inline-block">
+                  <span className="text-[10px] px-3 py-1 bg-primary text-steel-900 font-bold uppercase tracking-wider mb-3 inline-block">
                     {getName(drawerProduct.category)}
                   </span>
                 )}
-                <h3 className="text-2xl md:text-3xl font-black text-steel-900 uppercase mb-1">
-                  {getName(drawerProduct)}
-                </h3>
-                <p className="text-neutral-400 text-sm">
-                  {isAr ? drawerProduct.nameEn : drawerProduct.nameAr}
-                </p>
+                <div className="flex items-start justify-between gap-3">
+                  <div>
+                    <h3 className="text-xl md:text-2xl font-black text-steel-900 uppercase mb-1">
+                      {getName(drawerProduct)}
+                    </h3>
+                    <p className="text-neutral-400 text-base">
+                      {isAr ? drawerProduct.nameEn : drawerProduct.nameAr}
+                    </p>
+                  </div>
+                  {drawerProduct.specifications?.model && (
+                    <div className="shrink-0 bg-primary px-5 py-3 text-center">
+                      <div className="text-steel-900/60 text-[10px] font-bold uppercase tracking-wider">{isAr ? 'الموديل' : 'MODEL'}</div>
+                      <div className="text-steel-900 font-black text-lg md:text-xl">{drawerProduct.specifications.model}</div>
+                    </div>
+                  )}
+                </div>
               </div>
 
               {/* Content */}
@@ -368,7 +391,7 @@ export default function ProductsPage() {
                 {/* Description */}
                 {getDesc(drawerProduct) && (
                   <div className="mb-5">
-                    <p className="text-neutral-600 text-sm leading-relaxed">
+                    <p className="text-neutral-600 text-base leading-relaxed">
                       {getDesc(drawerProduct)}
                     </p>
                   </div>
@@ -377,51 +400,24 @@ export default function ProductsPage() {
                 {/* Specifications */}
                 {drawerProduct.specifications && Object.keys(drawerProduct.specifications).length > 0 && (
                   <div className="mb-5">
-                    <span className="text-primary text-xs font-bold uppercase tracking-[0.15em] mb-2 block">
+                    <span className="text-primary text-sm font-bold uppercase tracking-[0.15em] mb-3 block">
                       {isAr ? 'المواصفات' : 'SPECIFICATIONS'}
                     </span>
-                    <div className="border border-neutral-200 divide-y divide-neutral-100">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                       {Object.entries(drawerProduct.specifications).map(([key, val]) => (
-                        <div key={key} className={cn("flex justify-between px-4 py-2 text-sm", isAr && "flex-row-reverse")}>
-                          <span className="text-neutral-400 capitalize">{key.replace(/_/g, ' ')}</span>
-                          <span className="text-steel-900 font-semibold">{val}</span>
+                        <div key={key} className="flex justify-between items-center px-3 py-2 bg-neutral-50 border border-neutral-100">
+                          <span className="text-neutral-400 capitalize text-sm">{key.replace(/_/g, ' ')}</span>
+                          <span className="text-steel-900 font-bold text-sm">{val}</span>
                         </div>
                       ))}
                     </div>
                   </div>
                 )}
 
-                {/* Models Table */}
-                {drawerProduct.models && drawerProduct.models.length > 0 && (() => {
-                  const headers = Object.keys(drawerProduct.models![0]);
-                  return (
-                    <div className="mb-5">
-                      <span className="text-primary text-xs font-bold uppercase tracking-[0.15em] mb-2 block">
-                        {isAr ? 'الموديلات' : 'MODELS'} ({drawerProduct.models!.length})
-                      </span>
-                      <div className="overflow-x-auto border border-neutral-200 max-h-[300px] overflow-y-auto">
-                        <table className="w-full text-xs">
-                          <thead className="sticky top-0">
-                            <tr className="bg-neutral-100">
-                              {headers.map(h => (
-                                <th key={h} className="px-2 py-1.5 text-steel-900 font-bold uppercase text-start whitespace-nowrap">{h.replace(/_/g, ' ')}</th>
-                              ))}
-                            </tr>
-                          </thead>
-                          <tbody className="divide-y divide-neutral-50">
-                            {drawerProduct.models!.map((model, i) => (
-                              <tr key={i} className="hover:bg-primary/5">
-                                {headers.map(h => (
-                                  <td key={h} className="px-2 py-1 text-neutral-600 whitespace-nowrap">{model[h] || '-'}</td>
-                                ))}
-                              </tr>
-                            ))}
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                  );
-                })()}
+                {/* Models - Slider */}
+                {drawerProduct.models && drawerProduct.models.length > 0 && (
+                  <ProductModelsSlider models={drawerProduct.models} isAr={isAr} />
+                )}
 
                 {/* Features */}
                 {(() => {
@@ -431,13 +427,13 @@ export default function ProductsPage() {
                   if (features.length === 0) return null;
                   return (
                     <div className="mb-4">
-                      <span className="text-primary text-xs font-bold uppercase tracking-[0.15em]">
+                      <span className="text-primary text-sm font-bold uppercase tracking-[0.15em]">
                         {isAr ? 'المميزات' : 'FEATURES'}
                       </span>
                       <div className="grid grid-cols-2 gap-x-4 gap-y-2 mt-2">
                         {features.map((f: string, i: number) => (
-                          <div key={i} className="flex items-start gap-2 text-sm text-neutral-600">
-                            <div className="w-1 h-1 bg-primary rounded-full mt-1.5 shrink-0" />
+                          <div key={i} className="flex items-start gap-2 text-base text-neutral-600">
+                            <div className="w-1 h-1 bg-primary rounded-full mt-2 shrink-0" />
                             {f}
                           </div>
                         ))}
@@ -454,5 +450,94 @@ export default function ProductsPage() {
       document.body
       )}
     </>
+  );
+}
+
+// ─── Product Models Slider ─────────────────────────
+function ProductModelsSlider({ models, isAr }: { models: Array<Record<string, string>>; isAr: boolean }) {
+  const [idx, setIdx] = useState(0);
+  const headers = Object.keys(models[0]);
+  const model = models[idx];
+
+  return (
+    <div className="mb-5 -mx-5 md:-mx-8 px-5 md:px-8 py-5 bg-steel-900">
+      <div className="flex items-center justify-between mb-4">
+        <span className="text-primary text-base font-bold uppercase tracking-[0.15em]">
+          {isAr ? 'الموديلات' : 'MODELS'} ({models.length})
+        </span>
+        <div className="flex items-center gap-1">
+          <button
+            onClick={(e) => { e.stopPropagation(); setIdx(prev => prev > 0 ? prev - 1 : models.length - 1); }}
+            className="w-8 h-8 flex items-center justify-center bg-white/10 hover:bg-primary/30 text-white hover:text-primary transition-colors"
+          >
+            <ArrowRight size={14} className="rotate-180" />
+          </button>
+          <span className="text-white/50 text-xs px-2 tabular-nums">{idx + 1} / {models.length}</span>
+          <button
+            onClick={(e) => { e.stopPropagation(); setIdx(prev => prev < models.length - 1 ? prev + 1 : 0); }}
+            className="w-8 h-8 flex items-center justify-center bg-white/10 hover:bg-primary/30 text-white hover:text-primary transition-colors"
+          >
+            <ArrowRight size={14} />
+          </button>
+        </div>
+      </div>
+
+      {/* Model Tabs */}
+      <div className="flex gap-1.5 mb-4 overflow-x-auto pb-2" style={{ scrollbarWidth: 'none' }}>
+        {models.map((m, i) => (
+          <button
+            key={i}
+            onClick={(e) => { e.stopPropagation(); setIdx(i); }}
+            className={cn(
+              'px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider whitespace-nowrap transition-all border shrink-0',
+              idx === i
+                ? 'bg-primary text-steel-900 border-primary'
+                : 'bg-white/5 text-white/50 border-white/10 hover:border-primary/40 hover:text-primary'
+            )}
+          >
+            {m[headers[0]] || `#${i + 1}`}
+          </button>
+        ))}
+      </div>
+
+      {/* Active Model Card */}
+      <motion.div
+        key={idx}
+        initial={{ opacity: 0, x: 20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.3 }}
+        className="bg-white/5 border border-primary/20 p-5"
+      >
+        {model[headers[0]] && (
+          <div className="text-primary font-black text-xl mb-4 pb-3 border-b border-primary/20">
+            {model[headers[0]]}
+          </div>
+        )}
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-x-6 gap-y-4">
+          {headers.slice(1).map(h => (
+            model[h] ? (
+              <div key={h}>
+                <div className="text-white/30 text-xs uppercase tracking-wider mb-1">{h.replace(/_/g, ' ')}</div>
+                <div className="text-white/90 text-base font-semibold">{model[h]}</div>
+              </div>
+            ) : null
+          ))}
+        </div>
+      </motion.div>
+
+      {/* Dots */}
+      <div className="flex justify-center gap-1.5 mt-4">
+        {models.map((_, i) => (
+          <button
+            key={i}
+            onClick={(e) => { e.stopPropagation(); setIdx(i); }}
+            className={cn(
+              'h-1.5 rounded-full transition-all',
+              idx === i ? 'w-6 bg-primary' : 'w-1.5 bg-white/20 hover:bg-white/40'
+            )}
+          />
+        ))}
+      </div>
+    </div>
   );
 }

@@ -27,7 +27,7 @@ interface TVInterview {
 export const TVSection = memo(function TVSection() {
   const t = useTranslations();
   const { isRTL, locale } = useLocale();
-  const [tvInterviews] = useState<TVInterview[]>(() => (tvInterviewsData as any[]).filter(t => t.isActive && !t.deletedAt).sort((a, b) => (a.order ?? 0) - (b.order ?? 0)).slice(0, 6) as TVInterview[]);
+  const [tvInterviews] = useState<TVInterview[]>(() => (tvInterviewsData as any[]).filter(t => t.isActive && !t.deletedAt).sort((a, b) => (a.order ?? 0) - (b.order ?? 0)).slice(0, 4) as TVInterview[]);
   const loading = false;
 
   const getTitle = (interview: TVInterview) => {
@@ -106,7 +106,7 @@ export const TVSection = memo(function TVSection() {
               </span>
             </div>
 
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-steel-900 uppercase tracking-wide mb-4">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-steel-900 uppercase tracking-wide mb-4 border-l-4 border-primary pl-4 rtl:border-l-0 rtl:border-r-4 rtl:pl-0 rtl:pr-4">
               {t('tv.subtitle') || 'ظهورنا الإعلامي'}
             </h2>
 
@@ -137,7 +137,7 @@ export const TVSection = memo(function TVSection() {
               </p>
             </div>
           ) : (
-            <div className="grid md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {tvInterviews.map((interview, index) => (
                 <motion.div
                   key={interview.id}

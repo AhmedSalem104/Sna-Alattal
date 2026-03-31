@@ -143,7 +143,7 @@
         "dimensions": "2100×1400×1650 mm"
       }
     ],
-    "order": 1
+    "order": 3
   },
   {
     "id": "direct-connected-screw",
@@ -277,7 +277,7 @@
         "dimensions": "2110×1410×1660 mm"
       }
     ],
-    "order": 2
+    "order": 4
   },
   {
     "id": "integrated-screw",
@@ -454,13 +454,13 @@
         "dimensions": "2300×1300×1600 mm"
       }
     ],
-    "order": 3
+    "order": 5
   },
   {
     "id": "permanent-variable-frequency",
     "slug": "permanent-variable-frequency",
-    "nameAr": "ضاغط التحكم بتغيير التردد",
-    "nameEn": "Permanent Variable Frequency Compressor",
+    "nameAr": "كمبروسور",
+    "nameEn": "Compressor VFD",
     "nameTr": "Kalıcı Değişken Frekanslı Kompresör",
     "descriptionAr": "ضاغط التحكم عن طريق تغيير التردد يوفر طاقة بنسبة 30-50% مقارنة بالضواغط العادية. يعمل على ضبط السرعة لتتناسب مع الطلب على الهواء من 0 إلى 100%. يعمل أيضاً كمضخة تفريغ للتطبيقات المتنوعة مثل البلاستيك وأجهزة CNC وتصنيع LED والتعبئة والتغليف.",
     "descriptionEn": "The Permanent Variable Frequency Compressor saves 30-50% energy compared to ordinary compressors. It adjusts speed to match air demand from 0 to 100%. Also serves as a vacuum pump for diverse applications including plastic, CNC machines, LED manufacturing, and packaging industries.",
@@ -607,7 +607,7 @@
         "dimensions": "2300×1500×1750 mm"
       }
     ],
-    "order": 4
+    "order": 1
   },
   {
     "id": "three-cylinder-booster",
@@ -771,7 +771,7 @@
         "dimensions": "1400×900×1060 mm"
       }
     ],
-    "order": 5
+    "order": 2
   },
   {
     "id": "precision-filter",

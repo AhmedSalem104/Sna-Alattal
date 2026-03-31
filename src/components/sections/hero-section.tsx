@@ -110,7 +110,7 @@ export function HeroSection() {
   // Embla carousel setup with autoplay
   const [emblaRef, emblaApi] = useEmblaCarousel(
     { loop: true, direction: isRTL ? 'rtl' : 'ltr' },
-    [Autoplay({ delay: 60000, stopOnInteraction: false })]
+    [Autoplay({ delay: 8000, stopOnInteraction: false })]
   );
 
   const scrollPrev = useCallback(() => {
@@ -503,13 +503,16 @@ export function HeroSection() {
                 return (
                   <div
                     key={slide.id}
-                    className="flex-[0_0_100%] min-w-0 relative"
+                    className="flex-[0_0_100%] min-w-0 relative overflow-hidden"
                   >
                     {/* Slide Background - Video or Image */}
-                    <div className="absolute inset-0">
+                    <div className="absolute inset-0 overflow-hidden">
                       {/* Overlay - none for direct video, light for youtube, full for images */}
                       {!isDirectVideo && (
-                        <div className={`absolute inset-0 z-10 ${isAnyVideo ? 'bg-gradient-to-b from-steel-900/30 via-transparent to-steel-900/50' : 'bg-gradient-to-b from-steel-900/50 via-steel-900/30 to-steel-900/70'}`} />
+                        <>
+                          <div className={`absolute inset-0 z-10 ${isAnyVideo ? 'bg-gradient-to-b from-steel-900/30 via-transparent to-steel-900/50' : 'bg-gradient-to-b from-steel-900/60 via-steel-900/20 to-steel-900/80'}`} />
+                          <div className="absolute inset-0 z-10 bg-gradient-to-r from-steel-900/40 via-transparent to-steel-900/40" />
+                        </>
                       )}
                       {isDirectVideo ? (
                         /* Direct Video Background - no zoom, clean display */
@@ -563,17 +566,30 @@ export function HeroSection() {
                           )}
                         </div>
                       ) : (
-                        /* Image Background */
-                        <Image
-                          src={slide.image}
-                          alt={getLocalizedField(slide, 'title', locale)}
-                          fill
-                          sizes="100vw"
-                          className="object-cover object-top"
-                          priority={index === 0}
-                          loading={index === 0 ? 'eager' : 'lazy'}
-                          fetchPriority={index === 0 ? 'high' : 'auto'}
-                        />
+                        /* Image Background with Ken Burns animation */
+                        <motion.div
+                          className="absolute inset-[-10%]"
+                          initial={{ scale: 1, x: 0, y: 0 }}
+                          animate={selectedIndex === index
+                            ? {
+                                scale: [1, 1.15, 1.25],
+                                x: index % 3 === 0 ? [0, -50, -80] : index % 3 === 1 ? [0, 50, 80] : [0, -30, 40],
+                                y: index % 3 === 0 ? [0, -30, -50] : index % 3 === 1 ? [0, 30, 50] : [0, -40, 20],
+                              }
+                            : { scale: 1, x: 0, y: 0 }}
+                          transition={{ duration: 8, ease: 'easeInOut', times: [0, 0.5, 1] }}
+                        >
+                          <Image
+                            src={slide.image}
+                            alt={getLocalizedField(slide, 'title', locale)}
+                            fill
+                            sizes="100vw"
+                            className="object-cover object-center"
+                            priority={index === 0}
+                            loading={index === 0 ? 'eager' : 'lazy'}
+                            fetchPriority={index === 0 ? 'high' : 'auto'}
+                          />
+                        </motion.div>
                       )}
                     </div>
                     {/* Slide Content - hide for direct video slides */}

@@ -370,11 +370,29 @@ export const ProductionLineSection = memo(function ProductionLineSection() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [zoomIn, zoomOut, resetView]);
 
-  // Open drawer with product details
+  // Open drawer with product + all similar products from same category
   const handleHotspotNavigate = useCallback((slug: string) => {
     const product = (productsData as any[]).find(p => p.slug === slug);
     if (product) {
-      setDrawerProduct(product as DrawerProduct);
+      // Find all products in the same category
+      const allInCategory = (productsData as any[]).filter(
+        p => p.categoryId === product.categoryId && p.isActive && !p.deletedAt
+      ).sort((a: any, b: any) => (a.order ?? 0) - (b.order ?? 0));
+
+      // Merge all models from all products in same category
+      const allModels: Record<string, string>[] = [];
+      allInCategory.forEach((p: any) => {
+        if (p.models && p.models.length > 0) {
+          p.models.forEach((m: Record<string, string>) => allModels.push(m));
+        }
+      });
+
+      // Use the clicked product but with all category models
+      const enriched = {
+        ...product,
+        models: allModels.length > 0 ? allModels : product.models,
+      };
+      setDrawerProduct(enriched as DrawerProduct);
     }
   }, []);
 
@@ -427,7 +445,7 @@ export const ProductionLineSection = memo(function ProductionLineSection() {
             </span>
           </div>
 
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-steel-900 uppercase tracking-wide mb-4">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-steel-900 uppercase tracking-wide mb-4 border-l-4 border-primary pl-4 rtl:border-l-0 rtl:border-r-4 rtl:pl-0 rtl:pr-4">
             {t('productionLine.title')}
           </h2>
 
@@ -604,8 +622,8 @@ export const ProductionLineSection = memo(function ProductionLineSection() {
                   'inset-x-0 bottom-0 top-[5vh] rounded-t-2xl',
                   'md:inset-y-0 md:rounded-none md:top-0',
                   isRTL
-                    ? 'md:left-0 md:right-auto md:w-[70vw] lg:w-[65vw] xl:w-[60vw]'
-                    : 'md:right-0 md:left-auto md:w-[70vw] lg:w-[65vw] xl:w-[60vw]'
+                    ? 'md:left-0 md:right-auto md:w-[80vw] lg:w-[75vw] xl:w-[70vw]'
+                    : 'md:right-0 md:left-auto md:w-[80vw] lg:w-[75vw] xl:w-[70vw]'
                 )}
                 initial={{ x: isRTL ? '-100%' : '100%' }}
                 animate={{ x: 0 }}
@@ -621,89 +639,73 @@ export const ProductionLineSection = memo(function ProductionLineSection() {
                   <div className="w-10 h-1 bg-neutral-300 rounded-full" />
                 </div>
 
-                {/* Image */}
-                <div className="relative h-64 md:h-80 bg-neutral-50 overflow-hidden">
+                {/* Image - FULL */}
+                <div className="relative h-[400px] md:h-[550px] bg-neutral-50 overflow-hidden">
                   <Image
                     src={drawerProduct.images?.[0] || '/images/placeholders/product.svg'}
                     alt={getLocalizedField(drawerProduct as any, 'name', locale)}
                     fill
-                    className="object-contain p-6"
+                    className="object-contain p-4 md:p-8"
                     sizes="(max-width: 768px) 100vw, 60vw"
+                    priority
                   />
                 </div>
 
-                {/* Name */}
-                <div className="px-5 md:px-8 py-4 border-b border-neutral-100">
+                {/* Name + model */}
+                <div className="px-5 md:px-8 py-4 border-b-4 border-primary">
                   {drawerProduct.category && (
-                    <span className="text-xs px-3 py-1 bg-primary/10 text-primary font-semibold mb-2 inline-block">
+                    <span className="text-[10px] px-3 py-1 bg-primary text-steel-900 font-bold uppercase tracking-wider mb-3 inline-block">
                       {getLocalizedField(drawerProduct.category as any, 'name', locale)}
                     </span>
                   )}
-                  <h3 className="text-2xl md:text-3xl font-black text-steel-900 uppercase mb-1">
-                    {getLocalizedField(drawerProduct as any, 'name', locale)}
-                  </h3>
-                  <p className="text-neutral-400 text-sm">
-                    {isAr ? drawerProduct.nameEn : drawerProduct.nameAr}
-                  </p>
+                  <div className="flex items-start justify-between gap-3">
+                    <div>
+                      <h3 className="text-xl md:text-2xl font-black text-steel-900 uppercase mb-1">
+                        {getLocalizedField(drawerProduct as any, 'name', locale)}
+                      </h3>
+                      <p className="text-neutral-400 text-base">
+                        {isAr ? drawerProduct.nameEn : drawerProduct.nameAr}
+                      </p>
+                    </div>
+                    {drawerProduct.specifications?.model && (
+                      <div className="shrink-0 bg-primary px-5 py-3 text-center">
+                        <div className="text-steel-900/60 text-[10px] font-bold uppercase tracking-wider">{isAr ? 'الموديل' : 'MODEL'}</div>
+                        <div className="text-steel-900 font-black text-lg md:text-xl">{drawerProduct.specifications.model}</div>
+                      </div>
+                    )}
+                  </div>
                 </div>
 
                 {/* Content */}
                 <div className="p-5 md:p-8">
                   {/* Description */}
                   {getLocalizedField(drawerProduct as any, 'description', locale) && (
-                    <p className="text-neutral-600 text-sm leading-relaxed mb-5">
+                    <p className="text-neutral-600 text-base leading-relaxed mb-5">
                       {getLocalizedField(drawerProduct as any, 'description', locale)}
                     </p>
                   )}
 
-                  {/* Specifications */}
+                  {/* Specifications - grid */}
                   {drawerProduct.specifications && Object.keys(drawerProduct.specifications).length > 0 && (
                     <div className="mb-5">
-                      <span className="text-primary text-xs font-bold uppercase tracking-[0.15em] mb-2 block">
+                      <span className="text-primary text-sm font-bold uppercase tracking-[0.15em] mb-3 block">
                         {isAr ? 'المواصفات' : 'SPECIFICATIONS'}
                       </span>
-                      <div className="border border-neutral-200 divide-y divide-neutral-100">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                         {Object.entries(drawerProduct.specifications).map(([key, val]) => (
-                          <div key={key} className={cn("flex justify-between px-4 py-2 text-sm", isAr && "flex-row-reverse")}>
-                            <span className="text-neutral-400 capitalize">{key.replace(/_/g, ' ')}</span>
-                            <span className="text-steel-900 font-semibold">{val}</span>
+                          <div key={key} className="flex justify-between items-center px-3 py-2 bg-neutral-50 border border-neutral-100">
+                            <span className="text-neutral-400 capitalize text-sm">{key.replace(/_/g, ' ')}</span>
+                            <span className="text-steel-900 font-bold text-sm">{val}</span>
                           </div>
                         ))}
                       </div>
                     </div>
                   )}
 
-                  {/* Models Table */}
-                  {drawerProduct.models && drawerProduct.models.length > 0 && (() => {
-                    const headers = Object.keys(drawerProduct.models![0]);
-                    return (
-                      <div className="mb-5">
-                        <span className="text-primary text-xs font-bold uppercase tracking-[0.15em] mb-2 block">
-                          {isAr ? 'الموديلات' : 'MODELS'} ({drawerProduct.models!.length})
-                        </span>
-                        <div className="overflow-x-auto border border-neutral-200 max-h-[300px] overflow-y-auto">
-                          <table className="w-full text-xs">
-                            <thead className="sticky top-0">
-                              <tr className="bg-neutral-100">
-                                {headers.map(h => (
-                                  <th key={h} className="px-2 py-1.5 text-steel-900 font-bold uppercase text-start whitespace-nowrap">{h.replace(/_/g, ' ')}</th>
-                                ))}
-                              </tr>
-                            </thead>
-                            <tbody className="divide-y divide-neutral-50">
-                              {drawerProduct.models!.map((model, i) => (
-                                <tr key={i} className="hover:bg-primary/5">
-                                  {headers.map(h => (
-                                    <td key={h} className="px-2 py-1 text-neutral-600 whitespace-nowrap">{model[h] || '-'}</td>
-                                  ))}
-                                </tr>
-                              ))}
-                            </tbody>
-                          </table>
-                        </div>
-                      </div>
-                    );
-                  })()}
+                  {/* Models - Slider */}
+                  {drawerProduct.models && drawerProduct.models.length > 0 && (
+                    <PLModelsSlider models={drawerProduct.models} isAr={isAr} />
+                  )}
 
                   {/* Features */}
                   {(() => {
@@ -713,13 +715,13 @@ export const ProductionLineSection = memo(function ProductionLineSection() {
                     if (features.length === 0) return null;
                     return (
                       <div className="mb-4">
-                        <span className="text-primary text-xs font-bold uppercase tracking-[0.15em]">
+                        <span className="text-primary text-sm font-bold uppercase tracking-[0.15em]">
                           {isAr ? 'المميزات' : 'FEATURES'}
                         </span>
-                        <div className="grid grid-cols-2 gap-x-4 gap-y-2 mt-2">
+                        <div className="grid grid-cols-2 gap-x-4 gap-y-3 mt-3">
                           {features.map((f: string, i: number) => (
-                            <div key={i} className="flex items-start gap-2 text-sm text-neutral-600">
-                              <div className="w-1 h-1 bg-primary rounded-full mt-1.5 shrink-0" />
+                            <div key={i} className="flex items-start gap-2 text-base text-neutral-600">
+                              <div className="w-1.5 h-1.5 bg-primary rounded-full mt-2 shrink-0" />
                               {f}
                             </div>
                           ))}
@@ -737,3 +739,87 @@ export const ProductionLineSection = memo(function ProductionLineSection() {
     </section>
   );
 });
+
+// ─── Production Line Models Slider ─────────────────
+function PLModelsSlider({ models, isAr }: { models: Array<Record<string, string>>; isAr: boolean }) {
+  const [idx, setIdx] = useState(0);
+  const headers = Object.keys(models[0]);
+  const model = models[idx];
+
+  return (
+    <div className="mb-5 -mx-5 md:-mx-8 px-5 md:px-8 py-5 bg-steel-900">
+      <div className="flex items-center justify-between mb-4">
+        <span className="text-primary text-base font-bold uppercase tracking-[0.15em]">
+          {isAr ? 'الموديلات' : 'MODELS'} ({models.length})
+        </span>
+        <div className="flex items-center gap-1">
+          <button
+            onClick={(e) => { e.stopPropagation(); setIdx(prev => prev > 0 ? prev - 1 : models.length - 1); }}
+            className="w-8 h-8 flex items-center justify-center bg-white/10 hover:bg-primary/30 text-white hover:text-primary transition-colors"
+          >
+            <ZoomIn size={14} className="rotate-180" />
+          </button>
+          <span className="text-white/50 text-xs px-2 tabular-nums">{idx + 1} / {models.length}</span>
+          <button
+            onClick={(e) => { e.stopPropagation(); setIdx(prev => prev < models.length - 1 ? prev + 1 : 0); }}
+            className="w-8 h-8 flex items-center justify-center bg-white/10 hover:bg-primary/30 text-white hover:text-primary transition-colors"
+          >
+            <ZoomIn size={14} />
+          </button>
+        </div>
+      </div>
+
+      <div className="flex gap-1.5 mb-4 overflow-x-auto pb-2" style={{ scrollbarWidth: 'none' }}>
+        {models.map((m, i) => (
+          <button
+            key={i}
+            onClick={(e) => { e.stopPropagation(); setIdx(i); }}
+            className={`px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider whitespace-nowrap transition-all border shrink-0 ${
+              idx === i
+                ? 'bg-primary text-steel-900 border-primary'
+                : 'bg-white/5 text-white/50 border-white/10 hover:border-primary/40 hover:text-primary'
+            }`}
+          >
+            {m[headers[0]] || `#${i + 1}`}
+          </button>
+        ))}
+      </div>
+
+      <motion.div
+        key={idx}
+        initial={{ opacity: 0, x: 20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.3 }}
+        className="bg-white/5 border border-primary/20 p-5"
+      >
+        {model[headers[0]] && (
+          <div className="text-primary font-black text-xl mb-4 pb-3 border-b border-primary/20">
+            {model[headers[0]]}
+          </div>
+        )}
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-x-6 gap-y-4">
+          {headers.slice(1).map(h => (
+            model[h] ? (
+              <div key={h}>
+                <div className="text-white/30 text-xs uppercase tracking-wider mb-1">{h.replace(/_/g, ' ')}</div>
+                <div className="text-white/90 text-base font-semibold">{model[h]}</div>
+              </div>
+            ) : null
+          ))}
+        </div>
+      </motion.div>
+
+      <div className="flex justify-center gap-1.5 mt-4">
+        {models.map((_, i) => (
+          <button
+            key={i}
+            onClick={(e) => { e.stopPropagation(); setIdx(i); }}
+            className={`h-1.5 rounded-full transition-all ${
+              idx === i ? 'w-6 bg-primary' : 'w-1.5 bg-white/20 hover:bg-white/40'
+            }`}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}

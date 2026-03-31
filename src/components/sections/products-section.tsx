@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { motion, useInView, type Variants } from 'framer-motion';
-import { ArrowRight, Package } from 'lucide-react';
+import { ArrowRight, Package, Download } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { IndustrialSpinner } from '@/components/ui/industrial-spinner';
 import { useLocale } from '@/hooks/useLocale';
@@ -109,7 +109,7 @@ export const ProductsSection = memo(function ProductsSection() {
               </span>
             </div>
 
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-steel-900 uppercase tracking-wide">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-steel-900 uppercase tracking-wide border-l-4 border-primary pl-4 rtl:border-l-0 rtl:border-r-4 rtl:pl-0 rtl:pr-4">
               {isAr ? 'خطوط إنتاج متكاملة' : 'Complete Production Lines'}
             </h2>
 
@@ -121,15 +121,22 @@ export const ProductsSection = memo(function ProductsSection() {
             </div>
           </div>
 
-          <Button asChild variant="industrial" className="group shrink-0">
-            <Link href="/products">
-              {t('products.viewAll')}
-              <ArrowRight
-                className={`${isRTL ? 'mr-2 rotate-180 group-hover:-translate-x-1' : 'ml-2 group-hover:translate-x-1'} transition-transform`}
-                size={18}
-              />
-            </Link>
-          </Button>
+          <div className="flex gap-3 shrink-0">
+            <a href="/downloads/products-catalog.pdf" download
+              className="inline-flex items-center gap-2 bg-primary/20 border border-primary/30 hover:bg-primary/30 px-4 py-2.5 transition-all">
+              <Download size={16} className="text-primary" />
+              <span className="text-primary text-xs font-bold uppercase">{isAr ? 'الكتالوج' : 'Catalog'}</span>
+            </a>
+            <Button asChild variant="industrial" className="group">
+              <Link href="/products">
+                {t('products.viewAll')}
+                <ArrowRight
+                  className={`${isRTL ? 'mr-2 rotate-180 group-hover:-translate-x-1' : 'ml-2 group-hover:translate-x-1'} transition-transform`}
+                  size={16}
+                />
+              </Link>
+            </Button>
+          </div>
         </motion.div>
 
         {/* Filter Tabs */}

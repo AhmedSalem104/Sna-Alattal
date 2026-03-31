@@ -5,7 +5,7 @@ import { ImageWithSkeleton } from '@/components/ui/image-with-skeleton';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { motion, useInView } from 'framer-motion';
-import { Calendar, MapPin, ArrowRight, Globe } from 'lucide-react';
+import { Calendar, MapPin, ArrowRight, Globe, Play, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { IndustrialSpinner } from '@/components/ui/industrial-spinner';
 import { useLocale } from '@/hooks/useLocale';
@@ -21,6 +21,7 @@ interface Exhibition {
   locationEn: string;
   locationTr: string;
   images: string[] | string;
+  videos?: string[];
   startDate: string;
   endDate: string;
 }
@@ -30,6 +31,7 @@ export function ExhibitionsSection() {
   const { isRTL, locale } = useLocale();
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const [activeVideo, setActiveVideo] = useState<string | null>(null);
 
   const [exhibitions] = useState<Exhibition[]>(() => (exhibitionsData as any[]).filter(e => e.isActive && !e.deletedAt).sort((a, b) => (a.order ?? 0) - (b.order ?? 0)).slice(0, 4) as Exhibition[]);
   const loading = false;
@@ -110,7 +112,7 @@ export function ExhibitionsSection() {
               </span>
             </div>
 
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-steel-900 tracking-tight">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-steel-900 tracking-tight border-l-4 border-primary pl-4 rtl:border-l-0 rtl:border-r-4 rtl:pl-0 rtl:pr-4">
               {t('exhibitions.subtitle')}
             </h2>
 
@@ -148,60 +150,125 @@ export function ExhibitionsSection() {
           </div>
         )}
 
-        {/* Exhibitions Grid */}
+        {/* Exhibition Videos - TV Style */}
+        {!loading && (() => {
+          const allVideos = exhibitions.flatMap(e => {
+            const img = Array.isArray(e.images) ? e.images[0] : e.images;
+            return (e.videos || []).map((v, vi) => ({ video: v, nameAr: e.nameAr, nameEn: e.nameEn, poster: img || '', index: vi + 1 }));
+          });
+          if (allVideos.length === 0) return null;
+          return (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="mb-10"
+            >
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {allVideos.map((item, i) => (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={isInView ? { opacity: 1, y: 0 } : {}}
+                    transition={{ duration: 0.6, delay: i * 0.1 }}
+                  >
+                    <div
+                      className="group relative overflow-hidden cursor-pointer aspect-[16/10] bg-steel-900"
+                      onClick={() => setActiveVideo(item.video)}
+                    >
+                      {/* Video thumbnail - first frame */}
+                      <video
+                        muted
+                        preload="metadata"
+                        className="absolute inset-0 w-full h-full object-cover group-hover:scale-[1.06] transition-transform duration-700"
+                        src={item.video + '#t=0.5'}
+                      />
+
+                      {/* Gradient overlay */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-steel-950 via-steel-900/40 to-transparent group-hover:via-steel-900/30 transition-colors duration-300" />
+
+                      {/* Gold top line on hover */}
+                      <div className="absolute top-0 left-0 right-0 h-1 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left z-10" />
+
+                      {/* Play button */}
+                      <div className="absolute inset-0 flex items-center justify-center z-10">
+                        <div className="relative">
+                          <div className="absolute -inset-3 border-2 border-white/20 rounded-full group-hover:border-primary/40 group-hover:scale-125 transition-all duration-500 opacity-0 group-hover:opacity-100" />
+                          <div className="relative w-14 h-14 bg-white/15 backdrop-blur-sm border border-white/30 rounded-full flex items-center justify-center group-hover:bg-primary group-hover:border-primary transition-all duration-300 shadow-lg">
+                            <Play size={22} className="text-white group-hover:text-steel-900 ml-0.5 transition-colors" fill="currentColor" />
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Bottom content */}
+                      <div className="absolute bottom-0 left-0 right-0 p-4 z-10">
+                        <h3 className="text-white font-bold text-sm uppercase tracking-wide group-hover:text-primary transition-colors">
+                          {locale === 'ar' ? item.nameAr : item.nameEn} — {item.index}
+                        </h3>
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+          );
+        })()}
+
+        {/* Video Modal */}
+        {activeVideo && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="fixed inset-0 z-[200] bg-black/90 flex items-center justify-center p-4 cursor-pointer"
+            onClick={() => setActiveVideo(null)}
+          >
+            <button className="absolute top-4 right-4 z-10 w-10 h-10 bg-white/10 hover:bg-primary rounded-full flex items-center justify-center transition-colors">
+              <X size={20} className="text-white" />
+            </button>
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              className="relative w-full max-w-4xl aspect-video bg-black border-2 border-primary overflow-hidden"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <video
+                autoPlay
+                controls
+                className="w-full h-full"
+                src={activeVideo}
+              />
+            </motion.div>
+          </motion.div>
+        )}
+
+        {/* Exhibitions Grid - compact */}
         {!loading && exhibitions.length > 0 && (
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-3 gap-3">
             {exhibitions.map((exhibition, index) => (
               <motion.div
                 key={exhibition.id}
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: 20 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
               >
-                <div className="group relative overflow-hidden h-full aspect-[4/3] bg-steel-900 hover:shadow-elevation-3 transition-all duration-500">
-                    {/* Full-bleed image */}
+                <div className="group relative overflow-hidden aspect-[2/1] bg-steel-900 hover:shadow-lg transition-all duration-500">
                     <ImageWithSkeleton
                       src={getExhibitionImage(exhibition)}
                       alt={getTitle(exhibition)}
                       fill
-                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                      className="object-cover group-hover:scale-[1.06] transition-transform duration-700 ease-out"
+                      sizes="33vw"
+                      className="object-cover group-hover:scale-[1.05] transition-transform duration-700"
                       wrapperClassName="absolute inset-0"
                       loading="lazy"
                     />
-
-                    {/* Cinematic gradient overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-steel-950 via-steel-900/50 to-transparent group-hover:via-steel-900/40 transition-colors duration-300" />
-
-                    {/* Gold top line on hover */}
-                    <div className="absolute top-0 left-0 right-0 h-1 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left z-10" />
-
-                    {/* Status Badge - glass morphism */}
-                    {isUpcoming(exhibition) && (
-                      <div className="absolute top-4 right-4 z-10">
-                        <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-primary/90 text-steel-900 text-xs font-bold uppercase tracking-wider">
-                          {t('exhibitions.upcoming')}
-                        </span>
-                      </div>
-                    )}
-
-                    {/* Floating info badges */}
-                    <div className="absolute top-4 left-4 z-10 flex flex-col gap-2">
-                      <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white/10 backdrop-blur-sm border border-white/20 text-white text-xs font-semibold">
-                        <MapPin size={12} />
-                        {getLocation(exhibition)}
-                      </span>
-                      <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white/10 backdrop-blur-sm border border-white/20 text-white text-xs font-semibold">
-                        <Calendar size={12} />
-                        {formatDate(exhibition.startDate)}
-                      </span>
-                    </div>
-
-                    {/* Bottom content overlay */}
-                    <div className="absolute bottom-0 left-0 right-0 p-5 z-10">
-                      <h3 className="text-white font-bold text-base uppercase tracking-wide group-hover:text-primary transition-colors duration-300 line-clamp-2">
+                    <div className="absolute inset-0 bg-gradient-to-t from-steel-950/90 via-steel-900/30 to-transparent" />
+                    <div className="absolute bottom-0 left-0 right-0 p-2.5 z-10">
+                      <h3 className="text-white font-bold text-[11px] uppercase tracking-wide group-hover:text-primary transition-colors line-clamp-1">
                         {getTitle(exhibition)}
                       </h3>
+                      <p className="text-white/50 text-[9px] mt-0.5 flex items-center gap-1">
+                        <MapPin size={8} /> {getLocation(exhibition)} · {formatDate(exhibition.startDate)}
+                      </p>
                     </div>
                   </div>
               </motion.div>

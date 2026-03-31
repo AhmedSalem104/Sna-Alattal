@@ -87,7 +87,7 @@ export const ClientsSection = memo(function ClientsSection() {
             </span>
           </div>
 
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-steel-900 tracking-tight mb-4">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-steel-900 tracking-tight mb-4 border-l-4 border-primary pl-4 rtl:border-l-0 rtl:border-r-4 rtl:pl-0 rtl:pr-4">
             {t('clients.subtitle')}
           </h2>
 
@@ -129,7 +129,7 @@ export const ClientsSection = memo(function ClientsSection() {
             <p className="text-neutral-600">{t('common.noData')}</p>
           </div>
         ) : (
-          /* Clients Logo Marquee (Newamstar-inspired) */
+          /* Clients Logo Marquee */
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -140,44 +140,52 @@ export const ClientsSection = memo(function ClientsSection() {
             <div className="absolute left-0 top-0 bottom-0 w-16 md:w-24 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none" />
             <div className="absolute right-0 top-0 bottom-0 w-16 md:w-24 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none" />
 
-            {/* Row 1 - scrolls left */}
+            {/* Row 1 - first half of clients, scrolls left */}
             <div className="flex animate-marquee hover:[animation-play-state:paused] mb-5">
-              {[...clients, ...clients].map((client, index) => (
-                <div key={`r1-${client.id}-${index}`} className="flex-shrink-0 mx-4">
-                  <div className="w-28 h-28 md:w-36 md:h-36 bg-white border border-primary/10 hover:border-primary/40 p-4 md:p-5 flex items-center justify-center
-                    hover:shadow-gold-sm hover:-translate-y-1 hover:scale-105 transition-all duration-500">
-                    <Image
-                      src={client.logo}
-                      alt={getName(client)}
-                      width={110}
-                      height={110}
-                      className="object-contain"
-                      loading="lazy"
-                      sizes="(max-width: 768px) 80px, 110px"
-                    />
+              {(() => {
+                const half = Math.ceil(clients.length / 2);
+                const row1 = clients.slice(0, half);
+                return [...row1, ...row1].map((client, index) => (
+                  <div key={`r1-${client.id}-${index}`} className="flex-shrink-0 mx-4">
+                    <div className="w-28 h-28 md:w-36 md:h-36 bg-white border border-primary/10 hover:border-primary/40 p-4 md:p-5 flex items-center justify-center
+                      hover:shadow-gold-sm hover:-translate-y-1 hover:scale-105 transition-all duration-500">
+                      <Image
+                        src={client.logo}
+                        alt={getName(client)}
+                        width={110}
+                        height={110}
+                        className="object-contain"
+                        loading="lazy"
+                        sizes="(max-width: 768px) 80px, 110px"
+                      />
+                    </div>
                   </div>
-                </div>
-              ))}
+                ));
+              })()}
             </div>
 
-            {/* Row 2 - scrolls right (always visible) */}
+            {/* Row 2 - second half of clients, scrolls right, full color */}
             <div className="flex animate-marquee-reverse hover:[animation-play-state:paused]">
-              {[...clients.slice().reverse(), ...clients.slice().reverse()].map((client, index) => (
-                <div key={`r2-${client.id}-${index}`} className="flex-shrink-0 mx-4">
-                  <div className="w-28 h-28 md:w-36 md:h-36 bg-white border border-primary/10 hover:border-primary/40 p-4 md:p-5 flex items-center justify-center
-                    grayscale hover:grayscale-0 opacity-70 hover:opacity-100 hover:shadow-gold-sm hover:-translate-y-1 transition-all duration-500">
-                    <Image
-                      src={client.logo}
-                      alt={getName(client)}
-                      width={110}
-                      height={110}
-                      className="object-contain"
-                      loading="lazy"
-                      sizes="(max-width: 768px) 80px, 110px"
-                    />
+              {(() => {
+                const half = Math.ceil(clients.length / 2);
+                const row2 = clients.slice(half);
+                return [...row2, ...row2].map((client, index) => (
+                  <div key={`r2-${client.id}-${index}`} className="flex-shrink-0 mx-4">
+                    <div className="w-28 h-28 md:w-36 md:h-36 bg-white border border-primary/10 hover:border-primary/40 p-4 md:p-5 flex items-center justify-center
+                      hover:shadow-gold-sm hover:-translate-y-1 hover:scale-105 transition-all duration-500">
+                      <Image
+                        src={client.logo}
+                        alt={getName(client)}
+                        width={110}
+                        height={110}
+                        className="object-contain"
+                        loading="lazy"
+                        sizes="(max-width: 768px) 80px, 110px"
+                      />
+                    </div>
                   </div>
-                </div>
-              ))}
+                ));
+              })()}
             </div>
           </motion.div>
         )}

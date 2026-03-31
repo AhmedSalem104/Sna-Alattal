@@ -48,9 +48,43 @@ interface ProductCard {
 
 const PRODUCTS: ProductCard[] = [
   {
+    key: 'variable-frequency',
+    nameEn: 'Compressor VFD',
+    nameAr: 'كمبروسور',
+    image: '/images/compressors/variable-frequency.jpg',
+    specs: ['15 - 250 kW', '2.0 - 40 m\u00B3/min', '7 - 13 bar'],
+    specsAr: ['15 - 250 كيلوواط', '2.0 - 40 م\u00B3/د', '7 - 13 بار'],
+    colSpan: 1,
+    row: 1,
+    applications: ['plastic', 'cnc', 'printing'],
+    specBars: [
+      { label: 'Power', labelAr: 'القدرة', value: 250, max: 300, unit: 'kW' },
+      { label: 'Air Flow', labelAr: 'تدفق الهواء', value: 40, max: 50, unit: 'm\u00B3/min' },
+      { label: 'Noise', labelAr: 'الضوضاء', value: 66, max: 100, unit: 'dB' },
+      { label: 'Pressure', labelAr: 'الضغط', value: 13, max: 16, unit: 'bar' },
+    ],
+  },
+  {
+    key: 'booster',
+    nameEn: 'Booster Compressor',
+    nameAr: 'ضاغط معزز',
+    image: '/images/compressors/booster-cylinders.png',
+    specs: ['15 - 132 kW', 'Up to 40 bar', 'Oil-free option'],
+    specsAr: ['15 - 132 كيلوواط', 'حتى 40 بار', 'خيار بدون زيت'],
+    colSpan: 1,
+    row: 1,
+    applications: ['highPressure'],
+    specBars: [
+      { label: 'Power', labelAr: 'القدرة', value: 132, max: 300, unit: 'kW' },
+      { label: 'Air Flow', labelAr: 'تدفق الهواء', value: 20, max: 50, unit: 'm\u00B3/min' },
+      { label: 'Noise', labelAr: 'الضوضاء', value: 75, max: 100, unit: 'dB' },
+      { label: 'Pressure', labelAr: 'الضغط', value: 40, max: 45, unit: 'bar' },
+    ],
+  },
+  {
     key: 'world-leading',
-    nameEn: 'World Leading Screw Compressor',
-    nameAr: 'ضاغط لولبي عالمي رائد',
+    nameEn: 'Screw Compressor',
+    nameAr: 'ضاغط لولبي',
     image: '/images/compressors/hero-world-leading.png',
     specs: ['7.5 - 250 kW', '0.8 - 40 m\u00B3/min', '7 - 13 bar'],
     specsAr: ['7.5 - 250 كيلوواط', '0.8 - 40 م\u00B3/د', '7 - 13 بار'],
@@ -116,43 +150,9 @@ const PRODUCTS: ProductCard[] = [
     ],
   },
   {
-    key: 'variable-frequency',
-    nameEn: 'Variable Frequency Drive',
-    nameAr: 'محرك متغير التردد',
-    image: '/images/compressors/variable-frequency.jpg',
-    specs: ['15 - 250 kW', '2.0 - 40 m\u00B3/min', '7 - 13 bar'],
-    specsAr: ['15 - 250 كيلوواط', '2.0 - 40 م\u00B3/د', '7 - 13 بار'],
-    colSpan: 1,
-    row: 2,
-    applications: ['plastic', 'cnc', 'printing'],
-    specBars: [
-      { label: 'Power', labelAr: 'القدرة', value: 250, max: 300, unit: 'kW' },
-      { label: 'Air Flow', labelAr: 'تدفق الهواء', value: 40, max: 50, unit: 'm\u00B3/min' },
-      { label: 'Noise', labelAr: 'الضوضاء', value: 66, max: 100, unit: 'dB' },
-      { label: 'Pressure', labelAr: 'الضغط', value: 13, max: 16, unit: 'bar' },
-    ],
-  },
-  {
-    key: 'booster',
-    nameEn: 'Booster Compressor',
-    nameAr: 'ضاغط معزز',
-    image: '/images/compressors/booster-cylinders.png',
-    specs: ['15 - 132 kW', 'Up to 40 bar', 'Oil-free option'],
-    specsAr: ['15 - 132 كيلوواط', 'حتى 40 بار', 'خيار بدون زيت'],
-    colSpan: 1,
-    row: 3,
-    applications: ['highPressure'],
-    specBars: [
-      { label: 'Power', labelAr: 'القدرة', value: 132, max: 300, unit: 'kW' },
-      { label: 'Air Flow', labelAr: 'تدفق الهواء', value: 20, max: 50, unit: 'm\u00B3/min' },
-      { label: 'Noise', labelAr: 'الضوضاء', value: 75, max: 100, unit: 'dB' },
-      { label: 'Pressure', labelAr: 'الضغط', value: 40, max: 45, unit: 'bar' },
-    ],
-  },
-  {
     key: 'precision-filters',
-    nameEn: 'Precision Filters & Air Dryers',
-    nameAr: 'فلاتر دقيقة ومجففات هواء',
+    nameEn: 'Precision Air Filters',
+    nameAr: 'فلاتر هواء الدقيقة',
     image: '/images/compressors/precision-filters.png',
     specs: ['0.01\u03BCm filtration', 'Dew point -40\u00B0C', 'ISO 8573-1 Class 1'],
     specsAr: ['ترشيح 0.01 ميكرون', 'نقطة ندى -40\u00B0م', 'ISO 8573-1 فئة 1'],
@@ -164,6 +164,23 @@ const PRODUCTS: ProductCard[] = [
       { label: 'Dew Point', labelAr: 'نقطة الندى', value: 40, max: 70, unit: '\u00B0C' },
       { label: 'Flow Rate', labelAr: 'معدل التدفق', value: 30, max: 50, unit: 'm\u00B3/min' },
       { label: 'Pressure Drop', labelAr: 'فقدان الضغط', value: 15, max: 100, unit: 'mbar' },
+    ],
+  },
+  {
+    key: 'air-dryers',
+    nameEn: 'Refrigerated Air Dryer',
+    nameAr: 'مجفف الهواء',
+    image: '/images/compressors/air-dryer-new.png',
+    specs: ['1.0 - 45 m\u00B3/min', 'Dew point 3~10\u00B0C', 'R-22 / R-407 / R-410'],
+    specsAr: ['1.0 - 45 م\u00B3/د', 'نقطة ندى 3~10\u00B0م', 'R-22 / R-407 / R-410'],
+    colSpan: 1,
+    row: 3,
+    applications: ['general', 'packaging', 'cnc'],
+    specBars: [
+      { label: 'Air Flow', labelAr: 'تدفق الهواء', value: 45, max: 50, unit: 'm\u00B3/min' },
+      { label: 'Dew Point', labelAr: 'نقطة الندى', value: 10, max: 40, unit: '\u00B0C' },
+      { label: 'Power', labelAr: 'القدرة', value: 8, max: 10, unit: 'HP' },
+      { label: 'Models', labelAr: 'الموديلات', value: 12, max: 15, unit: '' },
     ],
   },
 ];
@@ -248,6 +265,7 @@ export default function CompressorsPage() {
     'variable-frequency': 'permanent-variable-frequency',
     'booster': 'three-cylinder-booster',
     'precision-filters': 'precision-filter',
+    'air-dryers': 'air-dryers',
   };
 
   const getApiCompressor = useCallback((productKey: string): Compressor | undefined => {
@@ -308,63 +326,67 @@ export default function CompressorsPage() {
           <div className="absolute inset-0 bg-gradient-to-b from-steel-900/60 via-steel-900/40 to-steel-900" />
         </div>
 
-        <div className="container mx-auto px-4 sm:px-6 relative z-10 pt-20 pb-12">
-          <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 items-start">
-            {/* Left: Title + Description (3 cols) */}
-            <div className="lg:col-span-3">
-              {/* Badge */}
-              <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="inline-flex items-center gap-2 border border-primary/20 bg-primary/5 px-3 py-1 mb-4">
-                <Wind size={12} className="text-primary" />
-                <span className="text-primary text-[10px] font-bold uppercase tracking-[0.25em]">
-                  {isAr ? 'ضواغط الهواء اللولبية' : 'SCREW AIR COMPRESSORS'}
-                </span>
-              </motion.div>
+        <div className="container mx-auto px-4 sm:px-6 relative z-10 pt-24 pb-20">
+          {/* Badge */}
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="inline-flex items-center gap-2 border border-primary/20 bg-primary/5 px-4 py-1.5 mb-6">
+            <Wind size={14} className="text-primary" />
+            <span className="text-primary text-[10px] md:text-xs font-bold uppercase tracking-[0.25em]">
+              {isAr ? 'ضواغط الهواء اللولبية' : 'SCREW AIR COMPRESSORS'}
+            </span>
+          </motion.div>
 
-              {/* Title */}
-              <motion.h1 initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
-                className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-white uppercase tracking-tight mb-4">
-                {isAr ? 'ضواغط الهواء اللولبية الرائدة عالمياً' : 'WORLD LEADING SCREW AIR COMPRESSORS'}
-              </motion.h1>
+          {/* Title */}
+          <motion.h1 initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white uppercase tracking-tight max-w-4xl mb-6">
+            {isAr ? 'ضواغط الهواء اللولبية الرائدة على مستوى العالم' : 'THE WORLD LEADING SCREW AIR COMPRESSORS'}
+          </motion.h1>
 
-              <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
-                className="text-white/60 text-sm md:text-base leading-relaxed mb-6 max-w-2xl">
+          {/* Two column: Description + Features */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 mt-10">
+            {/* Left: About text */}
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
+              <p className="text-white/70 text-base md:text-lg leading-relaxed mb-6">
                 {isAr
-                  ? 'تعد شركة SNA العتال من الشركات الرائدة في تصنيع وتوريد معدات ضغط الهواء. نقدم أفضل التقنيات الأوروبية المعروفة بخلوها من العيوب وأقل تكاليف الصيانة.'
-                  : 'SNA is a pioneer in manufacturing and supplying air compressor equipment. We introduce European top technology known for defect-free operation and lowest maintenance costs.'}
-              </motion.p>
+                  ? 'تعد شركة SNA العتال من الشركات الرائدة في مجال تصنيع وتركيب وتوريد معدات ضغط الهواء بكافة أشكالها وأحجامها وأنواعها. تتمتع الشركة بسمعة طيبة في السوق بفضل جودة منتجاتها العالية ومتانتها وفعاليتها.'
+                  : 'SNA is a pioneer in the manufacturing, installation, and supply of air compressor equipment in all its shapes, sizes, and types. The company enjoys a strong reputation in the market due to the high quality, durability, and efficiency of its products.'}
+              </p>
+              <p className="text-white/50 text-sm leading-relaxed mb-8">
+                {isAr
+                  ? 'نحن نقدم أفضل التقنيات الأوروبية ذات الأداء الأفضل عالمياً. يتم استخدامها في آلاف الضواغط في العالم، وتشتهر بخلوها من العيوب وأقل تكاليف الصيانة. هدفنا هو تلبية احتياجات الضواغط من الموثوقية الصناعية العالية والكفاءة العالية واستهلاك الطاقة المنخفض.'
+                  : 'We introduce European top technology with best performance in the world. Used in thousands of compressors globally, known for defect-free operation and lowest maintenance costs. Our goal is to satisfy industrial high-reliability, high-efficiency and low-energy compressor needs.'}
+              </p>
 
               {/* Download */}
-              <motion.a initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }}
-                href="/downloads/compressors-catalog.pdf" download="SNA-Compressors-Catalog.pdf"
-                className="inline-flex items-center gap-3 bg-primary hover:bg-primary/90 px-5 py-3 transition-all duration-300 shadow-lg">
-                <Download size={18} className="text-steel-900" />
+              <a href="/downloads/compressors-catalog.pdf" download="SNA-Compressors-Catalog.pdf"
+                className="inline-flex items-center gap-3 bg-primary hover:bg-primary/90 px-7 py-4 transition-all duration-300 shadow-lg">
+                <Download size={20} className="text-steel-900" />
                 <div>
-                  <div className="text-steel-900 font-bold text-xs uppercase tracking-wider">
+                  <div className="text-steel-900 font-bold text-sm uppercase tracking-wider">
                     {isAr ? 'تحميل الكتالوج' : 'Download Catalog'}
                   </div>
-                  <div className="text-steel-900/50 text-[9px]">PDF • 3.6 MB</div>
+                  <div className="text-steel-900/50 text-[10px]">PDF • 3.6 MB</div>
                 </div>
-              </motion.a>
-            </div>
+              </a>
+            </motion.div>
 
-            {/* Right: Features (2 cols) */}
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="lg:col-span-2">
-              <h3 className="text-primary text-[10px] font-bold uppercase tracking-[0.2em] mb-3">
+            {/* Right: Product Features */}
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.35 }}>
+              <h3 className="text-primary text-xs font-bold uppercase tracking-[0.2em] mb-5">
                 {isAr ? 'مميزات المنتج' : 'PRODUCT FEATURES'}
               </h3>
-              <div className="space-y-2.5">
+              <div className="space-y-4">
                 {[
                   { titleAr: 'صوت منخفض', titleEn: 'Low Noise', descAr: 'نقل الحركة مباشرة دون ضوضاء', descEn: 'Direct driven, without gear noise' },
-                  { titleAr: 'توفير طاقة', titleEn: 'Energy Saving', descAr: 'توفير حتى 30-50% من الطاقة', descEn: 'Saves 30-50% energy' },
-                  { titleAr: 'تصميم فعال', titleEn: 'Effective Design', descAr: 'محرك عالي الكفاءة بدون تروس', descEn: 'High effective motor, no gears' },
-                  { titleAr: 'تبريد متقدم', titleEn: 'Advanced Cooling', descAr: 'مروحة تبريد متغيرة التردد', descEn: 'Variable frequency cooling fan' },
-                  { titleAr: 'مصداقية عالية', titleEn: 'High Reliability', descAr: 'جودة عالية مع النقل المباشر', descEn: 'High quality with direct drive' },
+                  { titleAr: 'توفير طاقة', titleEn: 'Energy Saving', descAr: 'توفر الطاقة بشكل كبير حيث تصل كل آلة إلى معيار توفير الطاقة العالمي', descEn: 'Greatly saves energy, each machine reaches global energy saving standard' },
+                  { titleAr: 'تصميم خارجي فعال', titleEn: 'High Effective Mainframe', descAr: 'محرك ذو فعالية عالية مع نظام تشغيل مباشر بدون تروس', descEn: 'High effective motor with direct driven system, no gears' },
+                  { titleAr: 'مروحة تبريد متغيرة التردد', titleEn: 'Frequency Conversion Cooling', descAr: 'مروحة تبريد زيت متغيرة التردد لأداء مثالي', descEn: 'Frequency conversion oil-cooling fan for optimal performance' },
+                  { titleAr: 'مصداقية عالية', titleEn: 'High Reliability', descAr: 'منتجات ذات جودة وكفاءة عالية مع النقل المباشر للحركة', descEn: 'Products of high quality and efficiency with direct driven big rotor' },
                 ].map((feat, i) => (
-                  <div key={i} className="flex gap-2.5">
-                    <div className="w-1 h-1 bg-primary rounded-full mt-1.5 shrink-0" />
+                  <div key={i} className="flex gap-3">
+                    <div className="w-1.5 h-1.5 bg-primary rounded-full mt-2 shrink-0" />
                     <div>
-                      <h4 className="text-white text-xs font-bold">{isAr ? feat.titleAr : feat.titleEn}</h4>
-                      <p className="text-white/35 text-[10px] leading-relaxed">{isAr ? feat.descAr : feat.descEn}</p>
+                      <h4 className="text-white text-sm font-bold mb-0.5">{isAr ? feat.titleAr : feat.titleEn}</h4>
+                      <p className="text-white/40 text-xs leading-relaxed">{isAr ? feat.descAr : feat.descEn}</p>
                     </div>
                   </div>
                 ))}
@@ -375,68 +397,68 @@ export default function CompressorsPage() {
       </section>
 
       {/* ═══════════════════════════════════════════════════════
-          APPLICATION FILTER + PRODUCT GRID
+          STICKY FILTER + PRODUCT GRID
           ═══════════════════════════════════════════════════════ */}
-      <section ref={gridRef} className="py-10 md:py-14 scroll-mt-16">
+      <section className="pt-20 pb-4 bg-white border-b border-neutral-200 sticky top-0 z-30">
         <div className="container mx-auto px-4 sm:px-6">
-          {/* Section header + filter */}
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8">
-            <div>
-              <div className="flex items-center gap-3 mb-2">
-                <div className="w-6 h-[2px] bg-primary" />
-                <span className="text-primary text-xs font-bold uppercase tracking-[0.2em]">
-                  {isAr ? 'منتجاتنا' : 'OUR PRODUCTS'}
-                </span>
-              </div>
-              <h2 className="text-xl md:text-3xl font-black text-steel-900 uppercase tracking-tight">
-                {isAr ? 'استكشف المجموعة' : 'EXPLORE THE RANGE'}
-              </h2>
-            </div>
-
-            {/* Application Filter Tabs */}
-            <div className="flex flex-wrap gap-1.5">
-              <button
-                onClick={() => setActiveApp(null)}
-                className={cn(
-                  'px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider transition-all duration-300 border',
-                  !activeApp
-                    ? 'bg-primary text-steel-900 border-primary'
-                    : 'bg-white text-neutral-400 border-neutral-200 hover:border-primary/50 hover:text-primary'
-                )}
-              >
-                {isAr ? 'الكل' : 'All'}
-              </button>
-              {APPLICATIONS.map(app => (
-                <button
-                  key={app.key}
-                  onClick={() => handleAppClick(app.key)}
-                  className={cn(
-                    'px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider transition-all duration-300 border inline-flex items-center gap-1',
-                    activeApp === app.key
-                      ? 'bg-primary text-steel-900 border-primary'
-                      : 'bg-white text-neutral-400 border-neutral-200 hover:border-primary/50 hover:text-primary'
-                  )}
-                >
-                  <app.icon size={10} />
-                  {isAr ? app.labelAr : app.labelEn}
-                </button>
-              ))}
-            </div>
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-4">
+            <h2 className="text-xl md:text-2xl font-bold text-steel-900">
+              {isAr ? 'استكشف الضواغط' : 'Explore Compressors'}
+            </h2>
+            <a href="/downloads/compressors-catalog.pdf" download
+              className="inline-flex items-center gap-2 bg-primary hover:bg-primary/90 px-4 py-2 transition-all shadow-sm">
+              <Download size={14} className="text-steel-900" />
+              <span className="text-steel-900 font-bold text-xs uppercase">{isAr ? 'تحميل الكتالوج' : 'Download Catalog'}</span>
+            </a>
           </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-              {PRODUCTS.map((product, i) => (
-                <ProductGridCard
-                  key={product.key}
-                  product={product}
-                  index={i}
-                  isHighlighted={isHighlighted(product)}
-                  activeApp={activeApp}
-                  isAr={isAr}
-                  onExplore={() => setDrawerProduct(product)}
-                />
-              ))}
-            </div>
+          {/* Filter Tabs */}
+          <div className="flex flex-wrap gap-2">
+            <button
+              onClick={() => setActiveApp(null)}
+              className={cn(
+                'px-4 py-2 text-xs font-bold uppercase tracking-wider transition-all duration-300 border',
+                !activeApp
+                  ? 'bg-primary text-steel-900 border-primary'
+                  : 'bg-white text-neutral-500 border-neutral-200 hover:border-primary/50 hover:text-primary'
+              )}
+            >
+              {isAr ? 'الكل' : 'All'}
+            </button>
+            {APPLICATIONS.map(app => (
+              <button
+                key={app.key}
+                onClick={() => handleAppClick(app.key)}
+                className={cn(
+                  'px-4 py-2 text-xs font-bold uppercase tracking-wider transition-all duration-300 border inline-flex items-center gap-1.5',
+                  activeApp === app.key
+                    ? 'bg-primary text-steel-900 border-primary'
+                    : 'bg-white text-neutral-500 border-neutral-200 hover:border-primary/50 hover:text-primary'
+                )}
+              >
+                <app.icon size={12} />
+                {isAr ? app.labelAr : app.labelEn}
+              </button>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section ref={gridRef} className="py-10 scroll-mt-32">
+        <div className="container mx-auto px-4 sm:px-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+            {PRODUCTS.map((product, i) => (
+              <ProductGridCard
+                key={product.key}
+                product={product}
+                index={i}
+                isHighlighted={isHighlighted(product)}
+                activeApp={activeApp}
+                isAr={isAr}
+                onExplore={() => setDrawerProduct(product)}
+              />
+            ))}
+          </div>
         </div>
       </section>
 
@@ -506,8 +528,8 @@ export default function CompressorsPage() {
                 'inset-x-0 bottom-0 top-[5vh] rounded-t-2xl',
                 'md:inset-y-0 md:rounded-none md:top-0',
                 isRTL
-                  ? 'md:left-0 md:right-auto md:w-[70vw] lg:w-[65vw] xl:w-[60vw]'
-                  : 'md:right-0 md:left-auto md:w-[70vw] lg:w-[65vw] xl:w-[60vw]'
+                  ? 'md:left-0 md:right-auto md:w-[80vw] lg:w-[75vw] xl:w-[70vw]'
+                  : 'md:right-0 md:left-auto md:w-[80vw] lg:w-[75vw] xl:w-[70vw]'
               )}
               initial={{ x: isRTL ? '-100%' : '100%' }}
               animate={{ x: 0 }}
@@ -527,26 +549,26 @@ export default function CompressorsPage() {
                 <div className="w-10 h-1 bg-neutral-300 rounded-full" />
               </div>
 
-              {/* Product image - large */}
-              <div className="relative h-64 md:h-80 bg-neutral-50 overflow-hidden">
+              {/* Product image - FULL */}
+              <div className="relative h-[400px] md:h-[550px] bg-neutral-50 overflow-hidden">
                 <Image
                   src={drawerProduct.image}
                   alt={isAr ? drawerProduct.nameAr : drawerProduct.nameEn}
                   fill
-                  className="object-contain p-6"
+                  className="object-contain p-4 md:p-8"
                   sizes="(max-width: 768px) 100vw, 60vw"
                 />
               </div>
 
               {/* Name + specs */}
-              <div className="px-5 md:px-8 py-4 border-b border-neutral-100">
+              <div className="px-5 md:px-8 py-4 border-b-4 border-primary">
                 <h3 className="text-2xl md:text-3xl font-black text-steel-900 uppercase mb-1">
                   {isAr ? drawerProduct.nameAr : drawerProduct.nameEn}
                 </h3>
-                <p className="text-neutral-400 text-sm mb-3">{isAr ? drawerProduct.nameEn : drawerProduct.nameAr}</p>
+                <p className="text-neutral-400 text-lg mb-3">{isAr ? drawerProduct.nameEn : drawerProduct.nameAr}</p>
                 <div className="flex flex-wrap gap-2">
                   {(isAr ? drawerProduct.specsAr : drawerProduct.specs).map((spec, i) => (
-                    <span key={i} className="text-xs px-3 py-1 bg-primary/10 text-primary font-semibold">{spec}</span>
+                    <span key={i} className="text-sm px-4 py-1.5 bg-primary/10 text-primary font-semibold">{spec}</span>
                   ))}
                 </div>
               </div>
@@ -558,7 +580,7 @@ export default function CompressorsPage() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-5">
                   {/* Col 1: Spec Bars */}
                   <div>
-                    <span className="text-primary text-xs font-bold uppercase tracking-[0.15em] mb-3 block">
+                    <span className="text-primary text-base font-bold uppercase tracking-[0.15em] mb-3 block">
                       {isAr ? 'الأداء' : 'PERFORMANCE'}
                     </span>
                     {drawerProduct.specBars.map((bar, i) => (
@@ -568,20 +590,20 @@ export default function CompressorsPage() {
 
                   {/* Col 2: Specs + Applications */}
                   <div>
-                    {/* All specs */}
+                    {/* All specs - grid layout */}
                     {(() => {
                       const apiComp = getApiCompressor(drawerProduct.key);
                       if (!apiComp || Object.keys(apiComp.specifications).length === 0) return null;
                       return (
                         <div className="mb-3">
-                          <span className="text-primary text-xs font-bold uppercase tracking-[0.15em] mb-2 block">
+                          <span className="text-primary text-base font-bold uppercase tracking-[0.15em] mb-3 block">
                             {isAr ? 'المواصفات' : 'SPECIFICATIONS'}
                           </span>
-                          <div className="border border-neutral-200 divide-y divide-neutral-100">
+                          <div className="grid grid-cols-1 gap-1.5">
                             {Object.entries(apiComp.specifications).map(([key, val]) => (
-                              <div key={key} className={cn("flex justify-between px-4 py-2 text-sm", isAr && "flex-row-reverse")}>
-                                <span className="text-neutral-400 capitalize">{key.replace(/_/g, ' ')}</span>
-                                <span className="text-steel-900 font-semibold">{val}</span>
+                              <div key={key} className="flex justify-between items-center px-3 py-2.5 bg-neutral-50 border border-neutral-100">
+                                <span className="text-neutral-400 capitalize text-base">{key.replace(/_/g, ' ')}</span>
+                                <span className="text-steel-900 font-bold text-base">{val}</span>
                               </div>
                             ))}
                           </div>
@@ -590,12 +612,12 @@ export default function CompressorsPage() {
                     })()}
 
                     {/* Applications */}
-                    <span className="text-primary text-xs font-bold uppercase tracking-[0.15em] mb-1.5 block">
+                    <span className="text-primary text-base font-bold uppercase tracking-[0.15em] mb-2 block">
                       {isAr ? 'التطبيقات' : 'APPLICATIONS'}
                     </span>
-                    <div className="flex flex-wrap gap-1.5">
+                    <div className="flex flex-wrap gap-2">
                       {drawerProduct.applications.map(appKey => (
-                        <span key={appKey} className="px-3 py-1.5 bg-primary/10 text-primary text-xs font-medium">
+                        <span key={appKey} className="px-4 py-2 bg-primary/10 text-primary text-base font-medium">
                           {isAr ? APP_LABEL_MAP[appKey].ar : APP_LABEL_MAP[appKey].en}
                         </span>
                       ))}
@@ -603,40 +625,11 @@ export default function CompressorsPage() {
                   </div>
                 </div>
 
-                {/* Models Table from API */}
+                {/* Models - Slider */}
                 {(() => {
                   const apiComp = getApiCompressor(drawerProduct.key);
                   if (!apiComp || !apiComp.models || apiComp.models.length === 0) return null;
-                  const headers = Object.keys(apiComp.models[0]);
-                  return (
-                    <div className="mb-4">
-                      <div className="flex items-center justify-between mb-2">
-                        <span className="text-primary text-xs font-bold uppercase tracking-[0.15em]">
-                          {isAr ? 'الموديلات' : 'MODELS'} ({apiComp.models.length})
-                        </span>
-                      </div>
-                      <div className="overflow-x-auto border border-neutral-200 max-h-[250px] overflow-y-auto">
-                        <table className="w-full text-xs">
-                          <thead className="sticky top-0">
-                            <tr className="bg-neutral-100">
-                              {headers.map(h => (
-                                <th key={h} className="px-2 py-1.5 text-steel-900 font-bold uppercase text-start whitespace-nowrap">{h.replace(/_/g, ' ')}</th>
-                              ))}
-                            </tr>
-                          </thead>
-                          <tbody className="divide-y divide-neutral-50">
-                            {apiComp.models.map((model, i) => (
-                              <tr key={i} className="hover:bg-primary/5">
-                                {headers.map(h => (
-                                  <td key={h} className="px-2 py-1 text-neutral-600 whitespace-nowrap">{model[h] || '-'}</td>
-                                ))}
-                              </tr>
-                            ))}
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                  );
+                  return <ModelsSlider models={apiComp.models} isAr={isAr} />;
                 })()}
 
                 {/* Features from API */}
@@ -645,13 +638,13 @@ export default function CompressorsPage() {
                   if (!apiComp || !apiComp.features || apiComp.features.length === 0) return null;
                   return (
                     <div className="mb-4">
-                      <span className="text-primary text-xs font-bold uppercase tracking-[0.15em]">
+                      <span className="text-primary text-base font-bold uppercase tracking-[0.15em]">
                         {isAr ? 'المميزات' : 'FEATURES'}
                       </span>
-                      <div className="grid grid-cols-2 gap-x-4 gap-y-2 mt-2">
+                      <div className="grid grid-cols-2 gap-x-4 gap-y-3 mt-3">
                         {apiComp.features.map((f: string, i: number) => (
-                          <div key={i} className="flex items-start gap-2 text-sm text-neutral-600">
-                            <div className="w-1 h-1 bg-primary rounded-full mt-1.5 shrink-0" />
+                          <div key={i} className="flex items-start gap-2 text-lg text-neutral-600">
+                            <div className="w-1.5 h-1.5 bg-primary rounded-full mt-2.5 shrink-0" />
                             {f}
                           </div>
                         ))}
@@ -771,5 +764,94 @@ function ProductGridCard({
         />
       )}
     </motion.div>
+  );
+}
+
+// ─── Models Slider Component ─────────────────────────
+function ModelsSlider({ models, isAr }: { models: Array<Record<string, string>>; isAr: boolean }) {
+  const [idx, setIdx] = useState(0);
+  const headers = Object.keys(models[0]);
+  const model = models[idx];
+
+  return (
+    <div className="mb-4 -mx-5 md:-mx-8 px-5 md:px-8 py-5 bg-steel-900">
+      <div className="flex items-center justify-between mb-4">
+        <span className="text-primary text-base font-bold uppercase tracking-[0.15em]">
+          {isAr ? 'الموديلات' : 'MODELS'} ({models.length})
+        </span>
+        <div className="flex items-center gap-1">
+          <button
+            onClick={(e) => { e.stopPropagation(); setIdx(prev => prev > 0 ? prev - 1 : models.length - 1); }}
+            className="w-8 h-8 flex items-center justify-center bg-white/10 hover:bg-primary/30 text-white hover:text-primary transition-colors"
+          >
+            <ArrowRight size={14} className="rotate-180" />
+          </button>
+          <span className="text-white/50 text-xs px-2 tabular-nums">{idx + 1} / {models.length}</span>
+          <button
+            onClick={(e) => { e.stopPropagation(); setIdx(prev => prev < models.length - 1 ? prev + 1 : 0); }}
+            className="w-8 h-8 flex items-center justify-center bg-white/10 hover:bg-primary/30 text-white hover:text-primary transition-colors"
+          >
+            <ArrowRight size={14} />
+          </button>
+        </div>
+      </div>
+
+      {/* Model Tabs */}
+      <div className="flex gap-1.5 mb-4 overflow-x-auto pb-2" style={{ scrollbarWidth: 'none' }}>
+        {models.map((m, i) => (
+          <button
+            key={i}
+            onClick={(e) => { e.stopPropagation(); setIdx(i); }}
+            className={cn(
+              'px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider whitespace-nowrap transition-all border shrink-0',
+              idx === i
+                ? 'bg-primary text-steel-900 border-primary'
+                : 'bg-white/5 text-white/50 border-white/10 hover:border-primary/40 hover:text-primary'
+            )}
+          >
+            {m[headers[0]] || `#${i + 1}`}
+          </button>
+        ))}
+      </div>
+
+      {/* Active Model Card */}
+      <motion.div
+        key={idx}
+        initial={{ opacity: 0, x: 20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.3 }}
+        className="bg-white/5 border border-primary/20 p-5"
+      >
+        {model[headers[0]] && (
+          <div className="text-primary font-black text-xl mb-4 pb-3 border-b border-primary/20">
+            {model[headers[0]]}
+          </div>
+        )}
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-x-6 gap-y-4">
+          {headers.slice(1).map(h => (
+            model[h] ? (
+              <div key={h}>
+                <div className="text-white/30 text-xs uppercase tracking-wider mb-1">{h.replace(/_/g, ' ')}</div>
+                <div className="text-white/90 text-base font-semibold">{model[h]}</div>
+              </div>
+            ) : null
+          ))}
+        </div>
+      </motion.div>
+
+      {/* Dots */}
+      <div className="flex justify-center gap-1.5 mt-4">
+        {models.map((_, i) => (
+          <button
+            key={i}
+            onClick={(e) => { e.stopPropagation(); setIdx(i); }}
+            className={cn(
+              'h-1.5 rounded-full transition-all',
+              idx === i ? 'w-6 bg-primary' : 'w-1.5 bg-white/20 hover:bg-white/40'
+            )}
+          />
+        ))}
+      </div>
+    </div>
   );
 }

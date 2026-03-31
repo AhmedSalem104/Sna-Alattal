@@ -100,7 +100,7 @@ export function ContactSection() {
             </span>
           </div>
 
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-steel-900 tracking-tight mb-4">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-steel-900 tracking-tight mb-4 border-l-4 border-primary pl-4 rtl:border-l-0 rtl:border-r-4 rtl:pl-0 rtl:pr-4">
             {t('contact.subtitle')}
           </h2>
 
@@ -119,101 +119,81 @@ export function ContactSection() {
             className="space-y-6"
           >
             {/* Egypt Office */}
-            <div className="bg-white border border-neutral-200 p-6 relative group hover:border-primary/40 hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-12 h-12 bg-primary/10 flex items-center justify-center">
-                  <Building2 size={24} className="text-primary" />
+            <div className="bg-white border border-neutral-200 p-5 relative group hover:border-primary/40 transition-all duration-300">
+              <div className="flex items-center gap-2 mb-4">
+                <Building2 size={20} className="text-primary" />
+                <h3 className="font-bold text-steel-900">🇪🇬 فرع مصر — المقر الرئيسي</h3>
+              </div>
+              <div className="space-y-2 text-sm text-neutral-600">
+                <div className="flex items-center gap-2"><MapPin size={14} className="text-primary shrink-0" /> العاشر من رمضان — المنطقة الصناعية B4 — قطعة 183</div>
+                <div className="flex items-center gap-2"><Phone size={14} className="text-primary shrink-0" /> أ. آية سعيد: <a href="tel:+201211459495" className="hover:text-primary font-medium" dir="ltr">+20 121 145 9495</a></div>
+                <div className="flex items-center gap-2"><Phone size={14} className="text-primary shrink-0" /> أ. امتياز حمدي: <a href="tel:+201032221038" className="hover:text-primary font-medium" dir="ltr">+20 103 222 1038</a> / <a href="tel:+201006193661" className="hover:text-primary font-medium" dir="ltr">+20 100 619 3661</a></div>
+                <div className="flex items-center gap-2"><Mail size={14} className="text-primary shrink-0" /> <a href="mailto:info@snalattal.com" className="hover:text-primary">info@snalattal.com</a></div>
+              </div>
+            </div>
+
+            {/* All Branches Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {/* Syria */}
+              <div className="bg-white border border-neutral-200 p-4 group hover:border-primary/40 transition-all duration-300">
+                <div className="flex items-center gap-2 mb-3">
+                  <Globe size={16} className="text-primary" />
+                  <h3 className="font-bold text-steel-900 text-sm">🇸🇾 فرع سوريا</h3>
                 </div>
-                <div>
-                  <h3 className="text-xl font-bold text-steel-900">
-                    {t('contact.info.egypt.title')}
-                  </h3>
-                  <p className="text-neutral-500 text-sm">{t('contact.info.egypt.country') || 'Egypt'}</p>
+                <div className="space-y-2 text-xs text-neutral-600">
+                  <div className="flex items-center gap-2"><MapPin size={12} className="text-primary shrink-0" /> حلب — ريف المهندسين الأول</div>
+                  <div className="flex items-center gap-2"><Phone size={12} className="text-primary shrink-0" /> أ. عمار بارود: <a href="tel:+963944971509" className="hover:text-primary" dir="ltr">+963 944 971 509</a></div>
+                  <div className="flex items-center gap-2"><Phone size={12} className="text-primary shrink-0" /> أ. عبادة المنجد: <a href="tel:+905366777156" className="hover:text-primary" dir="ltr">+90 536 677 7156</a></div>
                 </div>
               </div>
 
-              <div className="space-y-4">
-                <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 bg-neutral-100 flex items-center justify-center shrink-0">
-                    <MapPin className="text-primary" size={18} />
-                  </div>
-                  <p className="text-neutral-600 pt-2">{t('contact.info.egypt.address')}</p>
+              {/* Saudi */}
+              <div className="bg-white border border-neutral-200 p-4 group hover:border-primary/40 transition-all duration-300">
+                <div className="flex items-center gap-2 mb-3">
+                  <Globe size={16} className="text-primary" />
+                  <h3 className="font-bold text-steel-900 text-sm">🇸🇦 فرع السعودية</h3>
                 </div>
-                <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 bg-neutral-100 flex items-center justify-center shrink-0">
-                    <Phone className="text-primary" size={18} />
-                  </div>
-                  <a
-                    href="tel:+201032221038"
-                    className="text-neutral-600 hover:text-primary transition-colors"
-                  >
-                    01032221038
-                  </a>
+                <div className="space-y-2 text-xs text-neutral-600">
+                  <div className="flex items-center gap-2"><Phone size={12} className="text-primary shrink-0" /> أ. عمرو يوسف (الطائف): <a href="tel:+966536471877" className="hover:text-primary" dir="ltr">+966 53 647 1877</a></div>
+                  <div className="flex items-center gap-2"><Phone size={12} className="text-primary shrink-0" /> أ. عبدالرحمن السني (الرياض): <a href="tel:+966554996623" className="hover:text-primary" dir="ltr">+966 55 499 6623</a></div>
                 </div>
-                <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 bg-neutral-100 flex items-center justify-center shrink-0">
-                    <Phone className="text-primary" size={18} />
-                  </div>
-                  <a
-                    href="tel:+201006193661"
-                    className="text-neutral-600 hover:text-primary transition-colors"
-                  >
-                    01006193661
-                  </a>
+              </div>
+
+              {/* Turkey */}
+              <div className="bg-white border border-neutral-200 p-4 group hover:border-primary/40 transition-all duration-300">
+                <div className="flex items-center gap-2 mb-3">
+                  <Globe size={16} className="text-primary" />
+                  <h3 className="font-bold text-steel-900 text-sm">🇹🇷 فرع تركيا</h3>
                 </div>
-                <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 bg-neutral-100 flex items-center justify-center shrink-0">
-                    <Mail className="text-primary" size={18} />
-                  </div>
-                  <a
-                    href="mailto:snaalattal@gmail.com"
-                    className="text-neutral-600 hover:text-primary transition-colors"
-                  >
-                    snaalattal@gmail.com
-                  </a>
+                <div className="space-y-2 text-xs text-neutral-600">
+                  <div className="flex items-center gap-2"><MapPin size={12} className="text-primary shrink-0" /> إسطنبول — ديميركابي</div>
+                  <div className="flex items-center gap-2"><Phone size={12} className="text-primary shrink-0" /> أ. منير عنان: <a href="tel:+905516072123" className="hover:text-primary" dir="ltr">+90 551 607 2123</a></div>
+                </div>
+              </div>
+
+              {/* Iraq */}
+              <div className="bg-white border border-neutral-200 p-4 group hover:border-primary/40 transition-all duration-300">
+                <div className="flex items-center gap-2 mb-3">
+                  <Globe size={16} className="text-primary" />
+                  <h3 className="font-bold text-steel-900 text-sm">🇮🇶 فرع العراق</h3>
+                </div>
+                <div className="space-y-2 text-xs text-neutral-600">
+                  <div className="flex items-center gap-2"><MapPin size={12} className="text-primary shrink-0" /> بغداد</div>
+                  <div className="flex items-center gap-2"><Phone size={12} className="text-primary shrink-0" /> أ. مرتضى اللامي: <a href="tel:+9647714375620" className="hover:text-primary" dir="ltr">+964 771 437 5620</a></div>
                 </div>
               </div>
             </div>
 
-            {/* Turkey Office */}
-            <div className="bg-white border border-neutral-200 p-6 relative group hover:border-primary/40 hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-12 h-12 bg-primary/10 flex items-center justify-center">
-                  <Globe size={24} className="text-primary" />
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-steel-900">
-                    {t('contact.info.turkey.title')}
-                  </h3>
-                  <p className="text-neutral-500 text-sm">{t('contact.info.turkey.country') || 'Turkey'}</p>
-                </div>
+            {/* Marketing Department */}
+            <div className="bg-primary/10 p-4 mt-2">
+              <div className="flex items-center gap-2 mb-2">
+                <MessageSquare size={16} className="text-primary" />
+                <h4 className="text-steel-900 font-bold text-sm">📢 إدارة التسويق (واتساب)</h4>
               </div>
-
-              <div className="space-y-4">
-                <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 bg-neutral-100 flex items-center justify-center shrink-0">
-                    <MapPin className="text-primary" size={18} />
-                  </div>
-                  <p className="text-neutral-600 pt-2">{t('contact.info.turkey.address')}</p>
-                </div>
-                <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 bg-neutral-100 flex items-center justify-center shrink-0">
-                    <Phone className="text-primary" size={18} />
-                  </div>
-                  <span className="text-neutral-600">{t('contact.info.turkey.phone')}</span>
-                </div>
+              <div className="space-y-1 text-xs text-neutral-600">
+                <div className="flex items-center gap-2"><Phone size={12} className="text-primary shrink-0" /> <a href="tel:+201032221038" className="hover:text-primary">+20 103 222 1038</a></div>
+                <div className="flex items-center gap-2"><Phone size={12} className="text-primary shrink-0" /> <a href="tel:+9647774123070" className="hover:text-primary" dir="ltr">+964 777 412 3070</a></div>
               </div>
-            </div>
-
-            {/* Quick Contact Info */}
-            <div className="bg-primary/10 p-6">
-              <h4 className="text-steel-900 font-bold mb-3">
-                {t('contact.quick_response') || 'Quick Response'}
-              </h4>
-              <p className="text-neutral-600 text-sm">
-                {t('contact.quick_response_text') ||
-                  'نحن نستجيب لجميع الاستفسارات خلال 24 ساعة عمل'}
-              </p>
             </div>
           </motion.div>
 

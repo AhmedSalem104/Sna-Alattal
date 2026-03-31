@@ -95,7 +95,7 @@ export function Footer() {
     <footer className="text-white relative overflow-hidden" dir={isRTL ? 'rtl' : 'ltr'}>
       {/* Factory Image Background with parallax */}
       <div className="absolute inset-0 z-0 overflow-hidden">
-        <div className="absolute inset-0 -top-20 -bottom-20" style={{ backgroundImage: 'url(/images/factory-bg.jpg)', backgroundSize: 'cover', backgroundPosition: 'center', backgroundAttachment: 'fixed' }} aria-hidden="true" />
+        <div className="absolute inset-0 -top-20 -bottom-20" style={{ backgroundImage: 'url(/images/footer-bg.jpg)', backgroundSize: 'cover', backgroundPosition: 'center', backgroundAttachment: 'fixed' }} aria-hidden="true" />
         {/* Dark overlay for readability */}
         <div className="absolute inset-0 bg-steel-950/80" />
         {/* Subtle gold tint */}

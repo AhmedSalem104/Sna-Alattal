@@ -87,10 +87,34 @@ const defaultOffices: Office[] = [
     nameAr: 'فرع سوريا',
     nameEn: 'Syria Branch',
     nameTr: 'Suriye Şubesi',
-    addressAr: 'حلب، ريف المهندسين الأول',
+    addressAr: 'حلب — ريف المهندسين الأول',
     addressEn: 'Aleppo City, Rif Mohandiseen Alawal',
     addressTr: 'Halep, Rif Mühendisler Birinci',
-    phone: '',
+    phone: '00963544977798',
+    email: 'info@snalattal.com',
+    hours: '',
+  },
+  {
+    country: 'saudi',
+    nameAr: 'فرع السعودية',
+    nameEn: 'Saudi Arabia Branch',
+    nameTr: 'Suudi Arabistan Şubesi',
+    addressAr: 'المملكة العربية السعودية — الوكيل: يوسف المخدوم',
+    addressEn: 'Saudi Arabia — Agent: Youssef Al-Makhdoum',
+    addressTr: 'Suudi Arabistan — Temsilci: Youssef Al-Makhdoum',
+    phone: '00966554671677',
+    email: 'info@snalattal.com',
+    hours: '',
+  },
+  {
+    country: 'iraq',
+    nameAr: 'فرع العراق',
+    nameEn: 'Iraq Branch',
+    nameTr: 'Irak Şubesi',
+    addressAr: 'بغداد — جمهورية العراق',
+    addressEn: 'Baghdad, Iraq',
+    addressTr: 'Bağdat, Irak',
+    phone: '00964771573620',
     email: 'info@snalattal.com',
     hours: '',
   },
@@ -444,7 +468,7 @@ export default function ContactPage() {
 
           <div className="h-64 sm:h-80 md:h-96 lg:h-[450px] xl:h-[500px] 2xl:h-[600px] rounded-2xl overflow-hidden border border-neutral-200">
             <iframe
-              src="https://maps.google.com/maps?q=10th+of+Ramadan+City+Industrial+Zone+Egypt&t=&z=13&ie=UTF8&iwloc=&output=embed"
+              src="https://maps.google.com/maps?q=30.3152746,31.7830169&z=17&output=embed"
               width="100%"
               height="100%"
               style={{ border: 0 }}

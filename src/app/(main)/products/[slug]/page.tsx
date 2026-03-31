@@ -226,7 +226,7 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
                 {t('technicalSpecs')}
               </h2>
               <div className="bg-white rounded-lg border border-neutral-200 overflow-hidden">
-                <table className="w-full">
+                <table className="w-full table-fixed">
                   <tbody>
                     {Object.entries(product.specifications).map(([key, value], index) => (
                       <tr key={key} className={index % 2 === 0 ? 'bg-neutral-50' : 'bg-white'}>
@@ -258,16 +258,16 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
               <h2 className="text-2xl md:text-3xl font-bold text-neutral-900 mb-8">
                 {t('models')} ({product.models.length})
               </h2>
-              <div className="bg-white rounded-lg border border-neutral-200 overflow-x-auto">
-                <table className="w-full min-w-[640px]">
+              <div className="bg-white rounded-lg border border-neutral-200">
+                <table className="w-full table-fixed">
                   <thead>
-                    <tr className="bg-primary/5 border-b-2 border-primary/20">
+                    <tr className="bg-steel-900">
                       {modelKeys.map((key) => (
                         <th
                           key={key}
-                          className="px-4 py-3 text-xs font-bold text-neutral-900 uppercase tracking-wider text-start"
+                          className="px-3 py-2.5 text-[10px] font-bold text-primary uppercase tracking-wider text-start"
                         >
-                          {key}
+                          {key.replace(/_/g, ' ')}
                         </th>
                       ))}
                     </tr>
@@ -281,10 +281,10 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
                         {modelKeys.map((key) => (
                           <td
                             key={key}
-                            className="px-4 py-3 text-sm text-neutral-700 border-b border-neutral-100 whitespace-nowrap"
+                            className="px-3 py-2.5 text-xs text-neutral-700 border-b border-neutral-100"
                           >
                             {key === 'model' ? (
-                              <span className="font-semibold text-neutral-900">{model[key]}</span>
+                              <span className="font-bold text-neutral-900">{model[key]}</span>
                             ) : (
                               model[key]
                             )}
