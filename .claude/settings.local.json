@@ -185,7 +185,21 @@
       "WebFetch(domain:maps.app.goo.gl)",
       "Bash(cp filling-f50-v2.png filling-f50-new.png)",
       "Bash(cp filling-f32-v2.png filling-f32-new.png)",
-      "Bash(ssh-keygen -R 72.60.132.3)"
+      "Bash(ssh-keygen -R 72.60.132.3)",
+      "Bash(ssh -o ConnectTimeout=10 -i ~/.ssh/hostinger_sna root@72.60.132.3 \":*)",
+      "Bash(rm -f src/app/api/auth/[...nextauth]/route.ts)",
+      "Bash(rmdir src/app/api/auth/[...nextauth])",
+      "Bash(rmdir src/app/api/auth)",
+      "Bash(rm -f src/lib/auth.ts)",
+      "Bash(rm -f src/lib/db.ts)",
+      "Bash(rm -rf src/app/api/admin)",
+      "Bash(rm -f src/app/api/upload/route.ts)",
+      "Bash(rmdir src/app/api/upload)",
+      "Bash(npm uninstall:*)",
+      "Bash(rm -f src/lib/cloudinary.ts)",
+      "Bash(rm -rf prisma)",
+      "Bash(rm -f src/lib/env-check.ts)",
+      "Bash(rm -f .env.example)"
     ]
   }
 }
