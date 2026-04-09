@@ -69,7 +69,7 @@ const productLinks = [
 
 export function Footer() {
   const t = useTranslations();
-  const { isRTL } = useLocale();
+  const { isRTL, locale } = useLocale();
   const [socialLinks] = useState(() => {
     const data = settingsData || {};
     const links: { icon: LucideIcon | typeof TikTokIcon; href: string; label: string }[] = [];
