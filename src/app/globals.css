@@ -810,3 +810,10 @@
     @apply not-sr-only;
   }
 }
+
+/* S.N.A brand highlight - auto color */
+.sna-brand {
+  color: #F5C400;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+}

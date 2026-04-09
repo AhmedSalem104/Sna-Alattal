@@ -1,10 +1,12 @@
 'use client';
 
-import { useRef, useState, useMemo } from 'react';
+import { useRef, useState, useMemo, useCallback, useEffect } from 'react';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import { motion, useInView } from 'framer-motion';
-import { Award, CheckCircle, Shield } from 'lucide-react';
+import { Award, CheckCircle, Shield, ChevronLeft, ChevronRight } from 'lucide-react';
+import useEmblaCarousel from 'embla-carousel-react';
+import Autoplay from 'embla-carousel-autoplay';
 import { useLocale } from '@/hooks/useLocale';
 import { IndustrialSpinner } from '@/components/ui/industrial-spinner';
 import { IndustrialRing } from '@/components/decorative';
@@ -149,30 +151,16 @@ export function CertificatesSection() {
           </div>
         )}
 
-        {/* Certificates Marquee */}
+        {/* Certificates Carousel */}
         {!loading && uniqueCertificates.length > 0 && (
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="relative overflow-hidden"
-          >
-            {/* Fade edges */}
-            <div className="absolute left-0 top-0 bottom-0 w-20 md:w-32 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none" />
-            <div className="absolute right-0 top-0 bottom-0 w-20 md:w-32 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none" />
-
-            {/* translateX(-50%) needs exactly 2 identical halves */}
-            <div className="flex animate-marquee hover:[animation-play-state:paused]">
-              {/* First half */}
-              {Array.from({ length: 6 }, () => uniqueCertificates).flat().map((cert, index) => (
-                <CertCard key={`a-${cert.id}-${index}`} cert={cert} getName={getName} getIssuingBody={getIssuingBody} verifiedText={t('certificates.verified')} />
-              ))}
-              {/* Second half (identical copy) */}
-              {Array.from({ length: 6 }, () => uniqueCertificates).flat().map((cert, index) => (
-                <CertCard key={`b-${cert.id}-${index}`} cert={cert} getName={getName} getIssuingBody={getIssuingBody} verifiedText={t('certificates.verified')} />
-              ))}
-            </div>
-          </motion.div>
+          <CertificatesCarousel
+            certificates={uniqueCertificates}
+            getName={getName}
+            getIssuingBody={getIssuingBody}
+            verifiedText={t('certificates.verified')}
+            isInView={isInView}
+            isRTL={isRTL}
+          />
         )}
 
         {/* Trust Banner */}
@@ -195,5 +183,71 @@ export function CertificatesSection() {
         </motion.div>
       </div>
     </section>
+  );
+}
+
+// ─── Certificates Carousel ─────────────────
+function CertificatesCarousel({ certificates, getName, getIssuingBody, verifiedText, isInView, isRTL }: {
+  certificates: Certificate[];
+  getName: (c: Certificate) => string;
+  getIssuingBody: (c: Certificate) => string;
+  verifiedText: string;
+  isInView: boolean;
+  isRTL: boolean;
+}) {
+  const [emblaRef, emblaApi] = useEmblaCarousel(
+    { loop: true, direction: isRTL ? 'rtl' : 'ltr', align: 'start', slidesToScroll: 1 },
+    [Autoplay({ delay: 3000, stopOnInteraction: false })]
+  );
+  const [selectedIndex, setSelectedIndex] = useState(0);
+
+  const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi]);
+  const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi]);
+
+  useEffect(() => {
+    if (!emblaApi) return;
+    const onSelect = () => setSelectedIndex(emblaApi.selectedScrollSnap());
+    emblaApi.on('select', onSelect);
+    onSelect();
+    return () => { emblaApi.off('select', onSelect); };
+  }, [emblaApi]);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 40 }}
+      animate={isInView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.8 }}
+      className="relative"
+    >
+      {/* Nav buttons */}
+      <button onClick={scrollPrev} className="absolute -left-2 md:left-0 top-1/2 -translate-y-1/2 z-10 w-10 h-10 bg-white border border-neutral-200 hover:border-primary flex items-center justify-center shadow-md transition-colors">
+        <ChevronLeft size={20} className="text-steel-900" />
+      </button>
+      <button onClick={scrollNext} className="absolute -right-2 md:right-0 top-1/2 -translate-y-1/2 z-10 w-10 h-10 bg-white border border-neutral-200 hover:border-primary flex items-center justify-center shadow-md transition-colors">
+        <ChevronRight size={20} className="text-steel-900" />
+      </button>
+
+      {/* Carousel */}
+      <div ref={emblaRef} className="overflow-hidden mx-8">
+        <div className="flex">
+          {certificates.map((cert) => (
+            <div key={cert.id} className="flex-[0_0_100%] sm:flex-[0_0_50%] md:flex-[0_0_33.33%] lg:flex-[0_0_25%] min-w-0 px-2">
+              <CertCard cert={cert} getName={getName} getIssuingBody={getIssuingBody} verifiedText={verifiedText} />
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Dots */}
+      <div className="flex justify-center gap-1.5 mt-6">
+        {certificates.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => emblaApi?.scrollTo(i)}
+            className={`h-1.5 rounded-full transition-all ${selectedIndex === i ? 'w-6 bg-primary' : 'w-1.5 bg-neutral-300'}`}
+          />
+        ))}
+      </div>
+    </motion.div>
   );
 }

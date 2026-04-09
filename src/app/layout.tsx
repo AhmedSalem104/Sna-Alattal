@@ -4,6 +4,7 @@ import { getLocale, getMessages } from 'next-intl/server';
 import { NextIntlClientProvider } from 'next-intl';
 import { localeDirection, type Locale } from '@/i18n/request';
 import { Providers } from '@/components/providers';
+import { SNAHighlight } from '@/components/ui/sna-highlight';
 import './globals.css';
 
 const cairo = Cairo({
@@ -137,6 +138,7 @@ export default async function RootLayout({
       <body className="font-cairo antialiased" suppressHydrationWarning>
         <NextIntlClientProvider messages={messages} locale={locale}>
           <Providers>
+            <SNAHighlight />
             {children}
           </Providers>
         </NextIntlClientProvider>
