@@ -12,6 +12,7 @@ import { useLocale } from '@/hooks/useLocale';
 import { getLocalizedField } from '@/lib/locale-helpers';
 import { cn } from '@/lib/utils';
 import { getProducts, getCategories } from '@/lib/static-data';
+import { translateSpecKey } from '@/lib/spec-translations';
 
 
 interface Category {
@@ -406,7 +407,7 @@ export default function ProductsPage() {
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                       {Object.entries(drawerProduct.specifications).map(([key, val]) => (
                         <div key={key} className="flex justify-between items-center px-3 py-2 bg-neutral-50 border border-neutral-100">
-                          <span className="text-neutral-400 capitalize text-sm">{key.replace(/_/g, ' ')}</span>
+                          <span className="text-neutral-400 capitalize text-sm">{translateSpecKey(key, locale)}</span>
                           <span className="text-steel-900 font-bold text-sm">{val}</span>
                         </div>
                       ))}

@@ -85,13 +85,11 @@ export function CertificatesSection() {
     }
   };
 
-  // Show only specific certificates
-  const ALLOWED = ['warranty certificate', 'exhibition certificate', 'excellence certificate', 'pcms certificate'];
+  // Show all certificates (no duplicates)
   const uniqueCertificates = useMemo(() => {
     const seen = new Set<string>();
     return certificates.filter((cert) => {
       const name = cert.nameEn.toLowerCase().trim();
-      if (!ALLOWED.some(a => name.includes(a))) return false;
       if (seen.has(name)) return false;
       seen.add(name);
       return true;

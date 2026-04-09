@@ -524,32 +524,7 @@ export const ProductionLineSection = memo(function ProductionLineSection() {
               </div>
             </div>
 
-            {/* Hint with repeating fade in/out */}
-            {transform.scale === 1 && transform.x === 0 && transform.y === 0 && (
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: [0, 1, 1, 0] }}
-                transition={{
-                  duration: 3,
-                  repeat: Infinity,
-                  repeatDelay: 0.5,
-                  times: [0, 0.15, 0.7, 1],
-                  ease: 'easeInOut',
-                }}
-                className="absolute bottom-2 left-1/2 -translate-x-1/2 z-10 pointer-events-none"
-              >
-                <motion.div
-                  animate={{ scale: [1, 1.03, 1] }}
-                  transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-                  className="bg-steel-900/70 backdrop-blur-sm text-white px-6 py-3 flex items-center gap-3"
-                >
-                  <ZoomIn size={20} className="text-primary" />
-                  <span className="text-sm font-medium">
-                    {t('productionLine.hint')}
-                  </span>
-                </motion.div>
-              </motion.div>
-            )}
+            {/* Hint removed from inside image - moved outside below */}
 
             {/* Production Line Image */}
             <div
@@ -586,20 +561,14 @@ export const ProductionLineSection = memo(function ProductionLineSection() {
             </div>
           </div>
 
-          {/* Controls hint bar */}
-          <div className="flex items-center justify-center gap-6 mt-4 text-neutral-400 text-xs">
-            <span className="hidden md:inline-flex items-center gap-1.5">
-              <kbd className="bg-neutral-100 text-neutral-500 px-1.5 py-0.5 text-[10px] border border-neutral-200">+</kbd>
-              <kbd className="bg-neutral-100 text-neutral-500 px-1.5 py-0.5 text-[10px] border border-neutral-200">-</kbd>
+          {/* Controls hint - below image, not overlapping */}
+          <div className="hidden md:flex items-center justify-center gap-6 mt-3 text-neutral-400 text-[10px]">
+            <span className="inline-flex items-center gap-1">
+              <kbd className="bg-neutral-100 text-neutral-500 px-1 py-0.5 border border-neutral-200">+</kbd>
+              <kbd className="bg-neutral-100 text-neutral-500 px-1 py-0.5 border border-neutral-200">-</kbd>
               {t('productionLine.zoomKeys')}
             </span>
-            <span className={`hidden md:inline-flex items-center gap-1.5 ${isRTL ? 'flex-row-reverse' : ''}`}>
-              <kbd className="bg-neutral-100 text-neutral-500 px-1.5 py-0.5 text-[10px] border border-neutral-200">{isRTL ? '&rarr;' : '&larr;'}</kbd>
-              <kbd className="bg-neutral-100 text-neutral-500 px-1.5 py-0.5 text-[10px] border border-neutral-200">{isRTL ? '&larr;' : '&rarr;'}</kbd>
-              {t('productionLine.panKeys')}
-            </span>
-            <span className="inline-flex items-center gap-1.5">
-              <span className="w-4 h-4 border border-neutral-300 flex items-center justify-center text-[8px]">&#x1f5b1;</span>
+            <span className="inline-flex items-center gap-1">
               {t('productionLine.scrollZoom')}
             </span>
           </div>
