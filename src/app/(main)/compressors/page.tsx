@@ -423,7 +423,7 @@ export default function CompressorsPage() {
                   : 'bg-white text-neutral-500 border-neutral-200 hover:border-primary/50 hover:text-primary'
               )}
             >
-              {isAr ? 'الكل' : 'All'}
+              {locale === 'ar' ? 'الكل' : locale === 'tr' ? 'Tümü' : 'All'}
             </button>
             {APPLICATIONS.map(app => (
               <button
@@ -581,7 +581,7 @@ export default function CompressorsPage() {
                   {/* Col 1: Spec Bars */}
                   <div>
                     <span className="text-primary text-base font-bold uppercase tracking-[0.15em] mb-3 block">
-                      {isAr ? 'الأداء' : 'PERFORMANCE'}
+                      {locale === 'ar' ? 'الأداء' : locale === 'tr' ? 'PERFORMANS' : 'PERFORMANCE'}
                     </span>
                     {drawerProduct.specBars.map((bar, i) => (
                       <SpecBar key={bar.label} label={isAr ? bar.labelAr : bar.label} value={bar.value} max={bar.max} unit={bar.unit} delay={0.1 + i * 0.1} isAr={isAr} />
@@ -597,7 +597,7 @@ export default function CompressorsPage() {
                       return (
                         <div className="mb-3">
                           <span className="text-primary text-base font-bold uppercase tracking-[0.15em] mb-3 block">
-                            {isAr ? 'المواصفات' : 'SPECIFICATIONS'}
+                            {locale === 'ar' ? 'المواصفات' : locale === 'tr' ? 'ÖZELLİKLER' : 'SPECIFICATIONS'}
                           </span>
                           <div className="grid grid-cols-1 gap-1.5">
                             {Object.entries(apiComp.specifications).map(([key, val]) => (
@@ -613,7 +613,7 @@ export default function CompressorsPage() {
 
                     {/* Applications */}
                     <span className="text-primary text-base font-bold uppercase tracking-[0.15em] mb-2 block">
-                      {isAr ? 'التطبيقات' : 'APPLICATIONS'}
+                      {locale === 'ar' ? 'التطبيقات' : locale === 'tr' ? 'UYGULAMALAR' : 'APPLICATIONS'}
                     </span>
                     <div className="flex flex-wrap gap-2">
                       {drawerProduct.applications.map(appKey => (
@@ -639,7 +639,7 @@ export default function CompressorsPage() {
                   return (
                     <div className="mb-4">
                       <span className="text-primary text-base font-bold uppercase tracking-[0.15em]">
-                        {isAr ? 'المميزات' : 'FEATURES'}
+                        {locale === 'ar' ? 'المميزات' : locale === 'tr' ? 'ÖZELLİKLER' : 'FEATURES'}
                       </span>
                       <div className="grid grid-cols-2 gap-x-4 gap-y-3 mt-3">
                         {apiComp.features.map((f: string, i: number) => (
@@ -777,7 +777,7 @@ function ModelsSlider({ models, isAr }: { models: Array<Record<string, string>>;
     <div className="mb-4 -mx-5 md:-mx-8 px-5 md:px-8 py-5 bg-steel-900">
       <div className="flex items-center justify-between mb-4">
         <span className="text-primary text-base font-bold uppercase tracking-[0.15em]">
-          {isAr ? 'الموديلات' : 'MODELS'} ({models.length})
+          {locale === 'ar' ? 'الموديلات' : locale === 'tr' ? 'MODELLER' : 'MODELS'} ({models.length})
         </span>
         <div className="flex items-center gap-1">
           <button

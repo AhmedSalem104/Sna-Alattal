@@ -244,7 +244,7 @@ export function Footer() {
           <div>
             <h4 className="text-white font-bold mb-6 uppercase tracking-wider text-sm flex items-center gap-2">
               <div className="w-8 h-0.5 bg-primary" />
-              {locale === 'ar' ? 'فروعنا' : 'Our Branches'}
+              {locale === 'ar' ? 'فروعنا' : locale === 'tr' ? 'Şubelerimiz' : 'Our Branches'}
             </h4>
             <ul className="space-y-2 text-white/70 text-xs">
               <li className="flex items-center gap-2">

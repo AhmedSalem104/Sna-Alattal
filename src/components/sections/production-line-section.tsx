@@ -689,7 +689,7 @@ export const ProductionLineSection = memo(function ProductionLineSection() {
                   {drawerProduct.specifications && Object.keys(drawerProduct.specifications).length > 0 && (
                     <div className="mb-5">
                       <span className="text-primary text-sm font-bold uppercase tracking-[0.15em] mb-3 block">
-                        {isAr ? 'المواصفات' : 'SPECIFICATIONS'}
+                        {locale === 'ar' ? 'المواصفات' : locale === 'tr' ? 'ÖZELLİKLER' : 'SPECIFICATIONS'}
                       </span>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                         {Object.entries(drawerProduct.specifications).map(([key, val]) => (
@@ -716,7 +716,7 @@ export const ProductionLineSection = memo(function ProductionLineSection() {
                     return (
                       <div className="mb-4">
                         <span className="text-primary text-sm font-bold uppercase tracking-[0.15em]">
-                          {isAr ? 'المميزات' : 'FEATURES'}
+                          {locale === 'ar' ? 'المميزات' : locale === 'tr' ? 'ÖZELLİKLER' : 'FEATURES'}
                         </span>
                         <div className="grid grid-cols-2 gap-x-4 gap-y-3 mt-3">
                           {features.map((f: string, i: number) => (
@@ -750,7 +750,7 @@ function PLModelsSlider({ models, isAr }: { models: Array<Record<string, string>
     <div className="mb-5 -mx-5 md:-mx-8 px-5 md:px-8 py-5 bg-steel-900">
       <div className="flex items-center justify-between mb-4">
         <span className="text-primary text-base font-bold uppercase tracking-[0.15em]">
-          {isAr ? 'الموديلات' : 'MODELS'} ({models.length})
+          {locale === 'ar' ? 'الموديلات' : locale === 'tr' ? 'MODELLER' : 'MODELS'} ({models.length})
         </span>
         <div className="flex items-center gap-1">
           <button

@@ -143,7 +143,7 @@ export const CompressorsSection = memo(function CompressorsSection() {
 
                     {/* Models count badge */}
                     <div className="absolute top-3 right-3 bg-primary text-steel-900 text-[10px] font-bold px-2 py-1">
-                      {compressor.models.length} {isAr ? 'موديل' : 'Models'}
+                      {compressor.models.length} {locale === 'ar' ? 'موديل' : locale === 'tr' ? 'Model' : 'Models'}
                     </div>
                   </div>
 
@@ -160,7 +160,7 @@ export const CompressorsSection = memo(function CompressorsSection() {
                     <div className={cn("h-0.5 w-0 group-hover:w-10 bg-primary transition-all duration-500 mt-3")} />
 
                     <div className="mt-3 flex items-center gap-2 text-xs font-semibold text-neutral-400 group-hover:text-primary transition-colors">
-                      <span>{isAr ? 'استكشف' : 'Explore'}</span>
+                      <span>{locale === 'ar' ? 'استكشف' : locale === 'tr' ? 'Keşfet' : 'Explore'}</span>
                       <ArrowRight size={12} className={cn("transition-transform", isRTL ? "rotate-180 group-hover:-translate-x-1" : "group-hover:translate-x-1")} />
                     </div>
                   </div>

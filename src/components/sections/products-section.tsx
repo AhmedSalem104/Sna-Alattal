@@ -156,7 +156,7 @@ export const ProductsSection = memo(function ProductsSection() {
                   : 'bg-white text-neutral-500 border-neutral-200 hover:border-primary/50 hover:text-primary'
               )}
             >
-              {isAr ? 'الكل' : 'All'}
+              {locale === 'ar' ? 'الكل' : locale === 'tr' ? 'Tümü' : 'All'}
             </button>
             {categories.map((cat) => (
               <button
@@ -215,7 +215,7 @@ export const ProductsSection = memo(function ProductsSection() {
 
                       {/* Product count badge */}
                       <div className="absolute top-3 right-3 bg-primary text-steel-900 text-xs font-bold px-2.5 py-1">
-                        {category._count?.products || 0} {isAr ? 'موديل' : 'Models'}
+                        {category._count?.products || 0} {locale === 'ar' ? 'موديل' : locale === 'tr' ? 'Model' : 'Models'}
                       </div>
                     </div>
 
@@ -233,7 +233,7 @@ export const ProductsSection = memo(function ProductsSection() {
                       <div className={cn("h-0.5 w-0 group-hover:w-12 bg-primary transition-all duration-500 mt-3", isRTL ? "mr-0" : "ml-0")} />
 
                       <div className="mt-3 flex items-center gap-2 text-sm font-semibold text-neutral-400 group-hover:text-primary transition-colors">
-                        <span>{isAr ? 'استكشف' : 'Explore'}</span>
+                        <span>{locale === 'ar' ? 'استكشف' : locale === 'tr' ? 'Keşfet' : 'Explore'}</span>
                         <ArrowRight
                           size={14}
                           className={cn(

@@ -154,7 +154,7 @@ export default function ProductsPage() {
                   : 'bg-white text-neutral-500 border-neutral-200 hover:border-primary/50 hover:text-primary'
               )}
             >
-              {isAr ? 'الكل' : 'All'}
+              {locale === 'ar' ? 'الكل' : locale === 'tr' ? 'Tümü' : 'All'}
             </button>
             {categories.map((cat) => (
               <button
@@ -267,7 +267,7 @@ export default function ProductsPage() {
 
                           {/* CTA */}
                           <div className="flex items-center gap-2 text-primary text-xs font-bold uppercase tracking-wider mt-auto pt-3">
-                            <span>{isAr ? 'استكشف' : 'EXPLORE'}</span>
+                            <span>{locale === 'ar' ? 'استكشف' : locale === 'tr' ? 'Keşfet' : 'EXPLORE'}</span>
                             <ArrowRight size={14} className={isRTL ? 'rotate-180' : ''} />
                           </div>
                         </div>
@@ -401,7 +401,7 @@ export default function ProductsPage() {
                 {drawerProduct.specifications && Object.keys(drawerProduct.specifications).length > 0 && (
                   <div className="mb-5">
                     <span className="text-primary text-sm font-bold uppercase tracking-[0.15em] mb-3 block">
-                      {isAr ? 'المواصفات' : 'SPECIFICATIONS'}
+                      {locale === 'ar' ? 'المواصفات' : locale === 'tr' ? 'ÖZELLİKLER' : 'SPECIFICATIONS'}
                     </span>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                       {Object.entries(drawerProduct.specifications).map(([key, val]) => (
@@ -428,7 +428,7 @@ export default function ProductsPage() {
                   return (
                     <div className="mb-4">
                       <span className="text-primary text-sm font-bold uppercase tracking-[0.15em]">
-                        {isAr ? 'المميزات' : 'FEATURES'}
+                        {locale === 'ar' ? 'المميزات' : locale === 'tr' ? 'ÖZELLİKLER' : 'FEATURES'}
                       </span>
                       <div className="grid grid-cols-2 gap-x-4 gap-y-2 mt-2">
                         {features.map((f: string, i: number) => (
@@ -463,7 +463,7 @@ function ProductModelsSlider({ models, isAr }: { models: Array<Record<string, st
     <div className="mb-5 -mx-5 md:-mx-8 px-5 md:px-8 py-5 bg-steel-900">
       <div className="flex items-center justify-between mb-4">
         <span className="text-primary text-base font-bold uppercase tracking-[0.15em]">
-          {isAr ? 'الموديلات' : 'MODELS'} ({models.length})
+          {locale === 'ar' ? 'الموديلات' : locale === 'tr' ? 'MODELLER' : 'MODELS'} ({models.length})
         </span>
         <div className="flex items-center gap-1">
           <button
