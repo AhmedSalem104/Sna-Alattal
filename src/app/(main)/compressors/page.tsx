@@ -633,17 +633,23 @@ export default function CompressorsPage() {
                   return <ModelsSlider models={apiComp.models} isAr={isAr} />;
                 })()}
 
-                {/* Features from API */}
+                {/* Features from API - language aware */}
                 {(() => {
                   const apiComp = getApiCompressor(drawerProduct.key);
-                  if (!apiComp || !apiComp.features || apiComp.features.length === 0) return null;
+                  if (!apiComp) return null;
+                  const features = locale === 'ar' && (apiComp as any).featuresAr?.length
+                    ? (apiComp as any).featuresAr
+                    : locale === 'tr' && (apiComp as any).featuresTr?.length
+                      ? (apiComp as any).featuresTr
+                      : apiComp.features;
+                  if (!features || features.length === 0) return null;
                   return (
                     <div className="mb-4">
                       <span className="text-primary text-base font-bold uppercase tracking-[0.15em]">
                         {locale === 'ar' ? 'المميزات' : locale === 'tr' ? 'ÖZELLİKLER' : 'FEATURES'}
                       </span>
                       <div className="grid grid-cols-2 gap-x-4 gap-y-3 mt-3">
-                        {apiComp.features.map((f: string, i: number) => (
+                        {features.map((f: string, i: number) => (
                           <div key={i} className="flex items-start gap-2 text-lg text-neutral-600">
                             <div className="w-1.5 h-1.5 bg-primary rounded-full mt-2.5 shrink-0" />
                             {f}
