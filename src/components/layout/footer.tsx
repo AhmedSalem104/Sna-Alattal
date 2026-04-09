@@ -246,30 +246,41 @@ export function Footer() {
               <div className="w-8 h-0.5 bg-primary" />
               {locale === 'ar' ? 'فروعنا' : locale === 'tr' ? 'Şubelerimiz' : 'Our Branches'}
             </h4>
-            <ul className="space-y-2 text-white/70 text-xs">
-              <li className="flex items-center gap-2">
-                <span>🇪🇬</span>
-                <a href="tel:+201211459495" dir="ltr" className="hover:text-primary">+20 121 145 9495</a>
+            <ul className="space-y-3 text-white/80 text-sm">
+              <li className="flex items-center gap-3">
+                <span className="text-lg">🇪🇬</span>
+                <div>
+                  <div className="text-white/50 text-[10px] uppercase">{locale === 'ar' ? 'مصر' : 'Egypt'}</div>
+                  <a href="tel:+201211459495" dir="ltr" className="hover:text-primary font-medium">+20 121 145 9495</a>
+                </div>
               </li>
-              <li className="flex items-center gap-2">
-                <span>🇪🇬</span>
-                <a href="tel:+201032221038" dir="ltr" className="hover:text-primary">+20 103 222 1038</a>
+              <li className="flex items-center gap-3">
+                <span className="text-lg">🇸🇾</span>
+                <div>
+                  <div className="text-white/50 text-[10px] uppercase">{locale === 'ar' ? 'سوريا' : 'Syria'}</div>
+                  <a href="tel:+963944971509" dir="ltr" className="hover:text-primary font-medium">+963 944 971 509</a>
+                </div>
               </li>
-              <li className="flex items-center gap-2">
-                <span>🇸🇾</span>
-                <a href="tel:+963944971509" dir="ltr" className="hover:text-primary">+963 944 971 509</a>
+              <li className="flex items-center gap-3">
+                <span className="text-lg">🇸🇦</span>
+                <div>
+                  <div className="text-white/50 text-[10px] uppercase">{locale === 'ar' ? 'السعودية' : 'KSA'}</div>
+                  <a href="tel:+966536471877" dir="ltr" className="hover:text-primary font-medium">+966 53 647 1877</a>
+                </div>
               </li>
-              <li className="flex items-center gap-2">
-                <span>🇸🇦</span>
-                <a href="tel:+966536471877" dir="ltr" className="hover:text-primary">+966 53 647 1877</a>
+              <li className="flex items-center gap-3">
+                <span className="text-lg">🇹🇷</span>
+                <div>
+                  <div className="text-white/50 text-[10px] uppercase">{locale === 'ar' ? 'تركيا' : 'Turkey'}</div>
+                  <a href="tel:+905516072123" dir="ltr" className="hover:text-primary font-medium">+90 551 607 2123</a>
+                </div>
               </li>
-              <li className="flex items-center gap-2">
-                <span>🇹🇷</span>
-                <a href="tel:+905516072123" dir="ltr" className="hover:text-primary">+90 551 607 2123</a>
-              </li>
-              <li className="flex items-center gap-2">
-                <span>🇮🇶</span>
-                <a href="tel:+9647714375620" dir="ltr" className="hover:text-primary">+964 771 437 5620</a>
+              <li className="flex items-center gap-3">
+                <span className="text-lg">🇮🇶</span>
+                <div>
+                  <div className="text-white/50 text-[10px] uppercase">{locale === 'ar' ? 'العراق' : 'Iraq'}</div>
+                  <a href="tel:+9647714375620" dir="ltr" className="hover:text-primary font-medium">+964 771 437 5620</a>
+                </div>
               </li>
             </ul>
           </div>

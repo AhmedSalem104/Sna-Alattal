@@ -41,7 +41,7 @@
     "learnMore": "اعرف المزيد",
     "contactUs": "تواصل معنا",
     "features": {
-      "manufacturing": "تصنيع محلي",
+      "manufacturing": "تصنيع داخلي",
       "global": "تواجد عالمي",
       "team": "فريق خبراء",
       "quality": "جودة عالية"
@@ -218,7 +218,7 @@
   },
   "parallax": {
     "products_title": "حلول متكاملة لخطوط الإنتاج",
-    "products_subtitle": "تصنيع محلي بمعايير عالمية",
+    "products_subtitle": "تصنيع داخلي بمعايير عالمية",
     "clients_title": "شركاء النجاح حول العالم",
     "clients_subtitle": "أكثر من 300 عميل في 15 دولة",
     "global_title": "حضور عالمي في أكبر المعارض",

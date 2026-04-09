@@ -200,7 +200,8 @@
       "Bash(rm -rf prisma)",
       "Bash(rm -f src/lib/env-check.ts)",
       "Bash(rm -f .env.example)",
-      "Bash(grep -rn \"locale === ''''ar''''\" src/components/layout/footer.tsx)"
+      "Bash(grep -rn \"locale === ''''ar''''\" src/components/layout/footer.tsx)",
+      "Bash(grep -n \"locale === ''''ar''''\" src/app/\\\\\\(main\\\\\\)/compressors/page.tsx)"
     ]
   }
 }

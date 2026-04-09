@@ -14,7 +14,7 @@ import { cn } from '@/lib/utils';
 /* ─── SNA Logo - clean text ─── */
 function GearLogo() {
   return (
-    <span className="text-primary font-black text-[28px] tracking-[0.25em] select-none shrink-0">
+    <span className="text-white font-black text-[28px] tracking-[0.25em] select-none shrink-0">
       S.N.A
     </span>
   );

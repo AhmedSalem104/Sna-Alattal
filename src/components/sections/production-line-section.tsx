@@ -750,7 +750,7 @@ function PLModelsSlider({ models, isAr }: { models: Array<Record<string, string>
     <div className="mb-5 -mx-5 md:-mx-8 px-5 md:px-8 py-5 bg-steel-900">
       <div className="flex items-center justify-between mb-4">
         <span className="text-primary text-base font-bold uppercase tracking-[0.15em]">
-          {locale === 'ar' ? 'الموديلات' : locale === 'tr' ? 'MODELLER' : 'MODELS'} ({models.length})
+          {isAr ? 'الموديلات' : 'MODELS'} ({models.length})
         </span>
         <div className="flex items-center gap-1">
           <button
