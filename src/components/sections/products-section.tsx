@@ -215,7 +215,7 @@ export const ProductsSection = memo(function ProductsSection() {
 
                       {/* Product count badge */}
                       <div className="absolute top-3 right-3 bg-primary text-steel-900 text-xs font-bold px-2.5 py-1">
-                        {category._count?.products || 0} {isAr ? 'منتج' : 'Products'}
+                        {category._count?.products || 0} {isAr ? 'موديل' : 'Models'}
                       </div>
                     </div>
 

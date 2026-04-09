@@ -149,7 +149,7 @@ export function Footer() {
             <div className="inline-flex items-center gap-2 px-3 py-2 border border-white/10 bg-white/5">
               <Factory size={16} className="text-primary" />
               <span className="text-xs text-white/70 uppercase tracking-wider">
-                {t('footer.since') || 'Since 1994'}
+                {t('footer.since') || 'Since 1997'}
               </span>
             </div>
 
@@ -240,29 +240,36 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Contact Info - Turkey */}
+          {/* Branches */}
           <div>
             <h4 className="text-white font-bold mb-6 uppercase tracking-wider text-sm flex items-center gap-2">
               <div className="w-8 h-0.5 bg-primary" />
-              {t('contact.info.turkey.title')}
+              {locale === 'ar' ? 'فروعنا' : 'Our Branches'}
             </h4>
-            <ul className="space-y-4">
-              <li className="flex items-start gap-3 text-white/70 text-sm">
-                <div className="w-8 h-8 border border-white/10 bg-white/5 flex items-center justify-center shrink-0">
-                  <MapPin size={14} className="text-primary" />
-                </div>
-                <span className="pt-1">{t('contact.info.turkey.address')}</span>
+            <ul className="space-y-2 text-white/70 text-xs">
+              <li className="flex items-center gap-2">
+                <span>🇪🇬</span>
+                <a href="tel:+201211459495" dir="ltr" className="hover:text-primary">+20 121 145 9495</a>
               </li>
-              <li className="flex items-center gap-3 text-white/70 text-sm">
-                <div className="w-8 h-8 border border-white/10 bg-white/5 flex items-center justify-center shrink-0">
-                  <Phone size={14} className="text-primary" />
-                </div>
-                <a
-                  href="tel:+90XXXXXXXXXX"
-                  className="hover:text-primary transition-colors"
-                >
-                  {t('contact.info.turkey.phone')}
-                </a>
+              <li className="flex items-center gap-2">
+                <span>🇪🇬</span>
+                <a href="tel:+201032221038" dir="ltr" className="hover:text-primary">+20 103 222 1038</a>
+              </li>
+              <li className="flex items-center gap-2">
+                <span>🇸🇾</span>
+                <a href="tel:+963944971509" dir="ltr" className="hover:text-primary">+963 944 971 509</a>
+              </li>
+              <li className="flex items-center gap-2">
+                <span>🇸🇦</span>
+                <a href="tel:+966536471877" dir="ltr" className="hover:text-primary">+966 53 647 1877</a>
+              </li>
+              <li className="flex items-center gap-2">
+                <span>🇹🇷</span>
+                <a href="tel:+905516072123" dir="ltr" className="hover:text-primary">+90 551 607 2123</a>
+              </li>
+              <li className="flex items-center gap-2">
+                <span>🇮🇶</span>
+                <a href="tel:+9647714375620" dir="ltr" className="hover:text-primary">+964 771 437 5620</a>
               </li>
             </ul>
           </div>

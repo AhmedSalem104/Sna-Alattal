@@ -247,7 +247,8 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
-            className="text-base sm:text-lg text-neutral-300 max-w-3xl mx-auto mb-8 leading-relaxed drop-shadow-md"
+            className="text-lg sm:text-xl md:text-2xl text-white max-w-4xl mx-auto mb-8 leading-relaxed font-medium"
+            style={{ textShadow: '0 2px 10px rgba(0,0,0,0.8)' }}
           >
             {description}
           </motion.p>
@@ -296,7 +297,7 @@ export function HeroSection() {
       >
         <Factory size={18} className="text-primary" />
         <span className="text-primary text-sm font-semibold">
-          {t('hero.badge') || '1994'}
+          {t('hero.badge') || '1997'}
         </span>
       </motion.div>
 

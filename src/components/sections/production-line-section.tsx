@@ -536,7 +536,7 @@ export const ProductionLineSection = memo(function ProductionLineSection() {
                   times: [0, 0.15, 0.7, 1],
                   ease: 'easeInOut',
                 }}
-                className="absolute inset-0 z-10 flex items-center justify-center pointer-events-none"
+                className="absolute bottom-2 left-1/2 -translate-x-1/2 z-10 pointer-events-none"
               >
                 <motion.div
                   animate={{ scale: [1, 1.03, 1] }}

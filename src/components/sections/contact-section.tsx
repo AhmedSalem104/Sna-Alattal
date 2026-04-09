@@ -126,8 +126,8 @@ export function ContactSection() {
               </div>
               <div className="space-y-2 text-sm text-neutral-600">
                 <div className="flex items-center gap-2"><MapPin size={14} className="text-primary shrink-0" /> العاشر من رمضان — المنطقة الصناعية B4 — قطعة 183</div>
-                <div className="flex items-center gap-2"><Phone size={14} className="text-primary shrink-0" /> أ. آية سعيد: <a href="tel:+201211459495" className="hover:text-primary font-medium" dir="ltr">+20 121 145 9495</a></div>
-                <div className="flex items-center gap-2"><Phone size={14} className="text-primary shrink-0" /> أ. امتياز حمدي: <a href="tel:+201032221038" className="hover:text-primary font-medium" dir="ltr">+20 103 222 1038</a> / <a href="tel:+201006193661" className="hover:text-primary font-medium" dir="ltr">+20 100 619 3661</a></div>
+                <div className="flex items-center gap-2"><Phone size={14} className="text-primary shrink-0" /> <a href="tel:+201211459495" className="hover:text-primary font-medium" dir="ltr">+20 121 145 9495</a></div>
+                <div className="flex items-center gap-2"><Phone size={14} className="text-primary shrink-0" /> <a href="tel:+201032221038" className="hover:text-primary font-medium" dir="ltr">+20 103 222 1038</a> / <a href="tel:+201006193661" className="hover:text-primary font-medium" dir="ltr">+20 100 619 3661</a></div>
                 <div className="flex items-center gap-2"><Mail size={14} className="text-primary shrink-0" /> <a href="mailto:info@snalattal.com" className="hover:text-primary">info@snalattal.com</a></div>
               </div>
             </div>
@@ -142,8 +142,8 @@ export function ContactSection() {
                 </div>
                 <div className="space-y-2 text-xs text-neutral-600">
                   <div className="flex items-center gap-2"><MapPin size={12} className="text-primary shrink-0" /> حلب — ريف المهندسين الأول</div>
-                  <div className="flex items-center gap-2"><Phone size={12} className="text-primary shrink-0" /> أ. عمار بارود: <a href="tel:+963944971509" className="hover:text-primary" dir="ltr">+963 944 971 509</a></div>
-                  <div className="flex items-center gap-2"><Phone size={12} className="text-primary shrink-0" /> أ. عبادة المنجد: <a href="tel:+905366777156" className="hover:text-primary" dir="ltr">+90 536 677 7156</a></div>
+                  <div className="flex items-center gap-2"><Phone size={12} className="text-primary shrink-0" /> <a href="tel:+963944971509" className="hover:text-primary" dir="ltr">+963 944 971 509</a></div>
+                  <div className="flex items-center gap-2"><Phone size={12} className="text-primary shrink-0" /> <a href="tel:+905366777156" className="hover:text-primary" dir="ltr">+90 536 677 7156</a></div>
                 </div>
               </div>
 
@@ -154,8 +154,8 @@ export function ContactSection() {
                   <h3 className="font-bold text-steel-900 text-sm">🇸🇦 فرع السعودية</h3>
                 </div>
                 <div className="space-y-2 text-xs text-neutral-600">
-                  <div className="flex items-center gap-2"><Phone size={12} className="text-primary shrink-0" /> أ. عمرو يوسف (الطائف): <a href="tel:+966536471877" className="hover:text-primary" dir="ltr">+966 53 647 1877</a></div>
-                  <div className="flex items-center gap-2"><Phone size={12} className="text-primary shrink-0" /> أ. عبدالرحمن السني (الرياض): <a href="tel:+966554996623" className="hover:text-primary" dir="ltr">+966 55 499 6623</a></div>
+                  <div className="flex items-center gap-2"><Phone size={12} className="text-primary shrink-0" /> الطائف: <a href="tel:+966536471877" className="hover:text-primary" dir="ltr">+966 53 647 1877</a></div>
+                  <div className="flex items-center gap-2"><Phone size={12} className="text-primary shrink-0" /> الرياض: <a href="tel:+966554996623" className="hover:text-primary" dir="ltr">+966 55 499 6623</a></div>
                 </div>
               </div>
 
@@ -167,7 +167,7 @@ export function ContactSection() {
                 </div>
                 <div className="space-y-2 text-xs text-neutral-600">
                   <div className="flex items-center gap-2"><MapPin size={12} className="text-primary shrink-0" /> إسطنبول — ديميركابي</div>
-                  <div className="flex items-center gap-2"><Phone size={12} className="text-primary shrink-0" /> أ. منير عنان: <a href="tel:+905516072123" className="hover:text-primary" dir="ltr">+90 551 607 2123</a></div>
+                  <div className="flex items-center gap-2"><Phone size={12} className="text-primary shrink-0" /> <a href="tel:+905516072123" className="hover:text-primary" dir="ltr">+90 551 607 2123</a></div>
                 </div>
               </div>
 
@@ -179,7 +179,7 @@ export function ContactSection() {
                 </div>
                 <div className="space-y-2 text-xs text-neutral-600">
                   <div className="flex items-center gap-2"><MapPin size={12} className="text-primary shrink-0" /> بغداد</div>
-                  <div className="flex items-center gap-2"><Phone size={12} className="text-primary shrink-0" /> أ. مرتضى اللامي: <a href="tel:+9647714375620" className="hover:text-primary" dir="ltr">+964 771 437 5620</a></div>
+                  <div className="flex items-center gap-2"><Phone size={12} className="text-primary shrink-0" /> <a href="tel:+9647714375620" className="hover:text-primary" dir="ltr">+964 771 437 5620</a></div>
                 </div>
               </div>
             </div>

@@ -99,8 +99,8 @@ export default async function RootLayout({
               alternateName: 'العتال للصناعات الهندسية',
               url: process.env.NEXT_PUBLIC_SITE_URL || 'https://sna-alattal.com',
               logo: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://sna-alattal.com'}/images/logo.jpg`,
-              description: 'Leading manufacturer of liquid filling production lines in Egypt and Turkey since 1994.',
-              foundingDate: '1994',
+              description: 'Leading manufacturer of liquid filling production lines in Egypt and Turkey since 1997.',
+              foundingDate: '1997',
               contactPoint: [
                 {
                   '@type': 'ContactPoint',
