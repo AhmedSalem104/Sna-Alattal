@@ -124,8 +124,8 @@ export function Footer() {
                 <div className="absolute -top-1 -right-1 w-3 h-3 bg-primary" />
               </div>
               <div>
-                <h3 className="text-lg font-bold text-primary uppercase tracking-wider group-hover:text-primary/80 transition-colors">
-                  S.N.A AL-ATTAL
+                <h3 className="text-lg font-bold uppercase group-hover:text-primary/80 transition-colors">
+                  <span className="text-primary tracking-[0.2em]">S.N.A</span> <span className="text-white">AL-ATTAL</span>
                 </h3>
                 <p className="text-xs text-white/50 uppercase tracking-widest">
                   Engineering Industries
@@ -280,7 +280,7 @@ export function Footer() {
       <div className="border-t border-white/10 relative z-10">
         <div className="container-custom py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-white/60 text-sm text-center sm:text-start">
-            &copy; {new Date().getFullYear()} S.N.A Al-Attal Engineering Industries.{' '}
+            &copy; {new Date().getFullYear()} <span className="text-primary tracking-[0.15em]">S.N.A</span> Al-Attal Engineering Industries.{' '}
             {t('footer.rights')}.
           </p>
           <div className="flex items-center gap-6">
