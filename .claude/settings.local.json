@@ -201,7 +201,10 @@
       "Bash(rm -f src/lib/env-check.ts)",
       "Bash(rm -f .env.example)",
       "Bash(grep -rn \"locale === ''''ar''''\" src/components/layout/footer.tsx)",
-      "Bash(grep -n \"locale === ''''ar''''\" src/app/\\\\\\(main\\\\\\)/compressors/page.tsx)"
+      "Bash(grep -n \"locale === ''''ar''''\" src/app/\\\\\\(main\\\\\\)/compressors/page.tsx)",
+      "Bash(sed -i \"s|h\\\\.replace\\(/_/g, '' ''\\)|translateSpecKey\\(h, isAr ? ''ar'' : ''en''\\)|g\" src/app/\\\\\\(main\\\\\\)/products/page.tsx)",
+      "Bash(sed -i \"s|key\\\\.replace\\(/_/g, '' ''\\)|translateSpecKey\\(key, isAr ? ''ar'' : ''en''\\)|g\" src/components/sections/production-line-section.tsx)",
+      "Bash(sed -i \"s|h\\\\.replace\\(/_/g, '' ''\\)|translateSpecKey\\(h, isAr ? ''ar'' : ''en''\\)|g\" src/components/sections/production-line-section.tsx)"
     ]
   }
 }

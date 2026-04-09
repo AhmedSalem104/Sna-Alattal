@@ -518,7 +518,7 @@ function ProductModelsSlider({ models, isAr }: { models: Array<Record<string, st
           {headers.slice(1).map(h => (
             model[h] ? (
               <div key={h}>
-                <div className="text-white/30 text-xs uppercase tracking-wider mb-1">{h.replace(/_/g, ' ')}</div>
+                <div className="text-white/30 text-xs uppercase tracking-wider mb-1">{translateSpecKey(h, isAr ? 'ar' : 'en')}</div>
                 <div className="text-white/90 text-base font-semibold">{model[h]}</div>
               </div>
             ) : null

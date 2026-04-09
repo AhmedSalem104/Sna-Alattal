@@ -11,6 +11,7 @@ import { useLocale } from '@/hooks/useLocale';
 import { useCountUp } from '@/hooks/useAnimations';
 import { cn } from '@/lib/utils';
 import { getCompressors } from '@/lib/static-data';
+import { translateSpecKey } from '@/lib/spec-translations';
 
 // ─── Types ────────────────────────────────────────────
 interface Compressor {
@@ -602,7 +603,7 @@ export default function CompressorsPage() {
                           <div className="grid grid-cols-1 gap-1.5">
                             {Object.entries(apiComp.specifications).map(([key, val]) => (
                               <div key={key} className="flex justify-between items-center px-3 py-2.5 bg-neutral-50 border border-neutral-100">
-                                <span className="text-neutral-400 capitalize text-base">{key.replace(/_/g, ' ')}</span>
+                                <span className="text-neutral-400 capitalize text-base">{translateSpecKey(key, locale)}</span>
                                 <span className="text-steel-900 font-bold text-base">{val}</span>
                               </div>
                             ))}
@@ -831,7 +832,7 @@ function ModelsSlider({ models, isAr }: { models: Array<Record<string, string>>;
           {headers.slice(1).map(h => (
             model[h] ? (
               <div key={h}>
-                <div className="text-white/30 text-xs uppercase tracking-wider mb-1">{h.replace(/_/g, ' ')}</div>
+                <div className="text-white/30 text-xs uppercase tracking-wider mb-1">{translateSpecKey(h, isAr ? 'ar' : 'en')}</div>
                 <div className="text-white/90 text-base font-semibold">{model[h]}</div>
               </div>
             ) : null

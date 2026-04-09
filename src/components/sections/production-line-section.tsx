@@ -12,6 +12,7 @@ import { cn } from '@/lib/utils';
 import { IndustrialGear } from '@/components/decorative';
 import productsData from '@/data/products.json';
 import { getLocalizedField } from '@/lib/locale-helpers';
+import { translateSpecKey } from '@/lib/spec-translations';
 
 interface Transform {
   x: number;
@@ -663,7 +664,7 @@ export const ProductionLineSection = memo(function ProductionLineSection() {
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                         {Object.entries(drawerProduct.specifications).map(([key, val]) => (
                           <div key={key} className="flex justify-between items-center px-3 py-2 bg-neutral-50 border border-neutral-100">
-                            <span className="text-neutral-400 capitalize text-sm">{key.replace(/_/g, ' ')}</span>
+                            <span className="text-neutral-400 capitalize text-sm">{translateSpecKey(key, isAr ? 'ar' : 'en')}</span>
                             <span className="text-steel-900 font-bold text-sm">{val}</span>
                           </div>
                         ))}
@@ -770,7 +771,7 @@ function PLModelsSlider({ models, isAr }: { models: Array<Record<string, string>
           {headers.slice(1).map(h => (
             model[h] ? (
               <div key={h}>
-                <div className="text-white/30 text-xs uppercase tracking-wider mb-1">{h.replace(/_/g, ' ')}</div>
+                <div className="text-white/30 text-xs uppercase tracking-wider mb-1">{translateSpecKey(h, isAr ? 'ar' : 'en')}</div>
                 <div className="text-white/90 text-base font-semibold">{model[h]}</div>
               </div>
             ) : null
