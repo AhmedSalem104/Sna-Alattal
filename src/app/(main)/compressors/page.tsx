@@ -309,6 +309,20 @@ export default function CompressorsPage() {
     return () => { document.body.style.overflow = ''; };
   }, [drawerProduct]);
 
+  // Hide tabs on scroll down, show on scroll up
+  const [showTabs, setShowTabs] = useState(true);
+  const lastScrollY = useRef(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentY = window.scrollY;
+      setShowTabs(currentY < lastScrollY.current || currentY < 100);
+      lastScrollY.current = currentY;
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   // Product rows for asymmetric layout
   const row1 = PRODUCTS.filter(p => p.row === 1);
   const row2 = PRODUCTS.filter(p => p.row === 2);
@@ -400,7 +414,7 @@ export default function CompressorsPage() {
       {/* ═══════════════════════════════════════════════════════
           STICKY FILTER + PRODUCT GRID
           ═══════════════════════════════════════════════════════ */}
-      <section className="pt-20 pb-4 bg-white border-b border-neutral-200 sticky top-0 z-30">
+      <section className={cn("pt-20 pb-4 bg-white border-b border-neutral-200 sticky z-30 transition-all duration-300", showTabs ? "top-0" : "-top-full")}>
         <div className="container mx-auto px-4 sm:px-6">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-4">
             <h2 className="text-xl md:text-2xl font-bold text-steel-900">

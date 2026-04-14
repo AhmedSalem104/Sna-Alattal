@@ -434,6 +434,62 @@ Only root with chattr -i can remove it
 
 ---
 
+## Incident #3 — VPS Offline / Not Responding (2026-04-14)
+
+- **Date:** 2026-04-14
+- **Symptom:** Site `https://snalattal.me` not loading; both ICMP ping and HTTPS connections to `72.60.132.3` timed out (100% packet loss).
+- **Diagnosis:** VPS instance itself is stopped at the Hostinger hypervisor level — not a Nginx/PM2/app issue. When the VPS process is stopped from outside the OS, the server cannot be reached at all (kernel is not running).
+- **Most likely cause:** Hostinger Monarx or their abuse team auto-stopped the VPS. Historically this has happened after Monarx detected suspicious activity (see Incident #1 and #2). Since malware was fully removed and cloud-init disabled, the trigger could also be: resource abuse detection, reboot policy, payment/plan issue, or a manual Hostinger intervention.
+- **Resolution Steps:**
+  1. Log in to Hostinger hPanel → VPS → `srv1290135`
+  2. Click **Start** (or **Restart** if state is "Stopped")
+  3. Check Monarx alerts page in hPanel — read the exact reason
+  4. SSH in: `ssh root@72.60.132.3` and run:
+     - `systemctl status nginx` — confirm Nginx is running
+     - `pm2 list` — confirm app (`sna-alattal`) is online
+     - `journalctl -xe --since "2 hours ago"` — look for shutdown reason
+     - `last -x | head -20` — check recent reboots/shutdowns
+     - `dmesg | tail -50` — kernel-level events before the stop
+  5. If Monarx flagged a file: do NOT quarantine — delete immediately
+  6. Update this incident entry with the confirmed root cause
+- **Prevention Going Forward:**
+  - **Uptime monitoring:** Set up external uptime check (UptimeRobot free tier) that pings `snalattal.me` every 5 minutes and emails/SMS on downtime → we learn about outages immediately, not from users
+  - **Hostinger alerts:** Enable email notifications for VPS state changes in hPanel
+  - **Monthly audit:** On the 1st of each month, SSH in and run `/usr/local/bin/health-check.sh` manually + review `/var/log/monarx/` for recent alerts
+  - **Document ANY Hostinger support ticket** in this file — their reasons for stopping the VPS are the strongest signal for what to harden next
+  - **Keep `SERVER-SECURITY.md` up to date** after every incident — future-me needs to know what was tried
+
+---
+
+## Outage Response Runbook (Quick Reference)
+
+When the site is reported down, run these checks **in order**:
+
+```bash
+# 1. Is the VPS itself alive?
+ping -c 3 72.60.132.3          # If timeout → VPS is stopped at hypervisor (check hPanel)
+
+# 2. Is HTTPS reachable?
+curl -I https://snalattal.me   # If timeout → same as above OR firewall/DNS issue
+
+# 3. Only after SSH works — is Nginx up?
+ssh root@72.60.132.3 "systemctl status nginx"
+
+# 4. Is the Node app up?
+ssh root@72.60.132.3 "pm2 list && pm2 logs sna-alattal --lines 50 --nostream"
+
+# 5. What stopped the server?
+ssh root@72.60.132.3 "last -x | head && journalctl --since '2 hours ago' | tail -100"
+```
+
+Decision tree:
+- **Ping fails** → VPS stopped externally → hPanel Start + check Monarx
+- **Ping OK, HTTPS fails** → Nginx down OR UFW issue → `systemctl restart nginx`
+- **HTTPS OK, but 502** → Node app crashed → `pm2 restart sna-alattal`
+- **HTTPS OK, but 500** → App-level error → read PM2 logs, redeploy
+
+---
+
 ## Lessons Learned
 
 1. **Never quarantine malware on production servers** — delete immediately or Monarx will detect it
@@ -442,6 +498,8 @@ Only root with chattr -i can remove it
 4. **Immutable files (`chattr +i`) are the best way** to prevent directory recreation
 5. **Block mining pools in /etc/hosts** as defense-in-depth
 6. **Avoid heavy monitoring tools** (Netdata) on production — use lightweight scripts instead
+7. **External uptime monitoring is mandatory** — we should never find out the site is down from a user. UptimeRobot or similar must be configured.
+8. **Ping-fails-first diagnosis** — if ICMP to the VPS times out, the OS is not running; no amount of nginx/pm2 work will help. Go to hPanel first.
 
 ---
 
@@ -455,5 +513,5 @@ Only root with chattr -i can remove it
 
 ---
 
-*Last updated: 2026-04-02*
+*Last updated: 2026-04-14 — added Incident #3 (VPS offline) + Outage Response Runbook*
 *Maintained by: DevOps Team*

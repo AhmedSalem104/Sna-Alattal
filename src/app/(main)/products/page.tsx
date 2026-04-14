@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -119,10 +119,24 @@ export default function ProductsPage() {
     ? categories
     : categories.filter(c => c.id === activeTab);
 
+  // Hide tabs on scroll down, show on scroll up
+  const [showTabs, setShowTabs] = useState(true);
+  const lastScrollY = useRef(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentY = window.scrollY;
+      setShowTabs(currentY < lastScrollY.current || currentY < 100);
+      lastScrollY.current = currentY;
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
     <>
       {/* Compact Header + Tabs */}
-      <section className="pt-20 pb-6 bg-white border-b border-neutral-200 sticky top-0 z-30">
+      <section className={cn("pt-20 pb-4 bg-white border-b border-neutral-200 sticky z-30 transition-all duration-300", showTabs ? "top-0" : "-top-full")}>
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 10 }}
