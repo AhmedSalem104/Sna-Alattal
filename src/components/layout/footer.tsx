@@ -1,7 +1,6 @@
 'use client';
 
-import { useState, useRef } from 'react';
-import { motion, useInView } from 'framer-motion';
+import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
@@ -16,12 +15,10 @@ import {
   Mail,
   ArrowUp,
   Factory,
-  Cog,
   type LucideIcon,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useLocale } from '@/hooks/useLocale';
-import { IndustrialGear } from '@/components/decorative';
 import settingsData from '@/data/settings.json';
 
 // TikTok icon (not in lucide)
@@ -110,35 +107,24 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-10">
           {/* Company Info */}
           <div className="space-y-6">
-            <Link href="/" className="flex items-center gap-3 group">
-              <div className="relative">
-                <Image
-                  src="/images/logo.jpg"
-                  alt="S.N.A Al-Attal"
-                  width={60}
-                  height={60}
-                  className="border-2 border-primary/50"
-                  loading="lazy"
-                  sizes="60px"
-                />
-                <div className="absolute -top-1 -right-1 w-3 h-3 bg-primary" />
-              </div>
-              <div>
-                <h3 className="text-lg font-bold uppercase group-hover:text-primary/80 transition-colors">
-                  <span className="text-primary tracking-[0.2em]">S.N.A</span> <span className="text-white">AL-ATTAL</span>
+            <Link href="/" className="flex items-center gap-4 group" aria-label="S.N.A Al-Attal Engineering Industries">
+              <Image
+                src="/images/logo-white.png"
+                alt="S.N.A"
+                width={160}
+                height={75}
+                loading="lazy"
+                className="h-14 w-auto select-none transition-opacity group-hover:opacity-80"
+                sizes="160px"
+              />
+              <div className="border-s-2 border-primary/40 ps-4">
+                <h3 className="text-base font-bold uppercase leading-tight group-hover:text-primary/80 transition-colors">
+                  <span className="text-white">AL-ATTAL</span>
                 </h3>
-                <p className="text-xs text-white/50 uppercase tracking-widest">
+                <p className="text-[10px] text-white/50 uppercase tracking-[0.2em]">
                   Engineering Industries
                 </p>
               </div>
-              {/* Decorative gear near footer logo */}
-              <IndustrialGear
-                size={28}
-                teeth={10}
-                className="text-primary opacity-40 shrink-0"
-                strokeWidth={1.5}
-                reverse
-              />
             </Link>
 
             <p className="text-white/70 text-sm leading-relaxed">

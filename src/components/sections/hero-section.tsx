@@ -310,18 +310,18 @@ export function HeroSection() {
       >
         <div className="relative">
           <Image
-            src="/images/logo.jpg"
+            src="/images/logo.png"
             alt="S.N.A Al-Attal"
-            width={140}
-            height={140}
+            width={180}
+            height={180}
             className="mx-auto shadow-soft-xl"
             priority
             loading="eager"
             fetchPriority="high"
-            sizes="140px"
+            sizes="180px"
           />
           {/* Modern Glow Effect */}
-          <div className="absolute inset-0 bg-primary/20 blur-xl -z-10" />
+          <div className="absolute inset-0 bg-primary/30 blur-2xl -z-10" />
         </div>
       </motion.div>
 

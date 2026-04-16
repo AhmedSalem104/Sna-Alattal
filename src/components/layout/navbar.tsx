@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -10,15 +11,6 @@ import { Button } from '@/components/ui/button';
 import { LanguageSwitcher } from '@/components/language-switcher';
 import { useLocale } from '@/hooks/useLocale';
 import { cn } from '@/lib/utils';
-
-/* ─── SNA Logo - clean text ─── */
-function GearLogo() {
-  return (
-    <span className="text-white font-black text-[28px] tracking-[0.25em] select-none shrink-0">
-      S.N.A
-    </span>
-  );
-}
 
 const navItems = [
   { key: 'home', href: '/' },
@@ -88,10 +80,18 @@ export function Navbar() {
         <nav className="container-custom">
           <div className="flex items-center justify-between h-[64px] md:h-[72px]">
             {/* Logo */}
-            <Link href="/" className="flex items-center gap-3 group shrink-0">
-              <GearLogo />
+            <Link href="/" className="flex items-center gap-3 group shrink-0" aria-label="S.N.A Al-Attal Engineering Industries">
+              <Image
+                src="/images/logo-white.png"
+                alt="S.N.A"
+                width={140}
+                height={65}
+                priority
+                className="h-10 md:h-12 w-auto select-none transition-opacity group-hover:opacity-90"
+                sizes="(max-width: 768px) 120px, 140px"
+              />
               <div className="hidden md:flex flex-col border-s-2 border-white/25 ps-3">
-                <h1 className="text-[20px] lg:text-[24px] font-black leading-tight uppercase tracking-[0.1em] text-white group-hover:text-white/90 transition-colors">
+                <h1 className="text-[18px] lg:text-[22px] font-black leading-tight uppercase tracking-[0.1em] text-white group-hover:text-white/90 transition-colors">
                   AL-ATTAL
                 </h1>
                 <p className="text-[10px] uppercase tracking-[0.25em] text-white/60 font-semibold">

@@ -204,7 +204,13 @@
       "Bash(grep -n \"locale === ''''ar''''\" src/app/\\\\\\(main\\\\\\)/compressors/page.tsx)",
       "Bash(sed -i \"s|h\\\\.replace\\(/_/g, '' ''\\)|translateSpecKey\\(h, isAr ? ''ar'' : ''en''\\)|g\" src/app/\\\\\\(main\\\\\\)/products/page.tsx)",
       "Bash(sed -i \"s|key\\\\.replace\\(/_/g, '' ''\\)|translateSpecKey\\(key, isAr ? ''ar'' : ''en''\\)|g\" src/components/sections/production-line-section.tsx)",
-      "Bash(sed -i \"s|h\\\\.replace\\(/_/g, '' ''\\)|translateSpecKey\\(h, isAr ? ''ar'' : ''en''\\)|g\" src/components/sections/production-line-section.tsx)"
+      "Bash(sed -i \"s|h\\\\.replace\\(/_/g, '' ''\\)|translateSpecKey\\(h, isAr ? ''ar'' : ''en''\\)|g\" src/components/sections/production-line-section.tsx)",
+      "Read(//c/Users/B-SMART/.ssh/**)",
+      "Bash(ssh-keygen -t ed25519 -a 100 -C \"sna-alattal-$\\(date +%Y%m%d\\)\" -f ~/.ssh/sna_alattal_new -N \"\")",
+      "Bash(ssh-keygen -R 72.60.132.3 -f ~/.ssh/known_hosts)",
+      "Bash(ssh-keyscan -H 72.60.132.3)",
+      "Bash(openssl s_client -servername snalattal.me -connect snalattal.me:443)",
+      "Bash(openssl x509:*)"
     ]
   }
 }

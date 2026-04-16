@@ -41,7 +41,7 @@ export const metadata: Metadata = {
     siteName: 'S.N.A Al-Attal Engineering Industries',
     images: [
       {
-        url: '/images/logo.jpg',
+        url: '/images/og-image.png',
         width: 1200,
         height: 630,
         alt: 'S.N.A Al-Attal Engineering Industries',
@@ -52,7 +52,18 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'S.N.A Al-Attal Engineering Industries',
     description: 'Leading manufacturer of liquid filling production lines',
-    images: ['/images/logo.jpg'],
+    images: ['/images/og-image.png'],
+  },
+  icons: {
+    icon: [
+      { url: '/favicon-32.png', sizes: '32x32', type: 'image/png' },
+      { url: '/favicon-16.png', sizes: '16x16', type: 'image/png' },
+      { url: '/images/logo-192.png', sizes: '192x192', type: 'image/png' },
+      { url: '/images/logo-512.png', sizes: '512x512', type: 'image/png' },
+    ],
+    apple: [
+      { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
+    ],
   },
   robots: {
     index: true,
@@ -82,9 +93,8 @@ export default async function RootLayout({
   return (
     <html lang={locale} dir={dir} className={cairo.variable} suppressHydrationWarning>
       <head>
-        <link rel="icon" href="/icon.svg" type="image/svg+xml" />
         <link rel="manifest" href="/manifest.json" />
-        <meta name="theme-color" content="#D4AF37" />
+        <meta name="theme-color" content="#F28A1C" />
         {/* Preconnect to external origins for faster resource loading */}
         <link rel="preconnect" href="https://res.cloudinary.com" />
         <link rel="dns-prefetch" href="https://res.cloudinary.com" />
@@ -99,7 +109,7 @@ export default async function RootLayout({
               name: 'S.N.A Al-Attal Engineering Industries',
               alternateName: 'العتال للصناعات الهندسية',
               url: process.env.NEXT_PUBLIC_SITE_URL || 'https://sna-alattal.com',
-              logo: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://sna-alattal.com'}/images/logo.jpg`,
+              logo: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://sna-alattal.com'}/images/logo.png`,
               description: 'Leading manufacturer of liquid filling production lines in Egypt and Turkey since 1997.',
               foundingDate: '1997',
               contactPoint: [
