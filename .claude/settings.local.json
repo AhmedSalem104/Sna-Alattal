@@ -210,7 +210,8 @@
       "Bash(ssh-keygen -R 72.60.132.3 -f ~/.ssh/known_hosts)",
       "Bash(ssh-keyscan -H 72.60.132.3)",
       "Bash(openssl s_client -servername snalattal.me -connect snalattal.me:443)",
-      "Bash(openssl x509:*)"
+      "Bash(openssl x509:*)",
+      "Bash(npm view:*)"
     ]
   }
 }
