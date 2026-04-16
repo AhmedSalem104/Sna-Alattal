@@ -32,8 +32,14 @@ export async function middleware(request: NextRequest) {
   const localeCookie = request.cookies.get('NEXT_LOCALE')?.value;
   const locale = localeCookie && locales.includes(localeCookie) ? localeCookie : defaultLocale;
 
-  // Create response with locale header for next-intl
-  const response = NextResponse.next();
+  // Forward the locale as a request header so server components can read it
+  const requestHeaders = new Headers(request.headers);
+  requestHeaders.set('x-next-intl-locale', locale);
+
+  const response = NextResponse.next({
+    request: { headers: requestHeaders },
+  });
+  // Also expose on response (for debugging / client awareness)
   response.headers.set('x-next-intl-locale', locale);
 
   return response;

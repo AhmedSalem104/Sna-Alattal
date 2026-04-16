@@ -1,29 +1,17 @@
 import { getRequestConfig } from 'next-intl/server';
+import { headers } from 'next/headers';
+import { locales, defaultLocale, type Locale } from './src/i18n/config';
 
-export const locales = ['ar', 'en', 'tr'] as const;
-export type Locale = (typeof locales)[number];
-export const defaultLocale: Locale = 'ar';
+export { locales, defaultLocale, localeNames, localeDirection } from './src/i18n/config';
+export type { Locale } from './src/i18n/config';
 
-export const localeNames: Record<Locale, string> = {
-  ar: 'العربية',
-  en: 'English',
-  tr: 'Türkçe',
-};
-
-export const localeDirection: Record<Locale, 'rtl' | 'ltr'> = {
-  ar: 'rtl',
-  en: 'ltr',
-  tr: 'ltr',
-};
-
-export default getRequestConfig(async ({ requestLocale }) => {
-  // Get locale from request or use default
-  let locale = await requestLocale;
-
-  // Validate locale
-  if (!locale || !locales.includes(locale as Locale)) {
-    locale = defaultLocale;
-  }
+export default getRequestConfig(async () => {
+  const headerList = await headers();
+  const headerLocale = headerList.get('x-next-intl-locale');
+  const locale: Locale =
+    headerLocale && (locales as readonly string[]).includes(headerLocale)
+      ? (headerLocale as Locale)
+      : defaultLocale;
 
   return {
     locale,
