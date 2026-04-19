@@ -604,22 +604,6 @@ export function HeroSection() {
           {/* Carousel Navigation */}
           {slides.length > 1 && (
             <>
-              {/* Arrow Navigation */}
-              <button
-                onClick={scrollPrev}
-                className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-20 p-3 min-w-[44px] min-h-[44px] flex items-center justify-center bg-white/10 backdrop-blur-sm text-white hover:bg-white/20 transition-all duration-300"
-                aria-label="Previous slide"
-              >
-                <ChevronLeft size={24} />
-              </button>
-              <button
-                onClick={scrollNext}
-                className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-20 p-3 min-w-[44px] min-h-[44px] flex items-center justify-center bg-white/10 backdrop-blur-sm text-white hover:bg-white/20 transition-all duration-300"
-                aria-label="Next slide"
-              >
-                <ChevronRight size={24} />
-              </button>
-
               {/* Numbered Indicators (GEA-inspired) */}
               <div className={cn(
                 "absolute bottom-28 z-20 hidden sm:flex flex-col gap-3",

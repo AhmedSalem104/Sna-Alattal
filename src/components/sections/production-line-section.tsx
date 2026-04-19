@@ -95,17 +95,17 @@ function HotspotMarker({
         }}
       >
         {/* Pulse ring */}
-        <span className="absolute inset-0 -m-3 rounded-full animate-hotspot-ping bg-primary/40" />
+        <span className="absolute inset-0 -m-3 rounded-full animate-hotspot-ping bg-primary/20" />
 
         {/* Marker body */}
-        <span className="relative flex items-center justify-center w-8 h-8 rounded-full bg-primary shadow-lg shadow-primary/40 animate-hotspot-bounce group-hover:bg-primary-600 transition-colors">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" className="text-white">
+        <span className="relative flex items-center justify-center w-7 h-7 rounded-full bg-primary/50 shadow-md shadow-primary/20 animate-hotspot-bounce group-hover:bg-primary/80 transition-colors">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" className="text-white/90">
             <path d="M12 5v14M5 12l7 7 7-7" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </span>
 
         {/* Connecting dot */}
-        <span className="absolute top-full left-1/2 -translate-x-1/2 mt-1 w-1.5 h-1.5 rounded-full bg-primary/60" />
+        <span className="absolute top-full left-1/2 -translate-x-1/2 mt-1 w-1 h-1 rounded-full bg-primary/30" />
       </div>
 
       {/* Tooltip (desktop only via mouse events) */}
@@ -119,7 +119,7 @@ function HotspotMarker({
   );
 }
 
-const MIN_SCALE = 0.5;
+const MIN_SCALE = 1;
 const MAX_SCALE = 5;
 const ZOOM_STEP = 1.3;
 
@@ -162,10 +162,11 @@ export const ProductionLineSection = memo(function ProductionLineSection() {
   }, []);
 
   const zoomOut = useCallback(() => {
-    setTransform(prev => ({
-      ...prev,
-      scale: Math.max(prev.scale / ZOOM_STEP, MIN_SCALE),
-    }));
+    setTransform(prev => {
+      const newScale = Math.max(prev.scale / ZOOM_STEP, MIN_SCALE);
+      if (newScale <= 1) return { x: 0, y: 0, scale: 1 };
+      return { ...prev, scale: newScale };
+    });
   }, []);
 
   const resetView = useCallback(() => {
