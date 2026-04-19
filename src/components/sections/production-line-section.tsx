@@ -519,12 +519,6 @@ export const ProductionLineSection = memo(function ProductionLineSection() {
               </Button>
             </div>
 
-            {/* Scale Indicator */}
-            <div className={`absolute bottom-4 ${isRTL ? 'right-4' : 'left-4'} z-20`}>
-              <div className="bg-steel-900/80 backdrop-blur-sm text-white px-3 py-1.5 text-xs font-mono tracking-wider">
-                {formatNumber(scalePercent)}
-              </div>
-            </div>
 
             {/* Hint removed from inside image - moved outside below */}
 
